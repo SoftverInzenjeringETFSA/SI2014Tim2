@@ -1,15 +1,15 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 public class Login extends JFrame {
-
-	private JPanel contentPane;
+	private JTextField txtIme;
+	private JPasswordField txtPassword;
 
 	/**
 	 * Launch the application.
@@ -31,12 +31,36 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-	}
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
+		
+		JLabel lblDobrodosliUQuicksheet = new JLabel("Dobrodosli u QuickSheet - Jednostavnu aplikaciju za evidentiranje radnih sati.");
+		lblDobrodosliUQuicksheet.setBounds(10, 0, 414, 33);
+		getContentPane().add(lblDobrodosliUQuicksheet);
+		
+		txtIme = new JTextField();
+		txtIme.setBounds(61, 60, 311, 20);
+		getContentPane().add(txtIme);
+		txtIme.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Vaša lozinka:");
+		lblNewLabel.setBounds(61, 99, 200, 20);
+		getContentPane().add(lblNewLabel);
+		
+		JLabel lblVaeKorisnikoIme = new JLabel("Vaše korisničko ime:");
+		lblVaeKorisnikoIme.setLabelFor(txtIme);
+		lblVaeKorisnikoIme.setBounds(61, 44, 200, 20);
+		getContentPane().add(lblVaeKorisnikoIme);
+		
+		txtPassword = new JPasswordField();
+		lblNewLabel.setLabelFor(txtPassword);
+		txtPassword.setBounds(61, 117, 311, 20);
+		getContentPane().add(txtPassword);
+		
+		JLabel lblUkolikoSteZaboravili = new JLabel("Ukoliko ste zaboravili svoju lozinku, molimo da se obratite Vašem Administratoru.");
+		lblUkolikoSteZaboravili.setBounds(20, 140, 404, 20);
+		getContentPane().add(lblUkolikoSteZaboravili);
 
+	}
 }
