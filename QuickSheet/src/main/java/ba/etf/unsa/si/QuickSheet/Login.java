@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JButton;
 
 public class Login extends JFrame {
 	private JTextField txtIme;
@@ -61,6 +62,10 @@ public class Login extends JFrame {
 		JLabel lblUkolikoSteZaboravili = new JLabel("Ukoliko ste zaboravili svoju lozinku, molimo da se obratite Vašem Administratoru.");
 		lblUkolikoSteZaboravili.setBounds(20, 140, 404, 20);
 		getContentPane().add(lblUkolikoSteZaboravili);
+		
+		JButton btnNewButton = new JButton("Prijava");
+		btnNewButton.setBounds(283, 194, 89, 23);
+		getContentPane().add(btnNewButton);
 
 	}
 }

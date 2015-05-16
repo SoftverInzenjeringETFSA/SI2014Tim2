@@ -14,6 +14,13 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.SystemColor;
+import java.awt.Button;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AdministratorForma extends JFrame {
 	private JTextField textField;
@@ -385,9 +392,46 @@ public class AdministratorForma extends JFrame {
 		tabbedPane.addTab("Moja Historija", null, historijaPanel, null);
 		historijaPanel.setLayout(null);
 		
+		JLabel lblNewLabel_4 = new JLabel("Projekat:");
+		lblNewLabel_4.setBounds(34, 29, 78, 20);
+		historijaPanel.add(lblNewLabel_4);
+		
+		JComboBox comboBox_10 = new JComboBox();
+		comboBox_10.setBounds(91, 29, 135, 20);
+		historijaPanel.add(comboBox_10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Timesheet historija:");
+		lblNewLabel_5.setBounds(34, 87, 200, 20);
+		historijaPanel.add(lblNewLabel_5);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(34, 107, 265, 252);
+		historijaPanel.add(scrollPane);
+		
+		Canvas canvas = new Canvas();
+		canvas.setBackground(SystemColor.controlHighlight);
+		canvas.setBounds(382, 107, 327, 252);
+		historijaPanel.add(canvas);
+		
+		JLabel lblNewLabel_6 = new JLabel("Od");
+		lblNewLabel_6.setBounds(372, 29, 46, 20);
+		historijaPanel.add(lblNewLabel_6);
+		
+		JLabel lblDo = new JLabel("Do");
+		lblDo.setBounds(512, 29, 46, 20);
+		historijaPanel.add(lblDo);
+		
 		JPanel korisniciPanel = new JPanel();
-		tabbedPane.addTab("New tab", null, korisniciPanel, null);
+		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
 		korisniciPanel.setLayout(null);
+		
+		Button button = new Button("Dodaj Novog korisnika");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		button.setBounds(38, 20, 70, 22);
+		korisniciPanel.add(button);
 		
 		JPanel odjeliPanel = new JPanel();
 		tabbedPane.addTab("Odjeli", null, odjeliPanel, null);
