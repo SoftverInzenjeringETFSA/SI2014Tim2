@@ -4,27 +4,25 @@ import java.time.LocalDate;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
-public class Zaposlenik {
-	String username;
-	String lozinka;
-	String ime;
-	String prezime;
-	String adresa;
-	LocalDate datumZaposlenja;
-	Double cijena;
+public abstract class Zaposlenik {
 	
-	public Zaposlenik()
-	{}
+	private String username;
+	private String lozinka;
+	private String ime;
+	private String prezime;
+	private String adresa;
+	private LocalDate datumZaposlenja;
+	private Double cijena;
 	
-	public Zaposlenik (String _username, String _lozinka, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena)
+	public Zaposlenik (String _username, String _lozinka, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena) throws InvalidAttributeValueException
 	{
-		username = _username;
-		lozinka = _lozinka;
-		ime = _ime;
-		prezime = _prezime;
-		adresa = _adresa;
-		datumZaposlenja = _datum;
-		cijena = _cijena;
+		setUsername(_username);
+		setLozinka(_lozinka);
+		setIme(_ime);
+		setPrezime(_prezime);
+		setAdresa(_adresa);
+		setDatumZaposlenja(_datum);
+		setCijena(_cijena);
 	}
 	
 	public String getUsername()
@@ -35,9 +33,7 @@ public class Zaposlenik {
 	public void setUsername(String _username) throws InvalidAttributeValueException
 	{
 		if (_username != null && !_username.isEmpty() && _username.matches("^[a-zA-Z0-9]*$"))
-		{
 			username = _username;
-		}
 		else throw new InvalidAttributeValueException();
 	}
 	
@@ -49,9 +45,7 @@ public class Zaposlenik {
 	public void setLozinka(String _lozinka) throws InvalidAttributeValueException
 	{
 		if (_lozinka != null && _lozinka.length() > 5 && _lozinka.matches("^[a-zA-Z0-9]*$"))
-		{
 			lozinka = _lozinka;
-		}
 		else throw new InvalidAttributeValueException();
 	}
 	
@@ -63,9 +57,7 @@ public class Zaposlenik {
 	public void setIme(String _ime) throws InvalidAttributeValueException
 	{
 		if (_ime != null && !_ime.isEmpty() && _ime.matches("^[a-zA-Z]*$"))
-		{
 			ime = _ime;
-		}
 		else throw new InvalidAttributeValueException();
 	}
 	
@@ -77,9 +69,7 @@ public class Zaposlenik {
 	public void setPrezime(String _prezime) throws InvalidAttributeValueException
 	{
 		if (_prezime != null && !_prezime.isEmpty() && prezime.matches("^[a-zA-Z]*$"))
-		{
 			prezime = _prezime;
-		}
 		else throw new InvalidAttributeValueException();
 	}
 	
@@ -91,9 +81,7 @@ public class Zaposlenik {
 	public void setAdresa(String _adresa) throws InvalidAttributeValueException
 	{
 		if (_adresa != null && !_adresa.isEmpty())
-		{
 			adresa = _adresa;
-		}
 		else throw new InvalidAttributeValueException();
 	}
 	
@@ -104,10 +92,8 @@ public class Zaposlenik {
 	
 	public void setDatumZaposlenja(LocalDate _datum) throws InvalidAttributeValueException
 	{
-		if (_datum != null && _datum.isAfter(LocalDate.now()))
-		{
+		if (_datum != null && _datum.isBefore(LocalDate.now()))
 			datumZaposlenja = _datum;
-		}
 		else throw new InvalidAttributeValueException();
 	}
 	
@@ -119,9 +105,8 @@ public class Zaposlenik {
 	public void setCijena(Double _cijena) throws InvalidAttributeValueException
 	{
 		if (_cijena != null && _cijena > 0)
-		{
 			cijena = _cijena;
-		}
 		else throw new InvalidAttributeValueException();
 	}
+	
 }
