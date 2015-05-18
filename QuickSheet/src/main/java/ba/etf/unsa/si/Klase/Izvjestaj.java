@@ -4,7 +4,10 @@ import javax.naming.directory.InvalidAttributeValueException;
 
 public abstract class Izvjestaj {
 
-	Projekat projekat;
+	protected Projekat projekat;
+	protected Double procenatZavrsenogRada;
+	protected Double trosak;
+	protected Double ukupnoVrijemeRada;
 	
 	public Izvjestaj(Projekat _projekat) throws InvalidAttributeValueException 
 	{
@@ -16,10 +19,23 @@ public abstract class Izvjestaj {
 		return projekat;
 	}
 	
-	public void setProjekat(Projekat projekat) throws InvalidAttributeValueException 
+	public Double getProcenatZavrsenogRada() 
 	{
-		if (projekat != null)
-			this.projekat = projekat;
-		else throw new InvalidAttributeValueException();
+		return procenatZavrsenogRada;
 	}
+	
+	public Double getTrosak() 
+	{
+		return trosak;
+	}
+	
+	public Double getUkupnoVrijemeRada() 
+	{
+		return ukupnoVrijemeRada;
+	}
+	
+	abstract public void setProjekat(Projekat projekat) throws InvalidAttributeValueException;
+	abstract public void IzracunajProcenatZavrsenogRada();
+	abstract public void IzracunajTrosak();
+	abstract public void IzracunajUkupnoVrijemeRada();
 }
