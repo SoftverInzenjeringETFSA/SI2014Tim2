@@ -1,7 +1,6 @@
 package ba.etf.unsa.si.Klase;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
