@@ -7,6 +7,7 @@ import javax.naming.directory.InvalidAttributeValueException;
 public class Projekat {
 	
 	private LinkedList<ProjekatRadnik> zaposlenici = new LinkedList<ProjekatRadnik>();
+	private LinkedList<Timesheet> timesheetList = new LinkedList<Timesheet>();
 	private LinkedList<Task> taskovi = new LinkedList<Task>();
 	private Koordinator koordinator;
 	private String naziv;
@@ -28,6 +29,16 @@ public class Projekat {
 		setKoordinator(koordinator);
 		setTaskovi(taskovi);
 		setZaposlenici(zaposlenici);
+	}
+	
+	public LinkedList<Timesheet> getTimesheetList() 
+	{
+		return timesheetList;
+	}
+	
+	public void setTimesheetList(LinkedList<Timesheet> timesheetList) 
+	{
+		this.timesheetList = timesheetList;
 	}
 	
 	public LinkedList<ProjekatRadnik> getZaposlenici() 

@@ -29,6 +29,6 @@ public class ProjekatRadnik extends Zaposlenik{
 	
 	public void SlanjeTimesheetaNaReviziju(Timesheet timesheet)
 	{
-		timesheet.getProjekat().getKoordinator().getTimesheetList().add(timesheet);
+		timesheet.getProjekat().getTimesheetList().add(timesheet);
 	}
 }

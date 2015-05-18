@@ -7,31 +7,14 @@ import javax.naming.directory.InvalidAttributeValueException;
 
 public class Koordinator extends Zaposlenik{
 
-	private LinkedList<Timesheet> timesheetList;
 	public Koordinator(String _username, String _lozinka, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena)
 			throws InvalidAttributeValueException {
 		super(_username, _lozinka, _ime, _prezime, _adresa, _datum, _cijena);
-		timesheetList = new LinkedList<Timesheet>();
-	}
-
-	public LinkedList<Timesheet> getTimesheetList() 
-	{
-		return timesheetList;
 	}
 	
-	public void setTimesheetList(LinkedList<Timesheet> timesheetList) 
+	public void OdobriTimesheet(Timesheet timesheet)
 	{
-		this.timesheetList = timesheetList;
-	}
-	
-	public boolean OdobriTimesheet(Timesheet timesheet)
-	{
-		if (timesheetList.contains(timesheet))
-		{
-			timesheet.setValidiran(true);
-			return true;
-		}
-		else return false;
+		timesheet.setValidiran(true);
 	}
 	
 	public void KreirajTaskProjekta(Projekat projekat, Task task) throws InvalidAttributeValueException
@@ -55,17 +38,17 @@ public class Koordinator extends Zaposlenik{
 		else throw new InvalidAttributeValueException();
 	}
 	
-	public void GenerisiIzvjestaj(Zaposlenik zaposlenik)
+	public IzvjestajZaposlenika GenerisiIzvjestaj(Projekat _projekat, Zaposlenik _zaposlenik) throws InvalidAttributeValueException
 	{
-		//TODO dodati logiku za kreiranje izvještaja
+		return new IzvjestajZaposlenika(_projekat, _zaposlenik);
 	}
 	
-	public void GenerisiIzvjestaj(Odjel odjel)
+	public IzvjestajOdjela GenerisiIzvjestaj(Projekat _projekat, Odjel _odjel) throws InvalidAttributeValueException
 	{
-		//TODO dodati logiku za kreiranje izvještaja
+		return new IzvjestajOdjela(_projekat, _odjel);
 	}
 	
-	public void PrintajIzvjestaj()
+	public void PrintajIzvjestaj(String naziv)
 	{
 		//TODO dodati logiku printanja izvjestaja
 	}

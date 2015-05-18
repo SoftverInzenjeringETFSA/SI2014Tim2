@@ -12,7 +12,7 @@ public abstract class Zaposlenik {
 	private String prezime;
 	private String adresa;
 	private LocalDate datumZaposlenja;
-	private Double cijena;
+	private Double satnica;
 	
 	public Zaposlenik (String _username, String _lozinka, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena) throws InvalidAttributeValueException
 	{
@@ -97,15 +97,15 @@ public abstract class Zaposlenik {
 		else throw new InvalidAttributeValueException();
 	}
 	
-	public double getCijena()
+	public double getSatnica()
 	{
-		return cijena;
+		return satnica;
 	}
 	
 	public void setCijena(Double _cijena) throws InvalidAttributeValueException
 	{
 		if (_cijena != null && _cijena > 0)
-			cijena = _cijena;
+			satnica = _cijena;
 		else throw new InvalidAttributeValueException();
 	}
 	

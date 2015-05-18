@@ -23,7 +23,6 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 			this.zaposlenik = zaposlenik;
 			IzracunajProcenatZavrsenogRada();
 			IzracunajTrosak();
-			IzracunajUkupnoVrijemeRada();
 		}
 		else throw new InvalidAttributeValueException();
 	}
@@ -36,29 +35,36 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 			this.projekat = projekat;
 			IzracunajProcenatZavrsenogRada();
 			IzracunajTrosak();
-			IzracunajUkupnoVrijemeRada();
 		}
 		else throw new InvalidAttributeValueException();
 	}
 
 	@Override
 	public void IzracunajProcenatZavrsenogRada() {
-		//TODO ubaciti logiku racunanja
-		
+		for (Timesheet t : projekat.getTimesheetList())
+		{
+			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran())
+			{
+				for (Task task: t.getTaskovi())
+				{
+					
+				}
+			}
+		}
 	}
 
 	@Override
 	public void IzracunajTrosak() {
-		//TODO ubaciti logiku racunanja
-		
+		IzracunajUkupnoVrijemeRada();		
+		trosak = zaposlenik.getSatnica() * ukupnoVrijemeRada;
 	}
 
 	@Override
 	public void IzracunajUkupnoVrijemeRada() {
 		ukupnoVrijemeRada = 0.0;
-		for (Timesheet t : projekat.getKoordinator().getTimesheetList())
+		for (Timesheet t : projekat.getTimesheetList())
 		{
-			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran())
+			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran() && t.getProjekat().equals(projekat))
 			{
 				ukupnoVrijemeRada += t.getBrojRadnihSati(); 
 			}
