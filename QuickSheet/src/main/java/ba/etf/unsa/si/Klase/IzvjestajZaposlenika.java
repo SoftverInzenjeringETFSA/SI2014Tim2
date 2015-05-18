@@ -1,5 +1,9 @@
 package ba.etf.unsa.si.Klase;
 
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.Set;
+
 import javax.naming.directory.InvalidAttributeValueException;
 
 public class IzvjestajZaposlenika extends Izvjestaj{
@@ -41,16 +45,31 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 
 	@Override
 	public void IzracunajProcenatZavrsenogRada() {
+		LinkedList<Task> taskovi = projekat.getTaskovi();
+		Hashtable<String, Double> taskoviZaposlenik = new Hashtable<String, Double>();
+		int ukupnoTaskova = 0;
+		for (Task ta: taskovi)
+		{
+			if (ta.getZaposlenik().equals(zaposlenik))
+				ukupnoTaskova++;
+		}
 		for (Timesheet t : projekat.getTimesheetList())
 		{
 			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran())
 			{
 				for (Task task: t.getTaskovi())
 				{
-					
+					taskoviZaposlenik.put(task.getNaziv(), task.getProcenatZavrsenosti());
 				}
 			}
 		}
+		Set<String> keys = taskoviZaposlenik.keySet();
+		procenatZavrsenogRada = 0.0;
+		for (String key: keys)
+		{
+			procenatZavrsenogRada += taskoviZaposlenik.get(key);
+		}
+		procenatZavrsenogRada /= ukupnoTaskova;
 	}
 
 	@Override

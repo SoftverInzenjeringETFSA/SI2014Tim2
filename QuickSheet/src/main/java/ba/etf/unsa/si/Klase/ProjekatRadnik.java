@@ -17,7 +17,7 @@ public class ProjekatRadnik extends Zaposlenik{
 		return new Timesheet(_taskovi, radniSati, _projekat);
 	}
 	
-	public void UrediTask(Task task, String komentar, Double procenatZavrsenosti) throws InvalidAttributeValueException
+	public void UrediTask(Task task, String komentar, Integer procenatZavrsenosti) throws InvalidAttributeValueException
 	{
 		if (this.equals(task.getZaposlenik()))
 		{

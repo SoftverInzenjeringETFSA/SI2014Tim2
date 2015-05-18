@@ -87,10 +87,10 @@ public class Task {
 		return procenatZavrsenosti;
 	}
 	
-	public void setProcenatZavrsenosti(Double procenatZavrsenosti) 
+	public void setProcenatZavrsenosti(Integer procenatZavrsenosti) 
 	{
-		if (procenatZavrsenosti > 0 && procenatZavrsenosti <= 1)
-		this.procenatZavrsenosti = (double) Math.round(procenatZavrsenosti * 100) / 100;
+		if (procenatZavrsenosti > 0 && procenatZavrsenosti <= 100)
+		this.procenatZavrsenosti = (double)procenatZavrsenosti / 100;
 	}
 	
 	public LocalDate getRok() 
