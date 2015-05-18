@@ -35,7 +35,7 @@ public abstract class Izvjestaj {
 	}
 	
 	abstract public void setProjekat(Projekat projekat) throws InvalidAttributeValueException;
-	abstract public void IzracunajProcenatZavrsenogRada();
-	abstract public void IzracunajTrosak();
-	abstract public void IzracunajUkupnoVrijemeRada();
+	abstract public void IzracunajProcenatZavrsenogRada() throws InvalidAttributeValueException;
+	abstract public void IzracunajTrosak() throws InvalidAttributeValueException;
+	abstract public void IzracunajUkupnoVrijemeRada() throws InvalidAttributeValueException;
 }

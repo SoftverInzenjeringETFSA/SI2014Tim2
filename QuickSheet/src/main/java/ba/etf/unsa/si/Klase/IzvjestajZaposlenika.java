@@ -9,12 +9,18 @@ import javax.naming.directory.InvalidAttributeValueException;
 public class IzvjestajZaposlenika extends Izvjestaj{
 
 	private Zaposlenik zaposlenik;
-	
+	private Integer ukupanBrojTaskova;
+	public Double decimalanProcenat;
 	public IzvjestajZaposlenika(Projekat _projekat, Zaposlenik _zaposlenik) throws InvalidAttributeValueException {
 		super(_projekat);
 		setZaposlenik(_zaposlenik);
 	}
 
+	public Integer getUkupanBrojTaskova() 
+	{
+		return ukupanBrojTaskova;
+	}
+	
 	public Zaposlenik getZaposlenik() 
 	{
 		return zaposlenik;
@@ -25,6 +31,7 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 		if (zaposlenik != null && projekat.getZaposlenici().contains(zaposlenik))
 		{
 			this.zaposlenik = zaposlenik;
+			ukupanBrojTaskova = 0;
 			IzracunajProcenatZavrsenogRada();
 			IzracunajTrosak();
 		}
@@ -37,6 +44,7 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 		if (projekat != null && projekat.getZaposlenici().contains(zaposlenik))
 		{
 			this.projekat = projekat;
+			ukupanBrojTaskova = 0;
 			IzracunajProcenatZavrsenogRada();
 			IzracunajTrosak();
 		}
@@ -47,11 +55,10 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 	public void IzracunajProcenatZavrsenogRada() {
 		LinkedList<Task> taskovi = projekat.getTaskovi();
 		Hashtable<String, Double> taskoviZaposlenik = new Hashtable<String, Double>();
-		int ukupnoTaskova = 0;
 		for (Task ta: taskovi)
 		{
 			if (ta.getZaposlenik().equals(zaposlenik))
-				ukupnoTaskova++;
+				ukupanBrojTaskova++;
 		}
 		for (Timesheet t : projekat.getTimesheetList())
 		{
@@ -69,7 +76,8 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 		{
 			procenatZavrsenogRada += taskoviZaposlenik.get(key);
 		}
-		procenatZavrsenogRada /= ukupnoTaskova;
+		decimalanProcenat = procenatZavrsenogRada;
+		procenatZavrsenogRada /= ukupanBrojTaskova;
 	}
 
 	@Override

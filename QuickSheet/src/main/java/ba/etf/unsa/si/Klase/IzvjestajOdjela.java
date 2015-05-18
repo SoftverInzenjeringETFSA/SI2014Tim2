@@ -5,12 +5,17 @@ import javax.naming.directory.InvalidAttributeValueException;
 public class IzvjestajOdjela extends Izvjestaj{
 
 	private Odjel odjel;
-	
+	private Integer ukupanBrojTaskovaOdjela;
 	public IzvjestajOdjela(Projekat _projekat, Odjel _odjel) throws InvalidAttributeValueException {
 		super(_projekat);
-		
+		setOdjel(_odjel);
 	}
 
+	public Integer getUkupanBrojTaskovaOdjela() 
+	{
+		return ukupanBrojTaskovaOdjela;
+	}
+	
 	public Odjel getOdjel() 
 	{
 		return odjel;
@@ -19,7 +24,12 @@ public class IzvjestajOdjela extends Izvjestaj{
 	public void setOdjel(Odjel odjel) throws InvalidAttributeValueException 
 	{
 		if (odjel != null)
+		{
 			this.odjel = odjel;
+			ukupanBrojTaskovaOdjela = 0;
+			IzracunajProcenatZavrsenogRada();
+			IzracunajTrosak();
+		}
 		else throw new InvalidAttributeValueException();
 	}
 	
@@ -27,26 +37,50 @@ public class IzvjestajOdjela extends Izvjestaj{
 	public void setProjekat(Projekat projekat) throws InvalidAttributeValueException 
 	{
 		if (projekat != null)
+		{
 			this.projekat = projekat;
+			ukupanBrojTaskovaOdjela = 0;
+			IzracunajProcenatZavrsenogRada();
+			IzracunajTrosak();
+		}
 		else throw new InvalidAttributeValueException();
 	}
 	
 	@Override
-	public void IzracunajProcenatZavrsenogRada()
+	public void IzracunajProcenatZavrsenogRada() throws InvalidAttributeValueException
 	{
-		//TODO ubaciti logiku racunanja
+		double ukupanProcenatOdjela = 0.0;
+		for (Zaposlenik zap: odjel.getZaposlenici())
+		{
+			if (projekat.getZaposlenici().contains(zap))
+			{
+				IzvjestajZaposlenika iz = new IzvjestajZaposlenika(projekat, zap);
+				ukupanBrojTaskovaOdjela += iz.getUkupanBrojTaskova();
+				ukupanProcenatOdjela += iz.decimalanProcenat;
+			}
+		}
+		procenatZavrsenogRada = ukupanProcenatOdjela / ukupanBrojTaskovaOdjela;
 	}
 	
 	@Override
-	public void IzracunajTrosak()
+	public void IzracunajTrosak() throws InvalidAttributeValueException
 	{
-		//TODO ubaciti logiku racunanja
-		
+		trosak = 0.0;
+		IzracunajUkupnoVrijemeRada();
+		for (Zaposlenik zap: odjel.getZaposlenici())
+		{
+			if (projekat.getZaposlenici().contains(zap))
+			{
+				IzvjestajZaposlenika iz = new IzvjestajZaposlenika(projekat, zap);
+				trosak += iz.getTrosak();
+				ukupnoVrijemeRada += iz.getUkupnoVrijemeRada();
+			}
+		}
 	}
 	
 	@Override
 	public void IzracunajUkupnoVrijemeRada()
 	{
-		//TODO ubaciti logiku racunanja
+		ukupnoVrijemeRada = 0.0;
 	}
 }
