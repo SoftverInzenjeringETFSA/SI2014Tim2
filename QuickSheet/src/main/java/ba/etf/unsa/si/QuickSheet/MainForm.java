@@ -21,8 +21,10 @@ import java.awt.SystemColor;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
+import javax.swing.JCheckBox;
 
-public class AdministratorForma extends JFrame {
+public class MainForm extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -72,6 +74,27 @@ public class AdministratorForma extends JFrame {
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
 	private JLabel lblSati;
+	private JPanel panel;
+	private JLabel lblId;
+	private JPasswordField passwordField;
+	private JPasswordField passwordField_1;
+	private JTextField textField_36;
+	private JTextField textField_37;
+	private JTextField textField_38;
+	private JTextField textField_39;
+	private JTextField textField_40;
+	private JTextField textField_41;
+	private JTextField textField_42;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JLabel label;
+	private JLabel lblNaziv;
+	private JTextField textField_43;
+	private JTextField textField_44;
+	private JTextField textField_45;
+	private JTextField textField_46;
+	private JTextField textField_47;
+	private JTextField textField_48;
 
 	/**
 	 * Launch the application.
@@ -80,7 +103,7 @@ public class AdministratorForma extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdministratorForma frame = new AdministratorForma();
+					MainForm frame = new MainForm();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -92,7 +115,7 @@ public class AdministratorForma extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AdministratorForma() {
+	public MainForm() {
 		setTitle("QuickSheet");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 793, 460);
@@ -421,6 +444,170 @@ public class AdministratorForma extends JFrame {
 		lblDo.setBounds(512, 29, 46, 20);
 		historijaPanel.add(lblDo);
 		
+		JPanel odjeliPanel = new JPanel();
+		tabbedPane.addTab("Odjeli", null, odjeliPanel, null);
+		odjeliPanel.setLayout(null);
+		
+		panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBounds(27, 51, 341, 331);
+		odjeliPanel.add(panel_2);
+		
+		label = new JLabel("ID:");
+		label.setBounds(10, 11, 46, 14);
+		panel_2.add(label);
+		
+		lblNaziv = new JLabel("Naziv:");
+		lblNaziv.setBounds(10, 36, 82, 14);
+		panel_2.add(lblNaziv);
+		
+		textField_43 = new JTextField();
+		textField_43.setColumns(10);
+		textField_43.setBounds(190, 33, 141, 20);
+		panel_2.add(textField_43);
+		
+		JLabel lblNewLabel_7 = new JLabel("Dodaj zaposlenika:");
+		lblNewLabel_7.setBounds(10, 61, 102, 14);
+		panel_2.add(lblNewLabel_7);
+		
+		JComboBox comboBox_14 = new JComboBox();
+		comboBox_14.setBounds(190, 64, 141, 20);
+		panel_2.add(comboBox_14);
+		
+		JButton btnDodajVise = new JButton("Dodaj vise");
+		btnDodajVise.setBounds(242, 95, 89, 23);
+		panel_2.add(btnDodajVise);
+		
+		JLabel lblNewLabel_9 = new JLabel("Dodaj nadredjenog:");
+		lblNewLabel_9.setBounds(10, 135, 102, 14);
+		panel_2.add(lblNewLabel_9);
+		
+		JComboBox comboBox_15 = new JComboBox();
+		comboBox_15.setBounds(190, 132, 141, 20);
+		panel_2.add(comboBox_15);
+		
+		JButton button_2 = new JButton("Dodaj vise");
+		button_2.setBounds(242, 163, 89, 23);
+		panel_2.add(button_2);
+		
+		JLabel lblMaksimalniBroj = new JLabel("Maksimalni broj zaposlenika:");
+		lblMaksimalniBroj.setBounds(10, 217, 152, 14);
+		panel_2.add(lblMaksimalniBroj);
+		
+		textField_44 = new JTextField();
+		textField_44.setBounds(190, 211, 141, 20);
+		panel_2.add(textField_44);
+		textField_44.setColumns(10);
+		
+		JButton btnDodaj_1 = new JButton("Dodaj");
+		btnDodaj_1.setBounds(242, 297, 89, 23);
+		panel_2.add(btnDodaj_1);
+		
+		Button button_1 = new Button("Dodaj novi odjel");
+		button_1.setBounds(27, 23, 135, 22);
+		odjeliPanel.add(button_1);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(378, 51, 373, 331);
+		odjeliPanel.add(panel_3);
+		
+		textField_45 = new JTextField();
+		textField_45.setColumns(10);
+		textField_45.setBounds(400, 26, 175, 20);
+		odjeliPanel.add(textField_45);
+		
+		JComboBox comboBox_16 = new JComboBox();
+		comboBox_16.setBounds(579, 26, 73, 20);
+		odjeliPanel.add(comboBox_16);
+		
+		JButton button_3 = new JButton("Pretrazi");
+		button_3.setBounds(662, 23, 89, 23);
+		odjeliPanel.add(button_3);
+		
+		JPanel projektiPanel = new JPanel();
+		tabbedPane.addTab("Projekti", null, projektiPanel, null);
+		projektiPanel.setLayout(null);
+		
+		textField_46 = new JTextField();
+		textField_46.setColumns(10);
+		textField_46.setBounds(411, 14, 175, 20);
+		projektiPanel.add(textField_46);
+		
+		JComboBox comboBox_17 = new JComboBox();
+		comboBox_17.setBounds(590, 14, 73, 20);
+		projektiPanel.add(comboBox_17);
+		
+		JButton button_4 = new JButton("Pretrazi");
+		button_4.setBounds(673, 11, 89, 23);
+		projektiPanel.add(button_4);
+		
+		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikazi arhivirane projekte");
+		chckbxPrikaziArhiviraneProjekte.setBounds(382, 41, 149, 23);
+		projektiPanel.add(chckbxPrikaziArhiviraneProjekte);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(382, 71, 351, 311);
+		projektiPanel.add(panel_4);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setLayout(null);
+		panel_5.setBounds(31, 51, 341, 331);
+		projektiPanel.add(panel_5);
+		
+		JLabel label_1 = new JLabel("ID:");
+		label_1.setBounds(10, 11, 46, 14);
+		panel_5.add(label_1);
+		
+		JLabel label_2 = new JLabel("Naziv:");
+		label_2.setBounds(10, 36, 82, 14);
+		panel_5.add(label_2);
+		
+		textField_47 = new JTextField();
+		textField_47.setColumns(10);
+		textField_47.setBounds(190, 33, 141, 20);
+		panel_5.add(textField_47);
+		
+		JLabel label_3 = new JLabel("Dodaj zaposlenika:");
+		label_3.setBounds(10, 132, 102, 14);
+		panel_5.add(label_3);
+		
+		JComboBox comboBox_18 = new JComboBox();
+		comboBox_18.setBounds(190, 129, 141, 20);
+		panel_5.add(comboBox_18);
+		
+		JButton button_5 = new JButton("Dodaj vise");
+		button_5.setBounds(242, 160, 89, 23);
+		panel_5.add(button_5);
+		
+		JLabel label_4 = new JLabel("Dodaj nadredjenog:");
+		label_4.setBounds(10, 197, 102, 14);
+		panel_5.add(label_4);
+		
+		JComboBox comboBox_19 = new JComboBox();
+		comboBox_19.setBounds(190, 194, 141, 20);
+		panel_5.add(comboBox_19);
+		
+		JButton button_6 = new JButton("Dodaj vise");
+		button_6.setBounds(242, 222, 89, 23);
+		panel_5.add(button_6);
+		
+		JButton button_7 = new JButton("Dodaj");
+		button_7.setBounds(242, 297, 89, 23);
+		panel_5.add(button_7);
+		
+		JLabel lblNazivKlijenta = new JLabel("Naziv klijenta:");
+		lblNazivKlijenta.setBounds(10, 78, 102, 14);
+		panel_5.add(lblNazivKlijenta);
+		
+		textField_48 = new JTextField();
+		textField_48.setColumns(10);
+		textField_48.setBounds(190, 75, 141, 20);
+		panel_5.add(textField_48);
+		
+		Button button_8 = new Button("Dodaj novi projekat");
+		button_8.setBounds(31, 12, 135, 22);
+		projektiPanel.add(button_8);
+		
 		JPanel korisniciPanel = new JPanel();
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
 		korisniciPanel.setLayout(null);
@@ -430,16 +617,128 @@ public class AdministratorForma extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		button.setBounds(38, 20, 70, 22);
+		button.setBounds(38, 20, 135, 22);
 		korisniciPanel.add(button);
 		
-		JPanel odjeliPanel = new JPanel();
-		tabbedPane.addTab("Odjeli", null, odjeliPanel, null);
-		odjeliPanel.setLayout(null);
+		panel = new JPanel();
+		panel.setBounds(38, 51, 341, 331);
+		korisniciPanel.add(panel);
+		panel.setLayout(null);
 		
-		JPanel projektiPanel = new JPanel();
-		tabbedPane.addTab("Projekti", null, projektiPanel, null);
-		projektiPanel.setLayout(null);
+		lblId = new JLabel("ID:");
+		lblId.setBounds(10, 11, 46, 14);
+		panel.add(lblId);
+		
+		JLabel lblIme = new JLabel("Ime:");
+		lblIme.setBounds(10, 36, 82, 14);
+		panel.add(lblIme);
+		
+		JLabel lblPrezime = new JLabel("Prezime:");
+		lblPrezime.setBounds(10, 59, 82, 14);
+		panel.add(lblPrezime);
+		
+		JLabel lblAdresa = new JLabel("Adresa:");
+		lblAdresa.setBounds(10, 84, 82, 14);
+		panel.add(lblAdresa);
+		
+		JLabel lblBrojTelefona = new JLabel("Broj Telefona:");
+		lblBrojTelefona.setBounds(10, 112, 97, 14);
+		panel.add(lblBrojTelefona);
+		
+		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setBounds(10, 137, 46, 14);
+		panel.add(lblEmail);
+		
+		JLabel lblNewLabel_8 = new JLabel("Datum zaposljavanja:");
+		lblNewLabel_8.setBounds(10, 161, 110, 14);
+		panel.add(lblNewLabel_8);
+		
+		JLabel lblOdjel = new JLabel("Odjel:");
+		lblOdjel.setBounds(10, 186, 46, 14);
+		panel.add(lblOdjel);
+		
+		JLabel lblKorisnickoIme = new JLabel("Korisnicko ime:");
+		lblKorisnickoIme.setBounds(10, 208, 82, 14);
+		panel.add(lblKorisnickoIme);
+		
+		JLabel lblLozinka = new JLabel("Lozinka");
+		lblLozinka.setBounds(10, 233, 46, 14);
+		panel.add(lblLozinka);
+		
+		JLabel lblPonoviLozinku = new JLabel("Ponovi lozinku:");
+		lblPonoviLozinku.setBounds(10, 258, 92, 14);
+		panel.add(lblPonoviLozinku);
+		
+		JLabel lblVrstaKorisnika = new JLabel("Vrsta korisnika:");
+		lblVrstaKorisnika.setBounds(10, 283, 82, 14);
+		panel.add(lblVrstaKorisnika);
+		
+		JComboBox comboBox_11 = new JComboBox();
+		comboBox_11.setBounds(190, 280, 141, 20);
+		panel.add(comboBox_11);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(190, 255, 141, 20);
+		panel.add(passwordField);
+		
+		passwordField_1 = new JPasswordField();
+		passwordField_1.setBounds(190, 230, 141, 20);
+		panel.add(passwordField_1);
+		
+		textField_36 = new JTextField();
+		textField_36.setBounds(190, 33, 141, 20);
+		panel.add(textField_36);
+		textField_36.setColumns(10);
+		
+		textField_37 = new JTextField();
+		textField_37.setColumns(10);
+		textField_37.setBounds(190, 56, 141, 20);
+		panel.add(textField_37);
+		
+		textField_38 = new JTextField();
+		textField_38.setColumns(10);
+		textField_38.setBounds(190, 81, 141, 20);
+		panel.add(textField_38);
+		
+		textField_39 = new JTextField();
+		textField_39.setColumns(10);
+		textField_39.setBounds(190, 109, 141, 20);
+		panel.add(textField_39);
+		
+		textField_40 = new JTextField();
+		textField_40.setColumns(10);
+		textField_40.setBounds(190, 134, 141, 20);
+		panel.add(textField_40);
+		
+		textField_41 = new JTextField();
+		textField_41.setColumns(10);
+		textField_41.setBounds(190, 205, 141, 20);
+		panel.add(textField_41);
+		
+		JComboBox comboBox_12 = new JComboBox();
+		comboBox_12.setBounds(190, 183, 141, 20);
+		panel.add(comboBox_12);
+		
+		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.setBounds(242, 308, 89, 23);
+		panel.add(btnDodaj);
+		
+		textField_42 = new JTextField();
+		textField_42.setBounds(411, 22, 175, 20);
+		korisniciPanel.add(textField_42);
+		textField_42.setColumns(10);
+		
+		JComboBox comboBox_13 = new JComboBox();
+		comboBox_13.setBounds(590, 22, 73, 20);
+		korisniciPanel.add(comboBox_13);
+		
+		JButton btnNewButton_1 = new JButton("Pretrazi");
+		btnNewButton_1.setBounds(673, 19, 89, 23);
+		korisniciPanel.add(btnNewButton_1);
+		
+		panel_1 = new JPanel();
+		panel_1.setBounds(389, 51, 373, 331);
+		korisniciPanel.add(panel_1);
 		
 		JPanel izvjestajiPanel = new JPanel();
 		tabbedPane.addTab("Izvjestaji", null, izvjestajiPanel, null);
