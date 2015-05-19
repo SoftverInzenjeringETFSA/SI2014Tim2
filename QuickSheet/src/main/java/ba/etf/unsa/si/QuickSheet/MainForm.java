@@ -113,7 +113,7 @@ public class MainForm extends JFrame {
 		
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnNewButton.setBounds(541, 291, 114, 29);
+		btnNewButton.setBounds(531, 291, 124, 29);
 		panel_4.add(btnNewButton);
 		
 		JComboBox comboBox = new JComboBox();
@@ -131,8 +131,8 @@ public class MainForm extends JFrame {
 		panel_4.add(lblBrojSati);
 		
 		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setModel(new SpinnerNumberModel(0.0, 0.0, 12.0, 0.0));
-		spinner_2.setBounds(136, 248, 210, 20);
+		spinner_2.setModel(new SpinnerNumberModel(0.0, 0.0, 12.0, 1.0));
+		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
 		
 		table = new JTable();
