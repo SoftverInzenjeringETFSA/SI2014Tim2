@@ -27,6 +27,15 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JPasswordField;
 import javax.swing.JCheckBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import java.util.Date;
+import java.util.Calendar;
+import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
+import javax.swing.Box;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
 
 public class MainForm extends JFrame {
 	private JTextField textField;
@@ -508,7 +517,7 @@ public class MainForm extends JFrame {
 		panel_2.add(btnDodaj_1);
 		
 		Button button_1 = new Button("Dodaj novi odjel");
-		button_1.setBounds(27, 23, 135, 22);
+		button_1.setBounds(129, 23, 135, 22);
 		odjeliPanel.add(button_1);
 		
 		JPanel panel_3 = new JPanel();
@@ -528,90 +537,6 @@ public class MainForm extends JFrame {
 		button_3.setBounds(662, 23, 89, 23);
 		odjeliPanel.add(button_3);
 		
-		JPanel projektiPanel = new JPanel();
-		tabbedPane.addTab("Projekti", null, projektiPanel, null);
-		projektiPanel.setLayout(null);
-		
-		textField_46 = new JTextField();
-		textField_46.setColumns(10);
-		textField_46.setBounds(411, 14, 175, 20);
-		projektiPanel.add(textField_46);
-		
-		JComboBox comboBox_17 = new JComboBox();
-		comboBox_17.setBounds(590, 14, 73, 20);
-		projektiPanel.add(comboBox_17);
-		
-		JButton button_4 = new JButton("Pretrazi");
-		button_4.setBounds(673, 11, 89, 23);
-		projektiPanel.add(button_4);
-		
-		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikazi arhivirane projekte");
-		chckbxPrikaziArhiviraneProjekte.setBounds(382, 41, 149, 23);
-		projektiPanel.add(chckbxPrikaziArhiviraneProjekte);
-		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(382, 71, 351, 311);
-		projektiPanel.add(panel_4);
-		
-		JPanel panel_5 = new JPanel();
-		panel_5.setLayout(null);
-		panel_5.setBounds(31, 51, 341, 331);
-		projektiPanel.add(panel_5);
-		
-		JLabel label_1 = new JLabel("ID:");
-		label_1.setBounds(10, 11, 46, 14);
-		panel_5.add(label_1);
-		
-		JLabel label_2 = new JLabel("Naziv:");
-		label_2.setBounds(10, 36, 82, 14);
-		panel_5.add(label_2);
-		
-		textField_47 = new JTextField();
-		textField_47.setColumns(10);
-		textField_47.setBounds(190, 33, 141, 20);
-		panel_5.add(textField_47);
-		
-		JLabel label_3 = new JLabel("Dodaj zaposlenika:");
-		label_3.setBounds(10, 132, 102, 14);
-		panel_5.add(label_3);
-		
-		JComboBox comboBox_18 = new JComboBox();
-		comboBox_18.setBounds(190, 129, 141, 20);
-		panel_5.add(comboBox_18);
-		
-		JButton button_5 = new JButton("Dodaj vise");
-		button_5.setBounds(242, 160, 89, 23);
-		panel_5.add(button_5);
-		
-		JLabel label_4 = new JLabel("Dodaj nadredjenog:");
-		label_4.setBounds(10, 197, 102, 14);
-		panel_5.add(label_4);
-		
-		JComboBox comboBox_19 = new JComboBox();
-		comboBox_19.setBounds(190, 194, 141, 20);
-		panel_5.add(comboBox_19);
-		
-		JButton button_6 = new JButton("Dodaj vise");
-		button_6.setBounds(242, 222, 89, 23);
-		panel_5.add(button_6);
-		
-		JButton button_7 = new JButton("Dodaj");
-		button_7.setBounds(242, 297, 89, 23);
-		panel_5.add(button_7);
-		
-		JLabel lblNazivKlijenta = new JLabel("Naziv klijenta:");
-		lblNazivKlijenta.setBounds(10, 78, 102, 14);
-		panel_5.add(lblNazivKlijenta);
-		
-		textField_48 = new JTextField();
-		textField_48.setColumns(10);
-		textField_48.setBounds(190, 75, 141, 20);
-		panel_5.add(textField_48);
-		
-		Button button_8 = new Button("Dodaj novi projekat");
-		button_8.setBounds(31, 12, 135, 22);
-		projektiPanel.add(button_8);
-		
 		JPanel korisniciPanel = new JPanel();
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
 		korisniciPanel.setLayout(null);
@@ -621,7 +546,7 @@ public class MainForm extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		button.setBounds(38, 20, 135, 22);
+		button.setBounds(125, 23, 135, 22);
 		korisniciPanel.add(button);
 		
 		panel = new JPanel();
@@ -744,6 +669,100 @@ public class MainForm extends JFrame {
 		panel_1.setBounds(389, 51, 373, 331);
 		korisniciPanel.add(panel_1);
 		
+		JPanel projektiPanel = new JPanel();
+		tabbedPane.addTab("Projekti", null, projektiPanel, null);
+		projektiPanel.setLayout(null);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBorder(new TitledBorder(null, "Podaci projekta", TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		panel_5.setLayout(null);
+		panel_5.setBounds(30, 40, 341, 342);
+		projektiPanel.add(panel_5);
+		
+		JLabel label_2 = new JLabel("Naziv:");
+		label_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		label_2.setBounds(79, 36, 82, 14);
+		panel_5.add(label_2);
+		
+		textField_47 = new JTextField();
+		textField_47.setColumns(10);
+		textField_47.setBounds(159, 33, 165, 20);
+		panel_5.add(textField_47);
+		
+		JLabel label_3 = new JLabel("Dodaj zaposlenika:");
+		label_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		label_3.setBounds(24, 117, 102, 14);
+		panel_5.add(label_3);
+		
+		JLabel label_4 = new JLabel("Dodaj nadredjenog:");
+		label_4.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		label_4.setBounds(24, 251, 102, 14);
+		panel_5.add(label_4);
+		
+		JComboBox comboBox_19 = new JComboBox();
+		comboBox_19.setBounds(159, 248, 165, 20);
+		panel_5.add(comboBox_19);
+		
+		JButton button_7 = new JButton("Dodaj");
+		button_7.setBounds(121, 292, 89, 39);
+		panel_5.add(button_7);
+		
+		JLabel lblNazivKlijenta = new JLabel("Naziv klijenta:");
+		lblNazivKlijenta.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblNazivKlijenta.setBounds(44, 78, 102, 14);
+		panel_5.add(lblNazivKlijenta);
+		
+		textField_48 = new JTextField();
+		textField_48.setColumns(10);
+		textField_48.setBounds(159, 75, 165, 20);
+		panel_5.add(textField_48);
+		
+		Box verticalBox = Box.createVerticalBox();
+		verticalBox.setBounds(149, 215, 82, -66);
+		panel_5.add(verticalBox);
+		
+		JList list = new JList();
+		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list.setModel(new AbstractListModel() {
+			String[] values = new String[] {"Radnik1", "Radnik2", "Radnik3"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		list.setBounds(159, 116, 165, 121);
+		panel_5.add(list);
+		
+		JPanel panel_11 = new JPanel();
+		panel_11.setLayout(null);
+		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga projekta", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_11.setBounds(392, 40, 341, 342);
+		projektiPanel.add(panel_11);
+		
+		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikazi arhivirane projekte");
+		chckbxPrikaziArhiviraneProjekte.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		chckbxPrikaziArhiviraneProjekte.setBounds(22, 110, 149, 23);
+		panel_11.add(chckbxPrikaziArhiviraneProjekte);
+		
+		JComboBox comboBox_17 = new JComboBox();
+		comboBox_17.setBounds(226, 39, 73, 20);
+		panel_11.add(comboBox_17);
+		
+		JButton button_4 = new JButton("Pretrazi");
+		button_4.setBounds(127, 70, 89, 23);
+		panel_11.add(button_4);
+		
+		textField_46 = new JTextField();
+		textField_46.setBounds(33, 39, 183, 20);
+		panel_11.add(textField_46);
+		textField_46.setColumns(10);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(10, 140, 321, 191);
+		panel_11.add(panel_4);
+		
 		JPanel izvjestajiPanel = new JPanel();
 		tabbedPane.addTab("Izvjestaji", null, izvjestajiPanel, null);
 		izvjestajiPanel.setLayout(null);
@@ -823,16 +842,26 @@ public class MainForm extends JFrame {
 		panel_7.add(lblIliIzvjestajZa);
 		
 		JLabel lblOd = new JLabel("Od:");
-		lblOd.setBounds(111, 254, 46, 14);
+		lblOd.setBounds(112, 257, 46, 14);
 		panel_7.add(lblOd);
 		
 		JLabel lblDo_1 = new JLabel("Do:");
-		lblDo_1.setBounds(226, 254, 46, 14);
+		lblDo_1.setBounds(213, 257, 46, 14);
 		panel_7.add(lblDo_1);
 		
 		JButton btnNewButton_3 = new JButton("Generisi izvjestaj");
 		btnNewButton_3.setBounds(111, 302, 197, 23);
 		panel_7.add(btnNewButton_3);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerDateModel(new Date(1431986400000L), new Date(1431986400000L), null, Calendar.YEAR));
+		spinner.setBounds(142, 254, 61, 20);
+		panel_7.add(spinner);
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerDateModel(new Date(1431986400000L), new Date(1431986400000L), null, Calendar.DAY_OF_YEAR));
+		spinner_1.setBounds(239, 254, 61, 20);
+		panel_7.add(spinner_1);
 		
 		JLabel lblTimesheetValidacija = new JLabel("Timesheet validacija:");
 		lblTimesheetValidacija.setBounds(24, 11, 129, 14);
@@ -873,11 +902,11 @@ public class MainForm extends JFrame {
 		panel_6.add(btnPrikazi);
 		
 		JButton btnOdobri = new JButton("Odobri");
-		btnOdobri.setBounds(94, 61, 74, 23);
+		btnOdobri.setBounds(110, 61, 74, 23);
 		panel_6.add(btnOdobri);
 		
 		JButton btnNewButton_2 = new JButton("Odbij");
-		btnNewButton_2.setBounds(173, 61, 74, 23);
+		btnNewButton_2.setBounds(205, 61, 74, 23);
 		panel_6.add(btnNewButton_2);
 		
 		JPanel panel_8 = new JPanel();
@@ -907,11 +936,11 @@ public class MainForm extends JFrame {
 		panel_8.add(button_9);
 		
 		JButton button_10 = new JButton("Odobri");
-		button_10.setBounds(94, 61, 74, 23);
+		button_10.setBounds(109, 61, 74, 23);
 		panel_8.add(button_10);
 		
 		JButton button_11 = new JButton("Odbij");
-		button_11.setBounds(173, 61, 74, 23);
+		button_11.setBounds(205, 61, 74, 23);
 		panel_8.add(button_11);
 		
 		JPanel panel_9 = new JPanel();
@@ -941,11 +970,11 @@ public class MainForm extends JFrame {
 		panel_9.add(button_12);
 		
 		JButton button_13 = new JButton("Odobri");
-		button_13.setBounds(94, 61, 74, 23);
+		button_13.setBounds(110, 61, 74, 23);
 		panel_9.add(button_13);
 		
 		JButton button_14 = new JButton("Odbij");
-		button_14.setBounds(173, 61, 74, 23);
+		button_14.setBounds(205, 61, 74, 23);
 		panel_9.add(button_14);
 		
 	}
