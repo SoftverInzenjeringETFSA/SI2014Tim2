@@ -744,5 +744,190 @@ public class MainForm extends JFrame {
 		tabbedPane.addTab("Izvjestaji", null, izvjestajiPanel, null);
 		izvjestajiPanel.setLayout(null);
 		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBounds(343, 29, 406, 353);
+		izvjestajiPanel.add(panel_7);
+		panel_7.setLayout(null);
+		
+		JPanel panel_10 = new JPanel();
+		panel_10.setBounds(202, 5, 1, 1);
+		panel_10.setLayout(null);
+		panel_7.add(panel_10);
+		
+		JLabel label_12 = new JLabel("Imenko Prezimenkovic");
+		label_12.setBounds(10, 11, 121, 14);
+		panel_10.add(label_12);
+		
+		JLabel label_13 = new JLabel("Projekat1");
+		label_13.setBounds(141, 11, 121, 14);
+		panel_10.add(label_13);
+		
+		JLabel label_14 = new JLabel("19.05.2015.");
+		label_14.setBounds(10, 36, 121, 14);
+		panel_10.add(label_14);
+		
+		JButton button_15 = new JButton("Prikazi");
+		button_15.setBounds(10, 61, 74, 23);
+		panel_10.add(button_15);
+		
+		JButton button_16 = new JButton("Odobri");
+		button_16.setBounds(94, 61, 74, 23);
+		panel_10.add(button_16);
+		
+		JButton button_17 = new JButton("Odbij");
+		button_17.setBounds(173, 61, 74, 23);
+		panel_10.add(button_17);
+		
+		JLabel lblNewLabel_11 = new JLabel("Odjel:");
+		lblNewLabel_11.setBounds(171, 5, 57, 14);
+		panel_7.add(lblNewLabel_11);
+		
+		JComboBox comboBox_20 = new JComboBox();
+		comboBox_20.setBounds(111, 30, 197, 20);
+		panel_7.add(comboBox_20);
+		
+		JLabel lblZaposlenik = new JLabel("Zaposlenik:");
+		lblZaposlenik.setBounds(171, 61, 57, 14);
+		panel_7.add(lblZaposlenik);
+		
+		JComboBox comboBox_21 = new JComboBox();
+		comboBox_21.setBounds(111, 86, 197, 20);
+		panel_7.add(comboBox_21);
+		
+		JComboBox comboBox_22 = new JComboBox();
+		comboBox_22.setBounds(111, 142, 197, 20);
+		panel_7.add(comboBox_22);
+		
+		JLabel lblProjekat_1 = new JLabel("Projekat:");
+		lblProjekat_1.setBounds(171, 117, 57, 14);
+		panel_7.add(lblProjekat_1);
+		
+		JComboBox comboBox_23 = new JComboBox();
+		comboBox_23.setBounds(111, 198, 197, 20);
+		panel_7.add(comboBox_23);
+		
+		JLabel lblMjesevc = new JLabel("Izvjestaj za mjesec:");
+		lblMjesevc.setBounds(156, 173, 116, 14);
+		panel_7.add(lblMjesevc);
+		
+		JLabel label_15 = new JLabel("");
+		label_15.setBounds(203, 229, 46, 14);
+		panel_7.add(label_15);
+		
+		JLabel lblIliIzvjestajZa = new JLabel("Ili, izvjestaj za vremenski period:");
+		lblIliIzvjestajZa.setBounds(142, 229, 197, 14);
+		panel_7.add(lblIliIzvjestajZa);
+		
+		JLabel lblOd = new JLabel("Od:");
+		lblOd.setBounds(111, 254, 46, 14);
+		panel_7.add(lblOd);
+		
+		JLabel lblDo_1 = new JLabel("Do:");
+		lblDo_1.setBounds(226, 254, 46, 14);
+		panel_7.add(lblDo_1);
+		
+		JButton btnNewButton_3 = new JButton("Generisi izvjestaj:");
+		btnNewButton_3.setBounds(111, 302, 197, 23);
+		panel_7.add(btnNewButton_3);
+		
+		JLabel lblTimesheetValidacija = new JLabel("Timesheet validacija:");
+		lblTimesheetValidacija.setBounds(24, 11, 129, 14);
+		izvjestajiPanel.add(lblTimesheetValidacija);
+		
+		JLabel lblNewLabel_10 = new JLabel("Izvjestaji:");
+		lblNewLabel_10.setBounds(344, 11, 67, 14);
+		izvjestajiPanel.add(lblNewLabel_10);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(24, 380, 309, -349);
+		izvjestajiPanel.add(scrollPane_1);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setBounds(34, 41, 289, 94);
+		izvjestajiPanel.add(panel_6);
+		panel_6.setLayout(null);
+		
+		JLabel lblImenkoPrezimenkovic = new JLabel("Imenko Prezimenkovic");
+		lblImenkoPrezimenkovic.setBounds(10, 11, 121, 14);
+		panel_6.add(lblImenkoPrezimenkovic);
+		
+		JLabel lblProjekat = new JLabel("Projekat1");
+		lblProjekat.setBounds(141, 11, 121, 14);
+		panel_6.add(lblProjekat);
+		
+		JLabel label_5 = new JLabel("19.05.2015.");
+		label_5.setBounds(10, 36, 121, 14);
+		panel_6.add(label_5);
+		
+		JButton btnPrikazi = new JButton("Prikazi");
+		btnPrikazi.setBounds(10, 61, 74, 23);
+		panel_6.add(btnPrikazi);
+		
+		JButton btnOdobri = new JButton("Odobri");
+		btnOdobri.setBounds(94, 61, 74, 23);
+		panel_6.add(btnOdobri);
+		
+		JButton btnNewButton_2 = new JButton("Odbij");
+		btnNewButton_2.setBounds(173, 61, 74, 23);
+		panel_6.add(btnNewButton_2);
+		
+		JPanel panel_8 = new JPanel();
+		panel_8.setLayout(null);
+		panel_8.setBounds(34, 146, 289, 94);
+		izvjestajiPanel.add(panel_8);
+		
+		JLabel label_6 = new JLabel("Imenko Prezimenkovic");
+		label_6.setBounds(10, 11, 121, 14);
+		panel_8.add(label_6);
+		
+		JLabel label_7 = new JLabel("Projekat1");
+		label_7.setBounds(141, 11, 121, 14);
+		panel_8.add(label_7);
+		
+		JLabel label_8 = new JLabel("19.05.2015.");
+		label_8.setBounds(10, 36, 121, 14);
+		panel_8.add(label_8);
+		
+		JButton button_9 = new JButton("Prikazi");
+		button_9.setBounds(10, 61, 74, 23);
+		panel_8.add(button_9);
+		
+		JButton button_10 = new JButton("Odobri");
+		button_10.setBounds(94, 61, 74, 23);
+		panel_8.add(button_10);
+		
+		JButton button_11 = new JButton("Odbij");
+		button_11.setBounds(173, 61, 74, 23);
+		panel_8.add(button_11);
+		
+		JPanel panel_9 = new JPanel();
+		panel_9.setLayout(null);
+		panel_9.setBounds(34, 251, 289, 94);
+		izvjestajiPanel.add(panel_9);
+		
+		JLabel label_9 = new JLabel("Imenko Prezimenkovic");
+		label_9.setBounds(10, 11, 121, 14);
+		panel_9.add(label_9);
+		
+		JLabel label_10 = new JLabel("Projekat1");
+		label_10.setBounds(141, 11, 121, 14);
+		panel_9.add(label_10);
+		
+		JLabel label_11 = new JLabel("19.05.2015.");
+		label_11.setBounds(10, 36, 121, 14);
+		panel_9.add(label_11);
+		
+		JButton button_12 = new JButton("Prikazi");
+		button_12.setBounds(10, 61, 74, 23);
+		panel_9.add(button_12);
+		
+		JButton button_13 = new JButton("Odobri");
+		button_13.setBounds(94, 61, 74, 23);
+		panel_9.add(button_13);
+		
+		JButton button_14 = new JButton("Odbij");
+		button_14.setBounds(173, 61, 74, 23);
+		panel_9.add(button_14);
+		
 	}
 }
