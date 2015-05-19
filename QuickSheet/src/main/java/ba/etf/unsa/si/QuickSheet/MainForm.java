@@ -119,7 +119,7 @@ public class MainForm extends JFrame {
 		panel_4.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton.setBounds(531, 291, 124, 29);
 		panel_4.add(btnNewButton);
 		
@@ -224,6 +224,7 @@ public class MainForm extends JFrame {
 		textField_44.setColumns(10);
 		
 		JButton btnDodaj_1 = new JButton("Dodaj");
+		btnDodaj_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDodaj_1.setBounds(242, 308, 89, 23);
 		panel_2.add(btnDodaj_1);
 		
@@ -251,7 +252,7 @@ public class MainForm extends JFrame {
 		panel_3.add(comboBox_16);
 		
 		JButton btnPretrai = new JButton("Pretraži");
-		btnPretrai.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnPretrai.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretrai.setBounds(262, 30, 69, 23);
 		panel_3.add(btnPretrai);
 		
@@ -265,12 +266,12 @@ public class MainForm extends JFrame {
 		panel_3.add(chckbxNewCheckBox_1);
 		
 		JButton btnIzmjeni = new JButton("Sačuvaj promjene");
-		btnIzmjeni.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnIzmjeni.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnIzmjeni.setBounds(83, 328, 119, 23);
 		panel_3.add(btnIzmjeni);
 		
 		JButton btnObrisi = new JButton("Obriši odjel");
-		btnObrisi.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnObrisi.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnObrisi.setBounds(212, 328, 119, 23);
 		panel_3.add(btnObrisi);
 		
@@ -382,6 +383,7 @@ public class MainForm extends JFrame {
 		panel.add(textField_41);
 		
 		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDodaj.setBounds(242, 336, 89, 23);
 		panel.add(btnDodaj);
 		
@@ -405,6 +407,7 @@ public class MainForm extends JFrame {
 		panel_1.add(comboBox_13);
 		
 		JButton btnPretraga = new JButton("Pretraži");
+		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretraga.setBounds(265, 30, 69, 23);
 		panel_1.add(btnPretraga);
 		
@@ -418,6 +421,7 @@ public class MainForm extends JFrame {
 		panel_1.add(chckbxNewCheckBox);
 		
 		JButton btnNewButton_1 = new JButton("Prikaži profil");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new KorisnikForm().setVisible(true);
@@ -427,6 +431,7 @@ public class MainForm extends JFrame {
 		panel_1.add(btnNewButton_1);
 		
 		JButton btnObriiKorisnika = new JButton("Obriši korisnika");
+		btnObriiKorisnika.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnObriiKorisnika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -469,6 +474,7 @@ public class MainForm extends JFrame {
 		panel_5.add(comboBox_19);
 		
 		JButton button_7 = new JButton("Dodaj");
+		button_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		button_7.setBounds(242, 308, 89, 23);
 		panel_5.add(button_7);
 		
@@ -516,6 +522,7 @@ public class MainForm extends JFrame {
 		panel_11.add(comboBox_17);
 		
 		JButton button_4 = new JButton("Pretrazi");
+		button_4.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_4.setBounds(265, 30, 69, 23);
 		panel_11.add(button_4);
 		
@@ -529,152 +536,14 @@ public class MainForm extends JFrame {
 		panel_11.add(list_1);
 		
 		JButton btnSauvajPromjene = new JButton("Sačuvaj promjene");
+		btnSauvajPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnSauvajPromjene.setBounds(83, 328, 119, 23);
 		panel_11.add(btnSauvajPromjene);
 		
 		JButton btnObriiProjekat = new JButton("Obriši projekat");
+		btnObriiProjekat.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnObriiProjekat.setBounds(212, 328, 119, 23);
 		panel_11.add(btnObriiProjekat);
-		
-		JPanel izvjestajiPanel = new JPanel();
-		tabbedPane.addTab("Izvještaji", null, izvjestajiPanel, null);
-		izvjestajiPanel.setLayout(null);
-		
-		JPanel panel_7 = new JPanel();
-		panel_7.setBorder(new TitledBorder(null, "Izvje\u0161taj", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_7.setBounds(408, 22, 341, 370);
-		izvjestajiPanel.add(panel_7);
-		panel_7.setLayout(null);
-		
-		JPanel panel_10 = new JPanel();
-		panel_10.setBounds(202, 5, 1, 1);
-		panel_10.setLayout(null);
-		panel_7.add(panel_10);
-		
-		JLabel label_12 = new JLabel("Imenko Prezimenkovic");
-		label_12.setBounds(10, 11, 121, 14);
-		panel_10.add(label_12);
-		
-		JLabel label_13 = new JLabel("Projekat1");
-		label_13.setBounds(141, 11, 121, 14);
-		panel_10.add(label_13);
-		
-		JLabel label_14 = new JLabel("19.05.2015.");
-		label_14.setBounds(10, 36, 121, 14);
-		panel_10.add(label_14);
-		
-		JButton button_15 = new JButton("Prikazi");
-		button_15.setBounds(10, 61, 74, 23);
-		panel_10.add(button_15);
-		
-		JButton button_16 = new JButton("Odobri");
-		button_16.setBounds(94, 61, 74, 23);
-		panel_10.add(button_16);
-		
-		JButton button_17 = new JButton("Odbij");
-		button_17.setBounds(173, 61, 74, 23);
-		panel_10.add(button_17);
-		
-		JLabel lblNewLabel_11 = new JLabel("Odjel:");
-		lblNewLabel_11.setBounds(75, 33, 57, 14);
-		panel_7.add(lblNewLabel_11);
-		
-		JComboBox comboBox_20 = new JComboBox();
-		comboBox_20.setBounds(75, 58, 197, 20);
-		panel_7.add(comboBox_20);
-		
-		JLabel lblZaposlenik = new JLabel("Zaposlenik:");
-		lblZaposlenik.setBounds(75, 89, 57, 14);
-		panel_7.add(lblZaposlenik);
-		
-		JComboBox comboBox_21 = new JComboBox();
-		comboBox_21.setBounds(75, 114, 197, 20);
-		panel_7.add(comboBox_21);
-		
-		JComboBox comboBox_22 = new JComboBox();
-		comboBox_22.setBounds(75, 170, 197, 20);
-		panel_7.add(comboBox_22);
-		
-		JLabel lblProjekat_1 = new JLabel("Projekat:");
-		lblProjekat_1.setBounds(75, 145, 57, 14);
-		panel_7.add(lblProjekat_1);
-		
-		JComboBox comboBox_23 = new JComboBox();
-		comboBox_23.setBounds(75, 226, 197, 20);
-		panel_7.add(comboBox_23);
-		
-		JLabel lblMjesevc = new JLabel("Izvjestaj za mjesec:");
-		lblMjesevc.setBounds(75, 201, 116, 14);
-		panel_7.add(lblMjesevc);
-		
-		JLabel label_15 = new JLabel("");
-		label_15.setBounds(203, 229, 46, 14);
-		panel_7.add(label_15);
-		
-		JLabel lblIliIzvjestajZa = new JLabel("Ili, izvjestaj za vremenski period:");
-		lblIliIzvjestajZa.setBounds(75, 264, 197, 14);
-		panel_7.add(lblIliIzvjestajZa);
-		
-		JLabel lblOd = new JLabel("Od:");
-		lblOd.setBounds(76, 289, 46, 14);
-		panel_7.add(lblOd);
-		
-		JLabel lblDo_1 = new JLabel("Do:");
-		lblDo_1.setBounds(177, 289, 46, 14);
-		panel_7.add(lblDo_1);
-		
-		JButton btnNewButton_3 = new JButton("Generisi izvjestaj");
-		btnNewButton_3.setBounds(75, 336, 197, 23);
-		panel_7.add(btnNewButton_3);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerDateModel(new Date(1431986400000L), new Date(1431986400000L), null, Calendar.YEAR));
-		spinner.setBounds(106, 286, 61, 20);
-		panel_7.add(spinner);
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerDateModel(new Date(1431986400000L), new Date(1431986400000L), null, Calendar.DAY_OF_YEAR));
-		spinner_1.setBounds(203, 286, 61, 20);
-		panel_7.add(spinner_1);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(24, 380, 309, -349);
-		izvjestajiPanel.add(scrollPane_1);
-		
-		JPanel panel_6 = new JPanel();
-		panel_6.setBorder(new TitledBorder(null, "Timesheet validacija", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_6.setBounds(30, 22, 341, 370);
-		izvjestajiPanel.add(panel_6);
-		panel_6.setLayout(null);
-		
-		JLabel lblImenkoPrezimenkovic = new JLabel("Zahtjevi za reviziju i odobravanje timesheeta:");
-		lblImenkoPrezimenkovic.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblImenkoPrezimenkovic.setBounds(10, 41, 240, 14);
-		panel_6.add(lblImenkoPrezimenkovic);
-		
-		JButton btnPrikazi = new JButton("Prikaži");
-		btnPrikazi.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnPrikazi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new PrikazTimesheeta().setVisible(true);
-			}			
-		});
-		btnPrikazi.setBounds(73, 336, 74, 23);
-		panel_6.add(btnPrikazi);
-		
-		JButton btnOdobri = new JButton("Odobri");
-		btnOdobri.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnOdobri.setBounds(157, 336, 74, 23);
-		panel_6.add(btnOdobri);
-		
-		JButton btnNewButton_2 = new JButton("Odbij");
-		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnNewButton_2.setBounds(241, 336, 74, 23);
-		panel_6.add(btnNewButton_2);
-		
-		JList list_6 = new JList();
-		list_6.setBounds(10, 76, 305, 249);
-		panel_6.add(list_6);
 		
 	}
 

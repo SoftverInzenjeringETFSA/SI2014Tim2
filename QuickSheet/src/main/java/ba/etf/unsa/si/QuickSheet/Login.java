@@ -79,8 +79,17 @@ public class Login extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new MainForm().setVisible(true);
-			}
+				String textFieldValue = txtIme.getText();
+				if(textFieldValue.equals("administrator")){
+					new MainForm().setVisible(true);
+				}
+				else if(textFieldValue.equals("koordinator")){
+					new MainFormKoordinator().setVisible(true);
+				}
+				else{
+					new MainFormZaposlenik().setVisible(true);
+				}
+		}
 		});
 		btnNewButton.setBounds(142, 238, 89, 23);
 		getContentPane().add(btnNewButton);
