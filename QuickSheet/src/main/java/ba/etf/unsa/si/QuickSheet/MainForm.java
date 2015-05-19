@@ -97,7 +97,6 @@ public class MainForm extends JFrame {
 	private JTextField textField_40;
 	private JTextField textField_41;
 	private JPanel panel_2;
-	private JLabel label;
 	private JLabel lblNaziv;
 	private JTextField textField_43;
 	private JTextField textField_44;
@@ -460,25 +459,22 @@ public class MainForm extends JFrame {
 		odjeliPanel.setLayout(null);
 		
 		panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "Podaci o odjelu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_2.setLayout(null);
-		panel_2.setBounds(27, 51, 341, 331);
+		panel_2.setBounds(30, 40, 341, 341);
 		odjeliPanel.add(panel_2);
 		
-		label = new JLabel("ID:");
-		label.setBounds(10, 11, 46, 14);
-		panel_2.add(label);
-		
 		lblNaziv = new JLabel("Naziv:");
-		lblNaziv.setBounds(10, 36, 82, 14);
+		lblNaziv.setBounds(71, 30, 82, 14);
 		panel_2.add(lblNaziv);
 		
 		textField_43 = new JTextField();
 		textField_43.setColumns(10);
-		textField_43.setBounds(190, 33, 141, 20);
+		textField_43.setBounds(190, 30, 141, 20);
 		panel_2.add(textField_43);
 		
 		JLabel lblNewLabel_7 = new JLabel("Dodaj zaposlenika:");
-		lblNewLabel_7.setBounds(10, 61, 102, 14);
+		lblNewLabel_7.setBounds(42, 60, 90, 29);
 		panel_2.add(lblNewLabel_7);
 		
 		JComboBox comboBox_14 = new JComboBox();
@@ -490,7 +486,7 @@ public class MainForm extends JFrame {
 		panel_2.add(btnDodajVise);
 		
 		JLabel lblNewLabel_9 = new JLabel("Dodaj nadredjenog:");
-		lblNewLabel_9.setBounds(10, 135, 102, 14);
+		lblNewLabel_9.setBounds(30, 132, 102, 14);
 		panel_2.add(lblNewLabel_9);
 		
 		JComboBox comboBox_15 = new JComboBox();
@@ -513,10 +509,6 @@ public class MainForm extends JFrame {
 		JButton btnDodaj_1 = new JButton("Dodaj");
 		btnDodaj_1.setBounds(242, 297, 89, 23);
 		panel_2.add(btnDodaj_1);
-		
-		Button button_1 = new Button("Dodaj novi odjel");
-		button_1.setBounds(129, 23, 135, 22);
-		odjeliPanel.add(button_1);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBounds(378, 51, 373, 331);
@@ -678,7 +670,7 @@ public class MainForm extends JFrame {
 		projektiPanel.setLayout(null);
 		
 		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new TitledBorder(null, "Podaci projekta", TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o projektu", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_5.setLayout(null);
 		panel_5.setBounds(30, 40, 341, 341);
 		projektiPanel.add(panel_5);
