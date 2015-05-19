@@ -747,7 +747,7 @@ public class MainForm extends JFrame {
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
 		
 		JComboBox comboBox_17 = new JComboBox();
-		comboBox_17.setBounds(226, 39, 73, 20);
+		comboBox_17.setBounds(226, 39, 85, 20);
 		panel_11.add(comboBox_17);
 		
 		JButton button_4 = new JButton("Pretrazi");
@@ -759,9 +759,9 @@ public class MainForm extends JFrame {
 		panel_11.add(textField_46);
 		textField_46.setColumns(10);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(10, 140, 321, 191);
-		panel_11.add(panel_4);
+		JList list_1 = new JList();
+		list_1.setBounds(33, 151, 278, 180);
+		panel_11.add(list_1);
 		
 		JPanel izvjestajiPanel = new JPanel();
 		tabbedPane.addTab("Izvjestaji", null, izvjestajiPanel, null);
