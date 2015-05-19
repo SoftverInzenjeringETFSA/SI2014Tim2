@@ -84,13 +84,14 @@ public class MainForm extends JFrame {
 	 * Create the frame.
 	 */
 	public MainForm() {
+		setResizable(false);
 		setTitle("QuickSheet");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 793, 460);
+		setBounds(100, 100, 765, 459);
 		getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 777, 421);
+		tabbedPane.setBounds(0, 0, 764, 431);
 		getContentPane().add(tabbedPane);
 		
 		JPanel timeSheetPanel = new JPanel();
@@ -110,7 +111,7 @@ public class MainForm extends JFrame {
 		panel_4.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
-		btnNewButton.setBounds(291, 299, 114, 42);
+		btnNewButton.setBounds(414, 299, 114, 29);
 		panel_4.add(btnNewButton);
 		
 		JComboBox comboBox = new JComboBox();
@@ -118,10 +119,12 @@ public class MainForm extends JFrame {
 		panel_4.add(comboBox);
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
+		lblTaskovi.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblTaskovi.setBounds(170, 120, 46, 14);
 		panel_4.add(lblTaskovi);
 		
 		JLabel lblBrojSati = new JLabel("Broj radnih sati:");
+		lblBrojSati.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblBrojSati.setBounds(140, 264, 76, 14);
 		panel_4.add(lblBrojSati);
 		
@@ -205,7 +208,7 @@ public class MainForm extends JFrame {
 		lblNewLabel_7.setBounds(50, 58, 102, 29);
 		panel_2.add(lblNewLabel_7);
 		
-		JLabel lblNewLabel_9 = new JLabel("Dodaj nadredjenog:");
+		JLabel lblNewLabel_9 = new JLabel("Dodaj nadređenog:");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel_9.setBounds(50, 207, 102, 14);
 		panel_2.add(lblNewLabel_9);
@@ -247,9 +250,18 @@ public class MainForm extends JFrame {
 		comboBox_16.setBounds(226, 39, 85, 20);
 		panel_3.add(comboBox_16);
 		
-		JButton button_3 = new JButton("Pretrazi");
-		button_3.setBounds(127, 70, 89, 23);
-		panel_3.add(button_3);
+		JButton btnPretrai = new JButton("Pretraži");
+		btnPretrai.setBounds(127, 70, 89, 23);
+		panel_3.add(btnPretrai);
+		
+		JList list_4 = new JList();
+		list_4.setBounds(33, 151, 278, 180);
+		panel_3.add(list_4);
+		
+		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Prikaži arhivirane odjele");
+		chckbxNewCheckBox_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		chckbxNewCheckBox_1.setBounds(22, 110, 149, 23);
+		panel_3.add(chckbxNewCheckBox_1);
 		
 		JPanel korisniciPanel = new JPanel();
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
@@ -286,7 +298,7 @@ public class MainForm extends JFrame {
 		lblEmail.setBounds(92, 133, 46, 14);
 		panel.add(lblEmail);
 		
-		JLabel lblNewLabel_8 = new JLabel("Datum zaposljavanja:");
+		JLabel lblNewLabel_8 = new JLabel("Datum zapošljavanja:");
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel_8.setBounds(10, 158, 124, 14);
 		panel.add(lblNewLabel_8);
@@ -296,7 +308,7 @@ public class MainForm extends JFrame {
 		lblOdjel.setBounds(92, 183, 46, 14);
 		panel.add(lblOdjel);
 		
-		JLabel lblKorisnickoIme = new JLabel("Korisnicko ime:");
+		JLabel lblKorisnickoIme = new JLabel("Korisničko ime:");
 		lblKorisnickoIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblKorisnickoIme.setBounds(52, 205, 82, 14);
 		panel.add(lblKorisnickoIme);
@@ -381,13 +393,18 @@ public class MainForm extends JFrame {
 		comboBox_13.setBounds(226, 39, 85, 20);
 		panel_1.add(comboBox_13);
 		
-		JButton btnPretraga = new JButton("Pretraga");
-		btnPretraga.setBounds(127, 70, 89, 23);
+		JButton btnPretraga = new JButton("Pretraži");
+		btnPretraga.setBounds(126, 70, 89, 23);
 		panel_1.add(btnPretraga);
 		
 		JList list_2 = new JList();
 		list_2.setBounds(33, 151, 278, 180);
 		panel_1.add(list_2);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
+		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		chckbxNewCheckBox.setBounds(22, 110, 172, 23);
+		panel_1.add(chckbxNewCheckBox);
 		
 		JPanel projektiPanel = new JPanel();
 		tabbedPane.addTab("Projekti", null, projektiPanel, null);
@@ -414,10 +431,10 @@ public class MainForm extends JFrame {
 		label_3.setBounds(24, 117, 102, 14);
 		panel_5.add(label_3);
 		
-		JLabel label_4 = new JLabel("Dodaj nadredjenog:");
-		label_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_4.setBounds(24, 251, 102, 14);
-		panel_5.add(label_4);
+		JLabel lblDodajNadreenog = new JLabel("Dodaj nadređenog:");
+		lblDodajNadreenog.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblDodajNadreenog.setBounds(24, 251, 102, 14);
+		panel_5.add(lblDodajNadreenog);
 		
 		JComboBox comboBox_19 = new JComboBox();
 		comboBox_19.setBounds(159, 248, 165, 20);
@@ -601,18 +618,22 @@ public class MainForm extends JFrame {
 		panel_6.setLayout(null);
 		
 		JLabel lblImenkoPrezimenkovic = new JLabel("Imenko Prezimenkovic");
+		lblImenkoPrezimenkovic.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblImenkoPrezimenkovic.setBounds(10, 11, 121, 14);
 		panel_6.add(lblImenkoPrezimenkovic);
 		
 		JLabel lblProjekat = new JLabel("Projekat1");
+		lblProjekat.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblProjekat.setBounds(141, 11, 121, 14);
 		panel_6.add(lblProjekat);
 		
 		JLabel label_5 = new JLabel("19.05.2015.");
+		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_5.setBounds(10, 36, 121, 14);
 		panel_6.add(label_5);
 		
 		JButton btnPrikazi = new JButton("Prikazi");
+		btnPrikazi.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnPrikazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new PrikazTimesheeta().setVisible(true);
@@ -622,10 +643,12 @@ public class MainForm extends JFrame {
 		panel_6.add(btnPrikazi);
 		
 		JButton btnOdobri = new JButton("Odobri");
+		btnOdobri.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnOdobri.setBounds(110, 61, 74, 23);
 		panel_6.add(btnOdobri);
 		
 		JButton btnNewButton_2 = new JButton("Odbij");
+		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnNewButton_2.setBounds(205, 61, 74, 23);
 		panel_6.add(btnNewButton_2);
 		
