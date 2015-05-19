@@ -12,15 +12,19 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JPasswordField;
 import javax.swing.JCheckBox;
 
@@ -826,7 +830,7 @@ public class MainForm extends JFrame {
 		lblDo_1.setBounds(226, 254, 46, 14);
 		panel_7.add(lblDo_1);
 		
-		JButton btnNewButton_3 = new JButton("Generisi izvjestaj:");
+		JButton btnNewButton_3 = new JButton("Generisi izvjestaj");
 		btnNewButton_3.setBounds(111, 302, 197, 23);
 		panel_7.add(btnNewButton_3);
 		
@@ -860,6 +864,11 @@ public class MainForm extends JFrame {
 		panel_6.add(label_5);
 		
 		JButton btnPrikazi = new JButton("Prikazi");
+		btnPrikazi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PrikazTimesheeta().setVisible(true);
+			}			
+		});
 		btnPrikazi.setBounds(10, 61, 74, 23);
 		panel_6.add(btnPrikazi);
 		
@@ -889,6 +898,11 @@ public class MainForm extends JFrame {
 		panel_8.add(label_8);
 		
 		JButton button_9 = new JButton("Prikazi");
+		button_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PrikazTimesheeta().setVisible(true);
+			}
+		});
 		button_9.setBounds(10, 61, 74, 23);
 		panel_8.add(button_9);
 		
@@ -918,6 +932,11 @@ public class MainForm extends JFrame {
 		panel_9.add(label_11);
 		
 		JButton button_12 = new JButton("Prikazi");
+		button_12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new PrikazTimesheeta().setVisible(true);
+			}
+		});
 		button_12.setBounds(10, 61, 74, 23);
 		panel_9.add(button_12);
 		

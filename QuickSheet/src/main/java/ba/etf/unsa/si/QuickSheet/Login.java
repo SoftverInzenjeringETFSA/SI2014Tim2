@@ -8,6 +8,9 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class Login extends JFrame {
 	private JTextField txtIme;
 	private JPasswordField txtPassword;
@@ -64,6 +67,11 @@ public class Login extends JFrame {
 		getContentPane().add(lblUkolikoSteZaboravili);
 		
 		JButton btnNewButton = new JButton("Prijava");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new MainForm().setVisible(true);
+			}
+		});
 		btnNewButton.setBounds(283, 194, 89, 23);
 		getContentPane().add(btnNewButton);
 
