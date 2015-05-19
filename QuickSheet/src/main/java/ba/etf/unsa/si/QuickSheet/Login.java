@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
 	private JTextField txtIme;

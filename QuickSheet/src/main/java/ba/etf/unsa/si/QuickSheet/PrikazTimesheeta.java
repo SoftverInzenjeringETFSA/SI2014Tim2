@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class PrikazTimesheeta extends JFrame {
 
@@ -69,6 +71,7 @@ public class PrikazTimesheeta extends JFrame {
 		contentPane.add(label);
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(10, 50, 364, 157);
 		contentPane.add(panel);
 		
