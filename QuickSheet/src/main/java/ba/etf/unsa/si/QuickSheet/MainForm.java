@@ -465,7 +465,8 @@ public class MainForm extends JFrame {
 		odjeliPanel.add(panel_2);
 		
 		lblNaziv = new JLabel("Naziv:");
-		lblNaziv.setBounds(71, 30, 82, 14);
+		lblNaziv.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNaziv.setBounds(111, 33, 69, 14);
 		panel_2.add(lblNaziv);
 		
 		textField_43 = new JTextField();
@@ -474,58 +475,55 @@ public class MainForm extends JFrame {
 		panel_2.add(textField_43);
 		
 		JLabel lblNewLabel_7 = new JLabel("Dodaj zaposlenika:");
-		lblNewLabel_7.setBounds(42, 60, 90, 29);
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_7.setBounds(50, 58, 102, 29);
 		panel_2.add(lblNewLabel_7);
 		
-		JComboBox comboBox_14 = new JComboBox();
-		comboBox_14.setBounds(190, 64, 141, 20);
-		panel_2.add(comboBox_14);
-		
-		JButton btnDodajVise = new JButton("Dodaj vise");
-		btnDodajVise.setBounds(242, 95, 89, 23);
-		panel_2.add(btnDodajVise);
-		
 		JLabel lblNewLabel_9 = new JLabel("Dodaj nadredjenog:");
-		lblNewLabel_9.setBounds(30, 132, 102, 14);
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_9.setBounds(50, 207, 102, 14);
 		panel_2.add(lblNewLabel_9);
 		
-		JComboBox comboBox_15 = new JComboBox();
-		comboBox_15.setBounds(190, 132, 141, 20);
-		panel_2.add(comboBox_15);
-		
-		JButton button_2 = new JButton("Dodaj vise");
-		button_2.setBounds(242, 163, 89, 23);
-		panel_2.add(button_2);
-		
 		JLabel lblMaksimalniBroj = new JLabel("Maksimalni broj zaposlenika:");
-		lblMaksimalniBroj.setBounds(10, 217, 152, 14);
+		lblMaksimalniBroj.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblMaksimalniBroj.setBounds(10, 243, 152, 14);
 		panel_2.add(lblMaksimalniBroj);
 		
 		textField_44 = new JTextField();
-		textField_44.setBounds(190, 211, 141, 20);
+		textField_44.setBounds(190, 240, 141, 20);
 		panel_2.add(textField_44);
 		textField_44.setColumns(10);
 		
 		JButton btnDodaj_1 = new JButton("Dodaj");
-		btnDodaj_1.setBounds(242, 297, 89, 23);
+		btnDodaj_1.setBounds(242, 308, 89, 23);
 		panel_2.add(btnDodaj_1);
 		
+		JList list_3 = new JList();
+		list_3.setBounds(190, 61, 141, 135);
+		panel_2.add(list_3);
+		
+		JComboBox comboBox_14 = new JComboBox();
+		comboBox_14.setBounds(190, 207, 141, 20);
+		panel_2.add(comboBox_14);
+		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(378, 51, 373, 331);
+		panel_3.setBorder(new TitledBorder(null, "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBounds(392, 40, 341, 342);
 		odjeliPanel.add(panel_3);
+		panel_3.setLayout(null);
 		
 		textField_45 = new JTextField();
+		textField_45.setBounds(33, 39, 183, 20);
+		panel_3.add(textField_45);
 		textField_45.setColumns(10);
-		textField_45.setBounds(400, 26, 175, 20);
-		odjeliPanel.add(textField_45);
 		
 		JComboBox comboBox_16 = new JComboBox();
-		comboBox_16.setBounds(579, 26, 73, 20);
-		odjeliPanel.add(comboBox_16);
+		comboBox_16.setBounds(226, 39, 85, 20);
+		panel_3.add(comboBox_16);
 		
 		JButton button_3 = new JButton("Pretrazi");
-		button_3.setBounds(662, 23, 89, 23);
-		odjeliPanel.add(button_3);
+		button_3.setBounds(127, 70, 89, 23);
+		panel_3.add(button_3);
 		
 		JPanel korisniciPanel = new JPanel();
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
