@@ -44,7 +44,6 @@ import javax.swing.SpinnerNumberModel;
 public class MainForm extends JFrame {
 	private JTextField textField;
 	private JPanel panel;
-	private JLabel lblId;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
 	private JTextField textField_36;
@@ -53,10 +52,7 @@ public class MainForm extends JFrame {
 	private JTextField textField_39;
 	private JTextField textField_40;
 	private JTextField textField_41;
-	private JTextField textField_42;
-	private JPanel panel_1;
 	private JPanel panel_2;
-	private JLabel label;
 	private JLabel lblNaziv;
 	private JTextField textField_43;
 	private JTextField textField_44;
@@ -66,6 +62,7 @@ public class MainForm extends JFrame {
 	private JTextField textField_48;
 	private JTable table;
 	private JTable table_1;
+	private JTextField textField_42;
 
 	/**
 	 * Launch the application.
@@ -188,225 +185,222 @@ public class MainForm extends JFrame {
 		odjeliPanel.setLayout(null);
 		
 		panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "Podaci o odjelu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_2.setLayout(null);
-		panel_2.setBounds(27, 51, 341, 331);
+		panel_2.setBounds(30, 40, 341, 341);
 		odjeliPanel.add(panel_2);
 		
-		label = new JLabel("ID:");
-		label.setBounds(10, 11, 46, 14);
-		panel_2.add(label);
-		
 		lblNaziv = new JLabel("Naziv:");
-		lblNaziv.setBounds(10, 36, 82, 14);
+		lblNaziv.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNaziv.setBounds(111, 33, 69, 14);
 		panel_2.add(lblNaziv);
 		
 		textField_43 = new JTextField();
 		textField_43.setColumns(10);
-		textField_43.setBounds(190, 33, 141, 20);
+		textField_43.setBounds(190, 30, 141, 20);
 		panel_2.add(textField_43);
 		
 		JLabel lblNewLabel_7 = new JLabel("Dodaj zaposlenika:");
-		lblNewLabel_7.setBounds(10, 61, 102, 14);
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_7.setBounds(50, 58, 102, 29);
 		panel_2.add(lblNewLabel_7);
 		
-		JComboBox comboBox_14 = new JComboBox();
-		comboBox_14.setBounds(190, 64, 141, 20);
-		panel_2.add(comboBox_14);
-		
-		JButton btnDodajVise = new JButton("Dodaj vise");
-		btnDodajVise.setBounds(242, 95, 89, 23);
-		panel_2.add(btnDodajVise);
-		
 		JLabel lblNewLabel_9 = new JLabel("Dodaj nadredjenog:");
-		lblNewLabel_9.setBounds(10, 135, 102, 14);
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_9.setBounds(50, 207, 102, 14);
 		panel_2.add(lblNewLabel_9);
 		
-		JComboBox comboBox_15 = new JComboBox();
-		comboBox_15.setBounds(190, 132, 141, 20);
-		panel_2.add(comboBox_15);
-		
-		JButton button_2 = new JButton("Dodaj vise");
-		button_2.setBounds(242, 163, 89, 23);
-		panel_2.add(button_2);
-		
 		JLabel lblMaksimalniBroj = new JLabel("Maksimalni broj zaposlenika:");
-		lblMaksimalniBroj.setBounds(10, 217, 152, 14);
+		lblMaksimalniBroj.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblMaksimalniBroj.setBounds(10, 243, 152, 14);
 		panel_2.add(lblMaksimalniBroj);
 		
 		textField_44 = new JTextField();
-		textField_44.setBounds(190, 211, 141, 20);
+		textField_44.setBounds(190, 240, 141, 20);
 		panel_2.add(textField_44);
 		textField_44.setColumns(10);
 		
 		JButton btnDodaj_1 = new JButton("Dodaj");
-		btnDodaj_1.setBounds(242, 297, 89, 23);
+		btnDodaj_1.setBounds(242, 308, 89, 23);
 		panel_2.add(btnDodaj_1);
 		
-		Button button_1 = new Button("Dodaj novi odjel");
-		button_1.setBounds(129, 23, 135, 22);
-		odjeliPanel.add(button_1);
+		JList list_3 = new JList();
+		list_3.setBounds(190, 61, 141, 135);
+		panel_2.add(list_3);
+		
+		JComboBox comboBox_14 = new JComboBox();
+		comboBox_14.setBounds(190, 207, 141, 20);
+		panel_2.add(comboBox_14);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(378, 51, 373, 331);
+		panel_3.setBorder(new TitledBorder(null, "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBounds(392, 40, 341, 342);
 		odjeliPanel.add(panel_3);
+		panel_3.setLayout(null);
 		
 		textField_45 = new JTextField();
+		textField_45.setBounds(33, 39, 183, 20);
+		panel_3.add(textField_45);
 		textField_45.setColumns(10);
-		textField_45.setBounds(400, 26, 175, 20);
-		odjeliPanel.add(textField_45);
 		
 		JComboBox comboBox_16 = new JComboBox();
-		comboBox_16.setBounds(579, 26, 73, 20);
-		odjeliPanel.add(comboBox_16);
+		comboBox_16.setBounds(226, 39, 85, 20);
+		panel_3.add(comboBox_16);
 		
 		JButton button_3 = new JButton("Pretrazi");
-		button_3.setBounds(662, 23, 89, 23);
-		odjeliPanel.add(button_3);
+		button_3.setBounds(127, 70, 89, 23);
+		panel_3.add(button_3);
 		
 		JPanel korisniciPanel = new JPanel();
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
 		korisniciPanel.setLayout(null);
 		
-		Button button = new Button("Dodaj Novog korisnika");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		button.setBounds(125, 23, 135, 22);
-		korisniciPanel.add(button);
-		
 		panel = new JPanel();
-		panel.setBounds(38, 51, 341, 331);
+		panel.setBorder(new TitledBorder(null, "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(30, 40, 341, 342);
 		korisniciPanel.add(panel);
 		panel.setLayout(null);
 		
-		lblId = new JLabel("ID:");
-		lblId.setBounds(10, 11, 46, 14);
-		panel.add(lblId);
-		
 		JLabel lblIme = new JLabel("Ime:");
-		lblIme.setBounds(10, 36, 82, 14);
+		lblIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblIme.setBounds(98, 33, 82, 14);
 		panel.add(lblIme);
 		
 		JLabel lblPrezime = new JLabel("Prezime:");
-		lblPrezime.setBounds(10, 59, 82, 14);
+		lblPrezime.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblPrezime.setBounds(82, 58, 82, 14);
 		panel.add(lblPrezime);
 		
 		JLabel lblAdresa = new JLabel("Adresa:");
-		lblAdresa.setBounds(10, 84, 82, 14);
+		lblAdresa.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblAdresa.setBounds(82, 83, 82, 14);
 		panel.add(lblAdresa);
 		
 		JLabel lblBrojTelefona = new JLabel("Broj Telefona:");
-		lblBrojTelefona.setBounds(10, 112, 97, 14);
+		lblBrojTelefona.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblBrojTelefona.setBounds(52, 108, 97, 14);
 		panel.add(lblBrojTelefona);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(10, 137, 46, 14);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblEmail.setBounds(92, 133, 46, 14);
 		panel.add(lblEmail);
 		
 		JLabel lblNewLabel_8 = new JLabel("Datum zaposljavanja:");
-		lblNewLabel_8.setBounds(10, 161, 110, 14);
+		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_8.setBounds(10, 158, 124, 14);
 		panel.add(lblNewLabel_8);
 		
 		JLabel lblOdjel = new JLabel("Odjel:");
-		lblOdjel.setBounds(10, 186, 46, 14);
+		lblOdjel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblOdjel.setBounds(92, 183, 46, 14);
 		panel.add(lblOdjel);
 		
 		JLabel lblKorisnickoIme = new JLabel("Korisnicko ime:");
-		lblKorisnickoIme.setBounds(10, 208, 82, 14);
+		lblKorisnickoIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblKorisnickoIme.setBounds(52, 205, 82, 14);
 		panel.add(lblKorisnickoIme);
 		
-		JLabel lblLozinka = new JLabel("Lozinka");
-		lblLozinka.setBounds(10, 233, 46, 14);
+		JLabel lblLozinka = new JLabel("Lozinka:");
+		lblLozinka.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblLozinka.setBounds(82, 230, 46, 14);
 		panel.add(lblLozinka);
 		
 		JLabel lblPonoviLozinku = new JLabel("Ponovi lozinku:");
-		lblPonoviLozinku.setBounds(10, 258, 92, 14);
+		lblPonoviLozinku.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblPonoviLozinku.setBounds(52, 255, 92, 14);
 		panel.add(lblPonoviLozinku);
 		
 		JLabel lblVrstaKorisnika = new JLabel("Vrsta korisnika:");
-		lblVrstaKorisnika.setBounds(10, 283, 82, 14);
+		lblVrstaKorisnika.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblVrstaKorisnika.setBounds(52, 280, 82, 14);
 		panel.add(lblVrstaKorisnika);
 		
 		JComboBox comboBox_11 = new JComboBox();
-		comboBox_11.setBounds(190, 280, 141, 20);
+		comboBox_11.setBounds(190, 277, 141, 20);
 		panel.add(comboBox_11);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(190, 255, 141, 20);
+		passwordField.setBounds(190, 252, 141, 20);
 		panel.add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(190, 230, 141, 20);
+		passwordField_1.setBounds(190, 227, 141, 20);
 		panel.add(passwordField_1);
 		
 		textField_36 = new JTextField();
-		textField_36.setBounds(190, 33, 141, 20);
+		textField_36.setBounds(190, 30, 141, 20);
 		panel.add(textField_36);
 		textField_36.setColumns(10);
 		
 		textField_37 = new JTextField();
 		textField_37.setColumns(10);
-		textField_37.setBounds(190, 56, 141, 20);
+		textField_37.setBounds(190, 53, 141, 20);
 		panel.add(textField_37);
 		
 		textField_38 = new JTextField();
 		textField_38.setColumns(10);
-		textField_38.setBounds(190, 81, 141, 20);
+		textField_38.setBounds(190, 78, 141, 20);
 		panel.add(textField_38);
 		
 		textField_39 = new JTextField();
 		textField_39.setColumns(10);
-		textField_39.setBounds(190, 109, 141, 20);
+		textField_39.setBounds(190, 106, 141, 20);
 		panel.add(textField_39);
 		
 		textField_40 = new JTextField();
 		textField_40.setColumns(10);
-		textField_40.setBounds(190, 134, 141, 20);
+		textField_40.setBounds(190, 131, 141, 20);
 		panel.add(textField_40);
 		
 		textField_41 = new JTextField();
 		textField_41.setColumns(10);
-		textField_41.setBounds(190, 205, 141, 20);
+		textField_41.setBounds(190, 202, 141, 20);
 		panel.add(textField_41);
 		
 		JComboBox comboBox_12 = new JComboBox();
-		comboBox_12.setBounds(190, 183, 141, 20);
+		comboBox_12.setBounds(190, 180, 141, 20);
 		panel.add(comboBox_12);
 		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.setBounds(242, 308, 89, 23);
 		panel.add(btnDodaj);
 		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(392, 40, 341, 342);
+		korisniciPanel.add(panel_1);
+		panel_1.setLayout(null);
+		
 		textField_42 = new JTextField();
-		textField_42.setBounds(411, 22, 175, 20);
-		korisniciPanel.add(textField_42);
+		textField_42.setBounds(33, 39, 183, 20);
+		panel_1.add(textField_42);
 		textField_42.setColumns(10);
 		
 		JComboBox comboBox_13 = new JComboBox();
-		comboBox_13.setBounds(590, 22, 73, 20);
-		korisniciPanel.add(comboBox_13);
+		comboBox_13.setBounds(226, 39, 85, 20);
+		panel_1.add(comboBox_13);
 		
-		JButton btnNewButton_1 = new JButton("Pretrazi");
-		btnNewButton_1.setBounds(673, 19, 89, 23);
-		korisniciPanel.add(btnNewButton_1);
+		JButton btnPretraga = new JButton("Pretraga");
+		btnPretraga.setBounds(127, 70, 89, 23);
+		panel_1.add(btnPretraga);
 		
-		panel_1 = new JPanel();
-		panel_1.setBounds(389, 51, 373, 331);
-		korisniciPanel.add(panel_1);
+		JList list_2 = new JList();
+		list_2.setBounds(33, 151, 278, 180);
+		panel_1.add(list_2);
 		
 		JPanel projektiPanel = new JPanel();
 		tabbedPane.addTab("Projekti", null, projektiPanel, null);
 		projektiPanel.setLayout(null);
 		
 		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new TitledBorder(null, "Podaci projekta", TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o projektu", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_5.setLayout(null);
-		panel_5.setBounds(30, 40, 341, 342);
+		panel_5.setBounds(30, 40, 341, 341);
 		projektiPanel.add(panel_5);
 		
 		JLabel label_2 = new JLabel("Naziv:");
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_2.setBounds(79, 36, 82, 14);
 		panel_5.add(label_2);
 		
@@ -416,12 +410,12 @@ public class MainForm extends JFrame {
 		panel_5.add(textField_47);
 		
 		JLabel label_3 = new JLabel("Dodaj zaposlenika:");
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_3.setBounds(24, 117, 102, 14);
 		panel_5.add(label_3);
 		
 		JLabel label_4 = new JLabel("Dodaj nadredjenog:");
-		label_4.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		label_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_4.setBounds(24, 251, 102, 14);
 		panel_5.add(label_4);
 		
@@ -430,11 +424,11 @@ public class MainForm extends JFrame {
 		panel_5.add(comboBox_19);
 		
 		JButton button_7 = new JButton("Dodaj");
-		button_7.setBounds(121, 292, 89, 39);
+		button_7.setBounds(242, 308, 89, 23);
 		panel_5.add(button_7);
 		
 		JLabel lblNazivKlijenta = new JLabel("Naziv klijenta:");
-		lblNazivKlijenta.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblNazivKlijenta.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNazivKlijenta.setBounds(44, 78, 102, 14);
 		panel_5.add(lblNazivKlijenta);
 		
@@ -468,7 +462,7 @@ public class MainForm extends JFrame {
 		projektiPanel.add(panel_11);
 		
 		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikazi arhivirane projekte");
-		chckbxPrikaziArhiviraneProjekte.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		chckbxPrikaziArhiviraneProjekte.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxPrikaziArhiviraneProjekte.setBounds(22, 110, 149, 23);
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
 		
