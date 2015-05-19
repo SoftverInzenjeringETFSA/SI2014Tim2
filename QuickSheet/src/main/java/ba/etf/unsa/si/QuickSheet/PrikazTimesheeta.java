@@ -39,7 +39,7 @@ public class PrikazTimesheeta extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		setLocationRelativeTo(null);
 		JLabel lblImeIPrezime = new JLabel("Ime i prezime uposlenika:");
 		lblImeIPrezime.setBounds(10, 11, 120, 14);
 		contentPane.add(lblImeIPrezime);

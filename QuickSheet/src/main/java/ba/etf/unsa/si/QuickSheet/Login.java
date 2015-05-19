@@ -41,7 +41,7 @@ public class Login extends JFrame {
 		setBounds(100, 100, 415, 352);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
-		
+		setLocationRelativeTo(null);
 		JLabel lblDobrodosliUQuicksheet = new JLabel("Dobrodošli u QuickSheet - Jednostavnu aplikaciju za evidentiranje radnih sati.");
 		lblDobrodosliUQuicksheet.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDobrodosliUQuicksheet.setFont(new Font("Tahoma", Font.PLAIN, 11));

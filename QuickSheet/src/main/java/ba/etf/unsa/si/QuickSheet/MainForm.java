@@ -93,7 +93,7 @@ public class MainForm extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 764, 431);
 		getContentPane().add(tabbedPane);
-		
+		setLocationRelativeTo(null);
 		JPanel timeSheetPanel = new JPanel();
 		tabbedPane.addTab("Moj Timesheet", null, timeSheetPanel, null);
 		timeSheetPanel.setLayout(null);
@@ -106,31 +106,31 @@ public class MainForm extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Projekat:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel.setBounds(170, 72, 46, 14);
+		lblNewLabel.setBounds(30, 72, 46, 14);
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		panel_4.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
-		btnNewButton.setBounds(414, 299, 114, 29);
+		btnNewButton.setBounds(316, 300, 114, 29);
 		panel_4.add(btnNewButton);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(318, 69, 210, 20);
+		comboBox.setBounds(97, 69, 210, 20);
 		panel_4.add(comboBox);
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
 		lblTaskovi.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblTaskovi.setBounds(170, 120, 46, 14);
+		lblTaskovi.setBounds(30, 120, 46, 14);
 		panel_4.add(lblTaskovi);
 		
 		JLabel lblBrojSati = new JLabel("Broj radnih sati:");
 		lblBrojSati.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblBrojSati.setBounds(140, 264, 76, 14);
+		lblBrojSati.setBounds(30, 264, 76, 14);
 		panel_4.add(lblBrojSati);
 		
 		JSpinner spinner_2 = new JSpinner();
 		spinner_2.setModel(new SpinnerNumberModel(0.0, 0.0, 12.0, 0.0));
-		spinner_2.setBounds(318, 261, 210, 20);
+		spinner_2.setBounds(140, 261, 210, 20);
 		panel_4.add(spinner_2);
 		
 		table = new JTable();
@@ -138,7 +138,37 @@ public class MainForm extends JFrame {
 		panel_4.add(table);
 		
 		table_1 = new JTable();
-		table_1.setBounds(318, 120, 210, 105);
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Task1", new Integer(20), "Super!"},
+			},
+			new String[] {
+				"Naziv taska", "Procenat zavr\u0161enog rada", "Komentar"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, Integer.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				false, true, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table_1.getColumnModel().getColumn(0).setResizable(false);
+		table_1.getColumnModel().getColumn(0).setPreferredWidth(150);
+		table_1.getColumnModel().getColumn(0).setMinWidth(150);
+		table_1.getColumnModel().getColumn(1).setResizable(false);
+		table_1.getColumnModel().getColumn(1).setPreferredWidth(150);
+		table_1.getColumnModel().getColumn(1).setMinWidth(150);
+		table_1.getColumnModel().getColumn(2).setResizable(false);
+		table_1.getColumnModel().getColumn(2).setPreferredWidth(175);
+		table_1.getColumnModel().getColumn(2).setMinWidth(175);
+		table_1.setBounds(103, 120, 552, 105);
 		panel_4.add(table_1);
 		
 		DefaultTableModel model = new DefaultTableModel();
