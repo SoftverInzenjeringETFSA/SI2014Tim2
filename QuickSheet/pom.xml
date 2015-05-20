@@ -54,8 +54,7 @@
     <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-core</artifactId>
-        <version>3.5.4-Final</version>
-        <type>pom</type>
+        <version>4.3.10.Final</version>
     </dependency>
    
   </dependencies>
