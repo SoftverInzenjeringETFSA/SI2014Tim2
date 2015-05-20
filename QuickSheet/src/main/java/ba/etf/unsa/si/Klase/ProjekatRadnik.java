@@ -7,9 +7,9 @@ import javax.naming.directory.InvalidAttributeValueException;
 
 public class ProjekatRadnik extends Zaposlenik{
 
-	public ProjekatRadnik(String _username, String _lozinka, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena)
+	public ProjekatRadnik(String _username, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena)
 			throws InvalidAttributeValueException {
-		super(_username, _lozinka, _ime, _prezime, _adresa, _datum, _cijena);
+		super(_username, _ime, _prezime, _adresa, _datum, _cijena);
 	}
 	
 	public Timesheet PopuniTimesheet(LinkedList<Task> _taskovi, Integer radniSati, Projekat _projekat, LocalDate datum) throws javax.management.InvalidAttributeValueException

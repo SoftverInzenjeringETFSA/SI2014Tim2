@@ -1,6 +1,7 @@
 package ba.etf.unsa.si.Klase;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
@@ -15,10 +16,9 @@ public abstract class Zaposlenik {
 	private Double satnica;
 	private Boolean arhiviran;
 	
-	public Zaposlenik (String _username, String _lozinka, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena) throws InvalidAttributeValueException
+	public Zaposlenik (String _username, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena) throws InvalidAttributeValueException
 	{
 		setUsername(_username);
-		setLozinka(_lozinka);
 		setIme(_ime);
 		setPrezime(_prezime);
 		setAdresa(_adresa);
@@ -44,11 +44,16 @@ public abstract class Zaposlenik {
 		return lozinka;
 	}
 	
-	public void setLozinka(String _lozinka) throws InvalidAttributeValueException
+	public void setLozinka()
 	{
-		if (_lozinka != null && _lozinka.length() > 5 && _lozinka.matches("^[a-zA-Z0-9]*$"))
-			lozinka = _lozinka;
-		else throw new InvalidAttributeValueException();
+		char[] chars = "AaBbCcČčĆćDdĐđEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsŠšTtUuVvWwXxYyZzŽž0123456789".toCharArray();
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+		for (int i = 0; i < 8; i++) {
+		    char c = chars[random.nextInt(chars.length)];
+		    sb.append(c);
+		}
+		this.lozinka = sb.toString();;
 	}
 	
 	public String getIme()
