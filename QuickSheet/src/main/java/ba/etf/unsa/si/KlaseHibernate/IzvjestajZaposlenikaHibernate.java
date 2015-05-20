@@ -1,4 +1,4 @@
-package ba.etf.unsa.si.Klase;
+package ba.etf.unsa.si.KlaseHibernate;
 
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -6,11 +6,16 @@ import java.util.Set;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
-public class IzvjestajZaposlenika extends Izvjestaj{
+public class IzvjestajZaposlenika{
 
 	private Zaposlenik zaposlenik;
 	private Integer ukupanBrojTaskova;
-	public Double decimalanProcenat;
+	private Double decimalanProcenat;
+	private Projekat projekat;
+	private Double procenatZavrsenogRada;
+	private Double trosak;
+	private Double ukupnoVrijemeRada;
+	
 	public IzvjestajZaposlenika(Projekat _projekat, Zaposlenik _zaposlenik) throws InvalidAttributeValueException {
 		super(_projekat);
 		setZaposlenik(_zaposlenik);
@@ -21,81 +26,68 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 		return ukupanBrojTaskova;
 	}
 	
+	public void setUkupanBrojTaskova(Integer _ukupanBrojTaskova)
+	{
+		ukupanBrojTaskova=_ukupanBrojTaskova;
+	}
+	
+	public Double getDecimalanProcenat() 
+	{
+		return decimalanProcenat;
+	}
+	
+	public void setDecimalanProcenat(Double _decimalanProcenat)
+	{
+		decimalanProcenat=_decimalanProcenat;
+	}
+	
 	public Zaposlenik getZaposlenik() 
 	{
 		return zaposlenik;
 	}
 	
-	public void setZaposlenik(Zaposlenik zaposlenik) throws InvalidAttributeValueException 
+	public void setZaposlenik(Zaposlenik zaposlenik)
 	{
-		if (zaposlenik != null && projekat.getZaposlenici().contains(zaposlenik))
-		{
-			this.zaposlenik = zaposlenik;
-			ukupanBrojTaskova = 0;
-			IzracunajProcenatZavrsenogRada();
-			IzracunajTrosak();
-		}
-		else throw new InvalidAttributeValueException();
+		this.zaposlenik = zaposlenik;		
 	}
 	
-	@Override
-	public void setProjekat(Projekat projekat) throws InvalidAttributeValueException 
+	public Projekat getProjekat() 
 	{
-		if (projekat != null && projekat.getZaposlenici().contains(zaposlenik))
-		{
-			this.projekat = projekat;
-			ukupanBrojTaskova = 0;
-			IzracunajProcenatZavrsenogRada();
-			IzracunajTrosak();
-		}
-		else throw new InvalidAttributeValueException();
+		return projekat;
+	}
+	
+	public void setProjekat(Projekat _projekat)
+	{
+		projekat=_projekat;
 	}
 
-	@Override
-	public void IzracunajProcenatZavrsenogRada() {
-		LinkedList<Task> taskovi = projekat.getTaskovi();
-		Hashtable<String, Double> taskoviZaposlenik = new Hashtable<String, Double>();
-		for (Task ta: taskovi)
-		{
-			if (ta.getZaposlenik().equals(zaposlenik))
-				ukupanBrojTaskova++;
-		}
-		for (Timesheet t : projekat.getTimesheetList())
-		{
-			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran())
-			{
-				for (Task task: t.getTaskovi())
-				{
-					taskoviZaposlenik.put(task.getNaziv(), task.getProcenatZavrsenosti());
-				}
-			}
-		}
-		Set<String> keys = taskoviZaposlenik.keySet();
-		procenatZavrsenogRada = 0.0;
-		for (String key: keys)
-		{
-			procenatZavrsenogRada += taskoviZaposlenik.get(key);
-		}
-		decimalanProcenat = procenatZavrsenogRada;
-		procenatZavrsenogRada /= ukupanBrojTaskova;
+	public Double getProcenatZavrsenogRada() 
+	{
+		return procenatZavrsenogRada;
 	}
-
-	@Override
-	public void IzracunajTrosak() {
-		IzracunajUkupnoVrijemeRada();		
-		trosak = zaposlenik.getSatnica() * ukupnoVrijemeRada;
+	
+	public void setProcenatZavrsenogRada(Double _procenatZavrsenogRada)
+	{
+		procenatZavrsenogRada=_procenatZavrsenogRada;
 	}
-
-	@Override
-	public void IzracunajUkupnoVrijemeRada() {
-		ukupnoVrijemeRada = 0.0;
-		for (Timesheet t : projekat.getTimesheetList())
-		{
-			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran() && t.getProjekat().equals(projekat))
-			{
-				ukupnoVrijemeRada += t.getBrojRadnihSati(); 
-			}
-		}
+	
+	public Double getTrosak() 
+	{
+		return trosak;
 	}
-
+	
+	public void setTrosak(Double _trosak)
+	{
+		trosak=_trosak;
+	}
+	
+	public Double getUkupnoVrijemeRada() 
+	{
+		return ukupnoVrijemeRada;
+	}
+	
+	public void setUkupnoVrijemeRada(Double _ukupnoVrijemeRada)
+	{
+		ukupnoVrijemeRada=_ukupnoVrijemeRada;
+	}	
 }
