@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 20, 2015 12:32:19 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ba.etf.unsa.si.Klase.Projekat" table="PROJEKAT">
+        <id name="koordinator" type="ba.etf.unsa.si.Klase.Koordinator">
+            <column name="KOORDINATOR" />
+            <generator class="native" />
+        </id>
+        <list name="zaposlenici" inverse="false" table="PROJEKATRADNIK" lazy="true">
+            <key>
+                <column name="KOORDINATOR" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ba.etf.unsa.si.Klase.ProjekatRadnik" />
+        </list>
+        <list name="timesheetList" inverse="false" table="TIMESHEET" lazy="true">
+            <key>
+                <column name="KOORDINATOR" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ba.etf.unsa.si.Klase.Timesheet" />
+        </list>
+        <list name="taskovi" inverse="false" table="TASK" lazy="true">
+            <key>
+                <column name="KOORDINATOR" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ba.etf.unsa.si.Klase.Task" />
+        </list>
+        <property name="naziv" type="java.lang.String">
+            <column name="NAZIV" />
+        </property>
+        <property name="nazivKlijenta" type="java.lang.String">
+            <column name="NAZIVKLIJENTA" />
+        </property>
+        <property name="arhiviran" type="java.lang.Boolean">
+            <column name="ARHIVIRAN" />
+        </property>
+    </class>
+</hibernate-mapping>
