@@ -142,6 +142,17 @@ public class MainForm extends JFrame {
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
 		
+		JLabel label = new JLabel("Datum:");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label.setBounds(68, 294, 35, 14);
+		panel_4.add(label);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner.setBounds(135, 291, 210, 20);
+		panel_4.add(spinner);
+		
 		
 		
 		
@@ -154,34 +165,60 @@ public class MainForm extends JFrame {
 		tabbedPane.addTab("Moja Historija", null, historijaPanel, null);
 		historijaPanel.setLayout(null);
 		
-		JLabel lblNewLabel_4 = new JLabel("Projekat:");
-		lblNewLabel_4.setBounds(34, 29, 78, 20);
-		historijaPanel.add(lblNewLabel_4);
+		JPanel panel_6 = new JPanel();
+		panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Prikaz historije timesheet - ova za odre\u0111eni projekat", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_6.setBounds(30, 22, 341, 370);
+		historijaPanel.add(panel_6);
+		panel_6.setLayout(null);
 		
 		JComboBox comboBox_10 = new JComboBox();
-		comboBox_10.setBounds(91, 29, 135, 20);
-		historijaPanel.add(comboBox_10);
+		comboBox_10.setBounds(155, 28, 141, 20);
+		panel_6.add(comboBox_10);
 		
-		JLabel lblNewLabel_5 = new JLabel("Timesheet historija:");
-		lblNewLabel_5.setBounds(34, 87, 200, 20);
-		historijaPanel.add(lblNewLabel_5);
+		JLabel lblNewLabel_4 = new JLabel("Projekat:");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_4.setBounds(10, 28, 78, 20);
+		panel_6.add(lblNewLabel_4);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(34, 107, 265, 252);
-		historijaPanel.add(scrollPane);
+		scrollPane.setBounds(10, 87, 321, 272);
+		panel_6.add(scrollPane);
+		
+		JLabel lblNewLabel_5 = new JLabel("Timesheet historija:");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_5.setBounds(10, 59, 200, 20);
+		panel_6.add(lblNewLabel_5);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBorder(new TitledBorder(null, "Prikaz historije za odre\u0111eni vremenski interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_7.setBounds(392, 22, 341, 370);
+		historijaPanel.add(panel_7);
+		panel_7.setLayout(null);
 		
 		Canvas canvas = new Canvas();
+		canvas.setBounds(10, 88, 321, 272);
+		panel_7.add(canvas);
 		canvas.setBackground(SystemColor.controlHighlight);
-		canvas.setBounds(382, 107, 327, 252);
-		historijaPanel.add(canvas);
 		
 		JLabel lblNewLabel_6 = new JLabel("Od");
-		lblNewLabel_6.setBounds(372, 29, 46, 20);
-		historijaPanel.add(lblNewLabel_6);
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_6.setBounds(10, 30, 46, 20);
+		panel_7.add(lblNewLabel_6);
 		
 		JLabel lblDo = new JLabel("Do");
-		lblDo.setBounds(512, 29, 46, 20);
-		historijaPanel.add(lblDo);
+		lblDo.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblDo.setBounds(178, 30, 46, 20);
+		panel_7.add(lblDo);
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner_1.setBounds(35, 30, 131, 20);
+		panel_7.add(spinner_1);
+		
+		JSpinner spinner_3 = new JSpinner();
+		spinner_3.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner_3.setBounds(200, 30, 131, 20);
+		panel_7.add(spinner_3);
 		
 		JPanel odjeliPanel = new JPanel();
 		tabbedPane.addTab("Odjeli", null, odjeliPanel, null);

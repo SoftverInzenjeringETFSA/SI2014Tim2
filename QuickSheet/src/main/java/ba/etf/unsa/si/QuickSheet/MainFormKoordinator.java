@@ -80,7 +80,7 @@ public class MainFormKoordinator extends JFrame {
 		setResizable(false);
 		setTitle("QuickSheet");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 765, 459);
+		setBounds(100, 100, 768, 459);
 		getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -127,6 +127,17 @@ public class MainFormKoordinator extends JFrame {
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
 		
+		JSpinner spinner_3 = new JSpinner();
+		spinner_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner_3.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner_3.setBounds(135, 294, 210, 20);
+		panel_4.add(spinner_3);
+		
+		JLabel label = new JLabel("Datum:");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label.setBounds(68, 294, 35, 14);
+		panel_4.add(label);
+		
 		
 		
 		
@@ -139,34 +150,58 @@ public class MainFormKoordinator extends JFrame {
 		tabbedPane.addTab("Moja Historija", null, historijaPanel, null);
 		historijaPanel.setLayout(null);
 		
-		JLabel lblNewLabel_4 = new JLabel("Projekat:");
-		lblNewLabel_4.setBounds(34, 29, 78, 20);
-		historijaPanel.add(lblNewLabel_4);
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Prikaz historije timesheet - ova za odre\u0111eni projekat", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBounds(30, 22, 341, 370);
+		historijaPanel.add(panel);
 		
-		JComboBox comboBox_10 = new JComboBox();
-		comboBox_10.setBounds(91, 29, 135, 20);
-		historijaPanel.add(comboBox_10);
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(155, 28, 141, 20);
+		panel.add(comboBox_1);
 		
-		JLabel lblNewLabel_5 = new JLabel("Timesheet historija:");
-		lblNewLabel_5.setBounds(34, 87, 200, 20);
-		historijaPanel.add(lblNewLabel_5);
+		JLabel label_1 = new JLabel("Projekat:");
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_1.setBounds(10, 28, 78, 20);
+		panel.add(label_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(34, 107, 265, 252);
-		historijaPanel.add(scrollPane);
+		scrollPane.setBounds(10, 87, 321, 272);
+		panel.add(scrollPane);
+		
+		JLabel label_2 = new JLabel("Timesheet historija:");
+		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_2.setBounds(10, 59, 200, 20);
+		panel.add(label_2);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBorder(new TitledBorder(null, "Prikaz historije za odre\u0111eni vremenski interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBounds(392, 22, 341, 370);
+		historijaPanel.add(panel_2);
 		
 		Canvas canvas = new Canvas();
 		canvas.setBackground(SystemColor.controlHighlight);
-		canvas.setBounds(382, 107, 327, 252);
-		historijaPanel.add(canvas);
+		canvas.setBounds(10, 88, 321, 272);
+		panel_2.add(canvas);
 		
-		JLabel lblNewLabel_6 = new JLabel("Od");
-		lblNewLabel_6.setBounds(372, 29, 46, 20);
-		historijaPanel.add(lblNewLabel_6);
+		JLabel label_3 = new JLabel("Od");
+		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_3.setBounds(10, 30, 46, 20);
+		panel_2.add(label_3);
 		
-		JLabel lblDo = new JLabel("Do");
-		lblDo.setBounds(512, 29, 46, 20);
-		historijaPanel.add(lblDo);
+		JLabel label_4 = new JLabel("Do");
+		label_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_4.setBounds(178, 30, 46, 20);
+		panel_2.add(label_4);
+		
+		JSpinner spinner_4 = new JSpinner();
+		spinner_4.setBounds(35, 30, 131, 20);
+		panel_2.add(spinner_4);
+		
+		JSpinner spinner_5 = new JSpinner();
+		spinner_5.setBounds(200, 30, 131, 20);
+		panel_2.add(spinner_5);
 		
 		JPanel odjeliPanel = new JPanel();
 		tabbedPane.addTab("Odjeli", null, odjeliPanel, null);
@@ -222,7 +257,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		JButton btnPretraga = new JButton("Pretraži");
 		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPretraga.setBounds(265, 30, 69, 23);
+		btnPretraga.setBounds(262, 30, 69, 23);
 		panel_1.add(btnPretraga);
 		
 		JList list_2 = new JList();
@@ -274,7 +309,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		JButton btnPretrai_1 = new JButton("Pretraži");
 		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPretrai_1.setBounds(265, 30, 69, 23);
+		btnPretrai_1.setBounds(262, 30, 69, 23);
 		panel_11.add(btnPretrai_1);
 		
 		textField_46 = new JTextField();
@@ -297,7 +332,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBorder(new TitledBorder(null, "Izvje\u0161taj", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_7.setBounds(408, 22, 341, 370);
+		panel_7.setBounds(392, 22, 341, 370);
 		izvjestajiPanel.add(panel_7);
 		panel_7.setLayout(null);
 		
@@ -331,6 +366,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_10.add(button_17);
 		
 		JLabel lblNewLabel_11 = new JLabel("Odjel:");
+		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel_11.setBounds(75, 33, 57, 14);
 		panel_7.add(lblNewLabel_11);
 		
@@ -339,6 +375,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(comboBox_20);
 		
 		JLabel lblZaposlenik = new JLabel("Zaposlenik:");
+		lblZaposlenik.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblZaposlenik.setBounds(75, 89, 57, 14);
 		panel_7.add(lblZaposlenik);
 		
@@ -351,6 +388,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(comboBox_22);
 		
 		JLabel lblProjekat_1 = new JLabel("Projekat:");
+		lblProjekat_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblProjekat_1.setBounds(75, 145, 57, 14);
 		panel_7.add(lblProjekat_1);
 		
@@ -358,7 +396,8 @@ public class MainFormKoordinator extends JFrame {
 		comboBox_23.setBounds(75, 226, 197, 20);
 		panel_7.add(comboBox_23);
 		
-		JLabel lblMjesevc = new JLabel("Izvjestaj za mjesec:");
+		JLabel lblMjesevc = new JLabel("Izvještaj za mjesec:");
+		lblMjesevc.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblMjesevc.setBounds(75, 201, 116, 14);
 		panel_7.add(lblMjesevc);
 		
@@ -366,15 +405,18 @@ public class MainFormKoordinator extends JFrame {
 		label_15.setBounds(203, 229, 46, 14);
 		panel_7.add(label_15);
 		
-		JLabel lblIliIzvjestajZa = new JLabel("Ili, izvjestaj za vremenski period:");
+		JLabel lblIliIzvjestajZa = new JLabel("Ili, izvještaj za vremenski period:");
+		lblIliIzvjestajZa.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblIliIzvjestajZa.setBounds(75, 264, 197, 14);
 		panel_7.add(lblIliIzvjestajZa);
 		
 		JLabel lblOd = new JLabel("Od:");
+		lblOd.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblOd.setBounds(76, 289, 46, 14);
 		panel_7.add(lblOd);
 		
 		JLabel lblDo_1 = new JLabel("Do:");
+		lblDo_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblDo_1.setBounds(177, 289, 46, 14);
 		panel_7.add(lblDo_1);
 		
@@ -384,11 +426,13 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(btnNewButton_3);
 		
 		JSpinner spinner = new JSpinner();
+		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner.setModel(new SpinnerDateModel(new Date(1431986400000L), new Date(1431986400000L), null, Calendar.YEAR));
 		spinner.setBounds(106, 286, 61, 20);
 		panel_7.add(spinner);
 		
 		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_1.setModel(new SpinnerDateModel(new Date(1431986400000L), new Date(1431986400000L), null, Calendar.DAY_OF_YEAR));
 		spinner_1.setBounds(203, 286, 61, 20);
 		panel_7.add(spinner_1);
@@ -399,13 +443,13 @@ public class MainFormKoordinator extends JFrame {
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Timesheet validacija", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_6.setBounds(30, 22, 355, 370);
+		panel_6.setBounds(30, 22, 341, 370);
 		izvjestajiPanel.add(panel_6);
 		panel_6.setLayout(null);
 		
 		JLabel lblImenkoPrezimenkovic = new JLabel("Zahtjevi za reviziju i odobravanje timesheeta:");
 		lblImenkoPrezimenkovic.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblImenkoPrezimenkovic.setBounds(24, 41, 240, 14);
+		lblImenkoPrezimenkovic.setBounds(15, 41, 240, 14);
 		panel_6.add(lblImenkoPrezimenkovic);
 		
 		JButton btnPrikazi = new JButton("Prikaži");
@@ -429,7 +473,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_6.add(btnNewButton_2);
 		
 		JList list_6 = new JList();
-		list_6.setBounds(24, 76, 305, 249);
+		list_6.setBounds(12, 76, 315, 249);
 		panel_6.add(list_6);
 		
 	}

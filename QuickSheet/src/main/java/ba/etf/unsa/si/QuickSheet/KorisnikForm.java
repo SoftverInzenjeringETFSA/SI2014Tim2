@@ -165,6 +165,7 @@ public class KorisnikForm extends JFrame {
 		panel.add(comboBox);
 		
 		JButton btnSpasiIzmjene = new JButton("Spasi izmjene");
+		btnSpasiIzmjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnSpasiIzmjene.setBounds(190, 336, 141, 23);
 		panel.add(btnSpasiIzmjene);
 	}

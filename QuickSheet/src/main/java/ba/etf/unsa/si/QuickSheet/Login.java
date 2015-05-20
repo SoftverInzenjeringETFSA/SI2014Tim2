@@ -39,6 +39,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setResizable(false);
 		setBounds(100, 100, 415, 352);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
