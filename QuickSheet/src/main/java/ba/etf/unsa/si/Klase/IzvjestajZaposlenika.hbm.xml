@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 20, 2015 12:32:19 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <subclass name="ba.etf.unsa.si.Klase.IzvjestajZaposlenika" extends="ba.etf.unsa.si.Klase.Izvjestaj" discriminator-value="IzvjestajZaposlenika" lazy="false">
+        <many-to-one name="zaposlenik" class="ba.etf.unsa.si.Klase.Zaposlenik" fetch="join">
+            <column name="ZAPOSLENIK" />
+        </many-to-one>
+        <property name="ukupanBrojTaskova" type="java.lang.Integer" access="field">
+            <column name="UKUPANBROJTASKOVA" />
+        </property>
+        <property name="decimalanProcenat" type="java.lang.Double" access="field">
+            <column name="DECIMALANPROCENAT" />
+        </property>
+    </subclass>
+</hibernate-mapping>

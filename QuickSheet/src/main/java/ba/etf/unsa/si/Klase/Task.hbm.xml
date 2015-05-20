@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 20, 2015 12:32:19 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ba.etf.unsa.si.Klase.Task" table="TASK">
+        <id name="zaposlenik" type="ba.etf.unsa.si.Klase.Zaposlenik">
+            <column name="ZAPOSLENIK" />
+            <generator class="native" />
+        </id>
+        <property name="prioritet" type="java.lang.Integer">
+            <column name="PRIORITET" />
+        </property>
+        <property name="procenatZavrsenosti" type="java.lang.Double">
+            <column name="PROCENATZAVRSENOSTI" />
+        </property>
+        <property name="naziv" type="java.lang.String">
+            <column name="NAZIV" />
+        </property>
+        <property name="opis" type="java.lang.String">
+            <column name="OPIS" />
+        </property>
+        <property name="komentar" type="java.lang.String">
+            <column name="KOMENTAR" />
+        </property>
+        <property name="rok" type="java.time.LocalDate">
+            <column name="ROK" />
+        </property>
+    </class>
+</hibernate-mapping>
