@@ -50,5 +50,13 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>3.5.4-Final</version>
+        <type>pom</type>
+    </dependency>
+   
   </dependencies>
 </project>
