@@ -13,6 +13,7 @@ public abstract class Zaposlenik {
 	private String adresa;
 	private LocalDate datumZaposlenja;
 	private Double satnica;
+	private Boolean arhiviran;
 	
 	public Zaposlenik (String _username, String _lozinka, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena) throws InvalidAttributeValueException
 	{
@@ -22,7 +23,8 @@ public abstract class Zaposlenik {
 		setPrezime(_prezime);
 		setAdresa(_adresa);
 		setDatumZaposlenja(_datum);
-		setCijena(_cijena);
+		setSatnica(_cijena);
+		arhiviran = false;
 	}
 	
 	public String getUsername()
@@ -102,11 +104,18 @@ public abstract class Zaposlenik {
 		return satnica;
 	}
 	
-	public void setCijena(Double _cijena) throws InvalidAttributeValueException
+	public void setSatnica(Double _cijena) throws InvalidAttributeValueException
 	{
 		if (_cijena != null && _cijena > 0)
 			satnica = _cijena;
 		else throw new InvalidAttributeValueException();
 	}
 	
+	public Boolean getArhiviran() {
+		return arhiviran;
+	}
+
+	public void setArhiviran(Boolean arhiviran) {
+		this.arhiviran = arhiviran;
+	}
 }

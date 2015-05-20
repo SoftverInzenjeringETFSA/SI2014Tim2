@@ -12,9 +12,9 @@ public class ProjekatRadnik extends Zaposlenik{
 		super(_username, _lozinka, _ime, _prezime, _adresa, _datum, _cijena);
 	}
 	
-	public Timesheet PopuniTimesheet(LinkedList<Task> _taskovi, Integer radniSati, Projekat _projekat) throws javax.management.InvalidAttributeValueException
+	public Timesheet PopuniTimesheet(LinkedList<Task> _taskovi, Integer radniSati, Projekat _projekat, LocalDate datum) throws javax.management.InvalidAttributeValueException
 	{
-		return new Timesheet(_taskovi, radniSati, _projekat);
+		return new Timesheet(_taskovi, radniSati, _projekat, datum);
 	}
 	
 	public void UrediTask(Task task, String komentar, Integer procenatZavrsenosti) throws InvalidAttributeValueException

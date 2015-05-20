@@ -13,10 +13,10 @@ public class Timesheet {
 	private Projekat projekat;
 	private Boolean validiran;
 	
-	public Timesheet(LinkedList<Task> _taskovi, Integer _brojRadnihSati, Projekat _projekat) throws InvalidAttributeValueException 
+	public Timesheet(LinkedList<Task> _taskovi, Integer _brojRadnihSati, Projekat _projekat, LocalDate _datumSlanja) throws InvalidAttributeValueException 
 	{
 		setBrojRadnihSati(_brojRadnihSati);
-		setDatumSlanja();
+		setDatumSlanja(_datumSlanja);
 		setTaskovi(_taskovi);
 		validiran = false;
 	}
@@ -50,9 +50,9 @@ public class Timesheet {
 		return datumSlanja;
 	}
 	
-	public void setDatumSlanja() 
+	public void setDatumSlanja(LocalDate datumSlanja) 
 	{
-		this.datumSlanja = LocalDate.now();
+		this.datumSlanja = datumSlanja;
 	}
 	
 	public Projekat getProjekat() 
