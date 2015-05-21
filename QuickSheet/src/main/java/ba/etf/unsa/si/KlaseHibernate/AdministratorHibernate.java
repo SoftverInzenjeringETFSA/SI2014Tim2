@@ -1,17 +1,9 @@
 package ba.etf.unsa.si.KlaseHibernate;
 
-import javax.naming.directory.InvalidAttributeValueException;
-
-public class Administrator {
+public class AdministratorHibernate {
 	
 	private String username;
 	private String lozinka;
-	
-	public Administrator(String _username, String _lozinka) throws InvalidAttributeValueException 
-	{
-		setUsername(_username);
-		setLozinka(_lozinka);
-	}
 	
 	public String getUsername()
 	{

@@ -3,30 +3,20 @@ package ba.etf.unsa.si.KlaseHibernate;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-import javax.management.InvalidAttributeValueException;
+public class TimesheetHibernate {
 
-public class Timesheet {
-
-	private LinkedList<Task> taskovi = new LinkedList<Task>();
+	private LinkedList<TaskHibernate> taskovi = new LinkedList<TaskHibernate>();
 	private LocalDate datumSlanja;
 	private Integer brojRadnihSati;
-	private Projekat projekat;
+	private ProjekatHibernate projekat;
 	private Boolean validiran;
 	
-	public Timesheet(LinkedList<Task> _taskovi, Integer _brojRadnihSati, Projekat _projekat, LocalDate _datumSlanja) throws InvalidAttributeValueException 
-	{
-		setBrojRadnihSati(_brojRadnihSati);
-		setDatumSlanja(_datumSlanja);
-		setTaskovi(_taskovi);
-		validiran = false;
-	}
-	
-	public LinkedList<Task> getTaskovi() 
+	public LinkedList<TaskHibernate> getTaskovi() 
 	{
 		return taskovi;
 	}
 	
-	public void setTaskovi(LinkedList<Task> taskovi) 
+	public void setTaskovi(LinkedList<TaskHibernate> taskovi) 
 	{
 		this.taskovi = taskovi;
 	}
@@ -51,12 +41,12 @@ public class Timesheet {
 		this.datumSlanja = datumSlanja;
 	}
 	
-	public Projekat getProjekat() 
+	public ProjekatHibernate getProjekat() 
 	{
 		return projekat;
 	}
 	
-	public void setProjekat(Projekat projekat)
+	public void setProjekat(ProjekatHibernate projekat)
 	{
 		this.projekat = projekat;
 	}

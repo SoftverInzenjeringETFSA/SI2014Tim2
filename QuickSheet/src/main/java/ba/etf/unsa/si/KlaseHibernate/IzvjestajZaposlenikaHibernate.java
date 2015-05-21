@@ -6,21 +6,16 @@ import java.util.Set;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
-public class IzvjestajZaposlenika{
+public class IzvjestajZaposlenikaHibernate{
 
-	private Zaposlenik zaposlenik;
+	private ZaposlenikHibernate zaposlenik;
 	private Integer ukupanBrojTaskova;
 	private Double decimalanProcenat;
-	private Projekat projekat;
+	private ProjekatHibernate projekat;
 	private Double procenatZavrsenogRada;
 	private Double trosak;
 	private Double ukupnoVrijemeRada;
 	
-	public IzvjestajZaposlenika(Projekat _projekat, Zaposlenik _zaposlenik) throws InvalidAttributeValueException {
-		super(_projekat);
-		setZaposlenik(_zaposlenik);
-	}
-
 	public Integer getUkupanBrojTaskova() 
 	{
 		return ukupanBrojTaskova;
@@ -41,22 +36,22 @@ public class IzvjestajZaposlenika{
 		decimalanProcenat=_decimalanProcenat;
 	}
 	
-	public Zaposlenik getZaposlenik() 
+	public ZaposlenikHibernate getZaposlenik() 
 	{
 		return zaposlenik;
 	}
 	
-	public void setZaposlenik(Zaposlenik zaposlenik)
+	public void setZaposlenik(ZaposlenikHibernate zaposlenik)
 	{
 		this.zaposlenik = zaposlenik;		
 	}
 	
-	public Projekat getProjekat() 
+	public ProjekatHibernate getProjekat() 
 	{
 		return projekat;
 	}
 	
-	public void setProjekat(Projekat _projekat)
+	public void setProjekat(ProjekatHibernate _projekat)
 	{
 		projekat=_projekat;
 	}

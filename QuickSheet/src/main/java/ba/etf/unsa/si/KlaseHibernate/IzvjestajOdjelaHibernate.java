@@ -1,20 +1,13 @@
 package ba.etf.unsa.si.KlaseHibernate;
 
-import javax.naming.directory.InvalidAttributeValueException;
+public class IzvjestajOdjelaHibernate{
 
-public class IzvjestajOdjela{
-
-	private Odjel odjel;
+	private OdjelHibernate odjel;
 	private Integer ukupanBrojTaskovaOdjela;
-	private Projekat projekat;
+	private ProjekatHibernate projekat;
 	private Double procenatZavrsenogRada;
 	private Double trosak;
 	private Double ukupnoVrijemeRada;
-	
-	public IzvjestajOdjela(Projekat _projekat, Odjel _odjel) throws InvalidAttributeValueException {
-		super(_projekat);
-		setOdjel(_odjel);
-	}
 
 	public Integer getUkupanBrojTaskovaOdjela() 
 	{
@@ -25,22 +18,22 @@ public class IzvjestajOdjela{
 	{
 		ukupanBrojTaskovaOdjela=_ukupanBrojTaskovaOdjela;
 	}
-	public Odjel getOdjel() 
+	public OdjelHibernate getOdjel() 
 	{
 		return odjel;
 	}
 	
-	public void setOdjel(Odjel odjel)
+	public void setOdjel(OdjelHibernate odjel)
 	{
 		this.odjel = odjel;	
 	}
 	
-	public Projekat getProjekat() 
+	public ProjekatHibernate getProjekat() 
 	{
 		return projekat;
 	}
 	
-	public void setProjekat(Projekat _projekat)
+	public void setProjekat(ProjekatHibernate _projekat)
 	{
 		projekat=_projekat;
 	}

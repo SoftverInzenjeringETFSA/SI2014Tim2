@@ -4,18 +4,12 @@ import java.util.LinkedList;
 
 import javax.management.InvalidAttributeValueException;
 
-public class Odjel {
+public class OdjelHibernate {
 
-	private LinkedList<Zaposlenik> zaposlenici = new LinkedList<Zaposlenik>();
+	private LinkedList<ZaposlenikHibernate> zaposlenici = new LinkedList<ZaposlenikHibernate>();
 	private String naziv;
 	private Integer maksimalanBrojRadnika;
 	private Boolean arhiviran;
-	
-	public Odjel(String _naziv, int _maksimalanBrojRadnika) throws InvalidAttributeValueException 
-	{
-		setNaziv(_naziv);
-		setMaksimalanBrojRadnika(_maksimalanBrojRadnika);
-	}
 	
 	public Boolean getArhiviran() {
 		return arhiviran;
@@ -25,18 +19,18 @@ public class Odjel {
 		this.arhiviran = arhiviran;
 	}
 
-	public Odjel(String _naziv, int _maksimalanBrojRadnika, LinkedList<Zaposlenik> _zaposlenici) throws InvalidAttributeValueException 
+	public OdjelHibernate(String _naziv, int _maksimalanBrojRadnika, LinkedList<ZaposlenikHibernate> _zaposlenici) throws InvalidAttributeValueException 
 	{
 		setNaziv(_naziv);
 		setMaksimalanBrojRadnika(_maksimalanBrojRadnika);
 		setZaposlenici(_zaposlenici);
 	}
 	
-	public LinkedList<Zaposlenik> getZaposlenici() {
+	public LinkedList<ZaposlenikHibernate> getZaposlenici() {
 		return zaposlenici;
 	}
 	
-	public void setZaposlenici(LinkedList<Zaposlenik> _zaposlenici) {
+	public void setZaposlenici(LinkedList<ZaposlenikHibernate> _zaposlenici) {
 		zaposlenici = _zaposlenici;
 	}
 	

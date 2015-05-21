@@ -2,11 +2,8 @@
 package ba.etf.unsa.si.KlaseHibernate;
 
 import java.time.LocalDate;
-import java.util.Random;
 
-import javax.naming.directory.InvalidAttributeValueException;
-
-public class Zaposlenik {
+public class ZaposlenikHibernate {
 	
 	private String username;
 	private String lozinka;
@@ -17,17 +14,6 @@ public class Zaposlenik {
 	private Double satnica;
 	private Boolean arhiviran;
 	private Boolean koordinator;
-	
-	public Zaposlenik (String _username, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena) throws InvalidAttributeValueException
-	{
-		setUsername(_username);
-		setIme(_ime);
-		setPrezime(_prezime);
-		setAdresa(_adresa);
-		setDatumZaposlenja(_datum);
-		setSatnica(_cijena);
-		arhiviran = false;
-	}
 	
 	public String getUsername()
 	{

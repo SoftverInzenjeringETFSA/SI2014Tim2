@@ -4,25 +4,15 @@ import java.time.LocalDate;
 
 import javax.management.InvalidAttributeValueException;
 
-public class Task {
+public class TaskHibernate {
 
-	private Zaposlenik zaposlenik;
+	private ZaposlenikHibernate zaposlenik;
 	private Integer prioritet;
-	private Double procenatZavrsenosti;
+	private Integer procenatZavrsenosti;
 	private String naziv;
 	private String opis;
 	private String komentar;
 	private LocalDate rok;
-	
-	public Task(String _naziv, String _opis, Integer _prioritet, Zaposlenik _zaposlenik, LocalDate _rok) throws InvalidAttributeValueException 
-	{
-		setNaziv(_naziv);
-		setOpis(_opis);
-		setPrioritet(_prioritet);
-		setZaposlenik(_zaposlenik);
-		setRok(_rok);
-		procenatZavrsenosti = 0.0;
-	}
 	
 	public String getNaziv() 
 	{
@@ -64,17 +54,17 @@ public class Task {
 		this.opis = opis;
 	}
 	
-	public Zaposlenik getZaposlenik() 
+	public ZaposlenikHibernate getZaposlenik() 
 	{
 		return zaposlenik;
 	}
 	
-	public void setZaposlenik(Zaposlenik zaposlenik)
+	public void setZaposlenik(ZaposlenikHibernate zaposlenik)
 	{
 		this.zaposlenik = zaposlenik;
 	}
 	
-	public Double getProcenatZavrsenosti() 
+	public Integer getProcenatZavrsenosti() 
 	{
 		return procenatZavrsenosti;
 	}
