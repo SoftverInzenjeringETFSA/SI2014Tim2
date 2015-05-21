@@ -11,8 +11,16 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
+import ba.etf.unsa.si.util.HibernateUtil;
+
 import java.awt.Toolkit;
 
 public class Login extends JFrame {
@@ -86,6 +94,17 @@ public class Login extends JFrame {
 				}
 				else if(textFieldValue.equals("koordinator")){
 					new MainFormKoordinator().setVisible(true);
+				}
+				else if(textFieldValue.equals("baza")){
+					
+					Session session = HibernateUtil.getSessionFactory().openSession();
+					Transaction t = session.beginTransaction();
+					AdministratorHibernate s = new AdministratorHibernate();
+					s.setLozinka("Meho");
+					s.setUsername("Mehic");
+					Long id = (Long) session.save(s);
+					t.commit();
+					session.close();
 				}
 				else{
 					new MainFormZaposlenik().setVisible(true);
