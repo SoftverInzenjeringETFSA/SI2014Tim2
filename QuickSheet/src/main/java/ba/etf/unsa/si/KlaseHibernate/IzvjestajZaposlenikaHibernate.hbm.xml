@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 21, 2015 2:11:18 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ba.etf.unsa.si.KlaseHibernate.IzvjestajZaposlenikaHibernate" table="IZVJESTAJZAPOSLENIKAHIBERNATE">
+        <id name="id" type="long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="zaposlenik" class="ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate" fetch="join">
+            <column name="ZAPOSLENIK" />
+        </many-to-one>
+        <property name="ukupanBrojTaskova" type="java.lang.Integer">
+            <column name="UKUPANBROJTASKOVA" />
+        </property>
+        <property name="decimalanProcenat" type="java.lang.Double">
+            <column name="DECIMALANPROCENAT" />
+        </property>
+        <many-to-one name="projekat" class="ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate" fetch="join">
+            <column name="PROJEKAT" />
+        </many-to-one>
+        <property name="procenatZavrsenogRada" type="java.lang.Double">
+            <column name="PROCENATZAVRSENOGRADA" />
+        </property>
+        <property name="trosak" type="java.lang.Double">
+            <column name="TROSAK" />
+        </property>
+        <property name="ukupnoVrijemeRada" type="java.lang.Double">
+            <column name="UKUPNOVRIJEMERADA" />
+        </property>
+    </class>
+</hibernate-mapping>

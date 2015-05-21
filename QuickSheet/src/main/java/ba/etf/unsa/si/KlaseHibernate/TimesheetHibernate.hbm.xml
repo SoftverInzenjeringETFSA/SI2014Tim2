@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 21, 2015 2:11:18 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate" table="TIMESHEETHIBERNATE">
+        <id name="id" type="long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <list name="taskovi" inverse="false" table="TASKHIBERNATE" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ba.etf.unsa.si.KlaseHibernate.TaskHibernate" />
+        </list>
+        <property name="datumSlanja" type="java.time.LocalDate">
+            <column name="DATUMSLANJA" />
+        </property>
+        <property name="brojRadnihSati" type="java.lang.Integer">
+            <column name="BROJRADNIHSATI" />
+        </property>
+        <many-to-one name="projekat" class="ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate" fetch="join">
+            <column name="PROJEKAT" />
+        </many-to-one>
+        <property name="validiran" type="java.lang.Boolean">
+            <column name="VALIDIRAN" />
+        </property>
+    </class>
+</hibernate-mapping>
