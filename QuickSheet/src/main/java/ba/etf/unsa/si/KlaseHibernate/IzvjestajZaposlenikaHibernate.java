@@ -1,11 +1,5 @@
 package ba.etf.unsa.si.KlaseHibernate;
 
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.Set;
-
-import javax.naming.directory.InvalidAttributeValueException;
-
 public class IzvjestajZaposlenikaHibernate{
 
 	private ZaposlenikHibernate zaposlenik;
