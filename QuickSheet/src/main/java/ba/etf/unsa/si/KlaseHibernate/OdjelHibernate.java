@@ -4,12 +4,24 @@ import java.util.LinkedList;
 
 import javax.management.InvalidAttributeValueException;
 
-public class OdjelHibernate {
+public class OdjelHibernate implements java.io.Serializable{
 
+	private long id;
 	private LinkedList<ZaposlenikHibernate> zaposlenici = new LinkedList<ZaposlenikHibernate>();
 	private String naziv;
 	private Integer maksimalanBrojRadnika;
 	private Boolean arhiviran;
+	
+	public OdjelHibernate() {
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	public Boolean getArhiviran() {
 		return arhiviran;

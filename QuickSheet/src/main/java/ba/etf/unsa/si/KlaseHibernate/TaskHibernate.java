@@ -2,8 +2,9 @@ package ba.etf.unsa.si.KlaseHibernate;
 
 import java.time.LocalDate;
 
-public class TaskHibernate {
+public class TaskHibernate implements java.io.Serializable{
 
+	private long id;
 	private ZaposlenikHibernate zaposlenik;
 	private Integer prioritet;
 	private Integer procenatZavrsenosti;
@@ -11,6 +12,17 @@ public class TaskHibernate {
 	private String opis;
 	private String komentar;
 	private LocalDate rok;
+	
+	public TaskHibernate() {
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	public String getNaziv() 
 	{
