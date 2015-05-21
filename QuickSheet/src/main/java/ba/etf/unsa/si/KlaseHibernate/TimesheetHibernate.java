@@ -3,13 +3,25 @@ package ba.etf.unsa.si.KlaseHibernate;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-public class TimesheetHibernate {
+public class TimesheetHibernate implements java.io.Serializable{
 
+	private long id;
 	private LinkedList<TaskHibernate> taskovi = new LinkedList<TaskHibernate>();
 	private LocalDate datumSlanja;
 	private Integer brojRadnihSati;
 	private ProjekatHibernate projekat;
 	private Boolean validiran;
+	
+	public TimesheetHibernate() {
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	public LinkedList<TaskHibernate> getTaskovi() 
 	{

@@ -3,8 +3,9 @@ package ba.etf.unsa.si.KlaseHibernate;
 
 import java.time.LocalDate;
 
-public class ZaposlenikHibernate {
+public class ZaposlenikHibernate implements java.io.Serializable{
 	
+	private long id;
 	private String username;
 	private String lozinka;
 	private String ime;
@@ -14,6 +15,17 @@ public class ZaposlenikHibernate {
 	private Double satnica;
 	private Boolean arhiviran;
 	private Boolean koordinator;
+	
+	public ZaposlenikHibernate() {
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	public String getUsername()
 	{

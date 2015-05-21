@@ -1,7 +1,8 @@
 package ba.etf.unsa.si.KlaseHibernate;
 
-public class IzvjestajZaposlenikaHibernate{
+public class IzvjestajZaposlenikaHibernate implements java.io.Serializable{
 
+	private long id;
 	private ZaposlenikHibernate zaposlenik;
 	private Integer ukupanBrojTaskova;
 	private Double decimalanProcenat;
@@ -9,6 +10,17 @@ public class IzvjestajZaposlenikaHibernate{
 	private Double procenatZavrsenogRada;
 	private Double trosak;
 	private Double ukupnoVrijemeRada;
+	
+	public IzvjestajZaposlenikaHibernate() {
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	public Integer getUkupanBrojTaskova() 
 	{

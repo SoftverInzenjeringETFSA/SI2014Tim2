@@ -1,7 +1,8 @@
 package ba.etf.unsa.si.KlaseHibernate;
 
-public class IzvjestajOdjelaHibernate{
+public class IzvjestajOdjelaHibernate implements java.io.Serializable{
 
+	private long id;
 	private OdjelHibernate odjel;
 	private Integer ukupanBrojTaskovaOdjela;
 	private ProjekatHibernate projekat;
@@ -9,6 +10,17 @@ public class IzvjestajOdjelaHibernate{
 	private Double trosak;
 	private Double ukupnoVrijemeRada;
 
+	public IzvjestajOdjelaHibernate() {
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	public Integer getUkupanBrojTaskovaOdjela() 
 	{
 		return ukupanBrojTaskovaOdjela;
