@@ -1,4 +1,4 @@
-package ba.etf.unsa.si.Klase;
+package ba.etf.unsa.si.KlaseHibernate;
 
 import java.util.LinkedList;
 
@@ -9,7 +9,7 @@ public class Projekat {
 	private LinkedList<ProjekatRadnik> zaposlenici = new LinkedList<ProjekatRadnik>();
 	private LinkedList<Timesheet> timesheetList = new LinkedList<Timesheet>();
 	private LinkedList<Task> taskovi = new LinkedList<Task>();
-	private Koordinator koordinator;
+	private Zaposlenik koordinator;
 	private String naziv;
 	private String nazivKlijenta;
 	private Boolean arhiviran;
@@ -46,11 +46,9 @@ public class Projekat {
 		return zaposlenici;
 	}
 	
-	public void setZaposlenici(LinkedList<ProjekatRadnik> zaposlenici) throws InvalidAttributeValueException 
+	public void setZaposlenici(LinkedList<ProjekatRadnik> zaposlenici)
 	{
-		if (zaposlenici != null)
-			this.zaposlenici = zaposlenici;
-		else throw new InvalidAttributeValueException(); 
+		this.zaposlenici = zaposlenici; 
 	}
 	
 	public LinkedList<Task> getTaskovi() 
@@ -58,11 +56,9 @@ public class Projekat {
 		return taskovi;
 	}
 	
-	public void setTaskovi(LinkedList<Task> taskovi) throws InvalidAttributeValueException 
+	public void setTaskovi(LinkedList<Task> taskovi)
 	{
-		if (taskovi != null)
-			this.taskovi = taskovi;
-		else throw new InvalidAttributeValueException();
+		this.taskovi = taskovi;
 	}
 	
 	public Koordinator getKoordinator() 
@@ -70,11 +66,9 @@ public class Projekat {
 		return koordinator;
 	}
 	
-	public void setKoordinator(Koordinator koordinator) throws InvalidAttributeValueException 
+	public void setKoordinator(Koordinator koordinator)
 	{
-		if (koordinator != null)
-			this.koordinator = koordinator;
-		else throw new InvalidAttributeValueException();
+		this.koordinator = koordinator;
 	}
 	
 	public String getNaziv() 
@@ -82,11 +76,9 @@ public class Projekat {
 		return naziv;
 	}
 	
-	public void setNaziv(String naziv) throws InvalidAttributeValueException 
+	public void setNaziv(String naziv) 
 	{
-		if (naziv != null && !naziv.isEmpty())
-			this.naziv = naziv;
-		else throw new InvalidAttributeValueException(); 
+		this.naziv = naziv;
 	}
 	
 	public String getNazivKlijenta() 
@@ -94,11 +86,9 @@ public class Projekat {
 		return nazivKlijenta;
 	}
 	
-	public void setNazivKlijenta(String nazivKlijenta) throws InvalidAttributeValueException 
+	public void setNazivKlijenta(String nazivKlijenta) 
 	{
-		if (nazivKlijenta != null && !nazivKlijenta.isEmpty())
-			this.nazivKlijenta = nazivKlijenta;
-		else throw new InvalidAttributeValueException(); 
+		this.nazivKlijenta = nazivKlijenta;
 	}
 	
 	public Boolean getArhiviran() 
@@ -109,16 +99,6 @@ public class Projekat {
 	public void setArhiviran(Boolean arhiviran) 
 	{
 		this.arhiviran = arhiviran;
-	}
-	
-	public void DodajTask(Task t)
-	{
-		taskovi.add(t);
-	}
-	
-	public void DodajZaposlenika (ProjekatRadnik zaposlenik)
-	{
-		zaposlenici.add(zaposlenik);
 	}
 	
 }

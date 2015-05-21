@@ -1,4 +1,4 @@
-package ba.etf.unsa.si.Klase;
+package ba.etf.unsa.si.KlaseHibernate;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -26,11 +26,9 @@ public class Timesheet {
 		return taskovi;
 	}
 	
-	public void setTaskovi(LinkedList<Task> taskovi) throws InvalidAttributeValueException 
+	public void setTaskovi(LinkedList<Task> taskovi) 
 	{
-		if (taskovi != null)
-			this.taskovi = taskovi;
-		else throw new InvalidAttributeValueException();
+		this.taskovi = taskovi;
 	}
 	
 	public Integer getBrojRadnihSati() 
@@ -38,11 +36,9 @@ public class Timesheet {
 		return brojRadnihSati;
 	}
 	
-	public void setBrojRadnihSati(Integer brojRadnihSati) throws InvalidAttributeValueException 
+	public void setBrojRadnihSati(Integer brojRadnihSati)
 	{
-		if (brojRadnihSati > 0 && brojRadnihSati <= 12)
-			this.brojRadnihSati = brojRadnihSati;
-		else throw new InvalidAttributeValueException();
+		this.brojRadnihSati = brojRadnihSati;
 	}
 	
 	public LocalDate getDatumSlanja() 
@@ -60,11 +56,9 @@ public class Timesheet {
 		return projekat;
 	}
 	
-	public void setProjekat(Projekat projekat) throws InvalidAttributeValueException 
+	public void setProjekat(Projekat projekat)
 	{
-		if (projekat != null)
-			this.projekat = projekat;
-		else throw new InvalidAttributeValueException();
+		this.projekat = projekat;
 	}
 	
 	public Boolean getValidiran() 

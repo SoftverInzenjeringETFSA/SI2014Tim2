@@ -1,4 +1,4 @@
-package ba.etf.unsa.si.Klase;
+package ba.etf.unsa.si.KlaseHibernate;
 
 import java.time.LocalDate;
 
@@ -29,11 +29,9 @@ public class Task {
 		return naziv;
 	}
 	
-	public void setNaziv(String naziv) throws InvalidAttributeValueException 
+	public void setNaziv(String naziv)
 	{
-		if (naziv != null && !naziv.isEmpty())
-			this.naziv = naziv;
-		else throw new InvalidAttributeValueException();
+		this.naziv = naziv;
 	}
 	
 	public Integer getPrioritet() 
@@ -41,11 +39,9 @@ public class Task {
 		return prioritet;
 	}
 	
-	public void setPrioritet(Integer prioritet) throws InvalidAttributeValueException 
+	public void setPrioritet(Integer prioritet)
 	{
-		if (prioritet > 0 && prioritet < 11)
 			this.prioritet = prioritet;
-		else throw new InvalidAttributeValueException();
 	}
 	
 	public String getKomentar() 
@@ -63,11 +59,9 @@ public class Task {
 		return opis;
 	}
 	
-	public void setOpis(String opis) throws InvalidAttributeValueException 
+	public void setOpis(String opis)
 	{
-		if (opis != null && !opis.isEmpty())
-			this.opis = opis;
-		else throw new InvalidAttributeValueException();
+		this.opis = opis;
 	}
 	
 	public Zaposlenik getZaposlenik() 
@@ -75,11 +69,9 @@ public class Task {
 		return zaposlenik;
 	}
 	
-	public void setZaposlenik(Zaposlenik zaposlenik) throws InvalidAttributeValueException 
+	public void setZaposlenik(Zaposlenik zaposlenik)
 	{
-		if (zaposlenik != null)
-			this.zaposlenik = zaposlenik;
-		else throw new InvalidAttributeValueException();
+		this.zaposlenik = zaposlenik;
 	}
 	
 	public Double getProcenatZavrsenosti() 
@@ -89,8 +81,7 @@ public class Task {
 	
 	public void setProcenatZavrsenosti(Integer procenatZavrsenosti) 
 	{
-		if (procenatZavrsenosti > 0 && procenatZavrsenosti <= 100)
-		this.procenatZavrsenosti = (double)procenatZavrsenosti / 100;
+		this.procenatZavrsenosti = procenatZavrsenosti;
 	}
 	
 	public LocalDate getRok() 
@@ -98,11 +89,9 @@ public class Task {
 		return rok;
 	}
 	
-	public void setRok(LocalDate rok) throws InvalidAttributeValueException 
+	public void setRok(LocalDate rok)
 	{
-		if (rok != null && rok.isAfter(LocalDate.now()))
-			this.rok = rok;
-		else throw new InvalidAttributeValueException(); 
+		this.rok = rok;
 	}
 	
 }

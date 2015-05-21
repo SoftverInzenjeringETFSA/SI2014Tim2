@@ -1,4 +1,4 @@
-package ba.etf.unsa.si.Klase;
+package ba.etf.unsa.si.KlaseHibernate;
 
 import java.util.LinkedList;
 
@@ -44,11 +44,9 @@ public class Odjel {
 		return maksimalanBrojRadnika;
 	}
 	
-	public void setMaksimalanBrojRadnika(Integer _maksimalanBrojRadnika) throws InvalidAttributeValueException {
-		if (_maksimalanBrojRadnika != null && _maksimalanBrojRadnika > 0 && _maksimalanBrojRadnika > zaposlenici.size())
-			maksimalanBrojRadnika = _maksimalanBrojRadnika;
-		else 
-			throw new InvalidAttributeValueException();
+	public void setMaksimalanBrojRadnika(Integer _maksimalanBrojRadnika)
+	{
+		maksimalanBrojRadnika = _maksimalanBrojRadnika;
 	}
 	
 	public String getNaziv() {
@@ -59,24 +57,4 @@ public class Odjel {
 		naziv = _naziv;
 	}
 	
-	public int TrenutniBrojRadnika()
-	{
-		return zaposlenici.size();
-	}
-	
-	public boolean DodajZaposlenika(Zaposlenik zaposlenik)
-	{
-		if (maksimalanBrojRadnika.equals(TrenutniBrojRadnika()) || zaposlenici.contains(zaposlenik))
-			return false;
-		else
-		{
-			zaposlenici.add(zaposlenik);
-			return true;
-		}
-	}
-	
-	public boolean UkloniZaposlenika(Zaposlenik zaposlenik)
-	{
-		return zaposlenici.remove(zaposlenik);
-	}
 }

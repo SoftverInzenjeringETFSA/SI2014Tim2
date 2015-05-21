@@ -1,12 +1,12 @@
 
-package ba.etf.unsa.si.Klase;
+package ba.etf.unsa.si.KlaseHibernate;
 
 import java.time.LocalDate;
 import java.util.Random;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
-public abstract class Zaposlenik {
+public class Zaposlenik {
 	
 	private String username;
 	private String lozinka;
@@ -16,6 +16,7 @@ public abstract class Zaposlenik {
 	private LocalDate datumZaposlenja;
 	private Double satnica;
 	private Boolean arhiviran;
+	private Boolean koordinator;
 	
 	public Zaposlenik (String _username, String _ime, String _prezime, String _adresa, LocalDate _datum, double _cijena) throws InvalidAttributeValueException
 	{
@@ -33,11 +34,9 @@ public abstract class Zaposlenik {
 		return username;
 	}
 	
-	public void setUsername(String _username) throws InvalidAttributeValueException
+	public void setUsername(String _username)
 	{
-		if (_username != null && !_username.isEmpty() && _username.matches("^[a-zA-Z0-9]*$"))
-			username = _username;
-		else throw new InvalidAttributeValueException();
+		username = _username;
 	}
 	
 	public String getLozinka()
@@ -45,16 +44,9 @@ public abstract class Zaposlenik {
 		return lozinka;
 	}
 	
-	public void setLozinka()
+	public void setLozinka(String lozinka)
 	{
-		char[] chars = "AaBbCcČčĆćDdĐđEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsŠšTtUuVvWwXxYyZzŽž0123456789".toCharArray();
-		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
-		for (int i = 0; i < 8; i++) {
-		    char c = chars[random.nextInt(chars.length)];
-		    sb.append(c);
-		}
-		this.lozinka = sb.toString();;
+		this.lozinka = lozinka;
 	}
 	
 	public String getIme()
@@ -62,11 +54,9 @@ public abstract class Zaposlenik {
 		return ime;
 	}
 	
-	public void setIme(String _ime) throws InvalidAttributeValueException
+	public void setIme(String _ime)
 	{
-		if (_ime != null && !_ime.isEmpty() && _ime.matches("^[a-zA-Z]*$"))
-			ime = _ime;
-		else throw new InvalidAttributeValueException();
+		ime = _ime;
 	}
 	
 	public String getPrezime()
@@ -74,11 +64,9 @@ public abstract class Zaposlenik {
 		return prezime;
 	}
 	
-	public void setPrezime(String _prezime) throws InvalidAttributeValueException
+	public void setPrezime(String _prezime)
 	{
-		if (_prezime != null && !_prezime.isEmpty() && prezime.matches("^[a-zA-Z]*$"))
-			prezime = _prezime;
-		else throw new InvalidAttributeValueException();
+		prezime = _prezime;
 	}
 	
 	public String getAdresa()
@@ -86,11 +74,9 @@ public abstract class Zaposlenik {
 		return adresa;
 	}
 	
-	public void setAdresa(String _adresa) throws InvalidAttributeValueException
+	public void setAdresa(String _adresa)
 	{
-		if (_adresa != null && !_adresa.isEmpty())
-			adresa = _adresa;
-		else throw new InvalidAttributeValueException();
+		adresa = _adresa;
 	}
 	
 	public LocalDate getDatumZaposlenja()
@@ -98,11 +84,9 @@ public abstract class Zaposlenik {
 		return datumZaposlenja;
 	}
 	
-	public void setDatumZaposlenja(LocalDate _datum) throws InvalidAttributeValueException
+	public void setDatumZaposlenja(LocalDate _datum)
 	{
-		if (_datum != null && _datum.isBefore(LocalDate.now()))
-			datumZaposlenja = _datum;
-		else throw new InvalidAttributeValueException();
+		datumZaposlenja = _datum;
 	}
 	
 	public double getSatnica()
@@ -110,11 +94,9 @@ public abstract class Zaposlenik {
 		return satnica;
 	}
 	
-	public void setSatnica(Double _cijena) throws InvalidAttributeValueException
+	public void setSatnica(Double _cijena)
 	{
-		if (_cijena != null && _cijena > 0)
-			satnica = _cijena;
-		else throw new InvalidAttributeValueException();
+		satnica = _cijena;
 	}
 	
 	public Boolean getArhiviran() {
@@ -123,5 +105,13 @@ public abstract class Zaposlenik {
 
 	public void setArhiviran(Boolean arhiviran) {
 		this.arhiviran = arhiviran;
+	}
+	
+	public Boolean getKoordinator() {
+		return koordinator;
+	}
+
+	public void setKoordinator(Boolean koordinator) {
+		this.koordinator = koordinator;
 	}
 }
