@@ -2,8 +2,6 @@ package ba.etf.unsa.si.KlaseHibernate;
 
 import java.time.LocalDate;
 
-import javax.management.InvalidAttributeValueException;
-
 public class TaskHibernate {
 
 	private ZaposlenikHibernate zaposlenik;
