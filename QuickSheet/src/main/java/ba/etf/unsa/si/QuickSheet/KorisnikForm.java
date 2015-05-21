@@ -14,6 +14,7 @@ import javax.swing.JList;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import java.awt.Toolkit;
 
 public class KorisnikForm extends JFrame {
 
@@ -47,15 +48,17 @@ public class KorisnikForm extends JFrame {
 	 * Create the frame.
 	 */
 	public KorisnikForm() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setFont(new Font("Dialog", Font.PLAIN, 11));
 		setResizable(false);
 		setTitle("Profil zaposlenika");
-		setBounds(100, 100, 389, 426);
+		setBounds(100, 100, 392, 429);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(22, 11, 341, 370);

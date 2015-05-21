@@ -47,6 +47,8 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
+		setTitle("QuickSheet - Login");
 		setResizable(false);
 		setBounds(100, 100, 415, 352);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

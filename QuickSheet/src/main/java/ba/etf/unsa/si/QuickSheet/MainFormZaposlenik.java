@@ -47,10 +47,14 @@ import javax.swing.SpinnerNumberModel;
 
 import java.awt.Component;
 import java.awt.ScrollPane;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import java.awt.Toolkit;
 
 public class MainFormZaposlenik extends JFrame {
 	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtGftfg;
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
@@ -87,12 +91,13 @@ public class MainFormZaposlenik extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFormZaposlenik() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 765, 459);
 		getContentPane().setLayout(null);
-		
+		setLocationRelativeTo(null);
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 764, 431);
 		getContentPane().add(tabbedPane);
@@ -103,7 +108,7 @@ public class MainFormZaposlenik extends JFrame {
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(null, "Timesheet podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(22, 28, 711, 354);
+		panel_4.setBounds(30, 22, 711, 354);
 		timeSheetPanel.add(panel_4);
 		panel_4.setLayout(null);
 		
@@ -167,6 +172,7 @@ public class MainFormZaposlenik extends JFrame {
 		historijaPanel.add(panel);
 		
 		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBackground(Color.WHITE);
 		comboBox_1.setBounds(155, 28, 141, 20);
 		panel.add(comboBox_1);
 		
@@ -206,12 +212,25 @@ public class MainFormZaposlenik extends JFrame {
 		panel_1.add(label_3);
 		
 		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner_1.setModel(new SpinnerDateModel(new Date(1432159200000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner_1.setBounds(35, 30, 131, 20);
 		panel_1.add(spinner_1);
 		
 		JSpinner spinner_3 = new JSpinner();
+		spinner_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner_3.setModel(new SpinnerDateModel(new Date(1432159200000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner_3.setBounds(200, 30, 131, 20);
 		panel_1.add(spinner_3);
+		
+		JLabel lblIliPrikazZa = new JLabel("Ili, prikaz za određeni mjesec:");
+		lblIliPrikazZa.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblIliPrikazZa.setBounds(10, 61, 156, 14);
+		panel_1.add(lblIliPrikazZa);
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(200, 61, 131, 20);
+		panel_1.add(comboBox_2);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Moj profil", null, panel_2, null);
@@ -278,56 +297,101 @@ public class MainFormZaposlenik extends JFrame {
 		label_14.setBounds(47, 293, 82, 14);
 		panel_3.add(label_14);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(159, 37, 141, 20);
-		panel_3.add(textField_1);
+		txtGftfg = new JTextField();
+		txtGftfg.setBorder(null);
+		txtGftfg.setEditable(false);
+		txtGftfg.setBackground(Color.WHITE);
+		txtGftfg.setEnabled(false);
+		txtGftfg.setDisabledTextColor(new Color(109, 109, 109));
+		txtGftfg.setColumns(10);
+		txtGftfg.setBounds(159, 37, 141, 20);
+		panel_3.add(txtGftfg);
 		
 		textField_2 = new JTextField();
+		textField_2.setBorder(null);
+		textField_2.setBackground(Color.WHITE);
+		textField_2.setDisabledTextColor(Color.LIGHT_GRAY);
+		textField_2.setEnabled(false);
+		textField_2.setEditable(false);
 		textField_2.setColumns(10);
-		textField_2.setBounds(159, 60, 141, 20);
+		textField_2.setBounds(159, 62, 141, 20);
 		panel_3.add(textField_2);
 		
 		textField_3 = new JTextField();
+		textField_3.setBorder(null);
+		textField_3.setBackground(Color.WHITE);
+		textField_3.setEnabled(false);
+		textField_3.setEditable(false);
 		textField_3.setColumns(10);
-		textField_3.setBounds(159, 85, 141, 20);
+		textField_3.setBounds(159, 87, 141, 20);
 		panel_3.add(textField_3);
 		
 		textField_4 = new JTextField();
+		textField_4.setBorder(null);
+		textField_4.setBackground(Color.WHITE);
+		textField_4.setEnabled(false);
+		textField_4.setEditable(false);
 		textField_4.setColumns(10);
 		textField_4.setBounds(159, 113, 141, 20);
 		panel_3.add(textField_4);
 		
 		textField_5 = new JTextField();
+		textField_5.setBorder(null);
+		textField_5.setBackground(Color.WHITE);
+		textField_5.setEnabled(false);
+		textField_5.setEditable(false);
 		textField_5.setColumns(10);
 		textField_5.setBounds(159, 138, 141, 20);
 		panel_3.add(textField_5);
 		
 		textField_6 = new JTextField();
+		textField_6.setBorder(null);
+		textField_6.setBackground(Color.WHITE);
+		textField_6.setEnabled(false);
+		textField_6.setEditable(false);
 		textField_6.setColumns(10);
 		textField_6.setBounds(159, 215, 141, 20);
 		panel_3.add(textField_6);
 		
 		passwordField = new JPasswordField();
+		passwordField.setBorder(null);
+		passwordField.setBackground(Color.WHITE);
+		passwordField.setEnabled(false);
+		passwordField.setEditable(false);
 		passwordField.setBounds(159, 240, 141, 20);
 		panel_3.add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
+		passwordField_1.setBorder(null);
+		passwordField_1.setBackground(Color.WHITE);
+		passwordField_1.setEnabled(false);
+		passwordField_1.setEditable(false);
 		passwordField_1.setBounds(159, 265, 141, 20);
 		panel_3.add(passwordField_1);
 		
 		JSpinner spinner_4 = new JSpinner();
+		spinner_4.setBorder(new CompoundBorder());
+		spinner_4.setBackground(Color.WHITE);
+		spinner_4.setEnabled(false);
 		spinner_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_4.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner_4.setBounds(159, 162, 141, 20);
 		panel_3.add(spinner_4);
 		
 		textField_7 = new JTextField();
+		textField_7.setBorder(null);
+		textField_7.setBackground(Color.WHITE);
+		textField_7.setEnabled(false);
+		textField_7.setEditable(false);
 		textField_7.setColumns(10);
-		textField_7.setBounds(159, 187, 141, 20);
+		textField_7.setBounds(159, 189, 141, 20);
 		panel_3.add(textField_7);
 		
 		passwordField_2 = new JPasswordField();
+		passwordField_2.setBorder(null);
+		passwordField_2.setBackground(Color.WHITE);
+		passwordField_2.setEnabled(false);
+		passwordField_2.setEditable(false);
 		passwordField_2.setBounds(159, 290, 141, 20);
 		panel_3.add(passwordField_2);
 		

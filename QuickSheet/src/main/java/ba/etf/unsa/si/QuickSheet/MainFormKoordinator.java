@@ -47,12 +47,18 @@ import javax.swing.SpinnerNumberModel;
 
 import java.awt.Component;
 import java.awt.ScrollPane;
+import java.awt.Toolkit;
 
 public class MainFormKoordinator extends JFrame {
 	private JTextField textField;
-	private JTextField textField_45;
 	private JTextField textField_46;
-	private JTextField textField_42;
+	private JTextField textField_1;
+	private JTextField textField_3;
+	private JTextField textField_2;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
 
 	
 	
@@ -77,11 +83,13 @@ public class MainFormKoordinator extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFormKoordinator() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 768, 459);
 		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 764, 431);
@@ -93,7 +101,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(null, "Timesheet podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(22, 28, 711, 354);
+		panel_4.setBounds(30, 22, 711, 354);
 		timeSheetPanel.add(panel_4);
 		panel_4.setLayout(null);
 		
@@ -123,6 +131,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_4.add(lblBrojSati);
 		
 		JSpinner spinner_2 = new JSpinner();
+		spinner_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_2.setModel(new SpinnerNumberModel(0.0, 0.0, 12.0, 1.0));
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
@@ -196,12 +205,25 @@ public class MainFormKoordinator extends JFrame {
 		panel_2.add(label_4);
 		
 		JSpinner spinner_4 = new JSpinner();
+		spinner_4.setModel(new SpinnerDateModel(new Date(1432159200000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_4.setBounds(35, 30, 131, 20);
 		panel_2.add(spinner_4);
 		
 		JSpinner spinner_5 = new JSpinner();
+		spinner_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner_5.setModel(new SpinnerDateModel(new Date(1432159200000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner_5.setBounds(200, 30, 131, 20);
 		panel_2.add(spinner_5);
+		
+		JLabel label_5 = new JLabel("Ili, prikaz za određeni mjesec:");
+		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_5.setBounds(10, 61, 156, 14);
+		panel_2.add(label_5);
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(200, 61, 131, 20);
+		panel_2.add(comboBox_2);
 		
 		JPanel odjeliPanel = new JPanel();
 		tabbedPane.addTab("Odjeli", null, odjeliPanel, null);
@@ -213,80 +235,91 @@ public class MainFormKoordinator extends JFrame {
 		odjeliPanel.add(panel_3);
 		panel_3.setLayout(null);
 		
-		textField_45 = new JTextField();
-		textField_45.setBounds(22, 30, 133, 23);
-		panel_3.add(textField_45);
-		textField_45.setColumns(10);
-		
-		JComboBox comboBox_16 = new JComboBox();
-		comboBox_16.setBounds(165, 30, 85, 23);
-		panel_3.add(comboBox_16);
-		
-		JButton btnPretrai = new JButton("Pretraži");
-		btnPretrai.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPretrai.setBounds(262, 30, 69, 23);
-		panel_3.add(btnPretrai);
-		
 		JList list_4 = new JList();
-		list_4.setBounds(22, 87, 309, 272);
+		list_4.setBounds(22, 116, 309, 243);
 		panel_3.add(list_4);
 		
-		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Prikaži arhivirane odjele");
-		chckbxNewCheckBox_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxNewCheckBox_1.setBounds(22, 57, 149, 23);
-		panel_3.add(chckbxNewCheckBox_1);
+		JLabel label_16 = new JLabel("Izaberite parametar pretrage:");
+		label_16.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_16.setBounds(22, 29, 170, 14);
+		panel_3.add(label_16);
 		
-		JPanel korisniciPanel = new JPanel();
-		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
-		korisniciPanel.setLayout(null);
+		JComboBox comboBox_5 = new JComboBox();
+		comboBox_5.setBounds(22, 56, 99, 23);
+		panel_3.add(comboBox_5);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(30, 22, 355, 370);
-		korisniciPanel.add(panel_1);
-		panel_1.setLayout(null);
+		textField_7 = new JTextField();
+		textField_7.setColumns(10);
+		textField_7.setBounds(128, 56, 124, 23);
+		panel_3.add(textField_7);
 		
-		textField_42 = new JTextField();
-		textField_42.setBounds(22, 30, 133, 23);
-		panel_1.add(textField_42);
-		textField_42.setColumns(10);
+		JButton button_2 = new JButton("Pretraži");
+		button_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		button_2.setBounds(262, 56, 69, 23);
+		panel_3.add(button_2);
 		
-		JComboBox comboBox_13 = new JComboBox();
-		comboBox_13.setBounds(165, 30, 85, 23);
-		panel_1.add(comboBox_13);
+		JCheckBox checkBox = new JCheckBox("Prikaži arhivirane korisnike");
+		checkBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		checkBox.setBounds(22, 86, 170, 23);
+		panel_3.add(checkBox);
 		
-		JButton btnPretraga = new JButton("Pretraži");
-		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPretraga.setBounds(262, 30, 69, 23);
-		panel_1.add(btnPretraga);
+		JPanel panel_5 = new JPanel();
+		panel_5.setLayout(null);
+		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o odjelu", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_5.setBounds(392, 22, 341, 370);
+		odjeliPanel.add(panel_5);
 		
-		JList list_2 = new JList();
-		list_2.setBounds(22, 87, 309, 230);
-		panel_1.add(list_2);
+		JLabel label_6 = new JLabel("Naziv odjela:");
+		label_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_6.setBounds(78, 33, 62, 14);
+		panel_5.add(label_6);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
-		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxNewCheckBox.setBounds(22, 57, 165, 23);
-		panel_1.add(chckbxNewCheckBox);
+		textField_1 = new JTextField();
+		textField_1.setBorder(null);
+		textField_1.setBackground(Color.WHITE);
+		textField_1.setEnabled(false);
+		textField_1.setEditable(false);
+		textField_1.setColumns(10);
+		textField_1.setBounds(190, 30, 141, 20);
+		panel_5.add(textField_1);
 		
-		JButton btnNewButton_1 = new JButton("Prikaži profil");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new KorisnikForm().setVisible(true);
-			}
-		});
-		btnNewButton_1.setBounds(83, 328, 119, 23);
-		panel_1.add(btnNewButton_1);
+		JLabel lblZaposlenici = new JLabel("Zaposlenici:");
+		lblZaposlenici.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblZaposlenici.setBounds(85, 58, 66, 29);
+		panel_5.add(lblZaposlenici);
 		
-		JButton btnObriiKorisnika = new JButton("Obriši korisnika");
-		btnObriiKorisnika.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnObriiKorisnika.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnObriiKorisnika.setBounds(212, 328, 119, 23);
-		panel_1.add(btnObriiKorisnika);
+		JLabel label_8 = new JLabel("Rukovodilac odjela:");
+		label_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_8.setBounds(50, 215, 102, 14);
+		panel_5.add(label_8);
+		
+		JLabel label_9 = new JLabel("Maksimalni broj zaposlenika:");
+		label_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_9.setBounds(10, 243, 152, 14);
+		panel_5.add(label_9);
+		
+		JList list = new JList();
+		list.setEnabled(false);
+		list.setBounds(190, 61, 141, 135);
+		panel_5.add(list);
+		
+		textField_3 = new JTextField();
+		textField_3.setEnabled(false);
+		textField_3.setEditable(false);
+		textField_3.setColumns(10);
+		textField_3.setBorder(null);
+		textField_3.setBackground(Color.WHITE);
+		textField_3.setBounds(190, 212, 141, 20);
+		panel_5.add(textField_3);
+		
+		textField_2 = new JTextField();
+		textField_2.setEnabled(false);
+		textField_2.setEditable(false);
+		textField_2.setColumns(10);
+		textField_2.setBorder(null);
+		textField_2.setBackground(Color.WHITE);
+		textField_2.setBounds(190, 243, 141, 20);
+		panel_5.add(textField_2);
 		
 		JPanel projektiPanel = new JPanel();
 		tabbedPane.addTab("Projekti", null, projektiPanel, null);
@@ -298,33 +331,161 @@ public class MainFormKoordinator extends JFrame {
 		panel_11.setBounds(30, 22, 355, 370);
 		projektiPanel.add(panel_11);
 		
-		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikazi arhivirane projekte");
+		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikaži arhivirane projekte");
 		chckbxPrikaziArhiviraneProjekte.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxPrikaziArhiviraneProjekte.setBounds(22, 57, 149, 23);
+		chckbxPrikaziArhiviraneProjekte.setBounds(22, 86, 149, 23);
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
 		
 		JComboBox comboBox_17 = new JComboBox();
-		comboBox_17.setBounds(165, 30, 85, 23);
+		comboBox_17.setBounds(22, 56, 99, 23);
 		panel_11.add(comboBox_17);
 		
 		JButton btnPretrai_1 = new JButton("Pretraži");
 		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPretrai_1.setBounds(262, 30, 69, 23);
+		btnPretrai_1.setBounds(262, 56, 69, 23);
 		panel_11.add(btnPretrai_1);
 		
 		textField_46 = new JTextField();
-		textField_46.setBounds(22, 30, 133, 23);
+		textField_46.setBounds(128, 56, 124, 23);
 		panel_11.add(textField_46);
 		textField_46.setColumns(10);
 		
 		JList list_1 = new JList();
-		list_1.setBounds(22, 87, 309, 243);
+		list_1.setBounds(22, 116, 309, 243);
 		panel_11.add(list_1);
+		
+		JLabel lblIzaberiteParametarPretrage = new JLabel("Izaberite parametar pretrage:");
+		lblIzaberiteParametarPretrage.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblIzaberiteParametarPretrage.setBounds(22, 29, 170, 14);
+		panel_11.add(lblIzaberiteParametarPretrage);
+		
+		JPanel panel_8 = new JPanel();
+		panel_8.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o projektu", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_8.setBounds(392, 22, 341, 370);
+		projektiPanel.add(panel_8);
+		panel_8.setLayout(null);
+		
+		textField_4 = new JTextField();
+		textField_4.setBorder(null);
+		textField_4.setBackground(Color.WHITE);
+		textField_4.setColumns(10);
+		textField_4.setBounds(166, 36, 165, 20);
+		panel_8.add(textField_4);
+		
+		JLabel label_7 = new JLabel("Naziv:");
+		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_7.setBounds(86, 39, 82, 14);
+		panel_8.add(label_7);
+		
+		JLabel label_10 = new JLabel("Naziv klijenta:");
+		label_10.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_10.setBounds(51, 70, 102, 14);
+		panel_8.add(label_10);
+		
+		JLabel lblZaposlenici_1 = new JLabel("Zaposlenici:");
+		lblZaposlenici_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblZaposlenici_1.setBounds(62, 95, 56, 14);
+		panel_8.add(lblZaposlenici_1);
+		
+		JList list_3 = new JList();
+		list_3.setBackground(Color.WHITE);
+		list_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list_3.setBounds(166, 95, 165, 63);
+		panel_8.add(list_3);
+		
+		JLabel lblNadreeni = new JLabel("Nadređeni:");
+		lblNadreeni.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNadreeni.setBounds(66, 254, 102, 14);
+		panel_8.add(lblNadreeni);
+		
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBorder(null);
+		textField_5.setBackground(Color.WHITE);
+		textField_5.setBounds(166, 67, 165, 20);
+		panel_8.add(textField_5);
+		
+		JButton btnUkloniZaposlenikaSa = new JButton("Ukloni zaposlenika sa projekta");
+		btnUkloniZaposlenikaSa.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnUkloniZaposlenikaSa.setBounds(21, 336, 178, 23);
+		panel_8.add(btnUkloniZaposlenikaSa);
+		
+		JLabel lblArhivirajProjekat = new JLabel("Arhiviraj projekat:");
+		lblArhivirajProjekat.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblArhivirajProjekat.setBounds(30, 289, 102, 14);
+		panel_8.add(lblArhivirajProjekat);
+		
+		JCheckBox chckbxArhiviraj = new JCheckBox("");
+		chckbxArhiviraj.setBounds(162, 285, 97, 23);
+		panel_8.add(chckbxArhiviraj);
+		
+		JList list_5 = new JList();
+		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list_5.setBackground(Color.WHITE);
+		list_5.setBounds(166, 169, 165, 63);
+		panel_8.add(list_5);
+		
+		JLabel lblDodajZaposelenike = new JLabel("Dodaj zaposelenike:");
+		lblDodajZaposelenike.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblDodajZaposelenike.setBounds(21, 169, 97, 14);
+		panel_8.add(lblDodajZaposelenike);
+		
+		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3.setBounds(166, 251, 165, 20);
+		panel_8.add(comboBox_3);
 		
 		JButton button = new JButton("Sačuvaj promjene");
 		button.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		button.setBounds(215, 336, 119, 23);
-		panel_11.add(button);
+		button.setBounds(212, 336, 119, 23);
+		panel_8.add(button);
+		
+		JPanel korisniciPanel = new JPanel();
+		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
+		korisniciPanel.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(30, 22, 355, 370);
+		korisniciPanel.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JList list_2 = new JList();
+		list_2.setBounds(22, 116, 309, 209);
+		panel_1.add(list_2);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
+		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		chckbxNewCheckBox.setBounds(22, 86, 170, 23);
+		panel_1.add(chckbxNewCheckBox);
+		
+		JButton btnNewButton_1 = new JButton("Prikaži profil");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new KorisnikFormKoordinator().setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(212, 336, 119, 23);
+		panel_1.add(btnNewButton_1);
+		
+		JLabel label_11 = new JLabel("Izaberite parametar pretrage:");
+		label_11.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_11.setBounds(22, 29, 170, 14);
+		panel_1.add(label_11);
+		
+		JComboBox comboBox_4 = new JComboBox();
+		comboBox_4.setBounds(22, 56, 99, 23);
+		panel_1.add(comboBox_4);
+		
+		textField_6 = new JTextField();
+		textField_6.setColumns(10);
+		textField_6.setBounds(128, 56, 124, 23);
+		panel_1.add(textField_6);
+		
+		JButton button_1 = new JButton("Pretraži");
+		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		button_1.setBounds(262, 56, 69, 23);
+		panel_1.add(button_1);
 		
 		JPanel izvjestajiPanel = new JPanel();
 		tabbedPane.addTab("Izvještaji", null, izvjestajiPanel, null);
@@ -420,7 +581,7 @@ public class MainFormKoordinator extends JFrame {
 		lblDo_1.setBounds(177, 289, 46, 14);
 		panel_7.add(lblDo_1);
 		
-		JButton btnNewButton_3 = new JButton("Generisi izvjestaj");
+		JButton btnNewButton_3 = new JButton("Generiši izvještaj");
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton_3.setBounds(75, 336, 197, 23);
 		panel_7.add(btnNewButton_3);
