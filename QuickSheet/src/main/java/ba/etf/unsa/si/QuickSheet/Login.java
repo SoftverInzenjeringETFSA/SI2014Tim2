@@ -50,17 +50,18 @@ public class Login extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
 		setTitle("QuickSheet - Login");
 		setResizable(false);
-		setBounds(100, 100, 415, 352);
+		setBounds(100, 100, 394, 352);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		JLabel lblDobrodosliUQuicksheet = new JLabel("Dobrodošli u QuickSheet - Jednostavnu aplikaciju za evidentiranje radnih sati.");
 		lblDobrodosliUQuicksheet.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDobrodosliUQuicksheet.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDobrodosliUQuicksheet.setBounds(0, 11, 402, 32);
+		lblDobrodosliUQuicksheet.setBounds(0, 11, 385, 32);
 		getContentPane().add(lblDobrodosliUQuicksheet);
 		
 		txtIme = new JTextField();
+		txtIme.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIme.setBounds(71, 91, 235, 20);
 		getContentPane().add(txtIme);
 		txtIme.setColumns(10);
@@ -77,6 +78,7 @@ public class Login extends JFrame {
 		getContentPane().add(lblVaeKorisnikoIme);
 		
 		txtPassword = new JPasswordField();
+		txtPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setLabelFor(txtPassword);
 		txtPassword.setBounds(71, 154, 235, 20);
 		getContentPane().add(txtPassword);

@@ -108,7 +108,7 @@ public class MainFormZaposlenik extends JFrame {
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(null, "Timesheet podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(30, 22, 711, 354);
+		panel_4.setBounds(30, 22, 703, 354);
 		timeSheetPanel.add(panel_4);
 		panel_4.setLayout(null);
 		

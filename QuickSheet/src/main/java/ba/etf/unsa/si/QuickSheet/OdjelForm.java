@@ -68,9 +68,9 @@ public class OdjelForm extends JFrame {
 		textField.setBounds(190, 30, 141, 20);
 		panel.add(textField);
 		
-		JLabel lblZaposlenici = new JLabel("Zaposlenici na projektu:");
+		JLabel lblZaposlenici = new JLabel("Zaposlenici u odjelu:");
 		lblZaposlenici.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblZaposlenici.setBounds(30, 58, 114, 29);
+		lblZaposlenici.setBounds(43, 55, 97, 29);
 		panel.add(lblZaposlenici);
 		
 		JLabel label_2 = new JLabel("Rukovodilac odjela:");
