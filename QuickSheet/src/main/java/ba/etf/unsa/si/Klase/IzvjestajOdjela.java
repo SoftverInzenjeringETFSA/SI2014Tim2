@@ -83,4 +83,49 @@ public class IzvjestajOdjela extends Izvjestaj{
 	{
 		ukupnoVrijemeRada = 0.0;
 	}
+	
+	@Override
+	public void IzracunajProcenatZavrsenogRada(int mjesec) throws InvalidAttributeValueException {
+		double ukupanProcenatOdjela = 0.0;
+		for (Zaposlenik zap: odjel.getZaposlenici())
+		{
+			if (projekat.getZaposlenici().contains(zap))
+			{
+				IzvjestajZaposlenika iz = new IzvjestajZaposlenika(projekat, zap);
+				iz.IzracunajProcenatZavrsenogRada(mjesec);
+				ukupanBrojTaskovaOdjela += iz.getUkupanBrojTaskova();
+				ukupanProcenatOdjela += iz.decimalanProcenat;
+			}
+		}
+		procenatZavrsenogRada = ukupanProcenatOdjela / ukupanBrojTaskovaOdjela;
+	}
+	
+	@Override
+	public void IzracunajTrosak(int mjesec) throws InvalidAttributeValueException {
+		trosak = 0.0;
+		IzracunajUkupnoVrijemeRada();
+		for (Zaposlenik zap: odjel.getZaposlenici())
+		{
+			if (projekat.getZaposlenici().contains(zap))
+			{
+				IzvjestajZaposlenika iz = new IzvjestajZaposlenika(projekat, zap);
+				iz.IzracunajTrosak(mjesec);
+				trosak += iz.getTrosak();
+				ukupnoVrijemeRada += iz.getUkupnoVrijemeRada();
+			}
+		}
+	}
+	@Override
+	public void IzracunajUkupnoVrijemeRada(int mjesec) throws InvalidAttributeValueException {
+		ukupnoVrijemeRada = 0.0;
+		for (Zaposlenik zap: odjel.getZaposlenici())
+		{
+			if (projekat.getZaposlenici().contains(zap))
+			{
+				IzvjestajZaposlenika iz = new IzvjestajZaposlenika(projekat, zap);
+				iz.IzracunajUkupnoVrijemeRada(mjesec);
+				ukupnoVrijemeRada = 0.0;
+			}
+		}
+	}
 }
