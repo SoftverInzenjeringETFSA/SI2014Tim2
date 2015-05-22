@@ -18,10 +18,13 @@ import javax.swing.SwingConstants;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
+import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.util.HibernateUtil;
 
 import java.awt.Toolkit;
+import java.util.LinkedList;
 
 public class Login extends JFrame {
 	private JTextField txtIme;
@@ -100,15 +103,15 @@ public class Login extends JFrame {
 					new MainFormKoordinator().setVisible(true);
 				}
 				else if(textFieldValue.equals("baza")){
-					
 					Session session = HibernateUtil.getSessionFactory().openSession();
-					Transaction t = session.beginTransaction();
-					AdministratorHibernate s = new AdministratorHibernate();
-					s.setLozinka("Meho");
-					s.setUsername("Mehic");
-					Long id = (Long) session.save(s);
-					t.commit();
+					Transaction transaction = session.beginTransaction();
+					AdministratorHibernate ah = new AdministratorHibernate();
+					ah.setLozinka("dsds");
+					ah.setUsername("sasdsa");
+					session.save(ah);
+					transaction.commit();
 					session.close();
+					
 				}
 				else{
 					new MainFormZaposlenik().setVisible(true);

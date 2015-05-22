@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 22, 2015 2:06:05 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ba.etf.unsa.si.KlaseHibernate.TimesheetTaskHibernate" table="TIMESHEETTASKHIBERNATE">
+        <id name="id" type="long">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="timesheet" class="ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate" fetch="join">
+            <column name="TIMESHEET" />
+        </many-to-one>
+        <many-to-one name="task" class="ba.etf.unsa.si.KlaseHibernate.TaskHibernate" fetch="join">
+            <column name="TASK" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
