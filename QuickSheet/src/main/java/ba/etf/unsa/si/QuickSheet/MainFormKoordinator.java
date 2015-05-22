@@ -125,9 +125,9 @@ public class MainFormKoordinator extends JFrame {
 		lblTaskovi.setBounds(56, 120, 46, 14);
 		panel_4.add(lblTaskovi);
 		
-		JLabel lblBrojSati = new JLabel("Broj radnih sati:");
+		JLabel lblBrojSati = new JLabel("Ukupan broj radnih sati:");
 		lblBrojSati.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblBrojSati.setBounds(26, 248, 76, 14);
+		lblBrojSati.setBounds(10, 248, 116, 14);
 		panel_4.add(lblBrojSati);
 		
 		JSpinner spinner_2 = new JSpinner();
@@ -392,75 +392,80 @@ public class MainFormKoordinator extends JFrame {
 		textField_4.setBorder(null);
 		textField_4.setBackground(Color.WHITE);
 		textField_4.setColumns(10);
-		textField_4.setBounds(166, 36, 165, 20);
+		textField_4.setBounds(166, 25, 165, 20);
 		panel_8.add(textField_4);
 		
 		JLabel label_7 = new JLabel("Naziv:");
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_7.setBounds(86, 39, 82, 14);
+		label_7.setBounds(86, 28, 82, 14);
 		panel_8.add(label_7);
 		
 		JLabel label_10 = new JLabel("Naziv klijenta:");
 		label_10.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_10.setBounds(51, 70, 102, 14);
+		label_10.setBounds(51, 53, 102, 14);
 		panel_8.add(label_10);
 		
 		JLabel lblZaposlenici_1 = new JLabel("Zaposlenici:");
 		lblZaposlenici_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblZaposlenici_1.setBounds(62, 95, 56, 14);
+		lblZaposlenici_1.setBounds(62, 78, 56, 14);
 		panel_8.add(lblZaposlenici_1);
 		
 		JList list_3 = new JList();
 		list_3.setBackground(Color.WHITE);
 		list_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		list_3.setBounds(166, 95, 165, 63);
+		list_3.setBounds(166, 78, 165, 63);
 		panel_8.add(list_3);
 		
 		JLabel lblNadreeni = new JLabel("Nadređeni:");
 		lblNadreeni.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNadreeni.setBounds(66, 254, 102, 14);
+		lblNadreeni.setBounds(66, 271, 102, 14);
 		panel_8.add(lblNadreeni);
 		
 		textField_5 = new JTextField();
 		textField_5.setColumns(10);
 		textField_5.setBorder(null);
 		textField_5.setBackground(Color.WHITE);
-		textField_5.setBounds(166, 67, 165, 20);
+		textField_5.setBounds(166, 50, 165, 20);
 		panel_8.add(textField_5);
-		
-		JButton btnUkloniZaposlenikaSa = new JButton("Ukloni zaposlenika sa projekta");
-		btnUkloniZaposlenikaSa.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnUkloniZaposlenikaSa.setBounds(21, 336, 178, 23);
-		panel_8.add(btnUkloniZaposlenikaSa);
 		
 		JLabel lblArhivirajProjekat = new JLabel("Arhiviraj projekat:");
 		lblArhivirajProjekat.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblArhivirajProjekat.setBounds(30, 289, 102, 14);
+		lblArhivirajProjekat.setBounds(30, 306, 102, 14);
 		panel_8.add(lblArhivirajProjekat);
 		
 		JCheckBox chckbxArhiviraj = new JCheckBox("");
-		chckbxArhiviraj.setBounds(162, 285, 97, 23);
+		chckbxArhiviraj.setBounds(162, 302, 97, 23);
 		panel_8.add(chckbxArhiviraj);
 		
 		JList list_5 = new JList();
 		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list_5.setBackground(Color.WHITE);
-		list_5.setBounds(166, 169, 165, 63);
+		list_5.setBounds(166, 171, 165, 63);
 		panel_8.add(list_5);
 		
 		JLabel lblDodajZaposelenike = new JLabel("Dodaj zaposlenike:");
 		lblDodajZaposelenike.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDodajZaposelenike.setBounds(28, 169, 90, 14);
+		lblDodajZaposelenike.setBounds(28, 171, 90, 14);
 		panel_8.add(lblDodajZaposelenike);
 		
 		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(166, 251, 165, 20);
+		comboBox_3.setBounds(166, 268, 165, 20);
 		panel_8.add(comboBox_3);
 		
 		JButton button = new JButton("Sačuvaj promjene");
 		button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button.setBounds(212, 336, 119, 23);
 		panel_8.add(button);
+		
+		JButton btnUkloni = new JButton("Dodaj");
+		btnUkloni.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnUkloni.setBounds(249, 145, 82, 23);
+		panel_8.add(btnUkloni);
+		
+		JButton button_3 = new JButton("Ukloni");
+		button_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		button_3.setBounds(249, 238, 82, 23);
+		panel_8.add(button_3);
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBorder(new TitledBorder(null, "Taskovi", TitledBorder.LEADING, TitledBorder.TOP, null, null));

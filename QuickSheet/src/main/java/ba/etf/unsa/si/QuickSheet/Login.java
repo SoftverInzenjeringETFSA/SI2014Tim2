@@ -70,7 +70,7 @@ public class Login extends JFrame {
 		txtIme = new JTextField();
 		txtIme.setDisabledTextColor(Color.WHITE);
 		txtIme.setCaretColor(Color.WHITE);
-		txtIme.setForeground(UIManager.getColor("TextField.background"));
+		txtIme.setForeground(Color.DARK_GRAY);
 		txtIme.setBackground(Color.WHITE);
 		txtIme.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIme.setBounds(71, 91, 235, 20);
