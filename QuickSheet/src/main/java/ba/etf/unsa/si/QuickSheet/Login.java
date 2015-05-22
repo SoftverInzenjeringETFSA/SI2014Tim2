@@ -2,6 +2,7 @@ package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
 
+import javax.naming.directory.InvalidAttributeValueException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -18,6 +19,7 @@ import javax.swing.SwingConstants;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
@@ -50,6 +52,8 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setBackground(UIManager.getColor("Button.darkShadow"));
+		getContentPane().setBackground(UIManager.getColor("Button.darkShadow"));
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setTitle("QuickSheet - Login");
 		setResizable(false);
@@ -103,14 +107,16 @@ public class Login extends JFrame {
 					new MainFormKoordinator().setVisible(true);
 				}
 				else if(textFieldValue.equals("baza")){
-					Session session = HibernateUtil.getSessionFactory().openSession();
-					Transaction transaction = session.beginTransaction();
-					AdministratorHibernate ah = new AdministratorHibernate();
-					ah.setLozinka("dsds");
-					ah.setUsername("sasdsa");
-					session.save(ah);
-					transaction.commit();
-					session.close();
+					try {
+						Administrator admin = new Administrator("Administrator", "dssdsdsds");
+						boolean validacija = DalDao.VerifikujAdministratora(admin);
+						System.out.println(validacija);
+						DalDao.VerifikujAdministratora(admin);
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 				}
 				else{
