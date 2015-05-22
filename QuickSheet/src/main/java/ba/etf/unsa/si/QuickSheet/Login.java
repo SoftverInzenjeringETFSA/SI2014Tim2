@@ -62,40 +62,50 @@ public class Login extends JFrame {
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		JLabel lblDobrodosliUQuicksheet = new JLabel("Dobrodošli u QuickSheet - Jednostavnu aplikaciju za evidentiranje radnih sati.");
+		lblDobrodosliUQuicksheet.setForeground(UIManager.getColor("Button.highlight"));
 		lblDobrodosliUQuicksheet.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDobrodosliUQuicksheet.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblDobrodosliUQuicksheet.setBounds(0, 11, 385, 32);
 		getContentPane().add(lblDobrodosliUQuicksheet);
 		
 		txtIme = new JTextField();
+		txtIme.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtIme.setForeground(UIManager.getColor("Button.foreground"));
 		txtIme.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIme.setBounds(71, 91, 235, 20);
 		getContentPane().add(txtIme);
 		txtIme.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Vaša lozinka:");
+		lblNewLabel.setForeground(UIManager.getColor("Button.highlight"));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setBounds(155, 134, 71, 20);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblVaeKorisnikoIme = new JLabel("Vaše korisničko ime:");
+		lblVaeKorisnikoIme.setForeground(UIManager.getColor("Button.highlight"));
 		lblVaeKorisnikoIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblVaeKorisnikoIme.setLabelFor(txtIme);
 		lblVaeKorisnikoIme.setBounds(142, 72, 101, 20);
 		getContentPane().add(lblVaeKorisnikoIme);
 		
 		txtPassword = new JPasswordField();
+		txtPassword.setFont(new Font("Stencil", Font.BOLD, 11));
+		txtPassword.setForeground(UIManager.getColor("Button.foreground"));
 		txtPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setLabelFor(txtPassword);
 		txtPassword.setBounds(71, 154, 235, 20);
 		getContentPane().add(txtPassword);
 		
 		JLabel lblUkolikoSteZaboravili = new JLabel("Ukoliko ste zaboravili svoju lozinku, molimo da se obratite Vašem Administratoru.");
+		lblUkolikoSteZaboravili.setForeground(UIManager.getColor("Button.background"));
 		lblUkolikoSteZaboravili.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		lblUkolikoSteZaboravili.setBounds(34, 177, 351, 20);
+		lblUkolikoSteZaboravili.setBounds(27, 176, 351, 20);
 		getContentPane().add(lblUkolikoSteZaboravili);
 		
 		JButton btnNewButton = new JButton("Prijava");
+		btnNewButton.setBackground(UIManager.getColor("CheckBoxMenuItem.selectionBackground"));
+		btnNewButton.setForeground(UIManager.getColor("Button.foreground"));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
