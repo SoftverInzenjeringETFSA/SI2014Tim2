@@ -179,17 +179,8 @@ public class Login extends JFrame {
 					new MainFormZaposlenik().setVisible(true);
 				}
 				else if(textFieldValue.equals("baza")){
-					try {
-						
-						ArrayList<ZaposlenikHibernate> zh = new ArrayList<ZaposlenikHibernate>();
-						zh = DalDao.VratiNadredjeneZaposlenike();
-						System.out.println(zh.size());
-						
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
+					labela1.setVisible(true);
+					labela1.setText("Konflikt baza");
 				}
 				else{
 					
