@@ -1,4 +1,3 @@
-
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.BorderLayout;
@@ -179,4 +178,4 @@ public class KorisnikForm extends JFrame {
 		label_error.setBounds(0, 386, 386, 14);
 		contentPane.add(label_error);
 	}
-}
+	}
