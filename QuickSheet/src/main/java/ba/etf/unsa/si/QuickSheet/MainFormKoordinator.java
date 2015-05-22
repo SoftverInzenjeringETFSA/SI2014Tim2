@@ -174,6 +174,12 @@ public class MainFormKoordinator extends JFrame {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
+			boolean[] columnEditables = new boolean[] {
+				false, true, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
 		});
 		table.getColumnModel().getColumn(0).setPreferredWidth(123);
 		table.getColumnModel().getColumn(1).setPreferredWidth(126);
@@ -463,6 +469,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_9.setLayout(null);
 		
 		JLabel lblPrikazTaskova = new JLabel("Prikaz taskova:");
+		lblPrikazTaskova.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblPrikazTaskova.setBounds(21, 22, 82, 14);
 		panel_9.add(lblPrikazTaskova);
 		
@@ -473,6 +480,7 @@ public class MainFormKoordinator extends JFrame {
 		JButton btnDodajTask = new JButton("Dodaj task");
 		btnDodajTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				new TaskForm().setVisible(true);
 			}
 		});
 		btnDodajTask.setFont(new Font("Tahoma", Font.PLAIN, 10));

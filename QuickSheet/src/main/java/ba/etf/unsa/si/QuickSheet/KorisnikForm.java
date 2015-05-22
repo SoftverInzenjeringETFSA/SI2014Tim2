@@ -172,5 +172,10 @@ public class KorisnikForm extends JFrame {
 		JCheckBox checkBox = new JCheckBox("");
 		checkBox.setBounds(164, 304, 97, 23);
 		panel.add(checkBox);
+		
+		JLabel label_error = new JLabel("");
+		label_error.setVisible(false);
+		label_error.setBounds(0, 386, 386, 14);
+		contentPane.add(label_error);
 	}
 }

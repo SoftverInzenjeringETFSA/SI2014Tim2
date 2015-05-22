@@ -68,8 +68,10 @@ public class Login extends JFrame {
 		getContentPane().add(lblDobrodosliUQuicksheet);
 		
 		txtIme = new JTextField();
+		txtIme.setDisabledTextColor(Color.WHITE);
+		txtIme.setCaretColor(Color.WHITE);
 		txtIme.setForeground(UIManager.getColor("TextField.background"));
-		txtIme.setBackground(UIManager.getColor("TextArea.selectionForeground"));
+		txtIme.setBackground(Color.WHITE);
 		txtIme.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIme.setBounds(71, 91, 235, 20);
 		getContentPane().add(txtIme);
@@ -100,17 +102,39 @@ public class Login extends JFrame {
 		lblUkolikoSteZaboravili.setBounds(21, 175, 357, 20);
 		getContentPane().add(lblUkolikoSteZaboravili);
 		
+		
+		
+		
+		JCheckBox chckbxAdministrator = new JCheckBox("Administrator");
+		chckbxAdministrator.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		chckbxAdministrator.setForeground(UIManager.getColor("Button.highlight"));
+		chckbxAdministrator.setBackground(UIManager.getColor("Button.darkShadow"));
+		chckbxAdministrator.setBounds(142, 207, 97, 23);
+		getContentPane().add(chckbxAdministrator);
+		
+		final JLabel labela1 = new JLabel("");
+		labela1.setForeground(Color.RED);
+		labela1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		labela1.setVisible(false);
+		labela1.setBounds(0, 305, 385, 18);
+		getContentPane().add(labela1);
+		
 		JButton btnNewButton = new JButton("Prijava");
 		btnNewButton.setBackground(UIManager.getColor("TextArea.selectionBackground"));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				String textFieldValue = txtIme.getText();
 				if(textFieldValue.equals("administrator")){
+					
 					new MainForm().setVisible(true);
 				}
 				else if(textFieldValue.equals("koordinator")){
 					new MainFormKoordinator().setVisible(true);
+				}
+				else if(textFieldValue.equals("zaposlenik")){
+					new MainFormZaposlenik().setVisible(true);
 				}
 				else if(textFieldValue.equals("baza")){
 					Session session = HibernateUtil.getSessionFactory().openSession();
@@ -124,18 +148,15 @@ public class Login extends JFrame {
 					
 				}
 				else{
-					new MainFormZaposlenik().setVisible(true);
+					
+					labela1.setVisible(true);
+					labela1.setText("Morate unijeti odgovarajući username ili password!");
 				}
+				
 		}
 		});
 		btnNewButton.setBounds(142, 271, 89, 23);
 		getContentPane().add(btnNewButton);
-		
-		JCheckBox chckbxAdministrator = new JCheckBox("Administrator");
-		chckbxAdministrator.setForeground(UIManager.getColor("Button.highlight"));
-		chckbxAdministrator.setBackground(UIManager.getColor("Button.darkShadow"));
-		chckbxAdministrator.setBounds(142, 207, 97, 23);
-		getContentPane().add(chckbxAdministrator);
 
 	}
 }

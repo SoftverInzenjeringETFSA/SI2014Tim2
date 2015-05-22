@@ -54,7 +54,8 @@ public class TaskForm extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		setLocationRelativeTo(null);
+
 		JPanel panel = new JPanel();
 		panel.setBounds(22, 11, 327, 197);
 		panel.setBorder(new TitledBorder(null, "Dodaj task", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -62,6 +63,7 @@ public class TaskForm extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNazivTaska = new JLabel("Naziv taska:");
+		lblNazivTaska.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNazivTaska.setBounds(26, 25, 59, 14);
 		panel.add(lblNazivTaska);
 		
@@ -71,6 +73,7 @@ public class TaskForm extends JFrame {
 		textField.setColumns(10);
 		
 		JLabel lblOpisTaska = new JLabel("Opis taska:");
+		lblOpisTaska.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblOpisTaska.setBounds(31, 62, 54, 14);
 		panel.add(lblOpisTaska);
 		
@@ -80,26 +83,30 @@ public class TaskForm extends JFrame {
 		panel.add(textField_1);
 		
 		JLabel lblPrioritet = new JLabel("Prioritet:");
+		lblPrioritet.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblPrioritet.setBounds(42, 121, 42, 14);
 		panel.add(lblPrioritet);
 		
 		JSpinner spinner = new JSpinner();
+		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner.setModel(new SpinnerNumberModel(1, 1, 10, 1));
 		spinner.setBounds(96, 118, 29, 20);
 		panel.add(spinner);
 		
 		JLabel lblNewLabel = new JLabel("Rok:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setBounds(63, 96, 22, 14);
 		panel.add(lblNewLabel);
 		
 		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_1.setModel(new SpinnerDateModel(new Date(1432245600000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner_1.setBounds(95, 90, 202, 20);
 		panel.add(spinner_1);
 		
 		JButton btnNewButton = new JButton("Dodaj task");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnNewButton.setBounds(156, 154, 141, 23);
+		btnNewButton.setBounds(196, 154, 101, 23);
 		panel.add(btnNewButton);
 	}
 }

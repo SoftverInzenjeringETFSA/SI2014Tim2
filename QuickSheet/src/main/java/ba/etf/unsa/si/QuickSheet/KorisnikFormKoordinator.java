@@ -192,5 +192,10 @@ public class KorisnikFormKoordinator extends JFrame {
 		textField_6.setBackground(Color.WHITE);
 		textField_6.setBounds(164, 255, 167, 20);
 		panel.add(textField_6);
+		
+		JLabel labela_error = new JLabel("");
+		labela_error.setVisible(false);
+		labela_error.setBounds(0, 312, 383, 14);
+		contentPane.add(labela_error);
 	}
 }

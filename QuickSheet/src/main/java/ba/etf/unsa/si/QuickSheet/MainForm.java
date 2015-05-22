@@ -100,7 +100,7 @@ public class MainForm extends JFrame {
 		setResizable(false);
 		setTitle("QuickSheet");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 765, 459);
+		setBounds(100, 100, 765, 476);
 		getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -144,6 +144,12 @@ public class MainForm extends JFrame {
 		textField_44.setColumns(10);
 		
 		JButton btnDodaj_1 = new JButton("Dodaj");
+		btnDodaj_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			}
+		});
 		btnDodaj_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDodaj_1.setBounds(242, 308, 89, 23);
 		panel_2.add(btnDodaj_1);
@@ -539,6 +545,11 @@ public class MainForm extends JFrame {
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_1.setBounds(193, 138, 110, 23);
 		panel_6.add(button_1);
+		
+		JLabel labela_error = new JLabel("");
+		labela_error.setVisible(false);
+		labela_error.setBounds(0, 433, 764, 14);
+		getContentPane().add(labela_error);
 		
 	}
 
