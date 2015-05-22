@@ -43,7 +43,7 @@ public class PrikazTimesheeta extends JFrame {
 	 * Create the frame.
 	 */
 	public PrikazTimesheeta() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("Prikaz timesheeta");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

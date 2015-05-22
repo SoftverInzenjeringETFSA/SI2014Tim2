@@ -50,7 +50,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setTitle("QuickSheet - Login");
 		setResizable(false);
 		setBounds(100, 100, 394, 352);

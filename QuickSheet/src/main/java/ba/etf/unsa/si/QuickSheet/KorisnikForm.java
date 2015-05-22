@@ -48,7 +48,7 @@ public class KorisnikForm extends JFrame {
 	 * Create the frame.
 	 */
 	public KorisnikForm() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setFont(new Font("Dialog", Font.PLAIN, 11));
 		setResizable(false);

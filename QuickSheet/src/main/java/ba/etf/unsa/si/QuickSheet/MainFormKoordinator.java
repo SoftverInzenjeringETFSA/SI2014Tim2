@@ -83,7 +83,7 @@ public class MainFormKoordinator extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFormKoordinator() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -328,35 +328,35 @@ public class MainFormKoordinator extends JFrame {
 		JPanel panel_11 = new JPanel();
 		panel_11.setLayout(null);
 		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga projekta", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_11.setBounds(30, 22, 355, 370);
+		panel_11.setBounds(30, 22, 355, 201);
 		projektiPanel.add(panel_11);
 		
 		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikaži arhivirane projekte");
 		chckbxPrikaziArhiviraneProjekte.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxPrikaziArhiviraneProjekte.setBounds(22, 86, 149, 23);
+		chckbxPrikaziArhiviraneProjekte.setBounds(22, 75, 149, 23);
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
 		
 		JComboBox comboBox_17 = new JComboBox();
-		comboBox_17.setBounds(22, 56, 99, 23);
+		comboBox_17.setBounds(22, 45, 99, 23);
 		panel_11.add(comboBox_17);
 		
 		JButton btnPretrai_1 = new JButton("Pretraži");
 		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPretrai_1.setBounds(262, 56, 69, 23);
+		btnPretrai_1.setBounds(262, 45, 69, 23);
 		panel_11.add(btnPretrai_1);
 		
 		textField_46 = new JTextField();
-		textField_46.setBounds(128, 56, 124, 23);
+		textField_46.setBounds(128, 45, 124, 23);
 		panel_11.add(textField_46);
 		textField_46.setColumns(10);
 		
 		JList list_1 = new JList();
-		list_1.setBounds(22, 116, 309, 243);
+		list_1.setBounds(22, 105, 309, 85);
 		panel_11.add(list_1);
 		
 		JLabel lblIzaberiteParametarPretrage = new JLabel("Izaberite parametar pretrage:");
 		lblIzaberiteParametarPretrage.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblIzaberiteParametarPretrage.setBounds(22, 29, 170, 14);
+		lblIzaberiteParametarPretrage.setBounds(22, 22, 170, 14);
 		panel_11.add(lblIzaberiteParametarPretrage);
 		
 		JPanel panel_8 = new JPanel();
@@ -425,9 +425,9 @@ public class MainFormKoordinator extends JFrame {
 		list_5.setBounds(166, 169, 165, 63);
 		panel_8.add(list_5);
 		
-		JLabel lblDodajZaposelenike = new JLabel("Dodaj zaposelenike:");
+		JLabel lblDodajZaposelenike = new JLabel("Dodaj zaposlenike:");
 		lblDodajZaposelenike.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDodajZaposelenike.setBounds(21, 169, 97, 14);
+		lblDodajZaposelenike.setBounds(28, 169, 90, 14);
 		panel_8.add(lblDodajZaposelenike);
 		
 		JComboBox comboBox_3 = new JComboBox();
@@ -438,6 +438,29 @@ public class MainFormKoordinator extends JFrame {
 		button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button.setBounds(212, 336, 119, 23);
 		panel_8.add(button);
+		
+		JPanel panel_9 = new JPanel();
+		panel_9.setBorder(new TitledBorder(null, "Taskovi", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_9.setBounds(30, 226, 355, 166);
+		projektiPanel.add(panel_9);
+		panel_9.setLayout(null);
+		
+		JLabel lblPrikazTaskova = new JLabel("Prikaz taskova:");
+		lblPrikazTaskova.setBounds(21, 22, 82, 14);
+		panel_9.add(lblPrikazTaskova);
+		
+		JList list_7 = new JList();
+		list_7.setBounds(21, 37, 309, 85);
+		panel_9.add(list_7);
+		
+		JButton btnDodajTask = new JButton("Dodaj task");
+		btnDodajTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnDodajTask.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnDodajTask.setBounds(211, 133, 119, 23);
+		panel_9.add(btnDodajTask);
 		
 		JPanel korisniciPanel = new JPanel();
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);

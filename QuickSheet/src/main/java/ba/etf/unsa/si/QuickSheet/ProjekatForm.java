@@ -41,7 +41,7 @@ public class ProjekatForm extends JFrame {
 	 * Create the frame.
 	 */
 	public ProjekatForm() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setTitle("Prikaz projekta");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

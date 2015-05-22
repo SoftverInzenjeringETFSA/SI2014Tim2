@@ -96,7 +96,7 @@ public class MainForm extends JFrame {
 	 * Create the frame.
 	 */
 	public MainForm() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
