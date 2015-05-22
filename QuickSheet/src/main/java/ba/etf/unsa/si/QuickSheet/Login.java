@@ -23,9 +23,12 @@ import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 import ba.etf.unsa.si.util.HibernateUtil;
 
 import java.awt.Toolkit;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Login extends JFrame {
@@ -118,10 +121,10 @@ public class Login extends JFrame {
 				}
 				else if(textFieldValue.equals("baza")){
 					try {
-						Administrator admin = new Administrator("Administrator", "dssdsdsds");
-						boolean validacija = DalDao.VerifikujAdministratora(admin);
-						System.out.println(validacija);
-						DalDao.VerifikujAdministratora(admin);
+						
+						ArrayList<ZaposlenikHibernate> zh = new ArrayList<ZaposlenikHibernate>();
+						zh = DalDao.VratiNadredjeneZaposlenike();
+						System.out.println(zh.size());
 						
 					} catch (Exception e) {
 						// TODO Auto-generated catch block

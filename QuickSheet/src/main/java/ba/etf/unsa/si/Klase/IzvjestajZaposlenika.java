@@ -6,8 +6,6 @@ import java.util.Set;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
-import com.sun.jmx.snmp.tasks.Task;
-
 public class IzvjestajZaposlenika extends Izvjestaj{
 
 	private Zaposlenik zaposlenik;
@@ -55,9 +53,9 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 
 	@Override
 	public void IzracunajProcenatZavrsenogRada() {
-		LinkedList<Task> taskovi = projekat.getTaskovi();
+		LinkedList<ba.etf.unsa.si.Klase.Task> taskovi = projekat.getTaskovi();
 		Hashtable<String, Double> taskoviZaposlenik = new Hashtable<String, Double>();
-		for (Task ta: taskovi)
+		for (ba.etf.unsa.si.Klase.Task ta: taskovi)
 		{
 			if (ta.getZaposlenik().equals(zaposlenik))
 				ukupanBrojTaskova++;
@@ -66,7 +64,7 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 		{
 			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran())
 			{
-				for (Task task: t.getTaskovi())
+				for (ba.etf.unsa.si.Klase.Task task: t.getTaskovi())
 				{
 					taskoviZaposlenik.put(task.getNaziv(), task.getProcenatZavrsenosti());
 				}
@@ -102,12 +100,12 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 	//mjesec od 1(januar) do 12(decembar)
 	@Override
 	public void IzracunajProcenatZavrsenogRada(int mjesec) throws InvalidAttributeValueException {
-		LinkedList<Task> taskovi = projekat.getTaskovi();
+		LinkedList<ba.etf.unsa.si.Klase.Task> taskovi = projekat.getTaskovi();
 		Hashtable<String, Double> taskoviZaposlenik = new Hashtable<String, Double>();
 		
-		for (Task ta: taskovi)
+		for (ba.etf.unsa.si.Klase.Task ta: taskovi)
 		{
-			if (ta.getZaposlenik().equals(zaposlenik) && ta.getRok().getMonth().getValue() == mjesec))
+			if (ta.getZaposlenik().equals(zaposlenik) && ta.getRok().getMonth().getValue() == mjesec)
 			{
 				ukupanBrojTaskova++;
 			}
@@ -117,9 +115,9 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 		{
 			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran())
 			{
-				for (Task task: t.getTaskovi())
+				for (ba.etf.unsa.si.Klase.Task task: t.getTaskovi())
 				{
-					if(task.rok.getMonth().getValue() == mjesec) 
+					if(task.getRok().getMonth().getValue() == mjesec) 
 					{
 						taskoviZaposlenik.put(task.getNaziv(), task.getProcenatZavrsenosti());
 					}
