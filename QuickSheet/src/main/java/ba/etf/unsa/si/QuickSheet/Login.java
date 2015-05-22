@@ -25,6 +25,8 @@ import ba.etf.unsa.si.util.HibernateUtil;
 
 import java.awt.Toolkit;
 import java.util.LinkedList;
+import javax.swing.JCheckBox;
+import java.awt.Color;
 
 public class Login extends JFrame {
 	private JTextField txtIme;
@@ -126,8 +128,14 @@ public class Login extends JFrame {
 				}
 		}
 		});
-		btnNewButton.setBounds(142, 238, 89, 23);
+		btnNewButton.setBounds(142, 271, 89, 23);
 		getContentPane().add(btnNewButton);
+		
+		JCheckBox chckbxAdministrator = new JCheckBox("Administrator");
+		chckbxAdministrator.setForeground(UIManager.getColor("Button.highlight"));
+		chckbxAdministrator.setBackground(UIManager.getColor("Button.darkShadow"));
+		chckbxAdministrator.setBounds(142, 207, 97, 23);
+		getContentPane().add(chckbxAdministrator);
 
 	}
 }

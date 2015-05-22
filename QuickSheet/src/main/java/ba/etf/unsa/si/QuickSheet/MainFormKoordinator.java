@@ -53,12 +53,12 @@ public class MainFormKoordinator extends JFrame {
 	private JTextField textField;
 	private JTextField textField_46;
 	private JTextField textField_1;
-	private JTextField textField_3;
 	private JTextField textField_2;
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
+	private JTable table;
 
 	
 	
@@ -147,6 +147,37 @@ public class MainFormKoordinator extends JFrame {
 		label.setBounds(68, 294, 35, 14);
 		panel_4.add(label);
 		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(136, 120, 519, 106);
+		panel_4.add(scrollPane_2);
+		
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		table.setRowSelectionAllowed(true);
+		
+		scrollPane_2.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+			},
+			new String[] {
+				"Naziv taska", "Procenat zavr\u0161enosti", "Broj radnih sati"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, Integer.class, Integer.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(123);
+		table.getColumnModel().getColumn(1).setPreferredWidth(126);
+		table.getColumnModel().getColumn(2).setPreferredWidth(120);
 		
 		
 		
@@ -288,14 +319,9 @@ public class MainFormKoordinator extends JFrame {
 		lblZaposlenici.setBounds(85, 58, 66, 29);
 		panel_5.add(lblZaposlenici);
 		
-		JLabel label_8 = new JLabel("Rukovodilac odjela:");
-		label_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_8.setBounds(50, 215, 102, 14);
-		panel_5.add(label_8);
-		
 		JLabel label_9 = new JLabel("Maksimalni broj zaposlenika:");
 		label_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_9.setBounds(10, 243, 152, 14);
+		label_9.setBounds(10, 207, 152, 14);
 		panel_5.add(label_9);
 		
 		JList list = new JList();
@@ -303,22 +329,13 @@ public class MainFormKoordinator extends JFrame {
 		list.setBounds(190, 61, 141, 135);
 		panel_5.add(list);
 		
-		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
-		textField_3.setEditable(false);
-		textField_3.setColumns(10);
-		textField_3.setBorder(null);
-		textField_3.setBackground(Color.WHITE);
-		textField_3.setBounds(190, 212, 141, 20);
-		panel_5.add(textField_3);
-		
 		textField_2 = new JTextField();
 		textField_2.setEnabled(false);
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBorder(null);
 		textField_2.setBackground(Color.WHITE);
-		textField_2.setBounds(190, 243, 141, 20);
+		textField_2.setBounds(190, 207, 141, 20);
 		panel_5.add(textField_2);
 		
 		JPanel projektiPanel = new JPanel();

@@ -45,7 +45,7 @@ public class OdjelForm extends JFrame {
 		setResizable(false);
 		setTitle("Prikaz odjela");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 402, 494);
+		setBounds(100, 100, 402, 486);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -53,7 +53,7 @@ public class OdjelForm extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(22, 11, 350, 447);
+		panel.setBounds(22, 11, 350, 435);
 		panel.setLayout(null);
 		panel.setBorder(new TitledBorder(null, "Podaci o odjelu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(panel);
@@ -73,46 +73,42 @@ public class OdjelForm extends JFrame {
 		lblZaposlenici.setBounds(43, 55, 97, 29);
 		panel.add(lblZaposlenici);
 		
-		JLabel label_2 = new JLabel("Rukovodilac odjela:");
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_2.setBounds(50, 207, 102, 14);
-		panel.add(label_2);
-		
 		JLabel label_3 = new JLabel("Maksimalni broj zaposlenika:");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_3.setBounds(10, 243, 152, 14);
+		label_3.setBounds(10, 360, 152, 14);
 		panel.add(label_3);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		textField_1.setBounds(190, 240, 141, 20);
+		textField_1.setBounds(190, 357, 141, 20);
 		panel.add(textField_1);
 		
 		JButton btnSpremiPromjene = new JButton("Spremi promjene");
 		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnSpremiPromjene.setBounds(210, 414, 121, 22);
+		btnSpremiPromjene.setBounds(210, 396, 121, 22);
 		panel.add(btnSpremiPromjene);
 		
 		JList list = new JList();
-		list.setBounds(190, 61, 141, 135);
+		list.setBounds(190, 61, 141, 106);
 		panel.add(list);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(190, 207, 141, 20);
-		panel.add(comboBox);
 		
 		JLabel lblNewLabel = new JLabel("Dodaj nove zaposlenike:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel.setBounds(30, 272, 121, 14);
+		lblNewLabel.setBounds(30, 208, 121, 14);
 		panel.add(lblNewLabel);
 		
+		JButton btnUkloni = new JButton("Ukloni");
+		btnUkloni.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnUkloni.setBounds(257, 174, 74, 22);
+		panel.add(btnUkloni);
+		
 		JList list_1 = new JList();
-		list_1.setBounds(190, 271, 141, 135);
+		list_1.setBounds(190, 207, 141, 106);
 		panel.add(list_1);
 		
-		JButton btnUkloniZaposlenikaSa = new JButton("Ukloni zaposlenika sa projekta");
-		btnUkloniZaposlenikaSa.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnUkloniZaposlenikaSa.setBounds(30, 414, 169, 22);
-		panel.add(btnUkloniZaposlenikaSa);
+		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnDodaj.setBounds(257, 317, 74, 22);
+		panel.add(btnDodaj);
 	}
 }

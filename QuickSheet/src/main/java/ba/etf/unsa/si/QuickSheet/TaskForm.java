@@ -49,14 +49,14 @@ public class TaskForm extends JFrame {
 		setTitle("Dodavanje taskova");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 399, 257);
+		setBounds(100, 100, 383, 257);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(22, 11, 337, 197);
+		panel.setBounds(22, 11, 327, 197);
 		panel.setBorder(new TitledBorder(null, "Dodaj task", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(panel);
 		panel.setLayout(null);

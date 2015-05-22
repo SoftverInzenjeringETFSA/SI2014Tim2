@@ -133,18 +133,13 @@ public class MainForm extends JFrame {
 		lblNewLabel_7.setBounds(50, 58, 102, 29);
 		panel_2.add(lblNewLabel_7);
 		
-		JLabel lblNewLabel_9 = new JLabel("Rukovodilac odjela:");
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel_9.setBounds(50, 207, 102, 14);
-		panel_2.add(lblNewLabel_9);
-		
 		JLabel lblMaksimalniBroj = new JLabel("Maksimalni broj zaposlenika:");
 		lblMaksimalniBroj.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblMaksimalniBroj.setBounds(10, 243, 152, 14);
+		lblMaksimalniBroj.setBounds(10, 210, 152, 14);
 		panel_2.add(lblMaksimalniBroj);
 		
 		textField_44 = new JTextField();
-		textField_44.setBounds(190, 240, 141, 20);
+		textField_44.setBounds(190, 207, 141, 20);
 		panel_2.add(textField_44);
 		textField_44.setColumns(10);
 		
@@ -156,10 +151,6 @@ public class MainForm extends JFrame {
 		JList list_3 = new JList();
 		list_3.setBounds(190, 61, 141, 135);
 		panel_2.add(list_3);
-		
-		JComboBox comboBox_14 = new JComboBox();
-		comboBox_14.setBounds(190, 207, 141, 20);
-		panel_2.add(comboBox_14);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, null));

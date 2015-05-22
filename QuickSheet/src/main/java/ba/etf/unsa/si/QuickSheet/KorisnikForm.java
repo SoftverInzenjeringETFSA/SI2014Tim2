@@ -15,6 +15,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import javax.swing.JCheckBox;
 
 public class KorisnikForm extends JFrame {
 
@@ -116,10 +117,10 @@ public class KorisnikForm extends JFrame {
 		label_9.setBounds(52, 283, 92, 14);
 		panel.add(label_9);
 		
-		JLabel label_10 = new JLabel("Vrsta korisnika:");
-		label_10.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_10.setBounds(52, 308, 82, 14);
-		panel.add(label_10);
+		JLabel lblKoordinator = new JLabel("Koordinator:");
+		lblKoordinator.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblKoordinator.setBounds(62, 308, 60, 14);
+		panel.add(lblKoordinator);
 		
 		textField = new JTextField();
 		textField.setColumns(10);
@@ -163,13 +164,13 @@ public class KorisnikForm extends JFrame {
 		passwordField_1.setBounds(164, 280, 167, 20);
 		panel.add(passwordField_1);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(164, 305, 167, 20);
-		panel.add(comboBox);
-		
-		JButton btnSpasiIzmjene = new JButton("Spasi izmjene");
+		JButton btnSpasiIzmjene = new JButton("Spremi izmjene");
 		btnSpasiIzmjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnSpasiIzmjene.setBounds(190, 336, 141, 23);
 		panel.add(btnSpasiIzmjene);
+		
+		JCheckBox checkBox = new JCheckBox("");
+		checkBox.setBounds(164, 304, 97, 23);
+		panel.add(checkBox);
 	}
 }

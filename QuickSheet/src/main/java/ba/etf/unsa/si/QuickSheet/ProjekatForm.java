@@ -45,7 +45,7 @@ public class ProjekatForm extends JFrame {
 		setTitle("Prikaz projekta");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 390, 494);
+		setBounds(100, 100, 390, 534);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -54,7 +54,7 @@ public class ProjekatForm extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Podaci o projektu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(22, 11, 340, 437);
+		panel.setBounds(22, 11, 340, 483);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -88,33 +88,38 @@ public class ProjekatForm extends JFrame {
 		list.setBounds(155, 83, 165, 121);
 		panel.add(list);
 		
-		JLabel lblNadreeni = new JLabel("Nadređeni:");
-		lblNadreeni.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNadreeni.setBounds(69, 218, 53, 14);
-		panel.add(lblNadreeni);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(155, 215, 165, 20);
-		panel.add(comboBox);
-		
-		JButton button = new JButton("Dodaj");
-		button.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		button.setBounds(231, 403, 89, 23);
-		panel.add(button);
-		
 		JLabel lblDodajZaposlenike = new JLabel("Dodaj zaposlenike:");
 		lblDodajZaposlenike.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDodajZaposlenike.setBounds(31, 243, 114, 14);
+		lblDodajZaposlenike.setBounds(29, 243, 114, 14);
 		panel.add(lblDodajZaposlenike);
 		
 		JList list_1 = new JList();
 		list_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		list_1.setBounds(155, 243, 165, 121);
+		list_1.setBounds(153, 243, 165, 121);
 		panel.add(list_1);
 		
-		JButton btnUkloniZaposlenikaSa = new JButton("Ukloni zaposlenika sa projekta");
+		JButton btnUkloniZaposlenikaSa = new JButton("Ukloni");
 		btnUkloniZaposlenikaSa.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnUkloniZaposlenikaSa.setBounds(31, 403, 195, 23);
+		btnUkloniZaposlenikaSa.setBounds(251, 209, 67, 23);
 		panel.add(btnUkloniZaposlenikaSa);
+		
+		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnDodaj.setBounds(255, 375, 61, 23);
+		panel.add(btnDodaj);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(151, 409, 165, 20);
+		panel.add(comboBox);
+		
+		JLabel label_2 = new JLabel("Nadređeni:");
+		label_2.setBounds(65, 412, 53, 14);
+		panel.add(label_2);
+		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		
+		JButton btnSpremiPromjene = new JButton("Spremi promjene");
+		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnSpremiPromjene.setBounds(195, 449, 125, 23);
+		panel.add(btnSpremiPromjene);
 	}
 }
