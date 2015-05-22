@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
+import com.sun.jmx.snmp.tasks.Task;
+
 public class IzvjestajZaposlenika extends Izvjestaj{
 
 	private Zaposlenik zaposlenik;
@@ -92,6 +94,58 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 		for (Timesheet t : projekat.getTimesheetList())
 		{
 			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran() && t.getProjekat().equals(projekat))
+			{
+				ukupnoVrijemeRada += t.getBrojRadnihSati(); 
+			}
+		}
+	}
+	//mjesec od 1(januar) do 12(decembar)
+	@Override
+	public void IzracunajProcenatZavrsenogRada(int mjesec) throws InvalidAttributeValueException {
+		LinkedList<Task> taskovi = projekat.getTaskovi();
+		Hashtable<String, Double> taskoviZaposlenik = new Hashtable<String, Double>();
+		
+		for (Task ta: taskovi)
+		{
+			if (ta.getZaposlenik().equals(zaposlenik) && ta.getRok().getMonth().getValue() == mjesec))
+			{
+				ukupanBrojTaskova++;
+			}
+		}
+		
+		for (Timesheet t : projekat.getTimesheetList())
+		{
+			if (t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran())
+			{
+				for (Task task: t.getTaskovi())
+				{
+					if(task.rok.getMonth().getValue() == mjesec) 
+					{
+						taskoviZaposlenik.put(task.getNaziv(), task.getProcenatZavrsenosti());
+					}
+				}
+			}
+		}
+		Set<String> keys = taskoviZaposlenik.keySet();
+		procenatZavrsenogRada = 0.0;
+		for (String key: keys)
+		{
+			procenatZavrsenogRada += taskoviZaposlenik.get(key);
+		}
+		decimalanProcenat = procenatZavrsenogRada;
+		procenatZavrsenogRada /= ukupanBrojTaskova;
+	}
+	@Override
+	public void IzracunajTrosak(int mjesec) throws InvalidAttributeValueException {
+		IzracunajUkupnoVrijemeRada(mjesec);		
+		trosak = zaposlenik.getSatnica() * ukupnoVrijemeRada;
+	}
+	@Override
+	public void IzracunajUkupnoVrijemeRada(int mjesec) throws InvalidAttributeValueException {
+		ukupnoVrijemeRada = 0.0;
+		for (Timesheet t : projekat.getTimesheetList())
+		{
+			if (t.getDatumSlanja().getMonth().getValue() == mjesec && t.getTaskovi().get(0).getZaposlenik().equals(zaposlenik) && t.getValidiran() && t.getProjekat().equals(projekat))
 			{
 				ukupnoVrijemeRada += t.getBrojRadnihSati(); 
 			}

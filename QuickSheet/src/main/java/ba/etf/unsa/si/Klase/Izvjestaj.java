@@ -38,4 +38,7 @@ public abstract class Izvjestaj {
 	abstract public void IzracunajProcenatZavrsenogRada() throws InvalidAttributeValueException;
 	abstract public void IzracunajTrosak() throws InvalidAttributeValueException;
 	abstract public void IzracunajUkupnoVrijemeRada() throws InvalidAttributeValueException;
+	abstract public void IzracunajProcenatZavrsenogRada(int mjesec) throws InvalidAttributeValueException;
+	abstract public void IzracunajTrosak(int mjesec) throws InvalidAttributeValueException;
+	abstract public void IzracunajUkupnoVrijemeRada(int mjesec) throws InvalidAttributeValueException;
 }
