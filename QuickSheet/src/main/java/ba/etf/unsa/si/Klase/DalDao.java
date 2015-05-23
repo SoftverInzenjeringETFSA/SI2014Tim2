@@ -234,11 +234,11 @@ public class DalDao {
 		return results;
 	}
 	
-	static public ArrayList<OdjelHibernate> PretraziOdjele(String naziv)
+	static public ArrayList<OdjelHibernate> PretraziArhiviraneOdjele(String naziv)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "'";
+		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "' AND arhiviran='1'";
 		Query query = session.createQuery(hql);
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		transaction.commit();
@@ -246,11 +246,23 @@ public class DalDao {
 		return results;
 	}
 	
-	static public ArrayList<OdjelHibernate> VratiSveOdjele()
+	static public ArrayList<OdjelHibernate> PretraziNearhiviraneOdjele(String naziv)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelHibernate";
+		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "' AND arhiviran='0'";
+		Query query = session.createQuery(hql);
+		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<OdjelHibernate> VratiSveArhiviraneOdjele()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM OdjelHibernate WHERE arhiviran='1'";
 		Query query = session.createQuery(hql);
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		transaction.commit();
