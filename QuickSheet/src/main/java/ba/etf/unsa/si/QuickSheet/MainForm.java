@@ -148,7 +148,7 @@ public class MainForm extends JFrame {
 		label_error.setBounds(0, 433, 764, 14);
 		getContentPane().add(label_error);
 		
-		JList list_3 = new JList();
+		final JList list_3 = new JList();
 		list_3.setBounds(190, 61, 141, 135);
 		panel_2.add(list_3);
 		
@@ -165,6 +165,9 @@ public class MainForm extends JFrame {
 					greska = false;}
 				else if(Integer.parseInt(textField_44.getText()) > 12){
 					label_error.setText("Broj zaposlenika mora biti manji od 12!");
+					greska = false;}
+				else if(list_3.isSelectionEmpty()){
+					label_error.setText("Morate označiti zaposlenike koje želite da dodate u odjel!");
 					greska = false;}
 				
 				else greska = true;
@@ -234,7 +237,7 @@ public class MainForm extends JFrame {
 				}
 				if(greska == false){
 					
-					label_error.setText("Morate selektovati odjel!");
+					label_error.setText("Morate označiti odjel!");
 					label_error.setVisible(true);
 				}
 				else{

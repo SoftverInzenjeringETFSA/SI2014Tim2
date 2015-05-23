@@ -14,6 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractListModel;
 
 public class OdjelForm extends JFrame {
 
@@ -45,7 +48,7 @@ public class OdjelForm extends JFrame {
 		setResizable(false);
 		setTitle("Prikaz odjela");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 402, 486);
+		setBounds(100, 100, 402, 492);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -84,11 +87,24 @@ public class OdjelForm extends JFrame {
 		panel.add(textField_1);
 		
 		JButton btnSpremiPromjene = new JButton("Spremi promjene");
+		btnSpremiPromjene.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnSpremiPromjene.setBounds(210, 396, 121, 22);
 		panel.add(btnSpremiPromjene);
 		
-		JList list = new JList();
+		final JList list = new JList();
+		list.setModel(new AbstractListModel() {
+			String[] values = new String[] {"zaposlenik1", "zaposlenik2"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		list.setBounds(190, 61, 141, 106);
 		panel.add(list);
 		
@@ -97,18 +113,55 @@ public class OdjelForm extends JFrame {
 		lblNewLabel.setBounds(30, 208, 121, 14);
 		panel.add(lblNewLabel);
 		
+		final JLabel label_1 = new JLabel("");
+		label_1.setVisible(false);
+		label_1.setBounds(0, 449, 396, 14);
+		contentPane.add(label_1);
+		
 		JButton btnUkloni = new JButton("Ukloni");
+		btnUkloni.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list.isSelectionEmpty()){
+					greska = false;
+				}
+				if(greska == false){
+					label_1.setVisible(true);
+					label_1.setText("Odaberite zaposlenika!");
+				}
+				else{
+					label_1.setVisible(false);
+				}
+			}
+		});
 		btnUkloni.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnUkloni.setBounds(257, 174, 74, 22);
 		panel.add(btnUkloni);
 		
-		JList list_1 = new JList();
+		final JList list_1 = new JList();
 		list_1.setBounds(190, 207, 141, 106);
 		panel.add(list_1);
 		
 		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list_1.isSelectionEmpty()){
+					greska = false;
+				}
+				if(greska == false){
+					label_1.setVisible(true);
+					label_1.setText("Odaberite zaposlenika!");
+				}
+				else{
+					label_1.setVisible(false);
+				}
+			}
+		});
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDodaj.setBounds(257, 317, 74, 22);
 		panel.add(btnDodaj);
+		
+		
 	}
 }

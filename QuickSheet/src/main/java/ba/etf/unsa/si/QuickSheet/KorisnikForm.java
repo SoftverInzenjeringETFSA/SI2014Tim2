@@ -205,12 +205,13 @@ public class KorisnikForm extends JFrame {
 				else if(textField_4.getText().equals("")){
 					label_error.setText("Unesite email!");
 					greska = false;}
-				else if(textField_5.getText().equals("")){
-					label_error.setText("Unesite korisničko ime!");
-					greska = false;}
 				else if(list.isSelectionEmpty()){ 
 					  label_error.setText("Odaberite odjel u kojem radi zaposlenik!");
 					  greska = false;}
+				else if(textField_5.getText().equals("")){
+					label_error.setText("Unesite korisničko ime!");
+					greska = false;}
+				
 				else greska = true;
 				
 				if(greska == false){
