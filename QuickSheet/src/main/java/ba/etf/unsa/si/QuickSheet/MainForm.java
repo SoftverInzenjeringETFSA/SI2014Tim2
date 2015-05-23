@@ -32,6 +32,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -115,7 +116,7 @@ public class MainForm extends JFrame {
 		odjeliPanel.setLayout(null);
 		
 		panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Podaci o odjelu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dodaj novi odjel", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_2.setLayout(null);
 		panel_2.setBounds(30, 22, 341, 370);
 		odjeliPanel.add(panel_2);
@@ -146,11 +147,23 @@ public class MainForm extends JFrame {
 		textField_44.setColumns(10);
 		
 		final JList list_3 = new JList();
+		list_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		list_3.setModel(new AbstractListModel() {
+			String[] values = new String[] {"zaposlenik 1", "zaposlenik 5"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		list_3.setBounds(190, 61, 141, 135);
 		panel_2.add(list_3);
 	
 		
 		final JLabel label_error = new JLabel("");
+		label_error.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_error.setForeground(Color.RED);
 		label_error.setBounds(0, 405, 764, 14);
 		odjeliPanel.add(label_error);
 		label_error.setVisible(false);
@@ -189,8 +202,21 @@ public class MainForm extends JFrame {
 			}
 		});
 		btnDodaj_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnDodaj_1.setBounds(242, 308, 89, 23);
+		btnDodaj_1.setBounds(147, 309, 89, 23);
 		panel_2.add(btnDodaj_1);
+		
+		JButton btnOtkai = new JButton("Otkaži");
+		btnOtkai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_43.setText("");
+				textField_44.setText("");
+				list_3.clearSelection();
+				label_error.setVisible(false);
+			}
+		});
+		btnOtkai.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnOtkai.setBounds(242, 309, 89, 23);
+		panel_2.add(btnOtkai);
 		
 		
 		
@@ -206,6 +232,7 @@ public class MainForm extends JFrame {
 		textField_45.setColumns(10);
 		
 		final JComboBox comboBox_16 = new JComboBox();
+		comboBox_16.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox_16.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!(comboBox_16.getSelectedItem() == null)){
@@ -237,6 +264,7 @@ public class MainForm extends JFrame {
 		panel_3.add(btnPretrai);
 		
 		final JList list_4 = new JList();
+		list_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list_4.setModel(new AbstractListModel() {
 			String[] values = new String[] {"odjel1", "odjel2"};
 			public int getSize() {
@@ -317,38 +345,39 @@ public class MainForm extends JFrame {
 		projektiPanel.setLayout(null);
 		
 		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o projektu", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dodaj novi projekat", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_5.setLayout(null);
 		panel_5.setBounds(30, 22, 341, 370);
 		projektiPanel.add(panel_5);
 		
 		JLabel lblNazivProjekta = new JLabel("Naziv projekta:");
 		lblNazivProjekta.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNazivProjekta.setBounds(40, 36, 73, 14);
+		lblNazivProjekta.setBounds(62, 36, 73, 14);
 		panel_5.add(lblNazivProjekta);
 		
 		textField_47 = new JTextField();
 		textField_47.setColumns(10);
-		textField_47.setBounds(159, 33, 165, 20);
+		textField_47.setBounds(190, 30, 141, 20);
 		panel_5.add(textField_47);
 		
 		JLabel label_3 = new JLabel("Dodaj zaposlenika:");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_3.setBounds(24, 117, 102, 14);
+		label_3.setBounds(45, 120, 90, 14);
 		panel_5.add(label_3);
 		
 		JLabel lblDodajNadreenog = new JLabel("Dodaj nadređenog:");
 		lblDodajNadreenog.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDodajNadreenog.setBounds(24, 251, 102, 14);
+		lblDodajNadreenog.setBounds(42, 254, 93, 14);
 		panel_5.add(lblDodajNadreenog);
 		
 		final JComboBox comboBox_19 = new JComboBox();
+		comboBox_19.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox_19.setModel(new DefaultComboBoxModel(new String[] {"", "nadređeni1", "nadređeni2"}));
-		comboBox_19.setBounds(159, 248, 165, 20);
+		comboBox_19.setBounds(190, 248, 141, 20);
 		panel_5.add(comboBox_19);
 		
 		final JList list = new JList();
-		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Radnik1", "Radnik2", "Radnik3"};
 			public int getSize() {
@@ -358,10 +387,12 @@ public class MainForm extends JFrame {
 				return values[index];
 			}
 		});
-		list.setBounds(159, 116, 165, 121);
+		list.setBounds(190, 117, 141, 121);
 		panel_5.add(list);
 		
 		final JLabel label_error1 = new JLabel("");
+		label_error1.setForeground(Color.RED);
+		label_error1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		label_error1.setVisible(false);
 		label_error1.setBounds(0, 403, 759, 14);
 		projektiPanel.add(label_error1);
@@ -397,22 +428,36 @@ public class MainForm extends JFrame {
 			}
 		});
 		button_7.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		button_7.setBounds(242, 308, 89, 23);
+		button_7.setBounds(147, 308, 89, 23);
 		panel_5.add(button_7);
 		
 		JLabel lblNazivKlijenta = new JLabel("Naziv klijenta:");
 		lblNazivKlijenta.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNazivKlijenta.setBounds(44, 78, 102, 14);
+		lblNazivKlijenta.setBounds(68, 81, 67, 14);
 		panel_5.add(lblNazivKlijenta);
 		
 		textField_48 = new JTextField();
 		textField_48.setColumns(10);
-		textField_48.setBounds(159, 75, 165, 20);
+		textField_48.setBounds(190, 75, 141, 20);
 		panel_5.add(textField_48);
 		
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.setBounds(149, 215, 82, -66);
 		panel_5.add(verticalBox);
+		
+		JButton btnOtkai_1 = new JButton("Otkaži");
+		btnOtkai_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_47.setText("");
+				textField_48.setText("");
+				list.clearSelection();
+				comboBox_19.setSelectedIndex(-1);
+				label_error1.setVisible(false);
+			}
+		});
+		btnOtkai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnOtkai_1.setBounds(242, 308, 89, 23);
+		panel_5.add(btnOtkai_1);
 		
 		
 		
@@ -466,6 +511,7 @@ public class MainForm extends JFrame {
 		textField_46.setColumns(10);
 		
 		final JList list_1 = new JList();
+		list_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list_1.setModel(new AbstractListModel() {
 			String[] values = new String[] {"projekat 1", "projekat 2"};
 			public int getSize() {
@@ -484,7 +530,7 @@ public class MainForm extends JFrame {
 				boolean greska = true;
 				if(list_1.isSelectionEmpty()){
 					greska = false;
-					label_error1.setText("Morate označiti odjel!");
+					label_error1.setText("Morate označiti projekat!");
 					
 				}
 				if(greska == false){
@@ -508,7 +554,7 @@ public class MainForm extends JFrame {
 				boolean greska = true;
 				if(list_1.isSelectionEmpty()){
 					greska = false;
-					label_error1.setText("Morate označiti odjel da bi ga obrisali!");
+					label_error1.setText("Morate označiti projekat da bi ga obrisali!");
 					
 				}
 				if(greska == false){
@@ -597,7 +643,7 @@ public class MainForm extends JFrame {
 		lblVrstaKorisnika.setBounds(52, 308, 82, 14);
 		panel.add(lblVrstaKorisnika);
 		
-		JComboBox comboBox_11 = new JComboBox();
+		final JComboBox comboBox_11 = new JComboBox();
 		comboBox_11.setBounds(190, 305, 141, 20);
 		panel.add(comboBox_11);
 		
@@ -639,19 +685,117 @@ public class MainForm extends JFrame {
 		textField_41.setBounds(190, 230, 141, 20);
 		panel.add(textField_41);
 		
+		final JLabel label_error2 = new JLabel("");
+		label_error2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_error2.setForeground(Color.RED);
+		label_error2.setBounds(0, 403, 759, 14);
+		korisniciPanel.add(label_error2);
+		
+		final JList list_5 = new JList();
+		list_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		list_5.setModel(new AbstractListModel() {
+			String[] values = new String[] {"odjel1", "odjel2"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		list_5.setBounds(190, 174, 141, 51);
+		panel.add(list_5);
+		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean greska = true; 
+				String p1 = Arrays.toString(passwordField_1.getPassword());
+				String p2 = Arrays.toString(passwordField.getPassword());
+				
+				
+					
+				if(textField_36.getText().equals("")){
+					label_error2.setText("Unesite ime!");
+					greska = false;}
+				else if(textField_37.getText().equals("")){
+					label_error2.setText("Unesite prezime!");
+					greska = false;}
+				else if(textField_38.getText().equals("")){
+					label_error2.setText("Unesite adresu!");
+					greska = false;}
+				else if(textField_39.getText().equals("")){
+					label_error2.setText("Unesite broj telefona!");
+					greska = false;}
+				else if(textField_40.getText().equals("")){
+					label_error2.setText("Unesite email!");
+					greska = false;}
+				
+				else if(list_5.isSelectionEmpty()){
+					label_error2.setText("Morate označiti odjel kojem zaposlenik pripada!");
+					greska = false;}
+				else if(textField_41.getText().equals("")){
+					label_error2.setText("Unesite korisničko ime!");
+					greska = false;}
+				else if(comboBox_11.getSelectedItem() == null){
+					greska = false;
+					label_error1.setText("Morate označiti vrstu korisnika!");
+				}
+				
+				else if(passwordField_1.getPassword().length == 0){
+					label_error2.setText("Unesite lozinku!");
+					greska = false;}
+				else if(passwordField.getPassword().length == 0){
+					label_error2.setText("Unesite ponovo lozinku!");
+					greska = false;} 
+				else if (!p1.equals(p2)) {
+					label_error2.setText("Lozinke se ne podudaraju!");
+					greska = false;
+					}
+				
+				else greska = true;
+				 
+				
+				if(greska == false){
+					label_error2.setVisible(true);	
+				}
+				else{
+					label_error2.setVisible(false);
+				}
+				
 				
 			}
 		});
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnDodaj.setBounds(242, 336, 89, 23);
+		btnDodaj.setBounds(147, 336, 89, 23);
 		panel.add(btnDodaj);
 		
-		JList list_5 = new JList();
-		list_5.setBounds(190, 174, 141, 51);
-		panel.add(list_5);
+		
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner.setModel(new SpinnerDateModel(new Date(1432332000000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner.setBounds(190, 146, 141, 20);
+		panel.add(spinner);
+		
+		JButton btnOtkai_2 = new JButton("Otkaži");
+		btnOtkai_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_36.setText("");
+				textField_37.setText("");
+				textField_38.setText("");
+				textField_39.setText("");
+				textField_40.setText("");
+				textField_41.setText("");
+				passwordField.setText("");
+				passwordField_1.setText("");
+				list_5.clearSelection();
+				comboBox_11.setSelectedIndex(-1);
+				label_error2.setVisible(false);
+			}
+		});
+		btnOtkai_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnOtkai_2.setBounds(242, 336, 89, 23);
+		panel.add(btnOtkai_2);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -664,16 +808,48 @@ public class MainForm extends JFrame {
 		panel_1.add(textField_42);
 		textField_42.setColumns(10);
 		
-		JComboBox comboBox_13 = new JComboBox();
+		final JComboBox comboBox_13 = new JComboBox();
+		comboBox_13.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBox_13.setModel(new DefaultComboBoxModel(new String[] {"ime", "prezime"}));
+		comboBox_13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!(comboBox_13.getSelectedItem() == null)){
+					textField_42.setText((String) comboBox_13.getSelectedItem());
+				}
+			}
+		});
 		comboBox_13.setBounds(22, 56, 99, 23);
 		panel_1.add(comboBox_13);
 		
 		JButton btnPretraga = new JButton("Pretraži");
+		btnPretraga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				if(comboBox_13.getSelectedItem() == null){
+					greska = false;
+					label_error2.setText("Morate označiti parametar pretrage!");
+				}
+				if(greska == false){
+					label_error2.setVisible(true);
+				}
+				else label_error2.setVisible(false);
+			}
+		});
 		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretraga.setBounds(262, 56, 69, 23);
 		panel_1.add(btnPretraga);
 		
-		JList list_2 = new JList();
+		final JList list_2 = new JList();
+		list_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		list_2.setModel(new AbstractListModel() {
+			String[] values = new String[] {"korisnik 1", "korisnik 2"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		list_2.setBounds(22, 114, 309, 209);
 		panel_1.add(list_2);
 		
@@ -686,7 +862,20 @@ public class MainForm extends JFrame {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new KorisnikForm().setVisible(true);
+				boolean greska = true;
+				if(list_2.isSelectionEmpty()){
+					greska = false;
+					label_error1.setText("Morate označiti korisnika!");
+					
+				}
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else{
+					label_error1.setVisible(false);
+					new KorisnikForm().setVisible(true);
+				}
+				
 			}
 		});
 		btnNewButton_1.setBounds(83, 334, 119, 23);
@@ -696,6 +885,20 @@ public class MainForm extends JFrame {
 		btnObriiKorisnika.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnObriiKorisnika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list_2.isSelectionEmpty()){
+					greska = false;
+					label_error2.setText("Morate označiti korisnika da bi ga obrisali!");
+					
+				}
+				if(greska == false){
+					label_error2.setVisible(true);
+				}
+				else{
+					label_error2.setVisible(false);
+					
+					
+				}
 			}
 		});
 		btnObriiKorisnika.setBounds(212, 334, 119, 23);
@@ -705,6 +908,9 @@ public class MainForm extends JFrame {
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_6.setBounds(22, 29, 170, 14);
 		panel_1.add(label_6);
+		
+		
+		
 		
 		JPanel panel_4 = new JPanel();
 		tabbedPane.addTab("Moj profil", null, panel_4, null);
@@ -746,15 +952,58 @@ public class MainForm extends JFrame {
 		label_4.setBounds(23, 94, 108, 14);
 		panel_6.add(label_4);
 		
+		final JLabel label_error3 = new JLabel("");
+		label_error3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_error3.setForeground(Color.RED);
+		label_error3.setVisible(false);
+		label_error3.setBounds(0, 405, 749, 14);
+		panel_4.add(label_error3);
+		
 		JButton button = new JButton("Spasi promjenu");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				if(textField_1.getText().equals("")){
+					greska = false;
+					label_error3.setText("Unesite trenutnu lozinku!");
+				}
+				else if(textField_2.getText().equals("")){
+					greska = false;
+					label_error3.setText("Unesite novu lozinku!");
+				}
+				else if(textField_3.getText().equals("")){
+					greska = false;
+					label_error3.setText("Unesite ponovo novu lozinku!");
+				}
+				else if(!textField_2.getText().equals(textField_3.getText())){
+					greska = false;
+					label_error3.setText("Lozinke se ne podudaraju!");
+				}
+				else greska = true;
+				if(greska == false){
+					label_error3.setVisible(true);
+				}
+				else label_error3.setVisible(false);
+			}
+		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button.setBounds(77, 138, 110, 23);
 		panel_6.add(button);
 		
 		JButton button_1 = new JButton("Otkaži");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_1.setText("");
+				textField_2.setText("");
+				textField_3.setText("");
+				label_error3.setVisible(false);
+			}
+		});
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_1.setBounds(193, 138, 110, 23);
 		panel_6.add(button_1);
+		
+		
 		
 		
 		
