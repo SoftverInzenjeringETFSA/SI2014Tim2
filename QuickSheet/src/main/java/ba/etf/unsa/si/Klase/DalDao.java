@@ -440,4 +440,31 @@ public class DalDao {
 		return results;
 	}
 
+	static public ArrayList<TaskHibernate> VratiZaposlenikoveTaskove(long ZaposlenikID)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM TaskHibernate where zaposlenik='" + ZaposlenikID + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<TaskHibernate> results = (ArrayList<TaskHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ProjekatHibernate> VratiZaposlenikoveProjekte (long ZaposlenikID)
+	{
+		ArrayList<TaskHibernate> taskovi = VratiZaposlenikoveTaskove(ZaposlenikID);
+		ArrayList<ProjekatHibernate> projekti = new ArrayList<ProjekatHibernate>();
+		for (int i = 0; i < taskovi.size(); i++)
+		{
+			ProjekatHibernate ph = taskovi.get(i).getProjekat();
+			if (!projekti.contains(ph))
+			{
+				projekti.add(ph);
+			}
+		}
+		return projekti;
+	}
+	
 }
