@@ -234,6 +234,18 @@ public class DalDao {
 		return results;
 	}
 	
+	static public ArrayList<ZaposlenikHibernate> VratiSveZaposlenikeKoordinatore()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ZaposlenikHibernate WHERE koordinator = '1' AND arhiviran = '0'";
+		Query query = session.createQuery(hql);
+		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
 	static public ArrayList<ZaposlenikHibernate> VratiSveNearhiviranaZaposlenike()
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -402,6 +414,16 @@ public class DalDao {
 		return results;
 	}
 		
+	static public ProjekatHibernate VratiProjekat(long id)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		ProjekatHibernate oh = (ProjekatHibernate)session.get(ProjekatHibernate.class, id);
+		transaction.commit();
+		session.close();
+		return oh;
+	}
+	
 	static public ArrayList<TaskHibernate> VratiSveTaskoveProjekta(long ProjekatID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -452,11 +474,53 @@ public class DalDao {
 		return results;
 	}
 
+	static public ArrayList<TimesheetHibernate> VratiNevalidiraneTimesheetoveProjekta (long ProjekatID)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM TimesheetHibernate WHERE projekat='" + ProjekatID + "' AND validiran='0'";
+		Query query = session.createQuery(hql);
+		ArrayList<TimesheetHibernate> results = (ArrayList<TimesheetHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaposlenikaNaProjektu(long ProjekatID, long ZaposlenikID)
+	{
+		ArrayList<TaskHibernate> taskovi = new ArrayList<TaskHibernate>();
+		taskovi = VratiTaskoveKorisnikaNaProjektu(ProjekatID, ZaposlenikID);
+		ArrayList<TimesheetHibernate> timesheetovi = new ArrayList<TimesheetHibernate>();
+		for (int i = 0; i < taskovi.size(); i++)
+		{
+			ArrayList<TimesheetTaskHibernate> timeshe = DalDao.VratiTimesheetTaskovePoTasku(taskovi.get(i).getId());
+			for (int j = 0; j < timeshe.size(); j++)
+			{
+				TimesheetHibernate th = timeshe.get(j).getTimesheet();
+				if (!timesheetovi.contains(th))
+					timesheetovi.add(th);
+			}
+		}
+		return timesheetovi;
+	}
+	
 	static private ArrayList<TimesheetTaskHibernate> VratiTimesheetTaskove(long TimesheetID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM TimesheetTaskHibernate where timesheet = '" + TimesheetID + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<TimesheetTaskHibernate> results = (ArrayList<TimesheetTaskHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static private ArrayList<TimesheetTaskHibernate> VratiTimesheetTaskovePoTasku(long TaskID)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM TimesheetTaskHibernate where task = '" + TaskID + "'";
 		Query query = session.createQuery(hql);
 		ArrayList<TimesheetTaskHibernate> results = (ArrayList<TimesheetTaskHibernate>)query.list();
 		transaction.commit();
@@ -504,6 +568,30 @@ public class DalDao {
 		}
 		return projekti;
 	}
-	
-	
+
+	static public ArrayList<ProjekatHibernate> VratiSveKoordinatorskeProjekte (long KoordinatorID)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ProjekatHibernate where koordinator='" + KoordinatorID + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+		
+	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaValidaciju (long KoordinatorID)
+	{
+		ArrayList<ProjekatHibernate> projekti = new ArrayList<ProjekatHibernate>();
+		projekti = VratiSveKoordinatorskeProjekte(KoordinatorID);
+		ArrayList<TimesheetHibernate> trebaValidirati = new ArrayList<TimesheetHibernate>();
+		for (int i = 0; i < projekti.size(); i++)
+		{
+			ArrayList<TimesheetHibernate> projekatTimesheet = VratiNevalidiraneTimesheetoveProjekta(projekti.get(i).getId());
+			trebaValidirati.addAll(projekatTimesheet);
+		}
+		return trebaValidirati;
+	}
 }
+
