@@ -1,13 +1,8 @@
 package ba.etf.unsa.si.KlaseHibernate;
 
-import java.util.LinkedList;
-
 public class ProjekatHibernate implements java.io.Serializable{
 	
 	private long id;
-	private LinkedList<ZaposlenikHibernate> zaposlenici = new LinkedList<ZaposlenikHibernate>();
-	private LinkedList<TimesheetHibernate> timesheetList = new LinkedList<TimesheetHibernate>();
-	private LinkedList<TaskHibernate> taskovi = new LinkedList<TaskHibernate>();
 	private ZaposlenikHibernate koordinator;
 	private String naziv;
 	private String nazivKlijenta;
@@ -22,36 +17,6 @@ public class ProjekatHibernate implements java.io.Serializable{
 
 	public void setId(long id) {
 		this.id = id;
-	}
-	
-	public LinkedList<TimesheetHibernate> getTimesheetList() 
-	{
-		return timesheetList;
-	}
-	
-	public void setTimesheetList(LinkedList<TimesheetHibernate> timesheetList) 
-	{
-		this.timesheetList = timesheetList;
-	}
-	
-	public LinkedList<ZaposlenikHibernate> getZaposlenici() 
-	{
-		return zaposlenici;
-	}
-	
-	public void setZaposlenici(LinkedList<ZaposlenikHibernate> zaposlenici)
-	{
-		this.zaposlenici = zaposlenici; 
-	}
-	
-	public LinkedList<TaskHibernate> getTaskovi() 
-	{
-		return taskovi;
-	}
-	
-	public void setTaskovi(LinkedList<TaskHibernate> taskovi)
-	{
-		this.taskovi = taskovi;
 	}
 	
 	public ZaposlenikHibernate getKoordinator() 

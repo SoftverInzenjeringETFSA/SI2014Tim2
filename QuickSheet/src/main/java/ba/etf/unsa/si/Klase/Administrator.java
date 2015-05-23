@@ -33,7 +33,7 @@ public class Administrator {
 	public void setLozinka(String _lozinka) throws InvalidAttributeValueException
 	{
 		if (_lozinka != null && _lozinka.length() > 5 && _lozinka.matches("^[a-zA-Z0-9]*$"))
-			lozinka = _lozinka;
+			lozinka = ((Integer)_lozinka.hashCode()).toString();
 		else throw new InvalidAttributeValueException();
 	}
 	
@@ -46,6 +46,5 @@ public class Administrator {
 	{
 		return new Projekat(naziv, klijent, koordinator);
 	}
-	
 	
 }

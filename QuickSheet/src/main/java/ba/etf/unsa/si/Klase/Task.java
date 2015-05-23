@@ -14,6 +14,9 @@ public class Task {
 	private String komentar;
 	private LocalDate rok;
 	
+	public Task(){
+	}
+	
 	public Task(String _naziv, String _opis, Integer _prioritet, Zaposlenik _zaposlenik, LocalDate _rok) throws InvalidAttributeValueException 
 	{
 		setNaziv(_naziv);

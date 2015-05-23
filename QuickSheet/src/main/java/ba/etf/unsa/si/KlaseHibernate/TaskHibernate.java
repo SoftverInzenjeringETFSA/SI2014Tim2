@@ -12,7 +12,8 @@ public class TaskHibernate implements java.io.Serializable{
 	private String opis;
 	private String komentar;
 	private LocalDate rok;
-	
+	private ProjekatHibernate projekat;
+
 	public TaskHibernate() {
 	}
 	
@@ -94,4 +95,11 @@ public class TaskHibernate implements java.io.Serializable{
 		this.rok = rok;
 	}
 	
+	public ProjekatHibernate getProjekat() {
+		return projekat;
+	}
+
+	public void setProjekat(ProjekatHibernate projekat) {
+		this.projekat = projekat;
+	}
 }

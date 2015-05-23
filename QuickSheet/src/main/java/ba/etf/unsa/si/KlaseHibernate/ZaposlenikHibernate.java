@@ -1,4 +1,3 @@
-
 package ba.etf.unsa.si.KlaseHibernate;
 
 import java.time.LocalDate;

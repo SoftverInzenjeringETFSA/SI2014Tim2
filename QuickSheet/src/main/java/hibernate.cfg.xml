@@ -17,5 +17,7 @@
   <mapping resource="ba/etf/unsa/si/KlaseHibernate/TaskHibernate.hbm.xml"/>
   <mapping resource="ba/etf/unsa/si/KlaseHibernate/TimesheetHibernate.hbm.xml"/>
   <mapping resource="ba/etf/unsa/si/KlaseHibernate/ZaposlenikHibernate.hbm.xml"/>
+  <mapping resource="ba/etf/unsa/si/KlaseHibernate/OdjelZaposlenikHibernate.hbm.xml"/>
+  <mapping resource="ba/etf/unsa/si/KlaseHibernate/TimesheetTaskHibernate.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>
