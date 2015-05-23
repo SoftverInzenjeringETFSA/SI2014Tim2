@@ -24,6 +24,8 @@ import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 import ba.etf.unsa.si.util.HibernateUtil;
 
@@ -178,22 +180,16 @@ public class Login extends JFrame {
 					new MainForm().setVisible(true);
 				}
 				else if(textFieldValue.equals("koordinator")){
-					new MainFormKoordinator().setVisible(true);
+					ZaposlenikHibernate zh = new ZaposlenikHibernate();
+					zh = DalDao.VratiZaposlenika(3);
+					new MainFormKoordinator(zh).setVisible(true);
 				}
 				else if(textFieldValue.equals("zaposlenik")){
 					new MainFormZaposlenik().setVisible(true);
 				}
 				else if(textFieldValue.equals("baza")){
-					//labela1.setVisible(true);
-					OdjelHibernate oh = new OdjelHibernate();
-					oh.setMaksimalanBrojRadnika(12);
-					oh.setId(4);
-					oh.setNaziv("Odjel2");
-					oh.setArhiviran(false);
-					OdjelZaposlenikHibernate ozh = new OdjelZaposlenikHibernate();
-					ozh.setOdjel(oh);
-					ozh.setZaposlenikOdjela(DalDao.VratiZaposlenika(1));
-					DalDao.DodajObjekat(ozh);
+					labela1.setVisible(true);
+					
 				}
 				else{
 					greska = false;

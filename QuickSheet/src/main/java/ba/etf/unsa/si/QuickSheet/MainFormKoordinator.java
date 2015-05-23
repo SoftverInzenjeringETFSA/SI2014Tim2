@@ -45,6 +45,7 @@ import java.awt.Toolkit;
 import javax.swing.DefaultComboBoxModel;
 
 import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class MainFormKoordinator extends JFrame {
@@ -62,7 +63,7 @@ public class MainFormKoordinator extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFormKoordinator frame = new MainFormKoordinator();
+					MainFormKoordinator frame = new MainFormKoordinator(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,7 +72,7 @@ public class MainFormKoordinator extends JFrame {
 		});
 	}
 
-	public MainFormKoordinator() {
+	public MainFormKoordinator(final ZaposlenikHibernate zh) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet");
@@ -530,41 +531,88 @@ public class MainFormKoordinator extends JFrame {
 				{
 			    DefaultListModel lista = new DefaultListModel();
 			    list_2.setModel(lista);
+			    ArrayList<ProjekatHibernate> projekti = DalDao.VratiSveKoordinatorskeProjekte(zh.getId());
 				ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
+				for (int i = 0; i < projekti.size(); i++)
+				{
+					ArrayList<ZaposlenikHibernate> zaps = DalDao.VratiZaposlenikeNaProjektu(projekti.get(i).getId());
+					for (int j = 0; j < zaps.size(); j++)
+					{
+						if (!zaposlenici.contains(zaps.get(j)))
+							zaposlenici.add(zaps.get(j));
+					}
+				}
+				ArrayList<ZaposlenikHibernate> filterZaposlenici = new ArrayList<ZaposlenikHibernate>();
 				String vrijednost = comboBox_4.getSelectedItem().toString();
 				if (chckbxNewCheckBox.isSelected())
 				{
 					if (vrijednost.equals("Ime"))
 					{
-						zaposlenici = DalDao.VratiZaposlenikePoImenu(textField_6.getText());
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getIme().equals(textField_6.getText()))
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
 					}
 					else if (vrijednost.equalsIgnoreCase("Prezime"))
 					{
-						zaposlenici = DalDao.VratiZaposlenikePoPrezimenu(textField_6.getText());
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getPrezime().equals(textField_6.getText()))
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
 					}
 					else
 					{
-						zaposlenici = DalDao.VratiZaposlenikePoUsername(textField_6.getText());
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getUsername().equals(textField_6.getText()))
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
 					}
 				}
 				else
 				{
 					if (vrijednost.equals("Ime"))
 					{
-						zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_6.getText());
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getIme().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
 					}
 					else if (vrijednost.equalsIgnoreCase("Prezime"))
 					{
-						zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoPrezimenu(textField_6.getText());
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getPrezime().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
 					}
 					else
 					{
-						zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_6.getText());
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getUsername().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}					
 					}
 				}
-				for (int i = 0; i < zaposlenici.size(); i++)
+				for (int i = 0; i < filterZaposlenici.size(); i++)
 				{
-					String podatak = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime();
+					String podatak = filterZaposlenici.get(i).getId() + " " + filterZaposlenici.get(i).getIme() + " " + filterZaposlenici.get(i).getPrezime();
 					lista.addElement(podatak);
 				}
 				}

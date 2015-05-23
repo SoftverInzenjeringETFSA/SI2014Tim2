@@ -451,7 +451,7 @@ public class DalDao {
 		return projekatZaposlenici;
 	}
 	
-	static public ArrayList<TaskHibernate> VratiTaskoveKorisnikaNaProjektu(long ProjekatID, long ZaposlenikID)
+	static public ArrayList<TaskHibernate> VratiTaskoveZaposlenikaNaProjektu(long ProjekatID, long ZaposlenikID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
@@ -490,7 +490,7 @@ public class DalDao {
 	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaposlenikaNaProjektu(long ProjekatID, long ZaposlenikID)
 	{
 		ArrayList<TaskHibernate> taskovi = new ArrayList<TaskHibernate>();
-		taskovi = VratiTaskoveKorisnikaNaProjektu(ProjekatID, ZaposlenikID);
+		taskovi = VratiTaskoveZaposlenikaNaProjektu(ProjekatID, ZaposlenikID);
 		ArrayList<TimesheetHibernate> timesheetovi = new ArrayList<TimesheetHibernate>();
 		for (int i = 0; i < taskovi.size(); i++)
 		{
