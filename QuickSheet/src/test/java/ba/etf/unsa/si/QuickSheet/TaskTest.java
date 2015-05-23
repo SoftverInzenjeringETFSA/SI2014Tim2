@@ -1,14 +1,13 @@
-package ba.etf.unsa.si.Klase;
+package ba.etf.unsa.si.QuickSheet;
 
-import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-
 import org.junit.Test;
-
+import ba.etf.unsa.si.Klase.ProjekatRadnik;
+import ba.etf.unsa.si.Klase.Task;
+import ba.etf.unsa.si.Klase.Zaposlenik;
 import javax.management.InvalidAttributeValueException;
 
-import junit.framework.Assert;
 
 //import javax.naming.directory.InvalidAttributeValueException;
 //dodao sam konstruktor bez parametara u klasu Task, jel može ovako

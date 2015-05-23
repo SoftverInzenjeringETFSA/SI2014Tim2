@@ -1,12 +1,13 @@
-package ba.etf.unsa.si.Klase;
-
-import static org.junit.Assert.*;
+package ba.etf.unsa.si.QuickSheet;
 
 import java.time.LocalDate;
-
 import javax.naming.directory.InvalidAttributeValueException;
-
 import org.junit.Test;
+import ba.etf.unsa.si.Klase.Koordinator;
+import ba.etf.unsa.si.Klase.Projekat;
+import ba.etf.unsa.si.Klase.ProjekatRadnik;
+import ba.etf.unsa.si.Klase.Task;
+import ba.etf.unsa.si.Klase.Zaposlenik;
 
 public class KoordinatorTest {
 
