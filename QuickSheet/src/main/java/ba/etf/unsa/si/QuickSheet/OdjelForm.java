@@ -8,14 +8,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JComboBox;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractListModel;
 
 public class OdjelForm extends JFrame {
@@ -86,9 +90,36 @@ public class OdjelForm extends JFrame {
 		textField_1.setBounds(190, 357, 141, 20);
 		panel.add(textField_1);
 		
+		final JLabel label_1 = new JLabel("");
+		label_1.setVisible(false);
+		label_1.setBounds(0, 449, 396, 14);
+		contentPane.add(label_1);
+		
 		JButton btnSpremiPromjene = new JButton("Spremi promjene");
 		btnSpremiPromjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(textField.getText().equals("")){
+					greska = false;
+					label_1.setVisible(true);
+					label_1.setText("Unesite naziv odjela!");
+					
+				}
+				else if(textField_1.getText().equals("")){
+					greska = false;
+					label_1.setVisible(true);
+					label_1.setText("Unesite maksimalni broj radnika!");
+				}
+				else if(Integer.parseInt(textField_1.getText()) > 12){
+					label_1.setText("Broj zaposlenika mora biti manji od 12!");
+					greska = false;
+				}
+				else greska = true;
+				
+				if(greska == false) label_1.setVisible(true);
+				else{
+					label_1.setVisible(false);
+				}
 			}
 		});
 		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -113,10 +144,7 @@ public class OdjelForm extends JFrame {
 		lblNewLabel.setBounds(30, 208, 121, 14);
 		panel.add(lblNewLabel);
 		
-		final JLabel label_1 = new JLabel("");
-		label_1.setVisible(false);
-		label_1.setBounds(0, 449, 396, 14);
-		contentPane.add(label_1);
+		
 		
 		JButton btnUkloni = new JButton("Ukloni");
 		btnUkloni.addActionListener(new ActionListener() {
@@ -139,6 +167,15 @@ public class OdjelForm extends JFrame {
 		panel.add(btnUkloni);
 		
 		final JList list_1 = new JList();
+		list_1.setModel(new AbstractListModel() {
+			String[] values = new String[] {"zaposlenik1\t", "zaposlenik2"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		list_1.setBounds(190, 207, 141, 106);
 		panel.add(list_1);
 		
