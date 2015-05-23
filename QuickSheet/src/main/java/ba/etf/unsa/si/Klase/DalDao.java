@@ -9,6 +9,9 @@ import org.hibernate.Transaction;
 
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 import ba.etf.unsa.si.util.HibernateUtil;
 
@@ -111,13 +114,59 @@ public class DalDao {
 		else return true;
 	}
 	
-	static public ArrayList<ZaposlenikHibernate> VratiZaposlenika(String username)
+	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikaPoUsername(String username)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM ZaposlenikHibernate where username='" + username + "'";
 		Query query = session.createQuery(hql);
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikaPoIme(String ime)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ZaposlenikHibernate where ime='" + ime + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikaPoPrezime(String prezime)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ZaposlenikHibernate where prezime='" + prezime + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikaPoMail(String email)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ZaposlenikHibernate where email='" + email + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ZaposlenikHibernate VratiZaposlenika(long id)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		ZaposlenikHibernate results = (ZaposlenikHibernate)session.get(Zaposlenik.class, id);
 		transaction.commit();
 		session.close();
 		return results;
@@ -209,7 +258,7 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "SELECT z.id,z.username,z.ime,z.prezime,z.adresa,z.datumZaposlenja,z.satnica,z.koordinator"
+		String hql = "SELECT zh.*"
 				+ "FROM OdjelZaposlenikHibernate ozh, OdjelHibernate oh, ZaposlenikHibernate zh"
 				+ "WHERE oh.id=ozh.odjel AND zh.id=ozh.zaposlenikodjela AND oh.id="+_id+"";
 		Query query = session.createQuery(hql);
@@ -219,14 +268,129 @@ public class DalDao {
 		return results;
 	}
 	
-	//static public ArrayList<ZaposlenikHibernate> VratiZaposlenikeUOdjelu(long _id)
-	//static public ArrayList<ZaposlenikHibernate> VratiProjektePoNazivu(long _id)
-	//static public ArrayList<ZaposlenikHibernate> VratiProjektePoNazivuKlijenta(long _id)
-	//static public ArrayList<ZaposlenikHibernate> VratiSveProjekte(long _id)
-	//static public ArrayList<ZaposlenikHibernate> VratiSveNearhiviraneProjekte(long _id)
-	//static public ArrayList<ZaposlenikHibernate> VratiZaposlenikeNaProjektu(long _id)
-	//pretraga korisnika po: ime,prezime,email,username,odjel
-	//vrati taskove projekta: projekatID, ZaposlenikID
-	//vrati timesheet-ove za projekat
+	static public ArrayList<ProjekatHibernate> VratiProjektePoNazivu(String naziv)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ProjekatHibernate where naziv='" + naziv + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ProjekatHibernate> VratiNearhiviraneProjektePoNazivu(String naziv)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ProjekatHibernate where naziv='" + naziv + "' and arhiviran ='0'";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ProjekatHibernate> VratiProjektePoNazivuKlijenta(String nazivKlijenta)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ProjekatHibernate where nazivKlijenta='" + nazivKlijenta + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ProjekatHibernate> VratiNearhiviraneProjektePoNazivuKlijenta(String nazivKlijenta)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ProjekatHibernate where nazivKlijenta='" + nazivKlijenta + "' and arhiviran ='0'";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ProjekatHibernate> VratiSveProjekte()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ProjekatHibernate";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ProjekatHibernate> VratiSveNearhiviraneProjekte()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM OdjelHibernate where arhiviran='0'";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikeNaProjektu(long _id)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "SELECT DISTINCT zh.*"
+				+ "FROM TaskHibernate ozh, ProjekatHibernate oh, ZaposlenikHibernate zh"
+				+ "WHERE oh.id=ozh.projekat AND zh.id=ozh.zaposlenik AND oh.id="+_id+""; 
+		Query query = session.createQuery(hql);
+		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<TaskHibernate> VratiTaskoveProjekta(long ProjekatID, long ZaposlenikID)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM TaskHibernate where projekat='" + ProjekatID + "' and zaposlenik ='" + ZaposlenikID + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<TaskHibernate> results = (ArrayList<TaskHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<TimesheetHibernate> VratiTimesheetoveProjekta(long ProjekatID)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM TimesheetHibernate where projekat='" + ProjekatID + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<TimesheetHibernate> results = (ArrayList<TimesheetHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+
+	static public ArrayList<TaskHibernate> VratiTimesheetTaskove(long TimesheetID)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "SELECT DISTINCT zh.*"
+				+ "FROM TimesheetTaskHibernate tth, TimesheetHibernate th, TaskHibernate tah"
+				+ "WHERE th.id=tth.timesheet AND tah.id=tth.task AND th.id=" + TimesheetID + ""; 
+		Query query = session.createQuery(hql);
+		ArrayList<TaskHibernate> results = (ArrayList<TaskHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+
 	
 }
