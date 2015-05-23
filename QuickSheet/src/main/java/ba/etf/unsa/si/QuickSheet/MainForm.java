@@ -49,6 +49,8 @@ import java.awt.Component;
 import java.awt.ScrollPane;
 import java.awt.Toolkit;
 
+import javax.swing.DefaultComboBoxModel;
+
 public class MainForm extends JFrame {
 	private JTextField textField;
 	private JPanel panel;
@@ -98,13 +100,13 @@ public class MainForm extends JFrame {
 	public MainForm() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
-		setTitle("QuickSheet");
+		setTitle("QuickSheet - Administrator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 765, 476);
 		getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 764, 431);
+		tabbedPane.setBounds(0, 0, 764, 447);
 		getContentPane().add(tabbedPane);
 		setLocationRelativeTo(null);
 		
@@ -143,14 +145,16 @@ public class MainForm extends JFrame {
 		panel_2.add(textField_44);
 		textField_44.setColumns(10);
 		
-		final JLabel label_error = new JLabel("");
-		label_error.setVisible(false);
-		label_error.setBounds(0, 433, 764, 14);
-		getContentPane().add(label_error);
-		
 		final JList list_3 = new JList();
 		list_3.setBounds(190, 61, 141, 135);
 		panel_2.add(list_3);
+	
+		
+		final JLabel label_error = new JLabel("");
+		label_error.setBounds(0, 405, 764, 14);
+		odjeliPanel.add(label_error);
+		label_error.setVisible(false);
+		
 		
 		JButton btnDodaj_1 = new JButton("Dodaj");
 		btnDodaj_1.addActionListener(new ActionListener() {
@@ -160,14 +164,15 @@ public class MainForm extends JFrame {
 				if(textField_43.getText().equals("")){
 					label_error.setText("Unesite naziv odjela!");
 					greska = false;}
+				else if(list_3.isSelectionEmpty()){
+					label_error.setText("Morate označiti zaposlenike koje želite da dodate u odjel!");
+					greska = false;}
+				
 				else if(textField_44.getText().equals("") ){
 					label_error.setText("Unesite maksimalan broj zaposlenika!");
 					greska = false;}
 				else if(Integer.parseInt(textField_44.getText()) > 12){
 					label_error.setText("Broj zaposlenika mora biti manji od 12!");
-					greska = false;}
-				else if(list_3.isSelectionEmpty()){
-					label_error.setText("Morate označiti zaposlenike koje želite da dodate u odjel!");
 					greska = false;}
 				
 				else greska = true;
@@ -200,11 +205,33 @@ public class MainForm extends JFrame {
 		panel_3.add(textField_45);
 		textField_45.setColumns(10);
 		
-		JComboBox comboBox_16 = new JComboBox();
+		final JComboBox comboBox_16 = new JComboBox();
+		comboBox_16.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!(comboBox_16.getSelectedItem() == null)){
+					textField_45.setText((String) comboBox_16.getSelectedItem());
+				}
+			}
+		});
+		comboBox_16.setModel(new DefaultComboBoxModel(new String[] {"naziv"}));
 		comboBox_16.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_16);
 		
 		JButton btnPretrai = new JButton("Pretraži");
+		btnPretrai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(comboBox_16.getSelectedItem() == null){
+					greska = false;
+					label_error.setText("Morate označiti parametar pretrage!");
+				}
+				if(greska == false){
+					label_error.setVisible(true);
+				}
+				else label_error.setVisible(false);
+			}
+		});
 		btnPretrai.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretrai.setBounds(262, 56, 69, 23);
 		panel_3.add(btnPretrai);
@@ -231,10 +258,13 @@ public class MainForm extends JFrame {
 		btnIzmjeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
+				
 				if(list_4.isSelectionEmpty()){
 					greska = false;
 					
 				}
+				
+				
 				if(greska == false){
 					
 					label_error.setText("Morate označiti odjel!");
@@ -281,6 +311,7 @@ public class MainForm extends JFrame {
 		label_5.setBounds(22, 29, 170, 14);
 		panel_3.add(label_5);
 		
+	
 		JPanel projektiPanel = new JPanel();
 		tabbedPane.addTab("Projekti", null, projektiPanel, null);
 		projektiPanel.setLayout(null);
@@ -291,10 +322,10 @@ public class MainForm extends JFrame {
 		panel_5.setBounds(30, 22, 341, 370);
 		projektiPanel.add(panel_5);
 		
-		JLabel label_2 = new JLabel("Naziv:");
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_2.setBounds(79, 36, 82, 14);
-		panel_5.add(label_2);
+		JLabel lblNazivProjekta = new JLabel("Naziv projekta:");
+		lblNazivProjekta.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNazivProjekta.setBounds(40, 36, 73, 14);
+		panel_5.add(lblNazivProjekta);
 		
 		textField_47 = new JTextField();
 		textField_47.setColumns(10);
@@ -311,11 +342,60 @@ public class MainForm extends JFrame {
 		lblDodajNadreenog.setBounds(24, 251, 102, 14);
 		panel_5.add(lblDodajNadreenog);
 		
-		JComboBox comboBox_19 = new JComboBox();
+		final JComboBox comboBox_19 = new JComboBox();
+		comboBox_19.setModel(new DefaultComboBoxModel(new String[] {"", "nadređeni1", "nadređeni2"}));
 		comboBox_19.setBounds(159, 248, 165, 20);
 		panel_5.add(comboBox_19);
 		
+		final JList list = new JList();
+		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list.setModel(new AbstractListModel() {
+			String[] values = new String[] {"Radnik1", "Radnik2", "Radnik3"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		list.setBounds(159, 116, 165, 121);
+		panel_5.add(list);
+		
+		final JLabel label_error1 = new JLabel("");
+		label_error1.setVisible(false);
+		label_error1.setBounds(0, 403, 759, 14);
+		projektiPanel.add(label_error1);
+		
 		JButton button_7 = new JButton("Dodaj");
+		button_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				if(textField_47.getText().equals("")){
+					greska = false;
+					label_error1.setText("Morate unijeti naziv projekta!");
+				}
+				else if(textField_48.getText().equals("")){
+					greska = false;
+					label_error1.setText("Morate unijeti naziv klijenta!");
+				}
+				else if(list.isSelectionEmpty()){
+					greska = false;
+					label_error1.setText("Morate označiti zaposlenike!");
+				}
+				else if(comboBox_19.getSelectedItem() == null){
+					greska = false;
+					label_error1.setText("Morate označiti nadređenog!");
+				}
+				else greska = true;
+				
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else  {
+					label_error1.setVisible(false);
+				}
+			}
+		});
 		button_7.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_7.setBounds(242, 308, 89, 23);
 		panel_5.add(button_7);
@@ -334,19 +414,7 @@ public class MainForm extends JFrame {
 		verticalBox.setBounds(149, 215, 82, -66);
 		panel_5.add(verticalBox);
 		
-		JList list = new JList();
-		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Radnik1", "Radnik2", "Radnik3"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list.setBounds(159, 116, 165, 121);
-		panel_5.add(list);
+		
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setLayout(null);
@@ -359,28 +427,75 @@ public class MainForm extends JFrame {
 		chckbxPrikaziArhiviraneProjekte.setBounds(22, 86, 149, 23);
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
 		
-		JComboBox comboBox_17 = new JComboBox();
+		final JComboBox comboBox_17 = new JComboBox();
+		comboBox_17.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!(comboBox_17.getSelectedItem() == null)){
+					textField_46.setText((String) comboBox_17.getSelectedItem());
+				}
+			}
+		});
+		comboBox_17.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"naziv projekta", "naziv klijenta", "naziv koordinatora"}));
 		comboBox_17.setBounds(22, 56, 99, 23);
 		panel_11.add(comboBox_17);
 		
-		JButton button_4 = new JButton("Pretrazi");
-		button_4.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		button_4.setBounds(265, 56, 69, 23);
-		panel_11.add(button_4);
+		JButton btnPretrai_1 = new JButton("Pretraži");
+		btnPretrai_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+
+				if(comboBox_17.getSelectedItem() == null){
+					greska = false;
+					label_error1.setText("Morate označiti parametar pretrage!");
+				}
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else label_error1.setVisible(false);
+			}
+		});
+		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnPretrai_1.setBounds(265, 56, 69, 23);
+		panel_11.add(btnPretrai_1);
 		
 		textField_46 = new JTextField();
 		textField_46.setBounds(131, 56, 124, 23);
 		panel_11.add(textField_46);
 		textField_46.setColumns(10);
 		
-		JList list_1 = new JList();
+		final JList list_1 = new JList();
+		list_1.setModel(new AbstractListModel() {
+			String[] values = new String[] {"projekat 1", "projekat 2"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		list_1.setBounds(22, 114, 309, 209);
 		panel_11.add(list_1);
 		
 		JButton btnSauvajPromjene = new JButton("Prikaži projekat");
 		btnSauvajPromjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new ProjekatForm().setVisible(true);
+				boolean greska = true;
+				if(list_1.isSelectionEmpty()){
+					greska = false;
+					label_error1.setText("Morate označiti odjel!");
+					
+				}
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else{
+					label_error1.setVisible(false);
+					new ProjekatForm().setVisible(true);
+					
+				}
+				
 			}
 		});
 		btnSauvajPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -388,6 +503,24 @@ public class MainForm extends JFrame {
 		panel_11.add(btnSauvajPromjene);
 		
 		JButton btnObriiProjekat = new JButton("Obriši projekat");
+		btnObriiProjekat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				if(list_1.isSelectionEmpty()){
+					greska = false;
+					label_error1.setText("Morate označiti odjel da bi ga obrisali!");
+					
+				}
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else{
+					label_error1.setVisible(false);
+					
+					
+				}
+			}
+		});
 		btnObriiProjekat.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnObriiProjekat.setBounds(212, 334, 119, 23);
 		panel_11.add(btnObriiProjekat);
@@ -396,6 +529,8 @@ public class MainForm extends JFrame {
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_7.setBounds(22, 29, 170, 14);
 		panel_11.add(label_7);
+		
+		
 		
 		JPanel korisniciPanel = new JPanel();
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
