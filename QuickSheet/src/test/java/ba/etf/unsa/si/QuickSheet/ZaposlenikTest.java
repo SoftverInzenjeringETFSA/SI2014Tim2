@@ -1,4 +1,4 @@
-package ba.etf.unsa.si.Klase;
+package ba.etf.unsa.si.QuickSheet;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import javax.naming.directory.InvalidAttributeValueException;
 
 import org.junit.Test;
+
+import ba.etf.unsa.si.Klase.ProjekatRadnik;
+import ba.etf.unsa.si.Klase.Zaposlenik;
 
 public class ZaposlenikTest {
 

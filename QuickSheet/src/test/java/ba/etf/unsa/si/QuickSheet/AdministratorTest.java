@@ -1,12 +1,15 @@
-package ba.etf.unsa.si.Klase;
-
-import static org.junit.Assert.*;
+package ba.etf.unsa.si.QuickSheet;
 
 import java.time.LocalDate;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
 import org.junit.Test;
+
+import ba.etf.unsa.si.Klase.Administrator;
+import ba.etf.unsa.si.Klase.Koordinator;
+import ba.etf.unsa.si.Klase.Odjel;
+import ba.etf.unsa.si.Klase.Projekat;
 
 public class AdministratorTest {
 

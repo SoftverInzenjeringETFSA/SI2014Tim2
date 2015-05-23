@@ -1,4 +1,4 @@
-package ba.etf.unsa.si.Klase;
+package ba.etf.unsa.si.QuickSheet;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,11 @@ import java.time.LocalDate;
 import javax.management.InvalidAttributeValueException;
 
 import org.junit.Test;
+
+import ba.etf.unsa.si.Klase.IzvjestajOdjela;
+import ba.etf.unsa.si.Klase.Koordinator;
+import ba.etf.unsa.si.Klase.Odjel;
+import ba.etf.unsa.si.Klase.Projekat;
 
 public class IzvjestajOdjelaTest {
 
