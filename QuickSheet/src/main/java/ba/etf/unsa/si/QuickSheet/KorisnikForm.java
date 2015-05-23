@@ -18,6 +18,12 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.Toolkit;
 import javax.swing.JCheckBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import java.util.Date;
+import java.util.Calendar;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class KorisnikForm extends JFrame {
 
@@ -165,19 +171,42 @@ public class KorisnikForm extends JFrame {
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setBounds(164, 280, 167, 20);
 		panel.add(passwordField_1);
-		
-		JButton btnSpasiIzmjene = new JButton("Spremi izmjene");
-		btnSpasiIzmjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnSpasiIzmjene.setBounds(190, 336, 141, 23);
-		panel.add(btnSpasiIzmjene);
-		
 		JCheckBox checkBox = new JCheckBox("");
 		checkBox.setBounds(164, 304, 97, 23);
 		panel.add(checkBox);
 		
-		JLabel label_error = new JLabel("");
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerDateModel(new Date(1432332000000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner.setBounds(164, 146, 167, 20);
+		panel.add(spinner);
+		
+		final JLabel label_error = new JLabel("");
 		label_error.setVisible(false);
 		label_error.setBounds(0, 386, 386, 14);
 		contentPane.add(label_error);
+		
+		JButton btnSpasiIzmjene = new JButton("Spremi izmjene");
+		btnSpasiIzmjene.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true; 
+				if(textField.getText().equals("")) greska = false;
+				else if(textField_1.getText().equals("")) greska = false;
+				else if(textField_2.getText().equals("")) greska = false;
+				else greska = true;
+				if(greska == false){
+					label_error.setVisible(true);
+					label_error.setText("Niste ispravno unijeli podatke");
+				}
+				else{
+					label_error.setVisible(false);
+				}
+				
+			}
+		});
+		btnSpasiIzmjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnSpasiIzmjene.setBounds(190, 336, 141, 23);
+		panel.add(btnSpasiIzmjene);
+		
+		
 	}
 }

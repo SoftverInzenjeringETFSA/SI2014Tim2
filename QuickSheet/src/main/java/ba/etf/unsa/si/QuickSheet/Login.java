@@ -168,6 +168,7 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String textFieldValue = txtIme.getText();
+				
 				if(textFieldValue.equals("administrator")){
 					
 					new MainForm().setVisible(true);
