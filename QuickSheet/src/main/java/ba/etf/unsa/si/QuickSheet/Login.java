@@ -168,7 +168,8 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String textFieldValue = txtIme.getText();
-				
+				boolean greska = true;
+				boolean greska_p = true;
 				if(textFieldValue.equals("administrator")){
 					
 					new MainForm().setVisible(true);
@@ -181,13 +182,20 @@ public class Login extends JFrame {
 				}
 				else if(textFieldValue.equals("baza")){
 					labela1.setVisible(true);
-					labela1.setText("Konflikt baza");
+					
 				}
 				else{
-					
-					labela1.setVisible(true);
-					labela1.setText("Morate unijeti odgovarajući username ili password!");
+					greska = false;
 				}
+				if(greska == false){
+					labela1.setVisible(true);
+					labela1.setText("Unesite username!");
+				}
+				else{
+					labela1.setVisible(false);
+				}
+				
+				
 				
 		}
 		});

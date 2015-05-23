@@ -155,7 +155,7 @@ public class KorisnikForm extends JFrame {
 		textField_4.setBounds(164, 122, 167, 20);
 		panel.add(textField_4);
 		
-		JList list = new JList();
+		final JList list = new JList();
 		list.setBounds(164, 174, 167, 51);
 		panel.add(list);
 		
@@ -175,7 +175,7 @@ public class KorisnikForm extends JFrame {
 		checkBox.setBounds(164, 304, 97, 23);
 		panel.add(checkBox);
 		
-		JSpinner spinner = new JSpinner();
+		final JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerDateModel(new Date(1432332000000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner.setBounds(164, 146, 167, 20);
 		panel.add(spinner);
@@ -189,14 +189,34 @@ public class KorisnikForm extends JFrame {
 		btnSpasiIzmjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true; 
-				if(textField.getText().equals("")) greska = false;
-				else if(textField_1.getText().equals("")) greska = false;
-				else if(textField_2.getText().equals("")) greska = false;
+				
+				if(textField.getText().equals("")){
+					label_error.setText("Unesite ime!");
+					greska = false;}
+				else if(textField_1.getText().equals("")){
+					label_error.setText("Unesite prezime!");
+					greska = false;}
+				else if(textField_2.getText().equals("")){
+					label_error.setText("Unesite adresu!");
+					greska = false;}
+				else if(textField_3.getText().equals("")){
+					label_error.setText("Unesite broj telefona!");
+					greska = false;}
+				else if(textField_4.getText().equals("")){
+					label_error.setText("Unesite email!");
+					greska = false;}
+				else if(textField_5.getText().equals("")){
+					label_error.setText("Unesite korisničko ime!");
+					greska = false;}
+				else if(list.getSelectedValue().equals("")){ 
+					  label_error.setText("Odaberite odjel u kojem radi zaposlenik!");
+					  greska = false;}
 				else greska = true;
+				
 				if(greska == false){
-					label_error.setVisible(true);
-					label_error.setText("Niste ispravno unijeli podatke");
+					label_error.setVisible(true);	
 				}
+				
 				else{
 					label_error.setVisible(false);
 				}

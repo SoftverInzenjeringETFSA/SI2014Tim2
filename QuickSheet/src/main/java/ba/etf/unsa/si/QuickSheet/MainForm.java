@@ -433,6 +433,7 @@ public class MainForm extends JFrame {
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
