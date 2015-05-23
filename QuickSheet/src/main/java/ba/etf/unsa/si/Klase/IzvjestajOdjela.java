@@ -21,6 +21,8 @@ public class IzvjestajOdjela extends Izvjestaj{
 		return odjel;
 	}
 	
+	
+	
 	public void setOdjel(Odjel odjel) throws InvalidAttributeValueException 
 	{
 		if (odjel != null)
