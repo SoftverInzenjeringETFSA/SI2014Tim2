@@ -143,9 +143,39 @@ public class MainForm extends JFrame {
 		panel_2.add(textField_44);
 		textField_44.setColumns(10);
 		
+		final JLabel label_error = new JLabel("");
+		label_error.setVisible(false);
+		label_error.setBounds(0, 433, 764, 14);
+		getContentPane().add(label_error);
+		
+		JList list_3 = new JList();
+		list_3.setBounds(190, 61, 141, 135);
+		panel_2.add(list_3);
+		
 		JButton btnDodaj_1 = new JButton("Dodaj");
 		btnDodaj_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true; 
+				
+				if(textField_43.getText().equals("")){
+					label_error.setText("Unesite naziv odjela!");
+					greska = false;}
+				else if(textField_44.getText().equals("") ){
+					label_error.setText("Unesite maksimalan broj zaposlenika!");
+					greska = false;}
+				else if(Integer.parseInt(textField_44.getText()) > 12){
+					label_error.setText("Broj zaposlenika mora biti manji od 12!");
+					greska = false;}
+				
+				else greska = true;
+				
+				if(greska == false){
+					label_error.setVisible(true);	
+				}
+				
+				else{
+					label_error.setVisible(false);
+				}
 				
 				
 			}
@@ -154,9 +184,7 @@ public class MainForm extends JFrame {
 		btnDodaj_1.setBounds(242, 308, 89, 23);
 		panel_2.add(btnDodaj_1);
 		
-		JList list_3 = new JList();
-		list_3.setBounds(190, 61, 141, 135);
-		panel_2.add(list_3);
+		
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -178,7 +206,16 @@ public class MainForm extends JFrame {
 		btnPretrai.setBounds(262, 56, 69, 23);
 		panel_3.add(btnPretrai);
 		
-		JList list_4 = new JList();
+		final JList list_4 = new JList();
+		list_4.setModel(new AbstractListModel() {
+			String[] values = new String[] {"odjel1", "odjel2"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		list_4.setBounds(22, 114, 309, 209);
 		panel_3.add(list_4);
 		
@@ -190,7 +227,22 @@ public class MainForm extends JFrame {
 		JButton btnIzmjeni = new JButton("Prikaži odjel");
 		btnIzmjeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new OdjelForm().setVisible(true);
+				boolean greska = true;
+				if(list_4.isSelectionEmpty()){
+					greska = false;
+					
+				}
+				if(greska == false){
+					
+					label_error.setText("Morate selektovati odjel!");
+					label_error.setVisible(true);
+				}
+				else{
+					label_error.setVisible(false);
+					new OdjelForm().setVisible(true);
+					
+				}
+				
 			}
 		});
 		btnIzmjeni.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -198,6 +250,25 @@ public class MainForm extends JFrame {
 		panel_3.add(btnIzmjeni);
 		
 		JButton btnObrisi = new JButton("Obriši odjel");
+		btnObrisi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list_4.isSelectionEmpty()){
+					greska = false;
+					
+				}
+				if(greska == false){
+					
+					label_error.setText("Morate selektovati odjel da bi ga izbrisali!");
+					label_error.setVisible(true);
+				}
+				else{
+					label_error.setVisible(false);
+					
+					
+				}
+			}
+		});
 		btnObrisi.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnObrisi.setBounds(212, 334, 119, 23);
 		panel_3.add(btnObrisi);
@@ -547,10 +618,7 @@ public class MainForm extends JFrame {
 		button_1.setBounds(193, 138, 110, 23);
 		panel_6.add(button_1);
 		
-		JLabel labela_error = new JLabel("");
-		labela_error.setVisible(false);
-		labela_error.setBounds(0, 433, 764, 14);
-		getContentPane().add(labela_error);
+		
 		
 	}
 
