@@ -60,8 +60,6 @@ public class MainForm extends JFrame {
 	private JTextField textField_36;
 	private JTextField textField_37;
 	private JTextField textField_38;
-	private JTextField textField_39;
-	private JTextField textField_40;
 	private JTextField textField_41;
 	private JPanel panel_2;
 	private JLabel lblNaziv;
@@ -603,56 +601,42 @@ public class MainForm extends JFrame {
 		lblAdresa.setBounds(82, 74, 82, 14);
 		panel.add(lblAdresa);
 		
-		JLabel lblBrojTelefona = new JLabel("Broj Telefona:");
-		lblBrojTelefona.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblBrojTelefona.setBounds(52, 99, 97, 14);
-		panel.add(lblBrojTelefona);
-		
-		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblEmail.setBounds(92, 124, 46, 14);
-		panel.add(lblEmail);
-		
 		JLabel lblNewLabel_8 = new JLabel("Datum zapošljavanja:");
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel_8.setBounds(10, 149, 104, 14);
+		lblNewLabel_8.setBounds(10, 102, 104, 14);
 		panel.add(lblNewLabel_8);
 		
 		JLabel lblOdjel = new JLabel("Odjel:");
 		lblOdjel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblOdjel.setBounds(82, 174, 46, 14);
+		lblOdjel.setBounds(82, 127, 46, 14);
 		panel.add(lblOdjel);
 		
 		JLabel lblKorisnickoIme = new JLabel("Korisničko ime:");
 		lblKorisnickoIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblKorisnickoIme.setBounds(52, 233, 82, 14);
+		lblKorisnickoIme.setBounds(52, 186, 82, 14);
 		panel.add(lblKorisnickoIme);
 		
 		JLabel lblLozinka = new JLabel("Lozinka:");
 		lblLozinka.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblLozinka.setBounds(82, 258, 46, 14);
+		lblLozinka.setBounds(82, 211, 46, 14);
 		panel.add(lblLozinka);
 		
 		JLabel lblPonoviLozinku = new JLabel("Ponovi lozinku:");
 		lblPonoviLozinku.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblPonoviLozinku.setBounds(52, 283, 92, 14);
+		lblPonoviLozinku.setBounds(52, 236, 92, 14);
 		panel.add(lblPonoviLozinku);
 		
-		JLabel lblVrstaKorisnika = new JLabel("Vrsta korisnika:");
+		JLabel lblVrstaKorisnika = new JLabel("Koordinator:");
 		lblVrstaKorisnika.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblVrstaKorisnika.setBounds(52, 308, 82, 14);
+		lblVrstaKorisnika.setBounds(62, 261, 82, 14);
 		panel.add(lblVrstaKorisnika);
 		
-		final JComboBox comboBox_11 = new JComboBox();
-		comboBox_11.setBounds(190, 305, 141, 20);
-		panel.add(comboBox_11);
-		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(190, 280, 141, 20);
+		passwordField.setBounds(190, 233, 141, 20);
 		panel.add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(190, 255, 141, 20);
+		passwordField_1.setBounds(190, 208, 141, 20);
 		panel.add(passwordField_1);
 		
 		textField_36 = new JTextField();
@@ -670,19 +654,9 @@ public class MainForm extends JFrame {
 		textField_38.setBounds(190, 69, 141, 20);
 		panel.add(textField_38);
 		
-		textField_39 = new JTextField();
-		textField_39.setColumns(10);
-		textField_39.setBounds(190, 97, 141, 20);
-		panel.add(textField_39);
-		
-		textField_40 = new JTextField();
-		textField_40.setColumns(10);
-		textField_40.setBounds(190, 122, 141, 20);
-		panel.add(textField_40);
-		
 		textField_41 = new JTextField();
 		textField_41.setColumns(10);
-		textField_41.setBounds(190, 230, 141, 20);
+		textField_41.setBounds(190, 183, 141, 20);
 		panel.add(textField_41);
 		
 		final JLabel label_error2 = new JLabel("");
@@ -702,7 +676,7 @@ public class MainForm extends JFrame {
 				return values[index];
 			}
 		});
-		list_5.setBounds(190, 174, 141, 51);
+		list_5.setBounds(190, 127, 141, 51);
 		panel.add(list_5);
 		
 		JButton btnDodaj = new JButton("Dodaj");
@@ -723,24 +697,12 @@ public class MainForm extends JFrame {
 				else if(textField_38.getText().equals("")){
 					label_error2.setText("Unesite adresu!");
 					greska = false;}
-				else if(textField_39.getText().equals("")){
-					label_error2.setText("Unesite broj telefona!");
-					greska = false;}
-				else if(textField_40.getText().equals("")){
-					label_error2.setText("Unesite email!");
-					greska = false;}
-				
 				else if(list_5.isSelectionEmpty()){
 					label_error2.setText("Morate označiti odjel kojem zaposlenik pripada!");
 					greska = false;}
 				else if(textField_41.getText().equals("")){
 					label_error2.setText("Unesite korisničko ime!");
 					greska = false;}
-				else if(comboBox_11.getSelectedItem() == null){
-					greska = false;
-					label_error1.setText("Morate označiti vrstu korisnika!");
-				}
-				
 				else if(passwordField_1.getPassword().length == 0){
 					label_error2.setText("Unesite lozinku!");
 					greska = false;}
@@ -774,7 +736,7 @@ public class MainForm extends JFrame {
 		JSpinner spinner = new JSpinner();
 		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner.setModel(new SpinnerDateModel(new Date(1432332000000L), null, null, Calendar.DAY_OF_YEAR));
-		spinner.setBounds(190, 146, 141, 20);
+		spinner.setBounds(190, 99, 141, 20);
 		panel.add(spinner);
 		
 		JButton btnOtkai_2 = new JButton("Otkaži");
@@ -783,19 +745,20 @@ public class MainForm extends JFrame {
 				textField_36.setText("");
 				textField_37.setText("");
 				textField_38.setText("");
-				textField_39.setText("");
-				textField_40.setText("");
 				textField_41.setText("");
 				passwordField.setText("");
 				passwordField_1.setText("");
 				list_5.clearSelection();
-				comboBox_11.setSelectedIndex(-1);
 				label_error2.setVisible(false);
 			}
 		});
 		btnOtkai_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnOtkai_2.setBounds(242, 336, 89, 23);
 		panel.add(btnOtkai_2);
+		
+		JCheckBox chckbxDa = new JCheckBox("Da");
+		chckbxDa.setBounds(190, 257, 97, 23);
+		panel.add(chckbxDa);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
