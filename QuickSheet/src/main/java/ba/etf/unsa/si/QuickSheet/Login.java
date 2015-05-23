@@ -23,6 +23,7 @@ import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 import ba.etf.unsa.si.util.HibernateUtil;
 
@@ -30,7 +31,9 @@ import java.awt.Toolkit;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
 import javax.swing.JCheckBox;
+
 import java.awt.Color;
 
 public class Login extends JFrame {
@@ -181,8 +184,16 @@ public class Login extends JFrame {
 					new MainFormZaposlenik().setVisible(true);
 				}
 				else if(textFieldValue.equals("baza")){
-					labela1.setVisible(true);
-					
+					//labela1.setVisible(true);
+					OdjelHibernate oh = new OdjelHibernate();
+					oh.setMaksimalanBrojRadnika(12);
+					oh.setId(4);
+					oh.setNaziv("Odjel2");
+					oh.setArhiviran(false);
+					OdjelZaposlenikHibernate ozh = new OdjelZaposlenikHibernate();
+					ozh.setOdjel(oh);
+					ozh.setZaposlenikOdjela(DalDao.VratiZaposlenika(1));
+					DalDao.DodajObjekat(ozh);
 				}
 				else{
 					greska = false;

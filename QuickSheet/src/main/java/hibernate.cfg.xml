@@ -9,6 +9,7 @@
   <property name="hibernate.connection.username">EtfSI2014</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
+  <property name="hibernate.enable_lazy_load_no_trans">true</property>
   <mapping resource="ba/etf/unsa/si/KlaseHibernate/AdministratorHibernate.hbm.xml"/>
   <mapping resource="ba/etf/unsa/si/KlaseHibernate/IzvjestajOdjelaHibernate.hbm.xml"/>
   <mapping resource="ba/etf/unsa/si/KlaseHibernate/IzvjestajZaposlenikaHibernate.hbm.xml"/>

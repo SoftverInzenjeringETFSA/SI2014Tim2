@@ -9,14 +9,26 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+
 import java.awt.Color;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+
+import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.awt.Toolkit;
@@ -28,18 +40,14 @@ public class KorisnikFormKoordinator extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					KorisnikFormKoordinator frame = new KorisnikFormKoordinator();
+					KorisnikFormKoordinator frame = new KorisnikFormKoordinator("Test");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +59,10 @@ public class KorisnikFormKoordinator extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public KorisnikFormKoordinator() {
+	public KorisnikFormKoordinator(String zaposlenik) {
+		String[] parametri = zaposlenik.split(" ");
+		long id = Long.parseLong(parametri[0]);
+		ZaposlenikHibernate prikaz = DalDao.VratiZaposlenika(id); 
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setFont(new Font("Dialog", Font.PLAIN, 11));
@@ -85,15 +96,10 @@ public class KorisnikFormKoordinator extends JFrame {
 		label_2.setBounds(82, 74, 82, 14);
 		panel.add(label_2);
 		
-		JLabel label_3 = new JLabel("Broj Telefona:");
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_3.setBounds(52, 99, 97, 14);
-		panel.add(label_3);
-		
-		JLabel label_4 = new JLabel("Email:");
-		label_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_4.setBounds(92, 124, 46, 14);
-		panel.add(label_4);
+		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblSatnica.setBounds(80, 99, 58, 14);
+		panel.add(lblSatnica);
 		
 		JLabel label_5 = new JLabel("Datum zapošljavanja:");
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -115,7 +121,7 @@ public class KorisnikFormKoordinator extends JFrame {
 		label_10.setBounds(52, 258, 82, 14);
 		panel.add(label_10);
 		
-		textField = new JTextField();
+		textField = new JTextField(prikaz.getIme());
 		textField.setBorder(null);
 		textField.setBackground(Color.WHITE);
 		textField.setEnabled(false);
@@ -124,7 +130,7 @@ public class KorisnikFormKoordinator extends JFrame {
 		textField.setBounds(164, 21, 167, 20);
 		panel.add(textField);
 		
-		textField_1 = new JTextField();
+		textField_1 = new JTextField(prikaz.getPrezime());
 		textField_1.setEnabled(false);
 		textField_1.setEditable(false);
 		textField_1.setColumns(10);
@@ -133,7 +139,7 @@ public class KorisnikFormKoordinator extends JFrame {
 		textField_1.setBounds(164, 46, 167, 20);
 		panel.add(textField_1);
 		
-		textField_2 = new JTextField();
+		textField_2 = new JTextField(prikaz.getAdresa());
 		textField_2.setEnabled(false);
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
@@ -142,7 +148,8 @@ public class KorisnikFormKoordinator extends JFrame {
 		textField_2.setBounds(164, 71, 167, 20);
 		panel.add(textField_2);
 		
-		textField_3 = new JTextField();
+		Double satnica = prikaz.getSatnica();
+		textField_3 = new JTextField(satnica.toString());
 		textField_3.setEnabled(false);
 		textField_3.setEditable(false);
 		textField_3.setColumns(10);
@@ -151,31 +158,38 @@ public class KorisnikFormKoordinator extends JFrame {
 		textField_3.setBounds(164, 96, 167, 20);
 		panel.add(textField_3);
 		
-		textField_4 = new JTextField();
-		textField_4.setEnabled(false);
-		textField_4.setEditable(false);
-		textField_4.setColumns(10);
-		textField_4.setBorder(null);
-		textField_4.setBackground(Color.WHITE);
-		textField_4.setBounds(164, 121, 167, 20);
-		panel.add(textField_4);
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, prikaz.getDatumZaposlenja().getYear());
+		cal.set(Calendar.MONTH, prikaz.getDatumZaposlenja().getMonthValue());
+		cal.set(Calendar.DAY_OF_MONTH, prikaz.getDatumZaposlenja().getDayOfMonth());
+		Date d = cal.getTime();
 		
 		JSpinner spinner = new JSpinner();
 		spinner.setBackground(Color.WHITE);
 		spinner.setEnabled(false);
 		spinner.setBorder(null);
-		spinner.setModel(new SpinnerDateModel(new Date(1432159200000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner.setModel(new SpinnerDateModel(new Date(1432159200000L), null, null, Calendar.MILLISECOND));
 		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner.setBounds(164, 146, 167, 20);
+		spinner.setValue(d);
 		panel.add(spinner);
-		
+
+		ArrayList<OdjelHibernate> oh = new ArrayList<OdjelHibernate>();
+		oh = DalDao.VratiZaposlenikoveOdjele(id);
+		DefaultListModel lista = new DefaultListModel();
 		JList list = new JList();
 		list.setBackground(Color.WHITE);
 		list.setEnabled(false);
 		list.setBounds(164, 173, 167, 51);
+		list.setModel(lista);
+		for (int i = 0; i < oh.size(); i++)
+		{
+			String podatak = oh.get(i).getNaziv();
+			lista.addElement(podatak);
+		}
 		panel.add(list);
 		
-		textField_5 = new JTextField();
+		textField_5 = new JTextField(prikaz.getUsername());
 		textField_5.setEnabled(false);
 		textField_5.setEditable(false);
 		textField_5.setColumns(10);
@@ -184,7 +198,10 @@ public class KorisnikFormKoordinator extends JFrame {
 		textField_5.setBounds(164, 230, 167, 20);
 		panel.add(textField_5);
 		
-		textField_6 = new JTextField();
+		if (prikaz.getKoordinator())
+			textField_6 = new JTextField("koordinator");
+		else
+			textField_6 = new JTextField("projekat radnik");
 		textField_6.setEnabled(false);
 		textField_6.setEditable(false);
 		textField_6.setColumns(10);
