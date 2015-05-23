@@ -9,9 +9,11 @@ import org.hibernate.Transaction;
 
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetTaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 import ba.etf.unsa.si.util.HibernateUtil;
 
@@ -302,18 +304,30 @@ public class DalDao {
 		return oh;
 	}
 	
-	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikeUOdjelu(long _id)
+	static private ArrayList<OdjelZaposlenikHibernate> VratiOdjelZaposlenik (long OdjelId)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "SELECT zh.*"
-				+ "FROM OdjelZaposlenikHibernate ozh, OdjelHibernate oh, ZaposlenikHibernate zh"
-				+ "WHERE oh.id=ozh.odjel AND zh.id=ozh.zaposlenikodjela AND oh.id="+_id+"";
+		String hql = "FROM OdjelZaposlenikHibernate where odjel = '" + OdjelId + "'";
 		Query query = session.createQuery(hql);
-		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		ArrayList<OdjelZaposlenikHibernate> results = (ArrayList<OdjelZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
 		return results;
+	}
+	
+	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikeUOdjelu(long OdjelId)
+	{
+		ArrayList<OdjelZaposlenikHibernate> odjelZaposlenici = new ArrayList<OdjelZaposlenikHibernate>();
+		odjelZaposlenici = DalDao.VratiOdjelZaposlenik(OdjelId);
+		ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
+		for (int i = 0; i < odjelZaposlenici.size(); i++)
+		{
+			ZaposlenikHibernate zh = odjelZaposlenici.get(i).getZaposlenikOdjela();
+			if (!zaposlenici.contains(zh))
+				zaposlenici.add(zh);
+		}
+		return zaposlenici;
 	}
 	
 	static public ArrayList<ProjekatHibernate> VratiProjektePoNazivu(String naziv)
@@ -387,22 +401,34 @@ public class DalDao {
 		session.close();
 		return results;
 	}
-	
-	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikeNaProjektu(long _id)
+		
+	static public ArrayList<TaskHibernate> VratiSveTaskoveProjekta(long ProjekatID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "SELECT DISTINCT zh.*"
-				+ "FROM TaskHibernate ozh, ProjekatHibernate oh, ZaposlenikHibernate zh"
-				+ "WHERE oh.id=ozh.projekat AND zh.id=ozh.zaposlenik AND oh.id="+_id+""; 
+		String hql = "FROM TaskHibernate WHERE projekat ='" + ProjekatID + "'";
 		Query query = session.createQuery(hql);
-		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		ArrayList<TaskHibernate> results = (ArrayList<TaskHibernate>)query.list();
 		transaction.commit();
 		session.close();
 		return results;
 	}
 	
-	static public ArrayList<TaskHibernate> VratiTaskoveProjekta(long ProjekatID, long ZaposlenikID)
+	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikeNaProjektu(long ProjekatID)
+	{
+		ArrayList<TaskHibernate> taskovi = new ArrayList<TaskHibernate>();
+		taskovi = DalDao.VratiSveTaskoveProjekta(ProjekatID);
+		ArrayList<ZaposlenikHibernate> projekatZaposlenici = new ArrayList<ZaposlenikHibernate>();
+		for (int i = 0; i < taskovi.size(); i++)
+		{
+			ZaposlenikHibernate zh = taskovi.get(i).getZaposlenik();
+			if (!projekatZaposlenici.contains(zh))
+				projekatZaposlenici.add(zh);
+		}
+		return projekatZaposlenici;
+	}
+	
+	static public ArrayList<TaskHibernate> VratiTaskoveKorisnikaNaProjektu(long ProjekatID, long ZaposlenikID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
@@ -426,21 +452,35 @@ public class DalDao {
 		return results;
 	}
 
-	static public ArrayList<TaskHibernate> VratiTimesheetTaskove(long TimesheetID)
+	static private ArrayList<TimesheetTaskHibernate> VratiTimesheetTaskove(long TimesheetID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "SELECT DISTINCT zh.*"
-				+ "FROM TimesheetTaskHibernate tth, TimesheetHibernate th, TaskHibernate tah"
-				+ "WHERE th.id=tth.timesheet AND tah.id=tth.task AND th.id=" + TimesheetID + ""; 
+		String hql = "FROM TimesheetTaskHibernate where timesheet = '" + TimesheetID + "'";
 		Query query = session.createQuery(hql);
-		ArrayList<TaskHibernate> results = (ArrayList<TaskHibernate>)query.list();
+		ArrayList<TimesheetTaskHibernate> results = (ArrayList<TimesheetTaskHibernate>)query.list();
 		transaction.commit();
 		session.close();
 		return results;
 	}
+	
+	static public ArrayList<TaskHibernate> VratiTimesheetTaskoveZaposlenika(long TimesheetID)
+	{
+		ArrayList<TimesheetTaskHibernate> taskTimesheet = new ArrayList<TimesheetTaskHibernate>();
+		taskTimesheet = VratiTimesheetTaskove(TimesheetID);
+		ArrayList<TaskHibernate> taskoviZaposlenika = new ArrayList<TaskHibernate>();
+		for (int index = 0; index < taskTimesheet.size(); index++)
+		{
+			TaskHibernate th = taskTimesheet.get(index).getTask();
+			if (!th.getProcenatZavrsenosti().equals(100) || taskoviZaposlenika.contains(th))
+			{
+				taskoviZaposlenika.add(th);
+			}
+		}
+		return taskoviZaposlenika;
+	}
 
-	static public ArrayList<TaskHibernate> VratiZaposlenikoveTaskove(long ZaposlenikID)
+	static public ArrayList<TaskHibernate> VratiSveZaposlenikoveTaskove(long ZaposlenikID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
@@ -454,17 +494,16 @@ public class DalDao {
 	
 	static public ArrayList<ProjekatHibernate> VratiZaposlenikoveProjekte (long ZaposlenikID)
 	{
-		ArrayList<TaskHibernate> taskovi = VratiZaposlenikoveTaskove(ZaposlenikID);
+		ArrayList<TaskHibernate> taskovi = VratiSveZaposlenikoveTaskove(ZaposlenikID);
 		ArrayList<ProjekatHibernate> projekti = new ArrayList<ProjekatHibernate>();
 		for (int i = 0; i < taskovi.size(); i++)
 		{
 			ProjekatHibernate ph = taskovi.get(i).getProjekat();
 			if (!projekti.contains(ph))
-			{
 				projekti.add(ph);
-			}
 		}
 		return projekti;
 	}
+	
 	
 }
