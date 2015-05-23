@@ -1,19 +1,18 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.ListModel;
 
 import java.awt.Font;
 
@@ -23,31 +22,31 @@ import javax.swing.JScrollPane;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.SystemColor;
-import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JPasswordField;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-import javax.swing.Box;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.border.LineBorder;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SpinnerNumberModel;
 
-import java.awt.Component;
-import java.awt.ScrollPane;
 import java.awt.Toolkit;
+
+import javax.swing.DefaultComboBoxModel;
+
+import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class MainFormKoordinator extends JFrame {
 	private JTextField textField;
@@ -59,18 +58,12 @@ public class MainFormKoordinator extends JFrame {
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTable table;
-
 	
-	
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFormKoordinator frame = new MainFormKoordinator();
+					MainFormKoordinator frame = new MainFormKoordinator(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,10 +72,7 @@ public class MainFormKoordinator extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public MainFormKoordinator() {
+	public MainFormKoordinator(final ZaposlenikHibernate zh) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet");
@@ -184,13 +174,6 @@ public class MainFormKoordinator extends JFrame {
 		table.getColumnModel().getColumn(0).setPreferredWidth(123);
 		table.getColumnModel().getColumn(1).setPreferredWidth(126);
 		table.getColumnModel().getColumn(2).setPreferredWidth(120);
-		
-		
-		
-		
-		
-		
-		
 		
 		JPanel historijaPanel = new JPanel();
 		tabbedPane.addTab("Moja Historija", null, historijaPanel, null);
@@ -502,11 +485,12 @@ public class MainFormKoordinator extends JFrame {
 		korisniciPanel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JList list_2 = new JList();
+	    final JList list_2 = new JList();
+	    list_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_2.setBounds(22, 116, 309, 209);
 		panel_1.add(list_2);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
+		final JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxNewCheckBox.setBounds(22, 86, 170, 23);
 		panel_1.add(chckbxNewCheckBox);
@@ -515,7 +499,11 @@ public class MainFormKoordinator extends JFrame {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new KorisnikFormKoordinator().setVisible(true);
+				if (!list_2.isSelectionEmpty())
+				{
+					String selektovaniModel = list_2.getSelectedValue().toString();
+					new KorisnikFormKoordinator(selektovaniModel).setVisible(true);
+				}
 			}
 		});
 		btnNewButton_1.setBounds(212, 336, 119, 23);
@@ -526,7 +514,8 @@ public class MainFormKoordinator extends JFrame {
 		label_11.setBounds(22, 29, 170, 14);
 		panel_1.add(label_11);
 		
-		JComboBox comboBox_4 = new JComboBox();
+		final JComboBox comboBox_4 = new JComboBox();
+		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"Ime", "Prezime", "Username"}));
 		comboBox_4.setBounds(22, 56, 99, 23);
 		panel_1.add(comboBox_4);
 		
@@ -536,6 +525,99 @@ public class MainFormKoordinator extends JFrame {
 		panel_1.add(textField_6);
 		
 		JButton button_1 = new JButton("Pretraži");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!textField_6.getText().isEmpty())
+				{
+			    DefaultListModel lista = new DefaultListModel();
+			    list_2.setModel(lista);
+			    ArrayList<ProjekatHibernate> projekti = DalDao.VratiSveKoordinatorskeProjekte(zh.getId());
+				ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
+				for (int i = 0; i < projekti.size(); i++)
+				{
+					ArrayList<ZaposlenikHibernate> zaps = DalDao.VratiZaposlenikeNaProjektu(projekti.get(i).getId());
+					for (int j = 0; j < zaps.size(); j++)
+					{
+						if (!zaposlenici.contains(zaps.get(j)))
+							zaposlenici.add(zaps.get(j));
+					}
+				}
+				ArrayList<ZaposlenikHibernate> filterZaposlenici = new ArrayList<ZaposlenikHibernate>();
+				String vrijednost = comboBox_4.getSelectedItem().toString();
+				if (chckbxNewCheckBox.isSelected())
+				{
+					if (vrijednost.equals("Ime"))
+					{
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getIme().equals(textField_6.getText()))
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
+					}
+					else if (vrijednost.equalsIgnoreCase("Prezime"))
+					{
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getPrezime().equals(textField_6.getText()))
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
+					}
+					else
+					{
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getUsername().equals(textField_6.getText()))
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
+					}
+				}
+				else
+				{
+					if (vrijednost.equals("Ime"))
+					{
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getIme().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
+					}
+					else if (vrijednost.equalsIgnoreCase("Prezime"))
+					{
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getPrezime().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}
+					}
+					else
+					{
+						for (int i = 0; i < zaposlenici.size(); i++)
+						{
+							if (zaposlenici.get(i).getUsername().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
+							{
+								filterZaposlenici.add(zaposlenici.get(i));
+							}
+						}					
+					}
+				}
+				for (int i = 0; i < filterZaposlenici.size(); i++)
+				{
+					String podatak = filterZaposlenici.get(i).getId() + " " + filterZaposlenici.get(i).getIme() + " " + filterZaposlenici.get(i).getPrezime();
+					lista.addElement(podatak);
+				}
+				}
+			}
+		});
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_1.setBounds(262, 56, 69, 23);
 		panel_1.add(button_1);
