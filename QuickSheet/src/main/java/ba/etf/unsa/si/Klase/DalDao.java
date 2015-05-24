@@ -115,6 +115,18 @@ public class DalDao {
 			return false;
 		else return true;
 	}
+	
+		static public LinkedList<ZaposlenikHibernate> VratiSveZaposlenikeLinkedList()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ZaposlenikHibernate";
+		Query query = session.createQuery(hql);
+		LinkedList<ZaposlenikHibernate> results = (LinkedList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
 		
 	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikePoUsername(String username)
 	{
