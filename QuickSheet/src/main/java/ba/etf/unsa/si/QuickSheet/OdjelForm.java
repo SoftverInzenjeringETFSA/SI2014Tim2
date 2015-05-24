@@ -174,11 +174,19 @@ public class OdjelForm extends JFrame {
 					ZaposlenikHibernate zh=DalDao.VratiZaposlenika(id);
 					OdjelHibernate oh=DalDao.VratiOdjelPoNazivu(textField.getText());
 					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
-					ozh.setOdjel(oh);
-					ozh.setZaposlenikOdjela(zh);
-					DalDao.ObrisiObjekat(ozh);
+					DalDao.IzbrisiZaposlenikaIzOdjela(zh.getId(), oh.getId());
 					JOptionPane.showMessageDialog(null, "Zaposlenik je uklonjen iz odjela.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
-				
+					
+					DefaultListModel listaZaposlenikaOdjela = new DefaultListModel();
+					list.setModel(listaZaposlenikaOdjela);
+					ArrayList<ZaposlenikHibernate> zaposleniciOdjela=DalDao.VratiZaposlenikeUOdjelu(oh.getId());
+
+					for (int i=0;i<zaposleniciOdjela.size();i++)
+						{
+						    String tempString = zaposleniciOdjela.get(i).getId() + " " + zaposleniciOdjela.get(i).getIme() + " " + zaposleniciOdjela.get(i).getPrezime()
+						    		+ " " + zaposleniciOdjela.get(i).getAdresa() + " " + zaposleniciOdjela.get(i).getSatnica();
+							listaZaposlenikaOdjela.addElement(tempString);
+						}
 				}
 			}
 		});
