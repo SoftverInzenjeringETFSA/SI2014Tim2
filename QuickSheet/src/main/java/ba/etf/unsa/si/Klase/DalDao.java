@@ -279,7 +279,7 @@ public class DalDao {
 		session.close();
 		return oh;
 	}
-	
+	/*
 	static public OdjelHibernate VratiOdjelPoNazivu(String naziv)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -291,7 +291,7 @@ public class DalDao {
 		session.close();
 		return oh;
 	}
-	
+	*/
 	static private ArrayList<OdjelZaposlenikHibernate> VratiOdjelZaposlenikPoOdjelu (long OdjelId)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();

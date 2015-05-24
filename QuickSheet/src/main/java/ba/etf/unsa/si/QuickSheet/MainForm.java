@@ -71,6 +71,9 @@ import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 public class MainForm extends JFrame {
 	private JTextField textField;
 	private JPanel panel;
@@ -678,9 +681,8 @@ public class MainForm extends JFrame {
 		label_7.setBounds(22, 29, 170, 14);
 		panel_11.add(label_7);
 		
-		
-		
 		JPanel korisniciPanel = new JPanel();
+		
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
 		korisniciPanel.setLayout(null);
 		panel = new JPanel();
@@ -768,34 +770,6 @@ public class MainForm extends JFrame {
 		label_error2.setBounds(0, 403, 759, 14);
 		korisniciPanel.add(label_error2);
 		
-		final JList list_5 = new JList();
-		list_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		list_5.setModel(new AbstractListModel() {
-			String[] values = new String[] {"odjel1", "odjel2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list_5.setBounds(190, 127, 141, 51);
-		panel.add(list_5);
-		
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowActivated(WindowEvent arg0) {
-				DefaultListModel dl = new DefaultListModel();
-				list_5.setModel(dl);
-				ArrayList<OdjelHibernate> odjeli = DalDao.VratiSveArhiviraneOdjele();
-				for (int i = 0; i < odjeli.size(); i++)
-				{
-					String komponenta = odjeli.get(i).getId() + " " + odjeli.get(i).getNaziv();
-					dl.addElement(komponenta);
-				}
-			}
-		});
-		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -815,9 +789,6 @@ public class MainForm extends JFrame {
 					greska = false;}
 				else if(textField_38.getText().equals("")){
 					label_error2.setText("Unesite adresu!");
-					greska = false;}
-				else if(list_5.isSelectionEmpty()){
-					label_error2.setText("Morate označiti odjel kojem zaposlenik pripada!");
 					greska = false;}
 				else if(textField_41.getText().equals("")){
 					label_error2.setText("Unesite korisničko ime!");
@@ -867,7 +838,7 @@ public class MainForm extends JFrame {
 				textField_41.setText("");
 				passwordField.setText("");
 				passwordField_1.setText("");
-				list_5.clearSelection();
+				list .clearSelection();
 				label_error2.setVisible(false);
 			}
 		});
@@ -888,6 +859,20 @@ public class MainForm extends JFrame {
 		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
 		spinner_1.setBounds(190, 182, 141, 20);
 		panel.add(spinner_1);
+		
+		DefaultListModel lista2 = new DefaultListModel();
+		final JList list_5 = new JList();
+		JScrollPane scrollPane = new JScrollPane(list_5, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(190, 126, 141, 50);
+		list_5.setBounds(190, 126, 141, 50);
+		list_5.setModel(lista2);
+		ArrayList<OdjelHibernate> sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
+		for (int i = 0; i < sviOdjeli.size(); i++)
+		{
+			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
+			lista2.addElement(podatak);
+		}
+		panel.add(scrollPane);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
