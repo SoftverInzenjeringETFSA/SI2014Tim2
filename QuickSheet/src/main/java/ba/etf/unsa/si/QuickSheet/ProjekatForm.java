@@ -253,8 +253,9 @@ public class ProjekatForm extends JFrame {
 				else{
 					label_1.setVisible(false);
 					int temp=list_1.getSelectedIndex();
-					listaZaposlenikaProjekta.addElement(listaZaposlenika.getElementAt(temp));
-					
+					if (listaZaposlenikaProjekta.contains(listaZaposlenika.getElementAt(temp))==false){
+						listaZaposlenikaProjekta.addElement(listaZaposlenika.getElementAt(temp));
+					}
 				}
 			}
 		});
@@ -263,12 +264,11 @@ public class ProjekatForm extends JFrame {
 		panel.add(btnDodaj);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.removeAllItems();
 		ArrayList<ZaposlenikHibernate> zhk=DalDao.VratiSveZaposlenikeKoordinatore();
-	
-		for (int i=0;i<zhk.size();i++)
-		{
-		    comboBox.addItem(zhk.get(i));
-		}
+		for(ZaposlenikHibernate z:zhk){
+			comboBox.addItem(zhk);
+			}
 		
 		comboBox.setBounds(151, 409, 165, 20);
 		panel.add(comboBox);

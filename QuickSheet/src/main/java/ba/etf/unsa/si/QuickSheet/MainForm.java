@@ -75,6 +75,7 @@ import java.awt.event.WindowEvent;
 
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 import ba.etf.unsa.si.util.HibernateUtil;
 
@@ -530,6 +531,26 @@ public class MainForm extends JFrame {
 				}
 				else  {
 					label_error1.setVisible(false);
+					ProjekatHibernate projekath = new ProjekatHibernate();
+					projekath.setNaziv(textField_47.getText());
+					projekath.setNazivKlijenta(textField_48.getText());
+					DalDao.DodajObjekat(projekath);
+					int[] indeksi=list.getSelectedIndices();
+					for(int i=0;i<indeksi.length;i++){
+						String selektovano=listaZaposlenikaPr.getElementAt(indeksi[i]).toString();
+						String[] rijeciPr=selektovano.split(" ");
+						long idPr=Long.parseLong(rijeciPr[0]);
+						ZaposlenikHibernate zPr=DalDao.VratiZaposlenika(idPr);
+						TaskHibernate tPr=new TaskHibernate();
+						tPr.setProjekat(projekath);
+						tPr.setZaposlenik(zPr);
+						DalDao.DodajObjekat(tPr);
+					}
+					
+					JOptionPane.showMessageDialog(null, "Projekat je dodan.", "OK", JOptionPane.INFORMATION_MESSAGE);
+					textField_47.setText("");
+					textField_48.setText("");
+					list.clearSelection();
 				}
 			}
 		});
