@@ -1130,9 +1130,9 @@ public class MainFormKoordinator extends JFrame {
 					try {
 						ZAPOSLENIK = new ProjekatRadnik(zh.getUsername(), zh.getIme(), zh.getPrezime(), zh.getAdresa(), zh.getDatumZaposlenja(), zh.getSatnica());
 					} catch (InvalidAttributeValueException e1) {}
-					
+					IzvjestajZaposlenika iz = null;
 					try {
-						IzvjestajZaposlenika iz = new IzvjestajZaposlenika(PROJEKAT, ZAPOSLENIK);
+						iz = new IzvjestajZaposlenika(PROJEKAT, ZAPOSLENIK);
 					} catch (InvalidAttributeValueException e1) {}
 					
 					
@@ -1153,11 +1153,12 @@ public class MainFormKoordinator extends JFrame {
 					
 					}
 					ODJEL.setZaposlenici(zaki);
+					IzvjestajOdjela oz = null;
 					try {
-						IzvjestajOdjela oz = new IzvjestajOdjela(PROJEKAT, ODJEL);
+						oz = new IzvjestajOdjela(PROJEKAT, ODJEL);
 					} catch (InvalidAttributeValueException e1) {
 					}
-					new IzvjestajForm().setVisible(true);
+					new IzvjestajForm(iz, oz).setVisible(true);
 				}
 				
 			}
