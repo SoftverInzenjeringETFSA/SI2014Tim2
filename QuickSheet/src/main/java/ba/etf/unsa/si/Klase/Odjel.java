@@ -6,7 +6,7 @@ import javax.management.InvalidAttributeValueException;
 
 public class Odjel {
 
-	private LinkedList<Zaposlenik> zaposlenici = new LinkedList<Zaposlenik>();
+	private LinkedList<ProjekatRadnik> zaposlenici = new LinkedList<ProjekatRadnik>();
 	private String naziv;
 	private Integer maksimalanBrojRadnika;
 	private Boolean arhiviran;
@@ -25,18 +25,18 @@ public class Odjel {
 		this.arhiviran = arhiviran;
 	}
 
-	public Odjel(String _naziv, int _maksimalanBrojRadnika, LinkedList<Zaposlenik> _zaposlenici) throws InvalidAttributeValueException 
+	public Odjel(String _naziv, int _maksimalanBrojRadnika, LinkedList<ProjekatRadnik> _zaposlenici) throws InvalidAttributeValueException 
 	{
 		setNaziv(_naziv);
 		setMaksimalanBrojRadnika(_maksimalanBrojRadnika);
 		setZaposlenici(_zaposlenici);
 	}
 	
-	public LinkedList<Zaposlenik> getZaposlenici() {
+	public LinkedList<ProjekatRadnik> getZaposlenici() {
 		return zaposlenici;
 	}
 	
-	public void setZaposlenici(LinkedList<Zaposlenik> _zaposlenici) {
+	public void setZaposlenici(LinkedList<ProjekatRadnik> _zaposlenici) {
 		zaposlenici = _zaposlenici;
 	}
 	
@@ -64,7 +64,7 @@ public class Odjel {
 		return zaposlenici.size();
 	}
 	
-	public boolean DodajZaposlenika(Zaposlenik zaposlenik)
+	public boolean DodajZaposlenika(ProjekatRadnik zaposlenik)
 	{
 		if (maksimalanBrojRadnika.equals(TrenutniBrojRadnika()) || zaposlenici.contains(zaposlenik))
 			return false;
