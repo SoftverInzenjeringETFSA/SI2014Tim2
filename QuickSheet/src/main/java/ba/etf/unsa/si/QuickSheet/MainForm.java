@@ -18,20 +18,56 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.SingleSelectionModel;
+import javax.swing.JScrollPane;
+
+import java.awt.Canvas;
+import java.awt.SystemColor;
+import java.awt.Button;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Calendar;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-import javax.swing.table.TableColumnModel;
 
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
+
+import java.awt.Component;
+import java.awt.ScrollPane;
+
+import ba.etf.unsa.si.Klase.Administrator;
+import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainForm extends JFrame {
 	private JTextField textField;
@@ -55,9 +91,6 @@ public class MainForm extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 
-	
-	
-
 	/**
 	 * Launch the application.
 	 */
@@ -78,6 +111,7 @@ public class MainForm extends JFrame {
 	 * Create the frame.
 	 */
 	public MainForm(AdministratorHibernate admin) {
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet - Administrator");
@@ -126,8 +160,19 @@ public class MainForm extends JFrame {
 		textField_44.setColumns(10);
 		
 		final JList list_3 = new JList();
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
+		list_3.setModel(listaZaposlenika);
+		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+
+		for (int i=0;i<zaposlenici.size();i++)
+			{
+			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
+			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+				listaZaposlenika.addElement(tempString);
+			}
 		list_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		list_3.setModel(new AbstractListModel() {
+		
+		/*list_3.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik 1", "zaposlenik 5"};
 			public int getSize() {
 				return values.length;
@@ -135,7 +180,7 @@ public class MainForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list_3.setBounds(190, 61, 141, 135);
 		panel_2.add(list_3);
 	
@@ -177,6 +222,23 @@ public class MainForm extends JFrame {
 				
 				else{
 					label_error.setVisible(false);
+					OdjelHibernate odjelh = new OdjelHibernate();
+					odjelh.setNaziv(textField_43.getText());
+					odjelh.setMaksimalanBrojRadnika(Integer.parseInt(textField_44.getText()));
+					
+					String selektovanaVrijednost = list_3.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					ZaposlenikHibernate z=DalDao.VratiZaposlenika(id);
+					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
+					ozh.setOdjel(odjelh);
+					ozh.setZaposlenikOdjela(z);
+					DalDao.DodajObjekat(odjelh);
+					DalDao.DodajObjekat(ozh);
+					JOptionPane.showMessageDialog(null, "Odjel je dodan.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
+					textField_43.setText("");
+					textField_44.setText("");
+					list_3.clearSelection();
 				}
 				
 				
@@ -221,47 +283,90 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
-		comboBox_16.setModel(new DefaultComboBoxModel(new String[] {"naziv"}));
+		comboBox_16.setModel(new DefaultComboBoxModel(new String[] {"Naziv"}));
 		comboBox_16.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_16);
+		
+		final JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Prikaži arhivirane odjele");
+		chckbxNewCheckBox_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		chckbxNewCheckBox_1.setBounds(22, 86, 149, 23);
+		panel_3.add(chckbxNewCheckBox_1);
+		
+		final JList list_4 = new JList();
+		list_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		list_4.setBounds(22, 114, 309, 209);
+		panel_3.add(list_4);
 		
 		JButton btnPretrai = new JButton("Pretraži");
 		btnPretrai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
 				
-				if(comboBox_16.getSelectedItem() == null){
+				/*if(comboBox_16.getSelectedItem() == null){
 					greska = false;
 					label_error.setText("Morate označiti parametar pretrage!");
 				}
+				
 				if(greska == false){
 					label_error.setVisible(true);
 				}
-				else label_error.setVisible(false);
+				else
+					label_error.setVisible(false); */
+				//ako je textbox prazan,ona vraca sve
+				if (textField_45.getText().equalsIgnoreCase("") && chckbxNewCheckBox_1.isSelected()){
+					DefaultListModel listaArhOdjela = new DefaultListModel();
+					list_4.setModel(listaArhOdjela);
+					ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveArhiviraneOdjele();
+
+					for (int i=0;i<arhiviraniOdjeli.size();i++)
+						{
+						    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+							listaArhOdjela.addElement(tempString);
+						}
+				} else 
+					if (textField_45.getText().equalsIgnoreCase("") && chckbxNewCheckBox_1.isSelected()==false){
+						DefaultListModel listaArhOdjela = new DefaultListModel();
+						list_4.setModel(listaArhOdjela);
+						ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveNearhiviraneOdjele();
+
+						for (int i=0;i<arhiviraniOdjeli.size();i++)
+							{
+							    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+								listaArhOdjela.addElement(tempString);
+							}
+					} else
+						if (chckbxNewCheckBox_1.isSelected()){
+							DefaultListModel listaArhOdjela = new DefaultListModel();
+							list_4.setModel(listaArhOdjela);
+							ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziArhiviraneOdjele(textField_45.getText());
+
+							for (int i=0;i<arhiviraniOdjeli.size();i++)
+								{
+								    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+									listaArhOdjela.addElement(tempString);
+								}
+						} else
+							if (chckbxNewCheckBox_1.isSelected()==false){
+								DefaultListModel listaArhOdjela = new DefaultListModel();
+								list_4.setModel(listaArhOdjela);
+								ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziNearhiviraneOdjele(textField_45.getText());
+
+								for (int i=0;i<arhiviraniOdjeli.size();i++)
+									{
+									    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+										listaArhOdjela.addElement(tempString);
+									}
+							} 
+							
 			}
 		});
 		btnPretrai.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretrai.setBounds(262, 56, 69, 23);
 		panel_3.add(btnPretrai);
 		
-		final JList list_4 = new JList();
-		list_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		list_4.setModel(new AbstractListModel() {
-			String[] values = new String[] {"odjel1", "odjel2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list_4.setBounds(22, 114, 309, 209);
-		panel_3.add(list_4);
 		
-		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Prikaži arhivirane odjele");
-		chckbxNewCheckBox_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxNewCheckBox_1.setBounds(22, 86, 149, 23);
-		panel_3.add(chckbxNewCheckBox_1);
+		
+		
 		
 		JButton btnIzmjeni = new JButton("Prikaži odjel");
 		btnIzmjeni.addActionListener(new ActionListener() {
@@ -281,8 +386,8 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error.setVisible(false);
-					new OdjelForm().setVisible(true);
-					
+					String Odjel=list_4.getSelectedValue().toString();
+					new OdjelForm(Odjel).setVisible(true);
 				}
 				
 			}
@@ -307,7 +412,24 @@ public class MainForm extends JFrame {
 				else{
 					label_error.setVisible(false);
 					
+					String selektovanaVrijednost = list_4.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					OdjelHibernate o=DalDao.VratiOdjel(id);
+					o.setArhiviran(true);
+					DalDao.ModifikujObjekat(o);
+					JOptionPane.showMessageDialog(null, "Odjel je arhiviran.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
 					
+					DefaultListModel listaArhOdjela = new DefaultListModel();
+					list_4.setModel(listaArhOdjela);
+					ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveNearhiviraneOdjele();
+
+					for (int i=0;i<arhiviraniOdjeli.size();i++)
+						{
+						    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+							listaArhOdjela.addElement(tempString);
+						}
+					textField_45.setText("");
 				}
 			}
 		});
@@ -557,12 +679,10 @@ public class MainForm extends JFrame {
 		label_7.setBounds(22, 29, 170, 14);
 		panel_11.add(label_7);
 		
-		
-		
 		JPanel korisniciPanel = new JPanel();
+		
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
 		korisniciPanel.setLayout(null);
-		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(30, 22, 341, 370);
@@ -596,30 +716,30 @@ public class MainForm extends JFrame {
 		
 		JLabel lblKorisnickoIme = new JLabel("Korisničko ime:");
 		lblKorisnickoIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblKorisnickoIme.setBounds(52, 186, 82, 14);
+		lblKorisnickoIme.setBounds(52, 211, 82, 14);
 		panel.add(lblKorisnickoIme);
 		
 		JLabel lblLozinka = new JLabel("Lozinka:");
 		lblLozinka.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblLozinka.setBounds(82, 211, 46, 14);
+		lblLozinka.setBounds(82, 236, 46, 14);
 		panel.add(lblLozinka);
 		
 		JLabel lblPonoviLozinku = new JLabel("Ponovi lozinku:");
 		lblPonoviLozinku.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblPonoviLozinku.setBounds(52, 236, 92, 14);
+		lblPonoviLozinku.setBounds(52, 261, 92, 14);
 		panel.add(lblPonoviLozinku);
 		
 		JLabel lblVrstaKorisnika = new JLabel("Koordinator:");
 		lblVrstaKorisnika.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblVrstaKorisnika.setBounds(62, 261, 82, 14);
+		lblVrstaKorisnika.setBounds(62, 286, 82, 14);
 		panel.add(lblVrstaKorisnika);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(190, 233, 141, 20);
+		passwordField.setBounds(190, 258, 141, 20);
 		panel.add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(190, 208, 141, 20);
+		passwordField_1.setBounds(190, 233, 141, 20);
 		panel.add(passwordField_1);
 		
 		textField_36 = new JTextField();
@@ -639,7 +759,7 @@ public class MainForm extends JFrame {
 		
 		textField_41 = new JTextField();
 		textField_41.setColumns(10);
-		textField_41.setBounds(190, 183, 141, 20);
+		textField_41.setBounds(190, 208, 141, 20);
 		panel.add(textField_41);
 		
 		final JLabel label_error2 = new JLabel("");
@@ -648,29 +768,17 @@ public class MainForm extends JFrame {
 		label_error2.setBounds(0, 403, 759, 14);
 		korisniciPanel.add(label_error2);
 		
-		final JList list_5 = new JList();
-		list_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		list_5.setModel(new AbstractListModel() {
-			String[] values = new String[] {"odjel1", "odjel2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list_5.setBounds(190, 127, 141, 51);
-		panel.add(list_5);
-		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true; 
 				String p1 = Arrays.toString(passwordField_1.getPassword());
 				String p2 = Arrays.toString(passwordField.getPassword());
+				String ime = textField_36.getText();
+				String prezime = textField_37.getText();
+				String adresa = textField_38.getText();
 				
 				
-					
 				if(textField_36.getText().equals("")){
 					label_error2.setText("Unesite ime!");
 					greska = false;}
@@ -679,9 +787,6 @@ public class MainForm extends JFrame {
 					greska = false;}
 				else if(textField_38.getText().equals("")){
 					label_error2.setText("Unesite adresu!");
-					greska = false;}
-				else if(list_5.isSelectionEmpty()){
-					label_error2.setText("Morate označiti odjel kojem zaposlenik pripada!");
 					greska = false;}
 				else if(textField_41.getText().equals("")){
 					label_error2.setText("Unesite korisničko ime!");
@@ -731,7 +836,7 @@ public class MainForm extends JFrame {
 				textField_41.setText("");
 				passwordField.setText("");
 				passwordField_1.setText("");
-				list_5.clearSelection();
+				list .clearSelection();
 				label_error2.setVisible(false);
 			}
 		});
@@ -740,8 +845,32 @@ public class MainForm extends JFrame {
 		panel.add(btnOtkai_2);
 		
 		JCheckBox chckbxDa = new JCheckBox("Da");
-		chckbxDa.setBounds(190, 257, 97, 23);
+		chckbxDa.setBounds(190, 282, 97, 23);
 		panel.add(chckbxDa);
+		
+		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblSatnica.setBounds(82, 185, 46, 14);
+		panel.add(lblSatnica);
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
+		spinner_1.setBounds(190, 182, 141, 20);
+		panel.add(spinner_1);
+		
+		DefaultListModel lista2 = new DefaultListModel();
+		final JList list_5 = new JList();
+		JScrollPane scrollPane = new JScrollPane(list_5, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(190, 126, 141, 50);
+		list_5.setBounds(190, 126, 141, 50);
+		list_5.setModel(lista2);
+		ArrayList<OdjelHibernate> sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
+		for (int i = 0; i < sviOdjeli.size(); i++)
+		{
+			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
+			lista2.addElement(podatak);
+		}
+		panel.add(scrollPane);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -756,7 +885,7 @@ public class MainForm extends JFrame {
 		
 		final JComboBox comboBox_13 = new JComboBox();
 		comboBox_13.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox_13.setModel(new DefaultComboBoxModel(new String[] {"ime", "prezime"}));
+		comboBox_13.setModel(new DefaultComboBoxModel(new String[] {"Ime", "Prezime", "Username"}));
 		comboBox_13.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!(comboBox_13.getSelectedItem() == null)){
@@ -767,28 +896,11 @@ public class MainForm extends JFrame {
 		comboBox_13.setBounds(22, 56, 99, 23);
 		panel_1.add(comboBox_13);
 		
-		JButton btnPretraga = new JButton("Pretraži");
-		btnPretraga.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				if(comboBox_13.getSelectedItem() == null){
-					greska = false;
-					label_error2.setText("Morate označiti parametar pretrage!");
-				}
-				if(greska == false){
-					label_error2.setVisible(true);
-				}
-				else label_error2.setVisible(false);
-			}
-		});
-		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPretraga.setBounds(262, 56, 69, 23);
-		panel_1.add(btnPretraga);
-		
 		final JList list_2 = new JList();
+		list_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list_2.setModel(new AbstractListModel() {
-			String[] values = new String[] {"korisnik 1", "korisnik 2"};
+			String[] values = new String[] {};
 			public int getSize() {
 				return values.length;
 			}
@@ -799,10 +911,64 @@ public class MainForm extends JFrame {
 		list_2.setBounds(22, 114, 309, 209);
 		panel_1.add(list_2);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
+		final JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxNewCheckBox.setBounds(22, 86, 170, 23);
 		panel_1.add(chckbxNewCheckBox);
+		final DefaultListModel lista = new DefaultListModel();
+		JButton btnPretraga = new JButton("Pretraži");
+		btnPretraga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (!textField_42.getText().isEmpty())
+				{
+					lista.removeAllElements();
+				    list_2.setModel(lista);
+					ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
+					String vrijednost = comboBox_13.getSelectedItem().toString();
+					if (chckbxNewCheckBox.isSelected())
+					{
+						if (vrijednost.equals("Ime"))
+						{
+							zaposlenici = DalDao.VratiZaposlenikePoImenu(textField_42.getText());
+						}
+						else if (vrijednost.equalsIgnoreCase("Prezime"))
+						{
+							zaposlenici = DalDao.VratiZaposlenikePoPrezimenu(textField_42.getText());
+						}
+						else
+						{
+							zaposlenici = DalDao.VratiZaposlenikePoUsername(textField_42.getText());
+						}
+					}
+					else
+					{
+						if (vrijednost.equals("Ime"))
+						{
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_42.getText());
+						}
+						else if (vrijednost.equalsIgnoreCase("Prezime"))
+						{
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoPrezimenu(textField_42.getText());
+						}
+						else
+						{
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_42.getText());
+						}
+					}
+					for (int i = 0; i < zaposlenici.size(); i++)
+					{
+						String podatak = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime();
+						lista.addElement(podatak);
+					}
+
+				}
+				
+			}
+			});
+		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnPretraga.setBounds(262, 56, 69, 23);
+		panel_1.add(btnPretraga);
 		
 		JButton btnNewButton_1 = new JButton("Prikaži profil");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -819,7 +985,10 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error1.setVisible(false);
-					new KorisnikForm().setVisible(true);
+					String selektovanaVrijednost = list_2.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					new KorisnikForm(id).setVisible(true);
 				}
 				
 			}
@@ -842,8 +1011,21 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error2.setVisible(false);
-					
-					
+					String selektovanaVrijednost = list_2.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					ZaposlenikHibernate zh = DalDao.VratiZaposlenika(id);
+					if (!zh.getArhiviran())
+					{
+						zh.setArhiviran(true);
+						DalDao.ModifikujObjekat(zh);
+						lista.removeAllElements();
+						JOptionPane.showMessageDialog(null, "Uspjesno ste izbrisali zaposlenika", "Zaposlenik izbrisan", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Zaposlenik je već arhiviran", "Greška brisanja", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 			}
 		});
@@ -947,12 +1129,7 @@ public class MainForm extends JFrame {
 		});
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_1.setBounds(193, 138, 110, 23);
-		panel_6.add(button_1);
-		
-		
-		
-		
-		
+		panel_6.add(button_1);		
 	}
 
 	private void JTable(Object rowData, TableColumnModel columnNames) {

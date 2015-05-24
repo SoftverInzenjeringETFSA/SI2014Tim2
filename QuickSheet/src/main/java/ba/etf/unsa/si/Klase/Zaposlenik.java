@@ -28,6 +28,10 @@ public abstract class Zaposlenik {
 		arhiviran = false;
 	}
 	
+	public Zaposlenik(){
+		
+	}
+	
 	public String getUsername()
 	{
 		return username;
@@ -57,6 +61,11 @@ public abstract class Zaposlenik {
 		this.lozinka = sb.toString();;
 	}
 	
+	public void setLozinka(String lozinka)
+	{
+		this.lozinka = lozinka;
+	}
+	
 	public String getIme()
 	{
 		return ime;
@@ -76,7 +85,7 @@ public abstract class Zaposlenik {
 	
 	public void setPrezime(String _prezime) throws InvalidAttributeValueException
 	{
-		if (_prezime != null && !_prezime.isEmpty() && prezime.matches("^[a-zA-Z]*$"))
+		if (_prezime != null && !_prezime.isEmpty() && _prezime.matches("^[a-zA-Z]*$"))
 			prezime = _prezime;
 		else throw new InvalidAttributeValueException();
 	}

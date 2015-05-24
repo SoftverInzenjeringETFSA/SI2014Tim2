@@ -42,9 +42,6 @@ public class Login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 
 		getContentPane().setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -128,9 +125,6 @@ public class Login extends JFrame {
 
 		getContentPane().add(lblUkolikoSteZaboravili);
 		
-		
-		
-		
 		final JCheckBox chckbxAdministrator = new JCheckBox("Administrator");
 		chckbxAdministrator.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxAdministrator.setForeground(UIManager.getColor("Button.highlight"));
@@ -184,15 +178,22 @@ public class Login extends JFrame {
 						labela1.setText("Pogrešan username ili password!");
 					}
 				
+				String textFieldValue = txtIme.getText();
+				boolean greska = true;
+				boolean greska_p = true;
+				if(textFieldValue.equals("administrator")){
+					AdministratorHibernate ah = DalDao.VratiAdministratora(1);
+					new MainForm(ah).setVisible(true);
+				}
 				}
 				catch(Exception ex) {
 					JOptionPane.showMessageDialog(null, "Dogodila se greska kontaktirajete administratora: " + ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE );
 				}		
-			}	
+			}
 				
+		
 		});
 		btnNewButton.setBounds(142, 271, 89, 23);
 		getContentPane().add(btnNewButton);
 
-	}
-}
+}}

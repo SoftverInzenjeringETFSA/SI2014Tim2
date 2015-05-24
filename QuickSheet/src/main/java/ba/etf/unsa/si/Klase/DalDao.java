@@ -81,35 +81,7 @@ public class DalDao {
 		transaction.commit();
 		session.close();
 	}
-	
-	static public boolean VerifikujAdministratora(Administrator admin)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		String hql = "FROM AdministratorHibernate WHERE username='" + admin.getUsername() + "' AND lozinka ='" + admin.getLozinka() + "'";
-		Query query = session.createQuery(hql);
-		ArrayList<AdministratorHibernate> results = (ArrayList<AdministratorHibernate>)query.list();
-		transaction.commit();
-		session.close();
-		if (results.isEmpty())
-			return false;
-		else return true;
-	}
-	
-	static public boolean VerifikujKorisnika(Zaposlenik zaposlenik)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE username='" + zaposlenik.getUsername() + "' AND lozinka ='" + zaposlenik.getLozinka() + "'";
-		Query query = session.createQuery(hql);
-		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
-		transaction.commit();
-		session.close();
-		if (results.isEmpty())
-			return false;
-		else return true;
-	}
-	
+		
 	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikePoUsername(String username)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -187,6 +159,16 @@ public class DalDao {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		ZaposlenikHibernate results = (ZaposlenikHibernate)session.get(ZaposlenikHibernate.class, id);
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public AdministratorHibernate VratiAdministratora(long id)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		AdministratorHibernate results = (AdministratorHibernate)session.get(AdministratorHibernate.class, id);
 		transaction.commit();
 		session.close();
 		return results;
@@ -293,6 +275,19 @@ public class DalDao {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 	    OdjelHibernate oh = (OdjelHibernate)session.get(OdjelHibernate.class, id);
+		transaction.commit();
+		session.close();
+		return oh;
+	}
+	
+	static public OdjelHibernate VratiOdjelPoNazivu(String naziv)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
+		OdjelHibernate oh = results.get(0);
 		transaction.commit();
 		session.close();
 		return oh;
@@ -622,6 +617,34 @@ public class DalDao {
 		transaction.commit();
 		session.close();
 		return result;
+	}
+	
+	static public boolean ValidirajUsername (String username, long id)
+	{
+		boolean validan = true;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		if (results.size() != 0)
+		{
+			Long rezultatID = results.get(0).getId();
+			if (!rezultatID.equals(id))
+				validan = false;
+		}
+		return validan;
+	}
+	
+	static public void IzbirisiZaposlenikoveOdjele (long id)
+	{
+		ArrayList<OdjelZaposlenikHibernate> ozh = VratiOdjelZaposlenikPoZaposleniku(id);
+		for (int i = 0; i < ozh.size(); i++)
+		{
+			ObrisiObjekat(ozh.get(i));
+		}
 	}
 }
 

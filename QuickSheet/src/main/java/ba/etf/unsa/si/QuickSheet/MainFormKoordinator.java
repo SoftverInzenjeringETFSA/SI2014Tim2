@@ -77,7 +77,7 @@ public class MainFormKoordinator extends JFrame {
 		setResizable(false);
 		setTitle("QuickSheet");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 768, 477);
+		setBounds(100, 100, 768, 474);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		
@@ -162,7 +162,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		JSpinner spinner_2 = new JSpinner();
 		spinner_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_2.setModel(new SpinnerNumberModel(0.0, 0.0, 12.0, 0.0));
+		spinner_2.setModel(new SpinnerNumberModel(1, 1, 12, 1));
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
 		
@@ -217,6 +217,7 @@ public class MainFormKoordinator extends JFrame {
 		historijaPanel.add(panel);
 		
 		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_1.setBounds(155, 28, 141, 20);
 		panel.add(comboBox_1);
 		
@@ -273,6 +274,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_2.add(label_5);
 		
 		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_2.setBounds(200, 61, 131, 20);
 		panel_2.add(comboBox_2);
 		
@@ -296,6 +298,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_3.add(label_16);
 		
 		final JComboBox comboBox_5 = new JComboBox();
+		comboBox_5.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!(comboBox_5.getSelectedItem() == null)){
@@ -405,11 +408,39 @@ public class MainFormKoordinator extends JFrame {
 		chckbxPrikaziArhiviraneProjekte.setBounds(22, 75, 149, 23);
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
 		
-		JComboBox comboBox_17 = new JComboBox();
+		final JComboBox comboBox_17 = new JComboBox();
+		comboBox_17.setFont(new Font("Times New Roman", Font.PLAIN, 11));
+		comboBox_17.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!(comboBox_17.getSelectedItem() == null)){
+					textField_46.setText((String) comboBox_17.getSelectedItem());
+				}
+			}
+		});
+		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"naziv projekta"}));
 		comboBox_17.setBounds(22, 45, 99, 23);
 		panel_11.add(comboBox_17);
 		
+		final JLabel label_error1 = new JLabel("");
+		label_error1.setVisible(false);
+		label_error1.setBounds(0, 403, 759, 14);
+		projektiPanel.add(label_error1);
+		
 		JButton btnPretrai_1 = new JButton("Pretraži");
+		btnPretrai_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(comboBox_17.getSelectedItem() == null){
+					greska = false;
+					label_error1.setText("Morate označiti parametar pretrage!");
+				}
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else label_error1.setVisible(false);
+			}
+		});
 		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretrai_1.setBounds(262, 45, 69, 23);
 		panel_11.add(btnPretrai_1);
@@ -456,11 +487,8 @@ public class MainFormKoordinator extends JFrame {
 		lblZaposlenici_1.setBounds(62, 78, 56, 14);
 		panel_8.add(lblZaposlenici_1);
 		
-		JList list_3 = new JList();
-		list_3.setBackground(Color.WHITE);
-		list_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		list_3.setBounds(166, 78, 165, 63);
-		panel_8.add(list_3);
+		
+		
 		
 		JLabel lblNadreeni = new JLabel("Nadređeni:");
 		lblNadreeni.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -483,34 +511,80 @@ public class MainFormKoordinator extends JFrame {
 		chckbxArhiviraj.setBounds(162, 302, 97, 23);
 		panel_8.add(chckbxArhiviraj);
 		
-		JList list_5 = new JList();
-		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		list_5.setBackground(Color.WHITE);
-		list_5.setBounds(166, 171, 165, 63);
-		panel_8.add(list_5);
-		
-		JLabel lblDodajZaposelenike = new JLabel("Dodaj zaposlenike:");
-		lblDodajZaposelenike.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDodajZaposelenike.setBounds(28, 171, 90, 14);
-		panel_8.add(lblDodajZaposelenike);
-		
-		JComboBox comboBox_3 = new JComboBox();
+		final JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.setBounds(166, 268, 165, 20);
 		panel_8.add(comboBox_3);
 		
+		final JList list_3 = new JList();
+		list_3.setBackground(Color.WHITE);
+		list_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list_3.setBounds(166, 78, 165, 148);
+		panel_8.add(list_3);
+		
 		JButton button = new JButton("Sačuvaj promjene");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(textField_4.getText().equals("")){
+					greska = false;
+					label_error1.setText("Unesite naziv projekta!");
+				}
+				else if(textField_5.getText().equals("")){
+					greska = false;
+					label_error1.setText("Unesite naziv klijenta!");
+				}
+				else if(list_3.getModel().getSize() == 0){
+					greska = false;
+					label_error1.setText("Dodajte zaposlenike na projekat!");
+				}
+			
+				
+				else if(comboBox_3.getSelectedItem() == null){
+					greska = false;
+					label_error1.setText("Morate označiti nadređenog!");
+				}
+				else greska = true;
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else label_error1.setVisible(false);
+			}
+		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button.setBounds(212, 336, 119, 23);
 		panel_8.add(button);
 		
 		JButton btnUkloni = new JButton("Dodaj");
+		btnUkloni.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new DodajKorisnika().setVisible(true);
+			}
+		});
 		btnUkloni.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnUkloni.setBounds(249, 145, 82, 23);
+		btnUkloni.setBounds(166, 237, 82, 23);
 		panel_8.add(btnUkloni);
 		
+		
+		
+		
 		JButton button_3 = new JButton("Ukloni");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(list_3.isSelectionEmpty()){
+					greska = false;
+					label_error1.setText("Morate označiti korisnika da bi ga uklonili!");
+				}
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else label_error1.setVisible(false);
+			}
+		});
 		button_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		button_3.setBounds(249, 238, 82, 23);
+		button_3.setBounds(249, 237, 82, 23);
 		panel_8.add(button_3);
 		
 		JPanel panel_9 = new JPanel();
@@ -537,6 +611,9 @@ public class MainFormKoordinator extends JFrame {
 		btnDodajTask.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDodajTask.setBounds(211, 133, 119, 23);
 		panel_9.add(btnDodajTask);
+		
+		
+		
 		
 		JPanel korisniciPanel = new JPanel();
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
@@ -578,6 +655,14 @@ public class MainFormKoordinator extends JFrame {
 		panel_1.add(label_11);
 		
 		final JComboBox comboBox_4 = new JComboBox();
+		comboBox_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!(comboBox_4.getSelectedItem() == null)){
+					textField_6.setText((String) comboBox_4.getSelectedItem());
+				}
+			}
+		});
+		comboBox_4.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"Ime", "Prezime", "Username"}));
 		comboBox_4.setBounds(22, 56, 99, 23);
 		panel_1.add(comboBox_4);
@@ -730,6 +815,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(lblNewLabel_11);
 		
 		JComboBox comboBox_20 = new JComboBox();
+		comboBox_20.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_20.setBounds(75, 58, 197, 20);
 		panel_7.add(comboBox_20);
 		
@@ -739,10 +825,12 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(lblZaposlenik);
 		
 		JComboBox comboBox_21 = new JComboBox();
+		comboBox_21.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_21.setBounds(75, 114, 197, 20);
 		panel_7.add(comboBox_21);
 		
 		JComboBox comboBox_22 = new JComboBox();
+		comboBox_22.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_22.setBounds(75, 170, 197, 20);
 		panel_7.add(comboBox_22);
 		
@@ -752,6 +840,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(lblProjekat_1);
 		
 		JComboBox comboBox_23 = new JComboBox();
+		comboBox_23.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_23.setBounds(75, 226, 197, 20);
 		panel_7.add(comboBox_23);
 		
