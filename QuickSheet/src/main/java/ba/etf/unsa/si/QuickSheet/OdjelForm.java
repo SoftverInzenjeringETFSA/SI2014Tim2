@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -19,11 +21,13 @@ import javax.swing.JComboBox;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.AbstractListModel;
 
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class OdjelForm extends JFrame {
@@ -131,7 +135,7 @@ public class OdjelForm extends JFrame {
 		panel.add(btnSpremiPromjene);
 		
 		final JList list = new JList();
-		list.setModel(new AbstractListModel() {
+		/*list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik1", "zaposlenik2"};
 			public int getSize() {
 				return values.length;
@@ -139,7 +143,7 @@ public class OdjelForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list.setBounds(190, 61, 141, 106);
 		panel.add(list);
 		
@@ -163,6 +167,18 @@ public class OdjelForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
+					/*
+					String selektovanaVrijednost = list.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					ZaposlenikHibernate zh=DalDao.VratiZaposlenika(id);
+					OdjelHibernate oh=DalDao.VratiOdjelPoNazivu(textField.getText());
+					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
+					ozh.setOdjel(oh);
+					ozh.setZaposlenikOdjela(zh);
+					DalDao.ObrisiObjekat(ozh);
+					JOptionPane.showMessageDialog(null, "Zaposlenik je uklonjen iz odjela.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
+				*/
 				}
 			}
 		});
@@ -171,7 +187,16 @@ public class OdjelForm extends JFrame {
 		panel.add(btnUkloni);
 		
 		final JList list_1 = new JList();
-		list_1.setModel(new AbstractListModel() {
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
+		list_1.setModel(listaZaposlenika);
+		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+
+		for (int i=0;i<zaposlenici.size();i++)
+			{
+			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
+			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+			}	
+		/*list_1.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik1\t", "zaposlenik2"};
 			public int getSize() {
 				return values.length;
@@ -179,7 +204,7 @@ public class OdjelForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list_1.setBounds(190, 207, 141, 106);
 		panel.add(list_1);
 		
@@ -289,7 +314,17 @@ public class OdjelForm extends JFrame {
 		panel.add(btnSpremiPromjene);
 		
 		final JList list = new JList();
-		list.setModel(new AbstractListModel() {
+		final DefaultListModel listaZaposlenikaOdjela = new DefaultListModel();
+		list.setModel(listaZaposlenikaOdjela);
+		ArrayList<ZaposlenikHibernate> zaposleniciOdjela=DalDao.VratiZaposlenikeUOdjelu(id);
+
+		for (int i=0;i<zaposleniciOdjela.size();i++)
+			{
+			    String tempString = zaposleniciOdjela.get(i).getId() + " " + zaposleniciOdjela.get(i).getIme() + " " + zaposleniciOdjela.get(i).getPrezime()
+			    		+ " " + zaposleniciOdjela.get(i).getAdresa() + " " + zaposleniciOdjela.get(i).getSatnica();
+				listaZaposlenikaOdjela.addElement(tempString);
+			}
+		/*list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik1", "zaposlenik2"};
 			public int getSize() {
 				return values.length;
@@ -297,7 +332,7 @@ public class OdjelForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list.setBounds(190, 61, 141, 106);
 		panel.add(list);
 		
@@ -329,7 +364,16 @@ public class OdjelForm extends JFrame {
 		panel.add(btnUkloni);
 		
 		final JList list_1 = new JList();
-		list_1.setModel(new AbstractListModel() {
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
+		list_1.setModel(listaZaposlenika);
+		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+
+		for (int i=0;i<zaposlenici.size();i++)
+			{
+			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
+			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+			}	
+		/*list_1.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik1\t", "zaposlenik2"};
 			public int getSize() {
 				return values.length;
@@ -337,7 +381,7 @@ public class OdjelForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list_1.setBounds(190, 207, 141, 106);
 		panel.add(list_1);
 		

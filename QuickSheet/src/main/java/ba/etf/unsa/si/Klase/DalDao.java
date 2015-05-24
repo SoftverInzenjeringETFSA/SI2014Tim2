@@ -279,7 +279,19 @@ public class DalDao {
 		session.close();
 		return oh;
 	}
-	
+	/*
+	static public OdjelHibernate VratiOdjelPoNazivu(String naziv)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		//String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "'";
+		//Query query = session.createQuery(hql);
+	    OdjelHibernate oh = (OdjelHibernate)session.get(OdjelHibernate.class, naziv);
+		transaction.commit();
+		session.close();
+		return oh;
+	}
+	*/
 	static private ArrayList<OdjelZaposlenikHibernate> VratiOdjelZaposlenikPoOdjelu (long OdjelId)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();

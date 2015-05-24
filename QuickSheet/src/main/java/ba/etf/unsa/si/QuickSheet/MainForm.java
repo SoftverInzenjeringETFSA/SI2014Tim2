@@ -390,7 +390,6 @@ public class MainForm extends JFrame {
 					label_error.setVisible(false);
 					String Odjel=list_4.getSelectedValue().toString();
 					new OdjelForm(Odjel).setVisible(true);
-					//TODO vratiti zaposlenike u odjelu
 				}
 				
 			}
@@ -422,6 +421,17 @@ public class MainForm extends JFrame {
 					o.setArhiviran(true);
 					DalDao.ModifikujObjekat(o);
 					JOptionPane.showMessageDialog(null, "Odjel je arhiviran.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
+					
+					DefaultListModel listaArhOdjela = new DefaultListModel();
+					list_4.setModel(listaArhOdjela);
+					ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveNearhiviraneOdjele();
+
+					for (int i=0;i<arhiviraniOdjeli.size();i++)
+						{
+						    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+							listaArhOdjela.addElement(tempString);
+						}
+					textField_45.setText("");
 				}
 			}
 		});
