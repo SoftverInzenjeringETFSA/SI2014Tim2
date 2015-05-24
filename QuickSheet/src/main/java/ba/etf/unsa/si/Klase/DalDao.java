@@ -19,12 +19,6 @@ import ba.etf.unsa.si.util.HibernateUtil;
 
 public class DalDao {
 	
-	static public String HashirajLozinku (String lozinka)
-	{
-		Integer loz = lozinka.hashCode();
-		return loz.toString();
-	}
-	
 	static public void DodajObjekte(LinkedList<?> kolekcija)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -86,34 +80,6 @@ public class DalDao {
 		session.update(objekat);
 		transaction.commit();
 		session.close();
-	}
-	
-	static public boolean VerifikujAdministratora(Administrator admin)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		String hql = "FROM AdministratorHibernate WHERE username='" + admin.getUsername() + "' AND lozinka ='" + admin.getLozinka() + "'";
-		Query query = session.createQuery(hql);
-		ArrayList<AdministratorHibernate> results = (ArrayList<AdministratorHibernate>)query.list();
-		transaction.commit();
-		session.close();
-		if (results.isEmpty())
-			return false;
-		else return true;
-	}
-	
-	static public boolean VerifikujKorisnika(Zaposlenik zaposlenik)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE username='" + zaposlenik.getUsername() + "' AND lozinka ='" + zaposlenik.getLozinka() + "'";
-		Query query = session.createQuery(hql);
-		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
-		transaction.commit();
-		session.close();
-		if (results.isEmpty())
-			return false;
-		else return true;
 	}
 		
 	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikePoUsername(String username)
@@ -615,6 +581,34 @@ public class DalDao {
 			trebaValidirati.addAll(projekatTimesheet);
 		}
 		return trebaValidirati;
+	}
+	
+	static public boolean ValidirajUsername (String username, long id)
+	{
+		boolean validan = true;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		if (results.size() != 0)
+		{
+			Long rezultatID = results.get(0).getId();
+			if (!rezultatID.equals(id))
+				validan = false;
+		}
+		return validan;
+	}
+	
+	static public void IzbirisiZaposlenikoveOdjele (long id)
+	{
+		ArrayList<OdjelZaposlenikHibernate> ozh = VratiOdjelZaposlenikPoZaposleniku(id);
+		for (int i = 0; i < ozh.size(); i++)
+		{
+			ObrisiObjekat(ozh.get(i));
+		}
 	}
 }
 

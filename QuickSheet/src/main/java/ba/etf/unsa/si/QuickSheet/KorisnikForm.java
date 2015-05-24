@@ -1,5 +1,3 @@
-
-
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.BorderLayout;
@@ -16,6 +14,7 @@ import java.awt.Font;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -27,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -41,7 +41,9 @@ import ba.etf.unsa.si.Klase.Koordinator;
 import ba.etf.unsa.si.Klase.ProjekatRadnik;
 import ba.etf.unsa.si.Klase.Zaposlenik;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
 import javax.swing.SpinnerNumberModel;
 
 public class KorisnikForm extends JFrame {
@@ -87,7 +89,7 @@ public class KorisnikForm extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
-		ZaposlenikHibernate zh = DalDao.VratiZaposlenika(id);
+		final ZaposlenikHibernate zh = DalDao.VratiZaposlenika(id);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(22, 11, 341, 370);
@@ -169,19 +171,21 @@ public class KorisnikForm extends JFrame {
 		}
 		sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
 		DefaultListModel lista = new DefaultListModel();
-		JScrollPane scrollPane = new JScrollPane();
 		final JList list = new JList();
-		scrollPane.setColumnHeaderView(list);
+		JScrollPane scrollPane = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(164, 123, 167, 51);
 		list.setBounds(164, 123, 167, 51);
 		list.setModel(lista);
+		int[] indexi = new int[sviOdjeli.size()];
+		int brojac = 0;
 		for (int i = 0; i < sviOdjeli.size(); i++)
 		{
 			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
 			lista.addElement(podatak);
 			if (zaposlenikoviOdjeli.contains(podatak))
-				list.setSelectedIndex(i);
+				indexi[brojac++] = i;
 		}
+		list.setSelectedIndices(indexi);
 		panel.add(scrollPane);
 		
 		textField_5 = new JTextField();
@@ -223,18 +227,20 @@ public class KorisnikForm extends JFrame {
 		final JSpinner spinner_1 = new JSpinner();
 		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
 		spinner_1.setBounds(164, 179, 167, 20);
+		spinner_1.setValue(zh.getSatnica());
 		panel.add(spinner_1);
 		
 		final JCheckBox chckbxDa_1 = new JCheckBox("Da");
 		chckbxDa_1.setBounds(164, 304, 97, 23);
+		chckbxDa_1.setSelected(zh.getArhiviran());
 		panel.add(chckbxDa_1);
 		
 		JButton btnSpasiIzmjene = new JButton("Spremi izmjene");
 		btnSpasiIzmjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
-				String p1 = Arrays.toString(passwordField_1.getPassword());
-				String p2 = Arrays.toString(passwordField.getPassword());
+				String p1 = new String(passwordField_1.getPassword());
+				String p2 = new String(passwordField.getPassword());
 				String ime = textField.getText();
 				String prezime = textField_1.getText();
 				String adresa = textField_2.getText();
@@ -268,6 +274,20 @@ public class KorisnikForm extends JFrame {
 					greska = false;
 				}
 				
+				try
+				{
+					Date d = (Date)spinner.getValue();
+					Calendar c = Calendar.getInstance();
+					c.setTime(d);
+					LocalDate ld = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+					z.setDatumZaposlenja(ld);
+				}
+				catch (Exception e)
+				{
+					label_error.setText("Unesite ispravan datum!");
+					greska = false;
+				}
+				
 				if(list.isSelectionEmpty())
 				{
 					label_error.setText("Odaberite odjel u kojem radi zaposlenik!");
@@ -288,6 +308,11 @@ public class KorisnikForm extends JFrame {
 				try
 				{
 					z.setUsername(textField_5.getText());
+					if (!DalDao.ValidirajUsername(z.getUsername(), zh.getId()))
+					{
+						label_error.setText("Unesite ispravno korisničko ime!");
+						greska = false;
+					}
 				}
 				catch(Exception e)
 				{
@@ -295,10 +320,10 @@ public class KorisnikForm extends JFrame {
 					greska = false;
 				}
 				
-				if(passwordField_1.getPassword().length < 8){
+				if(passwordField_1.getPassword().length > 0 && passwordField_1.getPassword().length < 8){
 					label_error.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;}
-				if(passwordField.getPassword().length < 8){
+				if(passwordField_1.getPassword().length > 0 && passwordField_1.getPassword().length < 8){
 					label_error.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;} 
 				if (!p1.equals(p2)) {
@@ -314,7 +339,33 @@ public class KorisnikForm extends JFrame {
 				
 				else{
 					label_error.setVisible(false);
-					
+					zh.setIme(z.getIme());
+					zh.setPrezime(z.getPrezime());
+					zh.setAdresa(z.getAdresa());
+					zh.setArhiviran(chckbxDa_1.isSelected());
+					zh.setKoordinator(chckbxDa.isSelected());
+					zh.setDatumZaposlenja(z.getDatumZaposlenja());
+					if (p1.length() > 7)
+					{
+						
+						zh.setLozinka(z.getLozinka());
+					}
+					zh.setSatnica(z.getSatnica());
+					zh.setUsername(z.getUsername());
+					DalDao.ModifikujObjekat(zh);
+					ArrayList<String> izabrane = (ArrayList<String>) list.getSelectedValuesList();
+					DalDao.IzbirisiZaposlenikoveOdjele(zh.getId());
+					for (int i = 0; i < izabrane.size(); i++)
+					{
+						String podatak = izabrane.get(i);
+						String[] rijeci = podatak.split(" ");
+						long id = Long.parseLong(rijeci[0]);
+						OdjelZaposlenikHibernate ozh = new OdjelZaposlenikHibernate();
+						ozh.setOdjel(DalDao.VratiOdjel(id));
+						ozh.setZaposlenikOdjela(zh);
+						DalDao.DodajObjekat(ozh);
+					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste modifikovali zaposlenika", "Zaposlenik modifikovan", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 			}
