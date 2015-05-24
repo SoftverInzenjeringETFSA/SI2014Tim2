@@ -102,4 +102,9 @@ public class TaskHibernate implements java.io.Serializable{
 	public void setProjekat(ProjekatHibernate projekat) {
 		this.projekat = projekat;
 	}
+	
+	@Override 
+	public String toString() {
+		return this.getId() + " " + this.getNaziv();
+	}
 }
