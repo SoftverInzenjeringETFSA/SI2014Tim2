@@ -511,11 +511,46 @@ public class MainFormKoordinator extends JFrame {
 		chckbxArhiviraj.setBounds(162, 302, 97, 23);
 		panel_8.add(chckbxArhiviraj);
 		
-		JComboBox comboBox_3 = new JComboBox();
+		final JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.setBounds(166, 268, 165, 20);
 		panel_8.add(comboBox_3);
 		
+		final JList list_3 = new JList();
+		list_3.setBackground(Color.WHITE);
+		list_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list_3.setBounds(166, 78, 165, 148);
+		panel_8.add(list_3);
+		
 		JButton button = new JButton("Sačuvaj promjene");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(textField_4.getText().equals("")){
+					greska = false;
+					label_error1.setText("Unesite naziv projekta!");
+				}
+				else if(textField_5.getText().equals("")){
+					greska = false;
+					label_error1.setText("Unesite naziv klijenta!");
+				}
+				else if(list_3.getModel().getSize() == 0){
+					greska = false;
+					label_error1.setText("Dodajte zaposlenike na projekat!");
+				}
+			
+				
+				else if(comboBox_3.getSelectedItem() == null){
+					greska = false;
+					label_error1.setText("Morate označiti nadređenog!");
+				}
+				else greska = true;
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else label_error1.setVisible(false);
+			}
+		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button.setBounds(212, 336, 119, 23);
 		panel_8.add(button);
@@ -530,11 +565,7 @@ public class MainFormKoordinator extends JFrame {
 		btnUkloni.setBounds(166, 237, 82, 23);
 		panel_8.add(btnUkloni);
 		
-		final JList list_3 = new JList();
-		list_3.setBackground(Color.WHITE);
-		list_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		list_3.setBounds(166, 78, 165, 148);
-		panel_8.add(list_3);
+		
 		
 		
 		JButton button_3 = new JButton("Ukloni");
