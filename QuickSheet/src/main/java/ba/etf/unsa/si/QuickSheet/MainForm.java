@@ -37,6 +37,7 @@ import javax.swing.SpinnerDateModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -223,20 +224,16 @@ public class MainForm extends JFrame {
 					OdjelHibernate odjelh = new OdjelHibernate();
 					odjelh.setNaziv(textField_43.getText());
 					odjelh.setMaksimalanBrojRadnika(Integer.parseInt(textField_44.getText()));
+					
+					String selektovanaVrijednost = list_3.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					ZaposlenikHibernate z=DalDao.VratiZaposlenika(id);
+					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
+					ozh.setOdjel(odjelh);
+					ozh.setZaposlenikOdjela(z);
 					DalDao.DodajObjekat(odjelh);
-					
-					DefaultListModel listaKorisnika = new DefaultListModel();
-					list_3.setModel(listaKorisnika);
-					int indeksi[]=list_3.getSelectedIndices();
-
-					for (int i=0;i<indeksi.length;i++)
-						{
-							OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
-							ozh.setOdjel(odjelh);
-							ozh.setZaposlenikOdjela((ZaposlenikHibernate) listaKorisnika.getElementAt(indeksi[i]));
-							DalDao.DodajObjekat(ozh);
-						}
-					
+					DalDao.DodajObjekat(ozh);
 					JOptionPane.showMessageDialog(null, "Odjel je dodan.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
 					textField_43.setText("");
 					textField_44.setText("");
@@ -390,7 +387,7 @@ public class MainForm extends JFrame {
 					label_error.setVisible(false);
 					String Odjel=list_4.getSelectedValue().toString();
 					new OdjelForm(Odjel).setVisible(true);
-					
+					//TODO vratiti zaposlenike u odjelu
 				}
 				
 			}
@@ -415,7 +412,13 @@ public class MainForm extends JFrame {
 				else{
 					label_error.setVisible(false);
 					
-					
+					String selektovanaVrijednost = list_4.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					OdjelHibernate o=DalDao.VratiOdjel(id);
+					o.setArhiviran(true);
+					DalDao.ModifikujObjekat(o);
+					JOptionPane.showMessageDialog(null, "Odjel je arhiviran.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
