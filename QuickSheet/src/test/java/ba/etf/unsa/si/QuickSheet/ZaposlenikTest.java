@@ -2,7 +2,10 @@ package ba.etf.unsa.si.QuickSheet;
 
 import static org.junit.Assert.*;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
+import java.time.Period;
 
 import javax.naming.directory.InvalidAttributeValueException;
 
@@ -13,19 +16,21 @@ import ba.etf.unsa.si.Klase.Zaposlenik;
 
 public class ZaposlenikTest {
 
-	@Test(expected=NullPointerException.class)
+	@Test(expected=InvalidAttributeValueException.class)
 	public void testZaposlenik() throws NullPointerException, javax.naming.directory.InvalidAttributeValueException, InvalidAttributeValueException{
 		LocalDate datum=LocalDate.now();
-		Zaposlenik z= new ProjekatRadnik("username","ime#%","prezime","adresa",datum,10000);
-		
+		Zaposlenik z= new ProjekatRadnik("username","ime#%","prezime","adresa",datum,10000);		
 	}
 
 	@Test
-	public void testGetUsername() {
-	 // TODO getter
+	public void testGetUsername() throws InvalidAttributeValueException {
+		LocalDate datum=LocalDate.now();
+		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
+		String u = z.getUsername();
+		assertEquals("username", u);		
 	}
 
-	@Test(expected=javax.management.InvalidAttributeValueException.class)
+	@Test(expected=javax.naming.directory.InvalidAttributeValueException.class)
 	public void testSetUsername() throws InvalidAttributeValueException{
 		LocalDate datum=LocalDate.now();
 		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
@@ -33,22 +38,24 @@ public class ZaposlenikTest {
 		
 	}
 
+	
+
 	@Test
-	public void testGetLozinka() {
-		 // TODO getter
+	public void testSetLozinka() throws InvalidAttributeValueException, NoSuchAlgorithmException, InvalidKeySpecException {
+		LocalDate datum=LocalDate.now().minus(Period.ofDays(1));
+		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
+		z.setLozinka("aaaa");
 	}
 
 	@Test
-	public void testSetLozinka() {
-		fail("Not yet implemented"); // TODO
+	public void testGetIme() throws InvalidAttributeValueException {
+		LocalDate datum=LocalDate.now();
+		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
+		String u = z.getIme();
+		assertEquals("ime", u);	
 	}
 
-	@Test
-	public void testGetIme() {
-		 // TODO getter
-	}
-
-	@Test(expected=javax.management.InvalidAttributeValueException.class)
+	@Test(expected=javax.naming.directory.InvalidAttributeValueException.class)
 	public void testSetIme() throws InvalidAttributeValueException{
 		LocalDate datum=LocalDate.now();
 		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
@@ -56,11 +63,14 @@ public class ZaposlenikTest {
 	}
 
 	@Test
-	public void testGetPrezime() {
-	 // TODO getter
+	public void testGetPrezime() throws InvalidAttributeValueException {
+		LocalDate datum=LocalDate.now();
+		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
+		String u = z.getPrezime();
+		assertEquals("prezime", u);	
 	}
 
-	@Test(expected=javax.management.InvalidAttributeValueException.class)
+	@Test(expected=javax.naming.directory.InvalidAttributeValueException.class)
 	public void testSetPrezime() throws InvalidAttributeValueException{
 		LocalDate datum=LocalDate.now();
 		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
@@ -68,23 +78,29 @@ public class ZaposlenikTest {
 	}
 
 	@Test
-	public void testGetAdresa() {
-		 // TODO getter
-	}
+	public void testGetAdresa() throws InvalidAttributeValueException {
+			LocalDate datum=LocalDate.now();
+			Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
+			String u = z.getAdresa();
+			assertEquals("adresa", u);	
+		}
 
-	@Test(expected=javax.management.InvalidAttributeValueException.class)
+	@Test(expected=javax.naming.directory.InvalidAttributeValueException.class)
 	public void testSetAdresa() throws InvalidAttributeValueException{
 		LocalDate datum=LocalDate.now();
 		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
-		z.setAdresa(" ");
+		z.setAdresa("");
 	}
 
 	@Test
-	public void testGetDatumZaposlenja() {
-		 // TODO getter
+	public void testGetDatumZaposlenja() throws InvalidAttributeValueException {
+		LocalDate datum=LocalDate.now();
+		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
+		LocalDate d = z.getDatumZaposlenja();
+		assertEquals(datum, d);	
 	}
 
-	@Test(expected=javax.management.InvalidAttributeValueException.class)
+	@Test(expected=javax.naming.directory.InvalidAttributeValueException.class)
 	public void testSetDatumZaposlenja() throws InvalidAttributeValueException{
 		LocalDate datum=LocalDate.now();
 		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
@@ -92,11 +108,14 @@ public class ZaposlenikTest {
 	}
 
 	@Test
-	public void testGetSatnica() {
-		 // TODO getters
+	public void testGetSatnica() throws InvalidAttributeValueException {
+		LocalDate datum=LocalDate.now().minus(Period.ofDays(1));
+		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
+		double s = z.getSatnica();
+		assertEquals(10000, s, 0.1);
 	}
 
-	@Test(expected=javax.management.InvalidAttributeValueException.class)
+	@Test(expected=javax.naming.directory.InvalidAttributeValueException.class)
 	public void testSetSatnica() throws InvalidAttributeValueException{
 		LocalDate datum=LocalDate.now();
 		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
@@ -104,14 +123,18 @@ public class ZaposlenikTest {
 	}
 
 	@Test
-	public void testGetArhiviran() {
-		//getter
+	public void testGetArhiviran() throws InvalidAttributeValueException {
+		LocalDate datum=LocalDate.now();
+		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
+		z.setArhiviran(true);
+		assertTrue(z.getArhiviran());
 	}
 
 	@Test
-	public void testSetArhiviran() {
-		Boolean arhiviran=true;
-		assertTrue(arhiviran);
+	public void testSetArhiviran() throws InvalidAttributeValueException {
+		LocalDate datum=LocalDate.now();
+		Zaposlenik z= new ProjekatRadnik("username","ime","prezime","adresa",datum,10000);
+		z.setArhiviran(true);
 	}
 
 }

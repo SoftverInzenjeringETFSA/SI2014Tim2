@@ -1133,15 +1133,15 @@ public class MainForm extends JFrame {
 					{
 						if (vrijednost.equals("Ime"))
 						{
-							zaposlenici = DalDao.VratiZaposlenikePoImenu(textField_42.getText());
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_42.getText());
 						}
 						else if (vrijednost.equalsIgnoreCase("Prezime"))
 						{
-							zaposlenici = DalDao.VratiZaposlenikePoPrezimenu(textField_42.getText());
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_42.getText());
 						}
 						else
 						{
-							zaposlenici = DalDao.VratiZaposlenikePoUsername(textField_42.getText());
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_42.getText());
 						}
 					}
 					else

@@ -23,14 +23,11 @@ public class PrikazTimesheeta extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PrikazTimesheeta frame = new PrikazTimesheeta();
+					PrikazTimesheeta frame = new PrikazTimesheeta(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,10 +36,7 @@ public class PrikazTimesheeta extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public PrikazTimesheeta() {
+	public PrikazTimesheeta(String timesheetString) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("Prikaz timesheeta");

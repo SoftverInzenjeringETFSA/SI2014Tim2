@@ -1,6 +1,6 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 
@@ -70,7 +70,7 @@ public class AdministratorTest {
 	}
 	
 	@Test
-	public void testKreirajOdjel1() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+	public void testVratiOdjelPoNazivu() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
 		OdjelHibernate o = new OdjelHibernate();
 		o.setNaziv("Odjel");
 		o.setMaksimalanBrojRadnika(24);
@@ -107,6 +107,64 @@ public class AdministratorTest {
 		assertEquals("projekat", p1.getNaziv());
 		
 	}
+	
+	@Test
+	public void testBrisanjeZaposlenika() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("Dzenana");
+		zh.setPrezime("Dzenana");
+		zh.setAdresa("Dzenana");
+		zh.setArhiviran(false);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(false);
+		zh.setLozinka("dsdasd");
+		zh.setSatnica(20d);
+		zh.setUsername("Username1111");
+		DalDao.DodajObjekat(zh);
+		
+		DalDao.ObrisiObjekat(zh);
+		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenikaPoUsernamu("Dzenana");
+		assertNull(zh1);
+		
+	}
+	
+	@Test
+	public void testDodavanjeOdjelaObjekat() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		OdjelHibernate o = new OdjelHibernate();
+		o.setNaziv("Odjeldzenanin1");
+		o.setMaksimalanBrojRadnika(24);
+		o.setArhiviran(true);
+		
+		DalDao.DodajObjekat(o);
+	
+		OdjelHibernate o1 = DalDao.VratiOdjelPoNazivu("Odjeldzenanin1");
+		assertNotNull(o1);
+		
+		
+	}
+	
+	@Test
+	public void testIzmijeniMaxBroj() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		OdjelHibernate o = new OdjelHibernate();
+		o.setNaziv("Odjeldzenanin1");
+		o.setMaksimalanBrojRadnika(24);
+		o.setArhiviran(true);
+		DalDao.DodajObjekat(o);	
+		
+		o.setMaksimalanBrojRadnika(26);
+		DalDao.ModifikujObjekat(o);
+		
+		OdjelHibernate o1 = DalDao.VratiOdjel(o.getId());
+		Integer i =  o1.getMaksimalanBrojRadnika();
+		
+		assertEquals(new Integer(26), i);	
+		
+	}
+
+	
+
+
+	
 
 	@Test
 	public void TestirajTest()
