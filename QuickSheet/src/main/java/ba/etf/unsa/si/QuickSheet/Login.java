@@ -173,8 +173,8 @@ public class Login extends JFrame {
 				boolean greska = true;
 				boolean greska_p = true;
 				if(textFieldValue.equals("administrator")){
-					
-					new MainForm().setVisible(true);
+					AdministratorHibernate ah = DalDao.VratiAdministratora(1);
+					new MainForm(ah).setVisible(true);
 				}
 				else if(textFieldValue.equals("koordinator")){
 					ZaposlenikHibernate zh = new ZaposlenikHibernate();
