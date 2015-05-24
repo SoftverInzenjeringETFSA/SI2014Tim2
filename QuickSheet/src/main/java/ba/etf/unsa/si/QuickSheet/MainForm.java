@@ -473,8 +473,18 @@ public class MainForm extends JFrame {
 		panel_5.add(comboBox_19);
 		
 		final JList list = new JList();
+		final DefaultListModel listaZaposlenikaPr = new DefaultListModel();
+		list.setModel(listaZaposlenikaPr);
+		ArrayList<ZaposlenikHibernate> zaposleniciPr=DalDao.VratiSveZaposlenike();
+
+		for (int i=0;i<zaposleniciPr.size();i++)
+			{
+			    String tempString = zaposleniciPr.get(i).getId() + " " + zaposleniciPr.get(i).getIme() + " " + zaposleniciPr.get(i).getPrezime()
+			    		+ " " + zaposleniciPr.get(i).getAdresa() + " " + zaposleniciPr.get(i).getSatnica();
+				listaZaposlenikaPr.addElement(tempString);
+			}
 		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		list.setModel(new AbstractListModel() {
+		/*list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Radnik1", "Radnik2", "Radnik3"};
 			public int getSize() {
 				return values.length;
@@ -482,7 +492,7 @@ public class MainForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list.setBounds(190, 117, 141, 121);
 		panel_5.add(list);
 		
@@ -1133,15 +1143,15 @@ public class MainForm extends JFrame {
 					{
 						if (vrijednost.equals("Ime"))
 						{
-							zaposlenici = DalDao.VratiZaposlenikePoImenu(textField_42.getText());
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_42.getText());
 						}
 						else if (vrijednost.equalsIgnoreCase("Prezime"))
 						{
-							zaposlenici = DalDao.VratiZaposlenikePoPrezimenu(textField_42.getText());
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_42.getText());
 						}
 						else
 						{
-							zaposlenici = DalDao.VratiZaposlenikePoUsername(textField_42.getText());
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_42.getText());
 						}
 					}
 					else

@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JComboBox;
@@ -19,8 +20,12 @@ import javax.swing.border.TitledBorder;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ProjekatForm extends JFrame {
 
@@ -162,7 +167,7 @@ public class ProjekatForm extends JFrame {
 		textField.setBounds(155, 27, 165, 20);
 		panel.add(textField);
 		
-		JLabel label_1 = new JLabel("Naziv klijenta:");
+		final JLabel label_1 = new JLabel("Naziv klijenta:");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_1.setBounds(55, 58, 67, 14);
 		panel.add(label_1);
@@ -177,7 +182,17 @@ public class ProjekatForm extends JFrame {
 		lblZaposleniciNaProjektu.setBounds(10, 83, 114, 14);
 		panel.add(lblZaposleniciNaProjektu);
 		
-		JList list = new JList();
+		final JList list = new JList();
+		final DefaultListModel listaZaposlenikaProjekta = new DefaultListModel();
+		list.setModel(listaZaposlenikaProjekta);
+		ArrayList<ZaposlenikHibernate> zaposleniciProjekta=DalDao.VratiZaposlenikeNaProjektu(id);
+
+		for (int i=0;i<zaposleniciProjekta.size();i++)
+			{
+			    String tempString = zaposleniciProjekta.get(i).getId() + " " + zaposleniciProjekta.get(i).getIme() + " " + zaposleniciProjekta.get(i).getPrezime()
+			    		+ " " + zaposleniciProjekta.get(i).getAdresa() + " " + zaposleniciProjekta.get(i).getSatnica();
+				listaZaposlenikaProjekta.addElement(tempString);
+			}
 		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list.setBounds(155, 83, 165, 121);
 		panel.add(list);
@@ -187,22 +202,74 @@ public class ProjekatForm extends JFrame {
 		lblDodajZaposlenike.setBounds(29, 243, 114, 14);
 		panel.add(lblDodajZaposlenike);
 		
-		JList list_1 = new JList();
+		final JList list_1 = new JList();
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
+		list_1.setModel(listaZaposlenika);
+		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+
+		for (int i=0;i<zaposlenici.size();i++)
+			{
+			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
+			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+			    listaZaposlenika.addElement(tempString);
+			}
 		list_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list_1.setBounds(153, 243, 165, 121);
 		panel.add(list_1);
 		
 		JButton btnUkloniZaposlenikaSa = new JButton("Ukloni");
+		btnUkloniZaposlenikaSa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list.isSelectionEmpty()){
+					greska = false;
+				}
+				if(greska == false){
+					label_1.setVisible(true);
+					label_1.setText("Odaberite zaposlenika!");
+				}
+				else{
+					label_1.setVisible(false);
+					int temp=list.getSelectedIndex();
+					listaZaposlenikaProjekta.remove(temp);				
+				}
+			}
+		});
 		btnUkloniZaposlenikaSa.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnUkloniZaposlenikaSa.setBounds(251, 209, 67, 23);
 		panel.add(btnUkloniZaposlenikaSa);
 		
 		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list_1.isSelectionEmpty()){
+					greska = false;
+				}
+				if(greska == false){
+					label_1.setVisible(true);
+					label_1.setText("Odaberite zaposlenika!");
+				}
+				else{
+					label_1.setVisible(false);
+					int temp=list_1.getSelectedIndex();
+					listaZaposlenikaProjekta.addElement(listaZaposlenika.getElementAt(temp));
+					
+				}
+			}
+		});
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnDodaj.setBounds(255, 375, 61, 23);
 		panel.add(btnDodaj);
 		
 		JComboBox comboBox = new JComboBox();
+		ArrayList<ZaposlenikHibernate> zhk=DalDao.VratiSveZaposlenikeKoordinatore();
+	
+		for (int i=0;i<zhk.size();i++)
+		{
+		    comboBox.addItem(zhk.get(i));
+		}
+		
 		comboBox.setBounds(151, 409, 165, 20);
 		panel.add(comboBox);
 		

@@ -49,6 +49,8 @@ import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 import javax.swing.JPasswordField;
@@ -56,6 +58,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.EmptyBorder;
 
+import java.time.Month;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -82,7 +85,7 @@ public class MainFormKoordinator extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFormKoordinator frame = new MainFormKoordinator(null);
+					MainFormKoordinator frame = new MainFormKoordinator(DalDao.VratiZaposlenika(8));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -146,7 +149,7 @@ public class MainFormKoordinator extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
 				
-				if(comboBox.getSelectedIndex()==-1){
+				if(comboBox.getSelectedItem()==null){
 					greska = false;
 					label_8.setText("Morate označiti parametar pretrage!");
 					
@@ -857,9 +860,15 @@ public class MainFormKoordinator extends JFrame {
 		lblNewLabel_11.setBounds(75, 33, 57, 14);
 		panel_7.add(lblNewLabel_11);
 		
-		JComboBox comboBox_20 = new JComboBox();
+		final ArrayList<OdjelHibernate> odjeli = DalDao.VratiSveNearhiviraneOdjele();
+		final JComboBox comboBox_20 = new JComboBox();
 		comboBox_20.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_20.setBounds(75, 58, 197, 20);
+		for (int i = 0; i < odjeli.size(); i++)
+		{
+			String komponenta = odjeli.get(i).getId() + " " + odjeli.get(i).getNaziv();
+			comboBox_20.addItem(komponenta);
+		}
 		panel_7.add(comboBox_20);
 		
 		JLabel lblZaposlenik = new JLabel("Zaposlenik:");
@@ -867,15 +876,73 @@ public class MainFormKoordinator extends JFrame {
 		lblZaposlenik.setBounds(75, 89, 57, 14);
 		panel_7.add(lblZaposlenik);
 		
-		JComboBox comboBox_21 = new JComboBox();
+		final JComboBox comboBox_21 = new JComboBox();
 		comboBox_21.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_21.setBounds(75, 114, 197, 20);
+		String vrijednost1 = comboBox_20.getSelectedItem().toString();
+		String[] rijeci = vrijednost1.split(" ");
+		long odjelId = Long.parseLong(rijeci[0]);
+		ArrayList<ZaposlenikHibernate> zaposleniciOdjela = DalDao.VratiZaposlenikeUOdjelu(odjelId);
+		comboBox_21.removeAllItems();
+		for (int i = 0; i < zaposleniciOdjela.size(); i++)
+		{
+			String komponenta = zaposleniciOdjela.get(i).getId() + " " + zaposleniciOdjela.get(i).getIme() + " " + zaposleniciOdjela.get(i).getPrezime();
+			comboBox_21.addItem(komponenta);
+		}
 		panel_7.add(comboBox_21);
 		
-		JComboBox comboBox_22 = new JComboBox();
+		comboBox_20.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String vrijednost1 = comboBox_20.getSelectedItem().toString();
+				String[] rijeci = vrijednost1.split(" ");
+				long odjelId = Long.parseLong(rijeci[0]);
+				ArrayList<ZaposlenikHibernate> zaposleniciOdjela = DalDao.VratiZaposlenikeUOdjelu(odjelId);
+				comboBox_21.removeAllItems();
+				for (int i = 0; i < zaposleniciOdjela.size(); i++)
+				{
+					String komponenta = zaposleniciOdjela.get(i).getId() + " " + zaposleniciOdjela.get(i).getIme() + " " + zaposleniciOdjela.get(i).getPrezime();
+					comboBox_21.addItem(komponenta);
+				}
+			}
+		});
+		
+		final JComboBox comboBox_22 = new JComboBox();
 		comboBox_22.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_22.setBounds(75, 170, 197, 20);
+		String vrijednost12 = comboBox_21.getSelectedItem().toString();
+		String[] rijeci1 = vrijednost12.split(" ");
+		long zaposlenikID = Long.parseLong(rijeci1[0]);
+		ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(zaposlenikID);
+		comboBox_22.removeAllItems();
+		for (int i = 0; i < projekti.size(); i++)
+		{
+			String komponenta = projekti.get(i).getId() + " " + projekti.get(i).getNaziv();
+			comboBox_22.addItem(komponenta);
+		}
 		panel_7.add(comboBox_22);
+		
+		comboBox_21.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (comboBox_21.getSelectedIndex() != -1)
+				{
+					String vrijednost1 = comboBox_21.getSelectedItem().toString();
+					String[] rijeci = vrijednost1.split(" ");
+					long zaposlenikID = Long.parseLong(rijeci[0]);
+					ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(zaposlenikID);
+					comboBox_22.removeAllItems();
+					for (int i = 0; i < projekti.size(); i++)
+					{
+						String komponenta = projekti.get(i).getId() + " " + projekti.get(i).getNaziv();
+						comboBox_22.addItem(komponenta);
+					}
+				}
+				else
+				{
+					comboBox_22.removeAllItems();
+				}
+			}
+		});
 		
 		JLabel lblProjekat_1 = new JLabel("Projekat:");
 		lblProjekat_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -883,6 +950,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(lblProjekat_1);
 		
 		JComboBox comboBox_23 = new JComboBox();
+		comboBox_23.setModel(new DefaultComboBoxModel(Month.values()));
 		comboBox_23.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_23.setBounds(75, 226, 197, 20);
 		panel_7.add(comboBox_23);
@@ -895,7 +963,6 @@ public class MainFormKoordinator extends JFrame {
 		JLabel label_15 = new JLabel("");
 		label_15.setBounds(203, 229, 46, 14);
 		panel_7.add(label_15);
-		
 		JLabel lblIliIzvjestajZa = new JLabel("Ili, izvještaj za vremenski period:");
 		lblIliIzvjestajZa.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblIliIzvjestajZa.setBounds(75, 264, 197, 14);
@@ -912,6 +979,11 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(lblDo_1);
 		
 		JButton btnNewButton_3 = new JButton("Generiši izvještaj");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton_3.setBounds(75, 336, 197, 23);
 		panel_7.add(btnNewButton_3);
@@ -950,33 +1022,65 @@ public class MainFormKoordinator extends JFrame {
 		
 		JButton btnPrikazi = new JButton("Prikaži");
 		btnPrikazi.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnPrikazi.setBounds(88, 336, 74, 23);
+		panel_6.add(btnPrikazi);
+		
+		JButton btnOdobri = new JButton("Odobri");
+		btnOdobri.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnOdobri.setBounds(172, 336, 74, 23);
+		panel_6.add(btnOdobri);
+		
+		JButton btnNewButton_2 = new JButton("Odbij");
+		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnNewButton_2.setBounds(256, 336, 74, 23);
+		panel_6.add(btnNewButton_2);
+		
+		ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaValidaciju(zh.getId());
+		DefaultListModel dlm = new DefaultListModel();
+		final JList list_6 = new JList();
+		list_6.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list_6.setBounds(12, 76, 315, 249);
+		list_6.setModel(dlm);
+		panel_6.add(list_6);
+		for(int i = 0; i < timesheets.size(); i++)
+		{
+			if (!timesheets.get(i).getValidiran())
+			{
+				ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(timesheets.get(i).getId());
+				if (taskovi.get(0).getKomentar().isEmpty())
+				{
+					String ime = taskovi.get(0).getZaposlenik().getIme() + " " + taskovi.get(0).getZaposlenik().getPrezime();
+					String komponenta = timesheets.get(i).getId() + " " + "Projekat: " + timesheets.get(i).getProjekat().getNaziv() + ", Zaposlenik: " + ime + ", " + timesheets.get(i).getDatumSlanja().toString();
+					dlm.addElement(komponenta);
+				}
+			}
+		}
+		
 		btnPrikazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
 				
-				if(list_3.isSelectionEmpty()){
+				if(list_6.isSelectionEmpty()){
 					greska = false;
-					label_17.setText("Morate označiti timesheet da bi ga uklonili!");
+					label_17.setText("Morate označiti timesheet da bi ga prikazali!");
 				}
 				if(greska == false){
 					label_17.setVisible(true);
 				}
 				else {
 					label_17.setVisible(false);
-					new PrikazTimesheeta().setVisible(true);
+					String selektovatniTimesheet = list_6.getSelectedValue().toString();
+					new PrikazTimesheeta(selektovatniTimesheet).setVisible(true);
 				}
 				
 			}			
 		});
-		btnPrikazi.setBounds(88, 336, 74, 23);
-		panel_6.add(btnPrikazi);
 		
-		JButton btnOdobri = new JButton("Odobri");
 		btnOdobri.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
 				
-				if(list_3.isSelectionEmpty()){
+				if(list_6.isSelectionEmpty()){
 					greska = false;
 					label_17.setText("Morate označiti timesheet da bi ga odobrili!");
 				}
@@ -985,20 +1089,28 @@ public class MainFormKoordinator extends JFrame {
 				}
 				else {
 					label_17.setVisible(false);
-					
+					String vrijednost = list_6.getSelectedValue().toString();
+					String[] rijeci = vrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					TimesheetHibernate timesheet = DalDao.VratiTimesheet(id);
+					timesheet.setValidiran(true);
+					DalDao.ModifikujObjekat(timesheet);
+					ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(id);
+					for (int i = 0; i < taskovi.size(); i++)
+					{
+						taskovi.get(i).setKomentar("Odobren:" + " " + taskovi.get(i).getKomentar());
+						DalDao.ModifikujObjekat(taskovi.get(i));
+					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste odobrili timesheet", "Timesheet odobren", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
-		btnOdobri.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnOdobri.setBounds(172, 336, 74, 23);
-		panel_6.add(btnOdobri);
 		
-		JButton btnNewButton_2 = new JButton("Odbij");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
 				
-				if(list_3.isSelectionEmpty()){
+				if(list_6.isSelectionEmpty()){
 					greska = false;
 					label_17.setText("Morate označiti timesheet da bi ga odbili!");
 				}
@@ -1007,17 +1119,22 @@ public class MainFormKoordinator extends JFrame {
 				}
 				else {
 					label_17.setVisible(false);
-					
+					String vrijednost = list_6.getSelectedValue().toString();
+					String[] rijeci = vrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					TimesheetHibernate timesheet = DalDao.VratiTimesheet(id);
+					timesheet.setValidiran(true);
+					DalDao.ModifikujObjekat(timesheet);
+					ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(id);
+					for (int i = 0; i < taskovi.size(); i++)
+					{
+						taskovi.get(i).setKomentar("Odbijen:" + " " + taskovi.get(i).getKomentar());
+						DalDao.ModifikujObjekat(taskovi.get(i));
+					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste odbili timesheet", "Timesheet odbijen", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
-		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnNewButton_2.setBounds(256, 336, 74, 23);
-		panel_6.add(btnNewButton_2);
-		
-		JList list_6 = new JList();
-		list_6.setBounds(12, 76, 315, 249);
-		panel_6.add(list_6);
 		
 		JPanel panel_12 = new JPanel();
 		
@@ -1066,6 +1183,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(label_28);
 		
 		textField_3 = new JTextField();
+		textField_3.setForeground(Color.BLACK);
 		textField_3.setEnabled(false);
 		textField_3.setEditable(false);
 		textField_3.setDisabledTextColor(SystemColor.textInactiveText);
@@ -1076,6 +1194,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_3);
 		
 		textField_8 = new JTextField();
+		textField_8.setForeground(Color.BLACK);
 		textField_8.setEnabled(false);
 		textField_8.setEditable(false);
 		textField_8.setDisabledTextColor(Color.LIGHT_GRAY);
@@ -1086,6 +1205,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_8);
 		
 		textField_9 = new JTextField();
+		textField_9.setForeground(Color.BLACK);
 		textField_9.setEnabled(false);
 		textField_9.setEditable(false);
 		textField_9.setColumns(10);
@@ -1095,6 +1215,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_9);
 		
 		textField_12 = new JTextField();
+		textField_12.setForeground(Color.BLACK);
 		textField_12.setEnabled(false);
 		textField_12.setEditable(false);
 		textField_12.setColumns(10);
@@ -1113,6 +1234,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(spinner_6);
 		
 		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblSatnica.setBounds(77, 124, 40, 14);
 		panel_13.add(lblSatnica);
 		
@@ -1126,6 +1248,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		final DefaultListModel defaultListModel = new DefaultListModel();
 		JList list_5 = new JList();
+		list_5.setForeground(Color.BLACK);
 		list_5.setModel(defaultListModel);
 		list_5.setEnabled(false);
 		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -1134,6 +1257,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(list_5);
 		
 		textField_10 = new JTextField();
+		textField_10.setForeground(Color.BLACK);
 		textField_10.setEnabled(false);
 		textField_10.setEditable(false);
 		textField_10.setColumns(10);
@@ -1264,9 +1388,7 @@ public class MainFormKoordinator extends JFrame {
 				textField_10.setText("Koordinator");
 			}
 		});
-		
-		
-		
+				
 	}
 
 	private void JTable(Object rowData, TableColumnModel columnNames) {
