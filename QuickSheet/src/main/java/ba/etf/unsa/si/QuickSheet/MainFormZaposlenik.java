@@ -116,8 +116,9 @@ public class MainFormZaposlenik extends JFrame {
 		panel_4.add(lblNewLabel);
 		
 		final JComboBox comboBox = new JComboBox();
-		
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"projekat 1", "projekat 2"}));
+		ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(zaposlenik.getId());
+		for (int i = 0; i < projekti.size(); i++)
+		comboBox.addItem(projekti.get(i));
 		comboBox.setBounds(136, 69, 201, 20);
 		panel_4.add(comboBox);
 		
@@ -537,7 +538,8 @@ public class MainFormZaposlenik extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//promjeniti 
 				DefaultListModel4.removeAllElements();
-				ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(((ProjekatHibernate)comboBox.getSelectedItem()).getId());
+				ProjekatHibernate ph = (ProjekatHibernate)comboBox.getSelectedItem();
+				ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(ph.getId());
 				for(TaskHibernate task : taskovi) {
 					DefaultListModel4.addElement(task);
 				}
