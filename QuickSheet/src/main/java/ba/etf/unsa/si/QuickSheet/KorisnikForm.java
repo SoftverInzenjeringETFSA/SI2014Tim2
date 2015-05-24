@@ -26,6 +26,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -329,9 +331,16 @@ public class KorisnikForm extends JFrame {
 				if (!p1.equals(p2)) {
 					label_error.setText("Lozinke se ne podudaraju!");
 					greska = false;
+					} else
+					try {
+						z.setLozinka(p1);
+					} catch (NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvalidKeySpecException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				else
-					z.setLozinka(p1);
 				
 				if(greska == false){
 					label_error.setVisible(true);	

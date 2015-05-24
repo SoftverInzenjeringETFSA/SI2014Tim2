@@ -51,6 +51,8 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import java.awt.Toolkit;
+import java.awt.Rectangle;
+import javax.swing.DefaultComboBoxModel;
 
 public class MainFormZaposlenik extends JFrame {
 	private JTextField textField;
@@ -67,6 +69,7 @@ public class MainFormZaposlenik extends JFrame {
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_10;
+	private JTable table;
 
 	
 	
@@ -93,13 +96,13 @@ public class MainFormZaposlenik extends JFrame {
 	public MainFormZaposlenik() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
-		setTitle("QuickSheet");
+		setTitle("QuickSheet - Zaposlenik");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 765, 459);
+		setBounds(100, 100, 765, 478);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 764, 431);
+		tabbedPane.setBounds(0, 0, 764, 453);
 		getContentPane().add(tabbedPane);
 		setLocationRelativeTo(null);
 		JPanel timeSheetPanel = new JPanel();
@@ -114,37 +117,73 @@ public class MainFormZaposlenik extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Projekat:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel.setBounds(56, 72, 46, 14);
+		lblNewLabel.setBounds(80, 69, 46, 14);
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		panel_4.add(lblNewLabel);
 		
+		final JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"projekat 1", "projekat 2"}));
+		comboBox.setBounds(136, 69, 201, 20);
+		panel_4.add(comboBox);
+		
+		final JLabel label_15 = new JLabel("");
+		label_15.setVisible(false);
+		label_15.setBounds(0, 387, 759, 14);
+		timeSheetPanel.add(label_15);
+		
+		
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(comboBox.getSelectedIndex() == -1){
+					greska = false;
+					label_15.setText("Morate označiti parametar pretrage!");
+					
+				}
+				else if(table.getModel().getValueAt(0,0) == null || table.getModel().getValueAt(0,1) == null || table.getModel().getValueAt(0,2) == null){
+					greska = false;
+					label_15.setText("Morate popuniti barem jedan task da bi poslali timesheet na reviziju!");
+				}
+				
+				else greska = true;
+					
+				if(greska == false){ 
+					label_15.setVisible(true);
+					}
+				
+				else{
+					label_15.setVisible(false);
+				}
+				
+			}
+			
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton.setBounds(531, 291, 124, 29);
 		panel_4.add(btnNewButton);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(136, 69, 201, 20);
-		panel_4.add(comboBox);
+		
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
 		lblTaskovi.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblTaskovi.setBounds(56, 120, 46, 14);
+		lblTaskovi.setBounds(80, 117, 46, 14);
 		panel_4.add(lblTaskovi);
 		
-		JLabel lblBrojSati = new JLabel("Broj radnih sati:");
+		JLabel lblBrojSati = new JLabel("Ukupan broj radnih sati:");
 		lblBrojSati.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblBrojSati.setBounds(26, 248, 76, 14);
+		lblBrojSati.setBounds(10, 248, 116, 14);
 		panel_4.add(lblBrojSati);
 		
 		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setModel(new SpinnerNumberModel(0.0, 0.0, 12.0, 1.0));
+		spinner_2.setModel(new SpinnerNumberModel(1, 1, 24, 1));
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
 		
 		JLabel lblDatum = new JLabel("Datum:");
 		lblDatum.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDatum.setBounds(68, 294, 35, 14);
+		lblDatum.setBounds(91, 298, 35, 14);
 		panel_4.add(lblDatum);
 		
 		JSpinner spinner = new JSpinner();
@@ -152,6 +191,34 @@ public class MainFormZaposlenik extends JFrame {
 		spinner.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner.setBounds(135, 291, 210, 20);
 		panel_4.add(spinner);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(new Rectangle(0, 0, 100, 100));
+		scrollPane_1.setBounds(136, 120, 519, 106);
+		panel_4.add(scrollPane_1);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+			},
+			new String[] {
+				"Naziv taska", "Procenat zavr\u0161enosti", "Broj radnih sati"
+			}
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(119);
+		table.getColumnModel().getColumn(1).setPreferredWidth(140);
+		table.setBounds(new Rectangle(10, 10, 100, 1000));
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		table.setRowSelectionAllowed(true);
+		scrollPane_1.setViewportView(table);
+		
+		
+		
 		
 		
 		
@@ -431,15 +498,58 @@ public class MainFormZaposlenik extends JFrame {
 		lblNovaLozinkaponovo.setBounds(23, 94, 108, 14);
 		panel_5.add(lblNovaLozinkaponovo);
 		
+		final JLabel label_16 = new JLabel("");
+		label_16.setVisible(false);
+		label_16.setBounds(0, 411, 759, 14);
+		panel_2.add(label_16);
+
+		
 		JButton btnSpasi = new JButton("Spasi promjenu");
+		btnSpasi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				if(textField_8.getText().equals("")){
+					greska = false;
+					label_16.setText("Unesite trenutnu lozinku!");
+				}
+				else if(textField_9.getText().equals("")){
+					greska = false;
+					label_16.setText("Unesite novu lozinku!");
+				}
+				else if(textField_10.getText().equals("")){
+					greska = false;
+					label_16.setText("Unesite ponovo novu lozinku!");
+				}
+				else if(!textField_9.getText().equals(textField_10.getText())){
+					greska = false;
+					label_16.setText("Lozinke se ne podudaraju!");
+				}
+				else greska = true;
+				if(greska == false){
+					label_16.setVisible(true);
+				}
+				else label_16.setVisible(false);
+			}
+		});
 		btnSpasi.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnSpasi.setBounds(77, 138, 110, 23);
 		panel_5.add(btnSpasi);
 		
 		JButton btnOtkai = new JButton("Otkaži");
+		btnOtkai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_8.setText("");
+				textField_9.setText("");
+				textField_10.setText("");
+				label_16.setVisible(false);
+			}
+		});
 		btnOtkai.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnOtkai.setBounds(193, 138, 110, 23);
 		panel_5.add(btnOtkai);
+		
+		
+		
 		
 	}
 
