@@ -326,7 +326,7 @@ public class MainFormKoordinator extends JFrame {
 				}
 			}
 		});
-		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"naziv"}));
+		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"Naziv"}));
 		comboBox_5.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_5);
 		
@@ -395,7 +395,18 @@ public class MainFormKoordinator extends JFrame {
 		label_9.setBounds(10, 207, 152, 14);
 		panel_5.add(label_9);
 		
-		JList list = new JList();
+		final JList list = new JList();
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
+		list.setModel(listaZaposlenika);
+		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+
+		for (int i=0;i<zaposlenici.size();i++)
+			{
+			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
+			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+				listaZaposlenika.addElement(tempString);
+			}
+		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list.setEnabled(false);
 		list.setBounds(190, 61, 141, 135);
 		panel_5.add(list);
