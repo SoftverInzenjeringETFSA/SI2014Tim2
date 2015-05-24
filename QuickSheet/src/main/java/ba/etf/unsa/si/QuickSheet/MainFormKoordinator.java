@@ -93,6 +93,9 @@ public class MainFormKoordinator extends JFrame {
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		
+		 
+		
+		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 764, 453);
 		getContentPane().add(tabbedPane);
