@@ -211,6 +211,7 @@ public class ProjekatForm extends JFrame {
 			{
 			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
 			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+			    listaZaposlenika.addElement(tempString);
 			}
 		list_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list_1.setBounds(153, 243, 165, 121);
@@ -252,15 +253,27 @@ public class ProjekatForm extends JFrame {
 				else{
 					label_1.setVisible(false);
 					int temp=list_1.getSelectedIndex();
-					listaZaposlenikaProjekta.addElement(listaZaposlenika.getElementAt(temp));	
+					listaZaposlenikaProjekta.addElement(listaZaposlenika.getElementAt(temp));
+					
 				}
 			}
 		});
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnDodaj.setBounds(255, 375, 61, 23);
 		panel.add(btnDodaj);
-		
+		/*
+		String[] koordinatori = null;
+		ArrayList<ZaposlenikHibernate> zhk=DalDao.VratiSveZaposlenikeKoordinatore();
+	
+		for (int i=0;i<zhk.size();i++)
+		{
+		    String tempString = zhk.get(i).getId() + " " + zhk.get(i).getIme() + " " + zhk.get(i).getPrezime();
+		    koordinatori[i]=tempString;
+		}
+*/
+		//JComboBox comboBox = new JComboBox(koordinatori);
 		JComboBox comboBox = new JComboBox();
+		comboBox.setSelectedIndex(0);
 		comboBox.setBounds(151, 409, 165, 20);
 		panel.add(comboBox);
 		
