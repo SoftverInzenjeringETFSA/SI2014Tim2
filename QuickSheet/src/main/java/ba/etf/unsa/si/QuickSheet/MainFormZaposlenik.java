@@ -218,11 +218,6 @@ public class MainFormZaposlenik extends JFrame {
 		
 		
 		JPanel historijaPanel = new JPanel();
-		historijaPanel.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-			}
-		});
 		tabbedPane.addTab("Moja Historija", null, historijaPanel, null);
 		historijaPanel.setLayout(null);
 		
