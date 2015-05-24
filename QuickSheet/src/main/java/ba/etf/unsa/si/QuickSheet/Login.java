@@ -168,7 +168,7 @@ public class Login extends JFrame {
 								new MainFormKoordinator(zaposlenik).setVisible(true);
 							}
 							else {
-								new MainFormZaposlenik().setVisible(true);
+								new MainFormZaposlenik(zaposlenik).setVisible(true);
 							}
 							isError = false;
 						}

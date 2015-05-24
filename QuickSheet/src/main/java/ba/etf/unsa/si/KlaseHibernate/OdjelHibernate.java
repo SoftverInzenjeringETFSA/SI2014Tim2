@@ -43,4 +43,9 @@ public class OdjelHibernate implements java.io.Serializable{
 		naziv = _naziv;
 	}
 	
+	@Override
+	public String toString() {
+		return this.getId() + " " + this.getNaziv();
+	}
+	
 }

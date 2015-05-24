@@ -1,60 +1,49 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.Button;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JPasswordField;
-import javax.swing.JCheckBox;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
-
-import java.util.Date;
-import java.util.Calendar;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
-import javax.swing.Box;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.border.LineBorder;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.SpinnerNumberModel;
-
-import java.awt.Component;
-import java.awt.ScrollPane;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import java.awt.Toolkit;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Rectangle;
-import javax.swing.DefaultComboBoxModel;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerDateModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.Klase.Lozinka;
+import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class MainFormZaposlenik extends JFrame {
 	private JTextField textField;
@@ -62,11 +51,11 @@ public class MainFormZaposlenik extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_6;
-	private JPasswordField passwordField_2;
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_10;
 	private JTable table;
+	private JTextField textField_7;
 
 	
 	
@@ -78,7 +67,7 @@ public class MainFormZaposlenik extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFormZaposlenik frame = new MainFormZaposlenik();
+					MainFormZaposlenik frame = new MainFormZaposlenik(new ZaposlenikHibernate());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -90,7 +79,7 @@ public class MainFormZaposlenik extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainFormZaposlenik() {
+	public MainFormZaposlenik(ZaposlenikHibernate zaposlenik) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet - Zaposlenik");
@@ -105,6 +94,8 @@ public class MainFormZaposlenik extends JFrame {
 		JPanel timeSheetPanel = new JPanel();
 		tabbedPane.addTab("Moj Timesheet", null, timeSheetPanel, null);
 		timeSheetPanel.setLayout(null);
+		
+		final ZaposlenikHibernate Zaposlenik = zaposlenik;
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(null, "Timesheet podaci", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -297,12 +288,7 @@ public class MainFormZaposlenik extends JFrame {
 		panel_1.add(comboBox_2);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent arg0) {
-				
-			}
-		});
+		
 		tabbedPane.addTab("Moj profil", null, panel_2, null);
 		panel_2.setLayout(null);
 		
@@ -385,7 +371,7 @@ public class MainFormZaposlenik extends JFrame {
 		textField_6.setBounds(159, 269, 141, 20);
 		panel_3.add(textField_6);
 		
-		JSpinner spinner_4 = new JSpinner();
+		final JSpinner spinner_4 = new JSpinner();
 		spinner_4.setBorder(new CompoundBorder());
 		spinner_4.setBackground(Color.WHITE);
 		spinner_4.setEnabled(false);
@@ -394,15 +380,7 @@ public class MainFormZaposlenik extends JFrame {
 		spinner_4.setBounds(159, 137, 141, 20);
 		panel_3.add(spinner_4);
 		
-		passwordField_2 = new JPasswordField();
-		passwordField_2.setBorder(null);
-		passwordField_2.setBackground(Color.WHITE);
-		passwordField_2.setEnabled(false);
-		passwordField_2.setEditable(false);
-		passwordField_2.setBounds(159, 299, 141, 20);
-		panel_3.add(passwordField_2);
-		
-		JSpinner spinner_5 = new JSpinner();
+		final JSpinner spinner_5 = new JSpinner();
 		spinner_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_5.setEnabled(false);
 		spinner_5.setBorder(new CompoundBorder());
@@ -415,12 +393,23 @@ public class MainFormZaposlenik extends JFrame {
 		lblSatnica.setBounds(77, 117, 40, 14);
 		panel_3.add(lblSatnica);
 		
+		final DefaultListModel defaultListModel = new DefaultListModel();
 		JList list = new JList();
+		list.setModel(defaultListModel);
 		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list.setEnabled(false);
 		list.setBackground(Color.WHITE);
 		list.setBounds(159, 165, 141, 97);
 		panel_3.add(list);
+		
+		textField_7 = new JTextField();
+		textField_7.setEnabled(false);
+		textField_7.setEditable(false);
+		textField_7.setColumns(10);
+		textField_7.setBorder(null);
+		textField_7.setBackground(Color.WHITE);
+		textField_7.setBounds(159, 299, 141, 20);
+		panel_3.add(textField_7);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(null, "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -468,27 +457,45 @@ public class MainFormZaposlenik extends JFrame {
 		btnSpasi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
-				if(textField_8.getText().equals("")){
-					greska = false;
-					label_16.setText("Unesite trenutnu lozinku!");
+				try {
+					if(Lozinka.validatePassword(textField_8.getText(), Zaposlenik.getLozinka()) && 
+							!textField_8.getText().equals("") && !textField_9.getText().equals("") && 
+							!textField_10.getText().equals("") && textField_9.getText().equals(textField_10.getText())){
+								Zaposlenik.setLozinka(Lozinka.generateStorngPasswordHash(textField_10.getText()));
+								DalDao.ModifikujObjekat(Zaposlenik);
+								JOptionPane.showMessageDialog(null, "Uspjesno ste promjenili lozinku!", "Info", JOptionPane.INFORMATION_MESSAGE );
+					}
+					else if(textField_8.getText().equals("")) {
+						greska = false;
+						label_16.setText("Unesite trenutnu lozinku!");
+					}
+					else if(textField_9.getText().equals("")){
+						greska = false;
+						label_16.setText("Unesite novu lozinku!");
+					}
+					else if(textField_10.getText().equals("")){
+						greska = false;
+						label_16.setText("Unesite ponovo novu lozinku!");
+					}
+					else if(!textField_9.getText().equals(textField_10.getText())) {
+						greska = false;
+						label_16.setText("Lozinke se ne poklapaju!");
+					}
+					else if(!Lozinka.validatePassword(textField_8.getText(), Zaposlenik.getLozinka())) {
+						greska = false;
+						label_16.setText("Pogresna lozinka!");
+					}
+					else { 
+						greska = true;
+					}
+					if(greska == false){
+						label_16.setVisible(true);
+					}
+					else label_16.setVisible(false);
 				}
-				else if(textField_9.getText().equals("")){
-					greska = false;
-					label_16.setText("Unesite novu lozinku!");
+				catch(Exception ex) {
+					
 				}
-				else if(textField_10.getText().equals("")){
-					greska = false;
-					label_16.setText("Unesite ponovo novu lozinku!");
-				}
-				else if(!textField_9.getText().equals(textField_10.getText())){
-					greska = false;
-					label_16.setText("Lozinke se ne podudaraju!");
-				}
-				else greska = true;
-				if(greska == false){
-					label_16.setVisible(true);
-				}
-				else label_16.setVisible(false);
 			}
 		});
 		btnSpasi.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -508,7 +515,25 @@ public class MainFormZaposlenik extends JFrame {
 		btnOtkai.setBounds(193, 138, 110, 23);
 		panel_5.add(btnOtkai);
 		
-		
+		panel_2.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent arg0) {
+				txtGftfg.setText(Zaposlenik.getIme());
+				textField_2.setText(Zaposlenik.getPrezime());
+				textField_3.setText(Zaposlenik.getAdresa());
+				spinner_5.setValue(Zaposlenik.getSatnica());
+				Calendar calendar = Calendar.getInstance();
+				calendar.set(Zaposlenik.getDatumZaposlenja().getYear(), Zaposlenik.getDatumZaposlenja().getMonthValue(), Zaposlenik.getDatumZaposlenja().getDayOfMonth());
+				Date temp = calendar.getTime();
+				spinner_4.setValue(temp);
+				ArrayList<OdjelHibernate> listaOdjela = DalDao.VratiZaposlenikoveOdjele(Zaposlenik.getId());
+				for(OdjelHibernate odjel : listaOdjela) {
+					defaultListModel.addElement(odjel);
+				}
+				textField_6.setText(Zaposlenik.getUsername());
+				textField_7.setText("Zaposlenik");
+			}
+		});
 		
 		
 	}
