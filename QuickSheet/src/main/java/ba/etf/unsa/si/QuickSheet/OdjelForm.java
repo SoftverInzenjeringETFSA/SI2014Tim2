@@ -165,6 +165,11 @@ public class OdjelForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
+					String selektovanaVrijednost = list.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					ZaposlenikHibernate zh=DalDao.VratiZaposlenika(id);
+					
 				}
 			}
 		});
