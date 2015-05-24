@@ -311,8 +311,7 @@ public class MainForm extends JFrame {
 				if (textField_45.getText().equalsIgnoreCase("") && chckbxNewCheckBox_1.isSelected()){
 					DefaultListModel listaArhOdjela = new DefaultListModel();
 					list_4.setModel(listaArhOdjela);
-					DalDao listaArhiviranihOdjela=new DalDao();
-					ArrayList<OdjelHibernate> arhiviraniOdjeli=listaArhiviranihOdjela.VratiSveArhiviraneOdjele();
+					ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveArhiviraneOdjele();
 
 					for (int i=0;i<arhiviraniOdjeli.size();i++)
 						{
@@ -323,8 +322,7 @@ public class MainForm extends JFrame {
 					if (textField_45.getText().equalsIgnoreCase("") && chckbxNewCheckBox_1.isSelected()==false){
 						DefaultListModel listaArhOdjela = new DefaultListModel();
 						list_4.setModel(listaArhOdjela);
-						DalDao listaArhiviranihOdjela=new DalDao();
-						ArrayList<OdjelHibernate> arhiviraniOdjeli=listaArhiviranihOdjela.VratiSveNearhiviraneOdjele();
+						ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveNearhiviraneOdjele();
 
 						for (int i=0;i<arhiviraniOdjeli.size();i++)
 							{
@@ -335,8 +333,7 @@ public class MainForm extends JFrame {
 						if (chckbxNewCheckBox_1.isSelected()){
 							DefaultListModel listaArhOdjela = new DefaultListModel();
 							list_4.setModel(listaArhOdjela);
-							DalDao listaArhiviranihOdjela=new DalDao();
-							ArrayList<OdjelHibernate> arhiviraniOdjeli=listaArhiviranihOdjela.PretraziArhiviraneOdjele(textField_45.getText());
+							ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziArhiviraneOdjele(textField_45.getText());
 
 							for (int i=0;i<arhiviraniOdjeli.size();i++)
 								{
@@ -347,8 +344,7 @@ public class MainForm extends JFrame {
 							if (chckbxNewCheckBox_1.isSelected()==false){
 								DefaultListModel listaArhOdjela = new DefaultListModel();
 								list_4.setModel(listaArhOdjela);
-								DalDao listaArhiviranihOdjela=new DalDao();
-								ArrayList<OdjelHibernate> arhiviraniOdjeli=listaArhiviranihOdjela.PretraziNearhiviraneOdjele(textField_45.getText());
+								ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziNearhiviraneOdjele(textField_45.getText());
 
 								for (int i=0;i<arhiviraniOdjeli.size();i++)
 									{
