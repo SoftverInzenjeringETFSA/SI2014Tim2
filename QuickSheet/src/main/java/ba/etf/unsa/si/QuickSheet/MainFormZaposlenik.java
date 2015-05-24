@@ -551,7 +551,6 @@ public class MainFormZaposlenik extends JFrame {
 		comboBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					//komentar
 					ProjekatHibernate selectedProjec = (ProjekatHibernate)comboBox_1.getSelectedItem();
 					if(selectedProjec != null) {
 					ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(selectedProjec.getId(), Zaposlenik.getId());
