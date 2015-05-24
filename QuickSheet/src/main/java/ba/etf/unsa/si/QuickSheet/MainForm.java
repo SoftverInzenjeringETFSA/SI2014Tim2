@@ -9,11 +9,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.SingleSelectionModel;
 
 import java.awt.Font;
 
@@ -32,6 +34,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
@@ -51,6 +54,10 @@ import java.awt.ScrollPane;
 import java.awt.Toolkit;
 
 import javax.swing.DefaultComboBoxModel;
+
+import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 
 public class MainForm extends JFrame {
 	private JTextField textField;
@@ -238,32 +245,19 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
-		comboBox_16.setModel(new DefaultComboBoxModel(new String[] {"naziv"}));
+		comboBox_16.setModel(new DefaultComboBoxModel(new String[] {"Naziv"}));
 		comboBox_16.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_16);
 		
-		JButton btnPretrai = new JButton("Pretraži");
-		btnPretrai.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if(comboBox_16.getSelectedItem() == null){
-					greska = false;
-					label_error.setText("Morate označiti parametar pretrage!");
-				}
-				if(greska == false){
-					label_error.setVisible(true);
-				}
-				else label_error.setVisible(false);
-			}
-		});
-		btnPretrai.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPretrai.setBounds(262, 56, 69, 23);
-		panel_3.add(btnPretrai);
+		final JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Prikaži arhivirane odjele");
+		chckbxNewCheckBox_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		chckbxNewCheckBox_1.setBounds(22, 86, 149, 23);
+		panel_3.add(chckbxNewCheckBox_1);
 		
 		final JList list_4 = new JList();
 		list_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		list_4.setModel(new AbstractListModel() {
+		
+		/*list_4.setModel(new AbstractListModel() {
 			String[] values = new String[] {"odjel1", "odjel2"};
 			public int getSize() {
 				return values.length;
@@ -271,14 +265,85 @@ public class MainForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+			
+		});*/
 		list_4.setBounds(22, 114, 309, 209);
 		panel_3.add(list_4);
 		
-		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Prikaži arhivirane odjele");
-		chckbxNewCheckBox_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxNewCheckBox_1.setBounds(22, 86, 149, 23);
-		panel_3.add(chckbxNewCheckBox_1);
+		JButton btnPretrai = new JButton("Pretraži");
+		btnPretrai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				/*if(comboBox_16.getSelectedItem() == null){
+					greska = false;
+					label_error.setText("Morate označiti parametar pretrage!");
+				}
+				
+				if(greska == false){
+					label_error.setVisible(true);
+				}
+				else
+					label_error.setVisible(false); */
+				//ako je textbox prazan,ona vraca sve
+				if (textField_45.getText().equalsIgnoreCase("") && chckbxNewCheckBox_1.isSelected()){
+					DefaultListModel listaArhOdjela = new DefaultListModel();
+					list_4.setModel(listaArhOdjela);
+					DalDao listaArhiviranihOdjela=new DalDao();
+					ArrayList<OdjelHibernate> arhiviraniOdjeli=listaArhiviranihOdjela.VratiSveArhiviraneOdjele();
+
+					for (int i=0;i<arhiviraniOdjeli.size();i++)
+						{
+						    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+							listaArhOdjela.addElement(tempString);
+						}
+				} else 
+					if (textField_45.getText().equalsIgnoreCase("") && chckbxNewCheckBox_1.isSelected()==false){
+						DefaultListModel listaArhOdjela = new DefaultListModel();
+						list_4.setModel(listaArhOdjela);
+						DalDao listaArhiviranihOdjela=new DalDao();
+						ArrayList<OdjelHibernate> arhiviraniOdjeli=listaArhiviranihOdjela.VratiSveNearhiviraneOdjele();
+
+						for (int i=0;i<arhiviraniOdjeli.size();i++)
+							{
+							    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+								listaArhOdjela.addElement(tempString);
+							}
+					} else
+						if (chckbxNewCheckBox_1.isSelected()){
+							DefaultListModel listaArhOdjela = new DefaultListModel();
+							list_4.setModel(listaArhOdjela);
+							DalDao listaArhiviranihOdjela=new DalDao();
+							ArrayList<OdjelHibernate> arhiviraniOdjeli=listaArhiviranihOdjela.PretraziArhiviraneOdjele(textField_45.getText());
+
+							for (int i=0;i<arhiviraniOdjeli.size();i++)
+								{
+								    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+									listaArhOdjela.addElement(tempString);
+								}
+						} else
+							if (chckbxNewCheckBox_1.isSelected()==false){
+								DefaultListModel listaArhOdjela = new DefaultListModel();
+								list_4.setModel(listaArhOdjela);
+								DalDao listaArhiviranihOdjela=new DalDao();
+								ArrayList<OdjelHibernate> arhiviraniOdjeli=listaArhiviranihOdjela.PretraziNearhiviraneOdjele(textField_45.getText());
+
+								for (int i=0;i<arhiviraniOdjeli.size();i++)
+									{
+									    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+										listaArhOdjela.addElement(tempString);
+									}
+							} 
+							
+			}
+		});
+		btnPretrai.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnPretrai.setBounds(262, 56, 69, 23);
+		panel_3.add(btnPretrai);
+		
+		
+		
+		
 		
 		JButton btnIzmjeni = new JButton("Prikaži odjel");
 		btnIzmjeni.addActionListener(new ActionListener() {
