@@ -28,6 +28,7 @@ import javax.swing.AbstractListModel;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class OdjelForm extends JFrame {
@@ -169,25 +170,6 @@ public class OdjelForm extends JFrame {
 				else{
 					label_1.setVisible(false);
 					
-					String selektovanaVrijednost = list.getSelectedValue().toString();
-					String[] rijeci = selektovanaVrijednost.split(" ");
-					long id = Long.parseLong(rijeci[0]);
-					ZaposlenikHibernate zh=DalDao.VratiZaposlenika(id);
-					OdjelHibernate oh=DalDao.VratiOdjelPoNazivu(textField.getText());
-					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
-					DalDao.IzbrisiZaposlenikaIzOdjela(zh.getId(), oh.getId());
-					JOptionPane.showMessageDialog(null, "Zaposlenik je uklonjen iz odjela.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
-					
-					DefaultListModel listaZaposlenikaOdjela = new DefaultListModel();
-					list.setModel(listaZaposlenikaOdjela);
-					ArrayList<ZaposlenikHibernate> zaposleniciOdjela=DalDao.VratiZaposlenikeUOdjelu(oh.getId());
-
-					for (int i=0;i<zaposleniciOdjela.size();i++)
-						{
-						    String tempString = zaposleniciOdjela.get(i).getId() + " " + zaposleniciOdjela.get(i).getIme() + " " + zaposleniciOdjela.get(i).getPrezime()
-						    		+ " " + zaposleniciOdjela.get(i).getAdresa() + " " + zaposleniciOdjela.get(i).getSatnica();
-							listaZaposlenikaOdjela.addElement(tempString);
-						}
 				}
 			}
 		});
@@ -292,44 +274,6 @@ public class OdjelForm extends JFrame {
 		label_1.setBounds(0, 449, 396, 14);
 		contentPane.add(label_1);
 		
-		JButton btnSpremiPromjene = new JButton("Spremi promjene");
-		btnSpremiPromjene.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				boolean greska = true;
-				if(textField.getText().equals("")){
-					greska = false;
-					label_1.setVisible(true);
-					label_1.setText("Unesite naziv odjela!");
-					
-				}
-				else if(textField_1.getText().equals("")){
-					greska = false;
-					label_1.setVisible(true);
-					label_1.setText("Unesite maksimalni broj radnika!");
-				}
-				else if(Integer.parseInt(textField_1.getText()) > 12){
-					label_1.setText("Broj zaposlenika mora biti manji od 12!");
-					greska = false;
-				}
-				else greska = true;
-				
-				if(greska == false) label_1.setVisible(true);
-				else{
-					label_1.setVisible(false);
-					OdjelHibernate o=new OdjelHibernate();
-					o=DalDao.VratiOdjel(id);
-					o.setNaziv(textField.getText());
-					o.setMaksimalanBrojRadnika(Integer.parseInt(textField_1.getText()));
-					DalDao.ModifikujObjekat(o);
-					JOptionPane.showMessageDialog(null, "Uspješno ste izmijenili odjel.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
-					
-				}
-			}
-		});
-		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnSpremiPromjene.setBounds(210, 396, 121, 22);
-		panel.add(btnSpremiPromjene);
-		
 		final JList list = new JList();
 		final DefaultListModel listaZaposlenikaOdjela = new DefaultListModel();
 		list.setModel(listaZaposlenikaOdjela);
@@ -353,6 +297,59 @@ public class OdjelForm extends JFrame {
 		list.setBounds(190, 61, 141, 106);
 		panel.add(list);
 		
+		JButton btnSpremiPromjene = new JButton("Spremi promjene");
+		btnSpremiPromjene.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(textField.getText().equals("")){
+					greska = false;
+					label_1.setVisible(true);
+					label_1.setText("Unesite naziv odjela!");
+					
+				}
+				else if(textField_1.getText().equals("")){
+					greska = false;
+					label_1.setVisible(true);
+					label_1.setText("Unesite maksimalni broj radnika!");
+				}
+				else if(Integer.parseInt(textField_1.getText()) > 12){
+					label_1.setText("Broj zaposlenika mora biti manji od 12!");
+					greska = false;
+				}
+				else greska = true;
+				
+				if(greska == false) label_1.setVisible(true);
+				else{
+					OdjelHibernate phib=DalDao.VratiOdjel(id);
+					phib.setNaziv(textField.getText());
+					phib.setMaksimalanBrojRadnika(Integer.parseInt(textField_1.getText()));
+					
+					DalDao.ModifikujObjekat(phib);
+					
+					int[] indeksi=list.getSelectedIndices();
+					for(int i=0;i<indeksi.length;i++){
+						String selektovano=listaZaposlenikaOdjela.getElementAt(indeksi[i]).toString();
+						String[] rijeciPr=selektovano.split(" ");
+						long idPr=Long.parseLong(rijeciPr[0]);
+						ZaposlenikHibernate zPr=DalDao.VratiZaposlenika(idPr);
+						OdjelHibernate o=DalDao.VratiOdjel(id);
+						OdjelZaposlenikHibernate tPr=new OdjelZaposlenikHibernate();
+						tPr.setOdjel(o);
+						tPr.setZaposlenikOdjela(zPr);
+						DalDao.DodajObjekat(tPr);
+					
+					}
+					JOptionPane.showMessageDialog(null, "Uspješno ste izmijenili odjel.", "OK", JOptionPane.INFORMATION_MESSAGE);
+					
+				}
+			}
+		});
+		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnSpremiPromjene.setBounds(210, 396, 121, 22);
+		panel.add(btnSpremiPromjene);
+		
+		
+		
 		JLabel lblNewLabel = new JLabel("Dodaj nove zaposlenike:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setBounds(30, 208, 121, 14);
@@ -373,6 +370,8 @@ public class OdjelForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
+					int temp=list.getSelectedIndex();
+					listaZaposlenikaOdjela.remove(temp);	
 				}
 			}
 		});
@@ -415,15 +414,10 @@ public class OdjelForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
-					String selektovanaVrijednost = list_1.getSelectedValue().toString();
-					String[] rijeci = selektovanaVrijednost.split(" ");
-					long idZap = Long.parseLong(rijeci[0]);
-					ZaposlenikHibernate z=DalDao.VratiZaposlenika(idZap);
-					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
-					ozh.setZaposlenikOdjela(z);
-					OdjelHibernate o=DalDao.VratiOdjel(id);
-					ozh.setOdjel(o);
-					DalDao.DodajObjekat(ozh);
+					int temp=list_1.getSelectedIndex();
+					if (listaZaposlenikaOdjela.contains(listaZaposlenika.getElementAt(temp))==false){
+						listaZaposlenikaOdjela.addElement(listaZaposlenika.getElementAt(temp));
+					}
 					
 				}
 			}
