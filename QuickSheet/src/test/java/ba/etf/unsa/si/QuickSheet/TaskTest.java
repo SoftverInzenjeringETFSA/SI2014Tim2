@@ -34,14 +34,10 @@ public class TaskTest {
 	
 		Task t= new Task(nazivtaska,opis,prioritet,zaposlenik,datum);
 		t.setNaziv(nazivtaska);
+		assertEquals("sta", t.getNaziv());
 		
-		
-		
-		/*Task t= new Task();
-		t.setNaziv("");
-		t.setNaziv(null);
-		//hocu li ove posebno napraviti*/
 	}
+	
 
 
 
@@ -52,17 +48,19 @@ public class TaskTest {
 	}
 
 
-	@Test(expected=InvalidAttributeValueException.class)
+	@Test
 	public void testSetOpis() throws  javax.management.InvalidAttributeValueException{
 		Task t= new Task();
-		t.setOpis(null);
-		t.setOpis("");
+		t.setOpis("Dzenana");
+		assertEquals("Dzenana", t.getOpis());
+		
 	}
 
 	@Test(expected=InvalidAttributeValueException.class)
 	public void testSetZaposlenik() throws InvalidAttributeValueException{
 		Task t= new Task();
 		t.setZaposlenik(null);
+		assertNull(t.getZaposlenik());
 	}
 
 
@@ -70,6 +68,7 @@ public class TaskTest {
 	public void testSetRok() throws InvalidAttributeValueException{
 		Task t= new Task();
 		t.setRok(LocalDate.now());
+		assertEquals(LocalDate.now(), t.getRok());
 	}
 	
 

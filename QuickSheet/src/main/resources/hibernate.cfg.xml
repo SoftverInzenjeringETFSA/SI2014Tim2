@@ -10,15 +10,15 @@
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
   <property name="hibernate.enable_lazy_load_no_trans">true</property>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/AdministratorHibernate.hbm.xml"/>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/IzvjestajOdjelaHibernate.hbm.xml"/>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/IzvjestajZaposlenikaHibernate.hbm.xml"/>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/OdjelHibernate.hbm.xml"/>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/ProjekatHibernate.hbm.xml"/>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/TaskHibernate.hbm.xml"/>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/TimesheetHibernate.hbm.xml"/>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/ZaposlenikHibernate.hbm.xml"/>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/OdjelZaposlenikHibernate.hbm.xml"/>
-  <mapping resource="ba/etf/unsa/si/KlaseHibernate/TimesheetTaskHibernate.hbm.xml"/>
+  <mapping resource="AdministratorHibernate.hbm.xml"/>
+  <mapping resource="IzvjestajOdjelaHibernate.hbm.xml"/>
+  <mapping resource="IzvjestajZaposlenikaHibernate.hbm.xml"/>
+  <mapping resource="OdjelHibernate.hbm.xml"/>
+  <mapping resource="ProjekatHibernate.hbm.xml"/>
+  <mapping resource="TaskHibernate.hbm.xml"/>
+  <mapping resource="TimesheetHibernate.hbm.xml"/>
+  <mapping resource="ZaposlenikHibernate.hbm.xml"/>
+  <mapping resource="OdjelZaposlenikHibernate.hbm.xml"/>
+  <mapping resource="TimesheetTaskHibernate.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>
