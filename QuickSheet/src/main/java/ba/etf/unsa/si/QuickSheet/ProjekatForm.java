@@ -303,19 +303,20 @@ public class ProjekatForm extends JFrame {
 					
 					phib.setKoordinator(zaps);
 					DalDao.ModifikujObjekat(phib);
-					/* TODO modifikovanje taskova
+					
 					int[] indeksi=list.getSelectedIndices();
 					for(int i=0;i<indeksi.length;i++){
 						String selektovano=listaZaposlenikaProjekta.getElementAt(indeksi[i]).toString();
 						String[] rijeciPr=selektovano.split(" ");
 						long idPr=Long.parseLong(rijeciPr[0]);
 						ZaposlenikHibernate zPr=DalDao.VratiZaposlenika(idPr);
+						ProjekatHibernate projekath=DalDao.VratiProjekat(id);
 						TaskHibernate tPr=new TaskHibernate();
 						tPr.setProjekat(projekath);
 						tPr.setZaposlenik(zPr);
 						DalDao.DodajObjekat(tPr);
 					
-					}*/
+					}
 				}
 			}
 		});
