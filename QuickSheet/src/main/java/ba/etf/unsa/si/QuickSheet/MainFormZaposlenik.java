@@ -44,8 +44,10 @@ import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
 import java.time.Month;
 
 public class MainFormZaposlenik extends JFrame {
@@ -544,7 +546,11 @@ public class MainFormZaposlenik extends JFrame {
 		
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//promena na combo timesheet
+				//promjeniti 
+				ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(Long.parseUnsignedLong(comboBox.getSelectedItem().toString().split(" ")[0]));
+				for(TaskHibernate task : taskovi) {
+					
+				}
 			}
 		});
 		
@@ -553,9 +559,11 @@ public class MainFormZaposlenik extends JFrame {
 				try {
 					DefaultListModel1.removeAllElements();
 					ProjekatHibernate selectedProjec = (ProjekatHibernate)comboBox_1.getSelectedItem();
-					ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(selectedProjec.getId(), Zaposlenik.getId());
-					for(TimesheetHibernate timesheet : timesheets) {
-						DefaultListModel1.addElement(timesheet);
+					if(selectedProjec != null) {
+						ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(selectedProjec.getId(), Zaposlenik.getId());
+						for(TimesheetHibernate timesheet : timesheets) {
+							DefaultListModel1.addElement(timesheet);
+						}
 					}
 				}
 				catch(Exception ex) {
