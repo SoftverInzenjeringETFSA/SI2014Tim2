@@ -202,7 +202,7 @@ public class ProjekatForm extends JFrame {
 		lblDodajZaposlenike.setBounds(29, 243, 114, 14);
 		panel.add(lblDodajZaposlenike);
 		
-		JList list_1 = new JList();
+		final JList list_1 = new JList();
 		final DefaultListModel listaZaposlenika = new DefaultListModel();
 		list_1.setModel(listaZaposlenika);
 		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
@@ -229,9 +229,8 @@ public class ProjekatForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
-					list.getSelectedIndex();
-					
-					
+					int temp=list.getSelectedIndex();
+					listaZaposlenikaProjekta.remove(temp);				
 				}
 			}
 		});
@@ -240,6 +239,23 @@ public class ProjekatForm extends JFrame {
 		panel.add(btnUkloniZaposlenikaSa);
 		
 		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list_1.isSelectionEmpty()){
+					greska = false;
+				}
+				if(greska == false){
+					label_1.setVisible(true);
+					label_1.setText("Odaberite zaposlenika!");
+				}
+				else{
+					label_1.setVisible(false);
+					int temp=list_1.getSelectedIndex();
+					listaZaposlenikaProjekta.addElement(listaZaposlenika.getElementAt(temp));	
+				}
+			}
+		});
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnDodaj.setBounds(255, 375, 61, 23);
 		panel.add(btnDodaj);
