@@ -127,6 +127,7 @@ public class OdjelForm extends JFrame {
 				if(greska == false) label_1.setVisible(true);
 				else{
 					label_1.setVisible(false);
+					
 				}
 			}
 		});
@@ -241,7 +242,7 @@ public class OdjelForm extends JFrame {
 	
 	public OdjelForm(String odjel) {
 		String[] temp = odjel.split(" ");
-		long id = Long.parseLong(temp[0]);
+		final long id = Long.parseLong(temp[0]);
 		OdjelHibernate prikaz = DalDao.VratiOdjel(id); 
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
@@ -314,6 +315,13 @@ public class OdjelForm extends JFrame {
 				if(greska == false) label_1.setVisible(true);
 				else{
 					label_1.setVisible(false);
+					OdjelHibernate o=new OdjelHibernate();
+					o=DalDao.VratiOdjel(id);
+					o.setNaziv(textField.getText());
+					o.setMaksimalanBrojRadnika(Integer.parseInt(textField_1.getText()));
+					DalDao.ModifikujObjekat(o);
+					JOptionPane.showMessageDialog(null, "Uspješno ste izmijenili odjel.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
+					
 				}
 			}
 		});
