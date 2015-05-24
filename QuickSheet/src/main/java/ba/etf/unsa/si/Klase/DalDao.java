@@ -19,18 +19,6 @@ import ba.etf.unsa.si.util.HibernateUtil;
 
 public class DalDao {
 
-	static public void DodajObjekte(LinkedList<?> kolekcija)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		for (int i = 0; i < kolekcija.size(); i++)
-		{
-			session.save(kolekcija.get(i));
-		}
-		transaction.commit();
-		session.close();
-	}
-	
 	static public <T> void DodajObjekat(T objekat)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -39,36 +27,12 @@ public class DalDao {
 		transaction.commit();
 		session.close();
 	}
-	
-	static public void ObrisiObjekte(LinkedList<?> kolekcija)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		for (int i = 0; i < kolekcija.size(); i++)
-		{
-			session.delete(kolekcija.get(i));
-		}
-		transaction.commit();
-		session.close();
-	}
-	
+		
 	static public <T> void ObrisiObjekat(T objekat)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		session.delete(objekat);
-		transaction.commit();
-		session.close();
-	}
-	
-	static public void ModifikujObjekte(LinkedList<?> kolekcija)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		for (int i = 0; i < kolekcija.size(); i++)
-		{
-			session.update(kolekcija.get(i));
-		}
 		transaction.commit();
 		session.close();
 	}
@@ -82,11 +46,11 @@ public class DalDao {
 		session.close();
 	}
 		
-	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikePoUsername(String username)
+	static public ArrayList<ZaposlenikHibernate> VratiArhiviraneZaposlenikePoUsername(String username)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "'";
+		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "' AND arhiviran = '1'";
 		Query query = session.createQuery(hql);
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
@@ -106,11 +70,11 @@ public class DalDao {
 		return results;
 	}
 	
-	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikePoImenu(String ime)
+	static public ArrayList<ZaposlenikHibernate> VratiArhiviraneZaposlenikePoImenu(String ime)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE ime='" + ime + "'";
+		String hql = "FROM ZaposlenikHibernate WHERE ime='" + ime + "' AND arhiviran = '1'";
 		Query query = session.createQuery(hql);
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
@@ -130,11 +94,11 @@ public class DalDao {
 		return results;
 	}
 	
-	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikePoPrezimenu(String prezime)
+	static public ArrayList<ZaposlenikHibernate> VratiArhiviraneZaposlenikePoPrezimenu(String prezime)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE prezime='" + prezime + "'";
+		String hql = "FROM ZaposlenikHibernate WHERE prezime='" + prezime + "'  AND arhiviran = '1'";
 		Query query = session.createQuery(hql);
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
@@ -253,18 +217,6 @@ public class DalDao {
 		String hql = "FROM OdjelHibernate WHERE arhiviran='0'";
 		Query query = session.createQuery(hql);
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
-		transaction.commit();
-		session.close();
-		return results;
-	}
-	
-	static public ArrayList<ZaposlenikHibernate> VratiNadredjeneZaposlenike()
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE koordinator = '1' AND arhiviran = '0'";
-		Query query = session.createQuery(hql);
-		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
 		return results;

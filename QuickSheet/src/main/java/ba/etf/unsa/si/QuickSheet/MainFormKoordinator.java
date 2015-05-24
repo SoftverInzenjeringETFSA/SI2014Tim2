@@ -1026,23 +1026,6 @@ public class MainFormKoordinator extends JFrame {
 		panel_6.add(btnOdobri);
 		
 		JButton btnNewButton_2 = new JButton("Odbij");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if(list_3.isSelectionEmpty()){
-					greska = false;
-					label_17.setText("Morate označiti timesheet da bi ga odbili!");
-				}
-				if(greska == false){
-					label_17.setVisible(true);
-				}
-				else {
-					label_17.setVisible(false);
-					
-				}
-			}
-		});
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton_2.setBounds(256, 336, 74, 23);
 		panel_6.add(btnNewButton_2);
@@ -1109,10 +1092,40 @@ public class MainFormKoordinator extends JFrame {
 					ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(id);
 					for (int i = 0; i < taskovi.size(); i++)
 					{
-						taskovi.get(i).setKomentar("Odobren");
+						taskovi.get(i).setKomentar("Odobren:" + " " + taskovi.get(i).getKomentar());
 						DalDao.ModifikujObjekat(taskovi.get(i));
 					}
 					JOptionPane.showMessageDialog(null, "Uspjesno ste odobrili timesheet", "Timesheet odobren", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(list_6.isSelectionEmpty()){
+					greska = false;
+					label_17.setText("Morate označiti timesheet da bi ga odbili!");
+				}
+				if(greska == false){
+					label_17.setVisible(true);
+				}
+				else {
+					label_17.setVisible(false);
+					String vrijednost = list_6.getSelectedValue().toString();
+					String[] rijeci = vrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					TimesheetHibernate timesheet = DalDao.VratiTimehseet(id);
+					timesheet.setValidiran(true);
+					DalDao.ModifikujObjekat(timesheet);
+					ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(id);
+					for (int i = 0; i < taskovi.size(); i++)
+					{
+						taskovi.get(i).setKomentar("Odbijen:" + " " + taskovi.get(i).getKomentar());
+						DalDao.ModifikujObjekat(taskovi.get(i));
+					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste odbili timesheet", "Timesheet odbijen", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});

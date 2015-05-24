@@ -23,9 +23,6 @@ public class PrikazTimesheeta extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -39,9 +36,6 @@ public class PrikazTimesheeta extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public PrikazTimesheeta(String timesheetString) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
