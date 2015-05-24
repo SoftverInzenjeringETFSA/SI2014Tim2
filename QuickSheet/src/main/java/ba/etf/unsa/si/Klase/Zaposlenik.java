@@ -99,7 +99,7 @@ public abstract class Zaposlenik {
 	
 	public void setDatumZaposlenja(LocalDate _datum) throws InvalidAttributeValueException
 	{
-		if (_datum != null && _datum.isBefore(LocalDate.now()))
+		if (_datum != null && (_datum.isBefore(LocalDate.now()) || _datum.isEqual(LocalDate.now())) )
 			datumZaposlenja = _datum;
 		else throw new InvalidAttributeValueException();
 	}
