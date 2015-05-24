@@ -1,13 +1,23 @@
 package ba.etf.unsa.si.QuickSheet;
 
+import static org.junit.Assert.*;
+
 import java.time.LocalDate;
+
+import javassist.compiler.ast.NewExpr;
+
 import javax.naming.directory.InvalidAttributeValueException;
+
 import org.junit.Test;
+
+import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Koordinator;
 import ba.etf.unsa.si.Klase.Projekat;
 import ba.etf.unsa.si.Klase.ProjekatRadnik;
 import ba.etf.unsa.si.Klase.Task;
 import ba.etf.unsa.si.Klase.Zaposlenik;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class KoordinatorTest {
 
@@ -35,45 +45,123 @@ public class KoordinatorTest {
 		Task t= new Task("Zadatak"," ",10,z,LocalDate.now());
 		p.DodajTask(t);
 	}
+	
 
-	@Test(expected=javax.management.InvalidAttributeValueException.class)
+	@Test
 	public void testDodajZaposlenikaUProjekat() throws InvalidAttributeValueException, javax.management.InvalidAttributeValueException{
-		String naziv="Timesheet";
-		String klijent="Dean";
 		
-		LocalDate datum=LocalDate.now();
-		Koordinator k= new Koordinator("Username","ime","prezime","adresa",datum,10000);
-		Projekat p= new Projekat(naziv,klijent,k);
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("DzenanaBrisanje");
+		zh.setPrezime("prezime");
+		zh.setAdresa("DzenanaAdresa");
+		zh.setArhiviran(false);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(true);
+		zh.setLozinka("dsdasd");
+		zh.setSatnica(20d);
+		zh.setUsername("Username222");
+		DalDao.DodajObjekat(zh);
 		
+		ProjekatHibernate p = new ProjekatHibernate();
+		p.setKoordinator(zh);
+		p.setNaziv("projekatTestiranje");
+		p.setNazivKlijenta("Dean");
+		p.setArhiviran(true);
 		
-		ProjekatRadnik pr= new ProjekatRadnik("","ime","prezime","adresa",datum,10000);
-		k.DodajZaposlenikaUProjekat(p, pr);
+		DalDao.DodajObjekat(p);
+		
+		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
+		ZaposlenikHibernate zh1 = p1.getKoordinator();
+		
+		assertEquals(zh1.getIme(), zh.getIme());
 	}
 
-	@Test(expected=javax.management.InvalidAttributeValueException.class)
-	public void testArhivirajProjekat() throws InvalidAttributeValueException, javax.management.InvalidAttributeValueException{
-		String naziv="Timesheet";
-		String klijent="Dean";
+	@Test
+	public void testArhivirajProjekatTrue() throws InvalidAttributeValueException, javax.management.InvalidAttributeValueException{
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("DzenanaBrisanje");
+		zh.setPrezime("prezime");
+		zh.setAdresa("DzenanaAdresa");
+		zh.setArhiviran(false);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(true);
+		zh.setLozinka("dsdasd");
+		zh.setSatnica(20d);
+		zh.setUsername("Username222");
+		DalDao.DodajObjekat(zh);
 		
-		LocalDate datum=LocalDate.now();
-		Koordinator k= new Koordinator("Username","ime","prezime","adresa",datum,10000);
-		Projekat p= new Projekat(naziv,klijent,k);
+		ProjekatHibernate p = new ProjekatHibernate();
+		p.setKoordinator(zh);
+		p.setNaziv("projekatTestiranje");
+		p.setNazivKlijenta("Dean");
+		p.setArhiviran(true);
+		
+		DalDao.DodajObjekat(p);
+		
+		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
+		assertTrue(p1.getArhiviran());
+		
+	}
+
+	@Test
+	public void testArhivirajProjekatFalse() throws InvalidAttributeValueException, javax.management.InvalidAttributeValueException{
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("DzenanaBrisanje");
+		zh.setPrezime("prezime");
+		zh.setAdresa("DzenanaAdresa");
+		zh.setArhiviran(false);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(true);
+		zh.setLozinka("dsdasd");
+		zh.setSatnica(20d);
+		zh.setUsername("Username222");
+		DalDao.DodajObjekat(zh);
+		
+		ProjekatHibernate p = new ProjekatHibernate();
+		p.setKoordinator(zh);
+		p.setNaziv("projekatTestiranje");
+		p.setNazivKlijenta("Dean");
 		p.setArhiviran(false);
+		
+		DalDao.DodajObjekat(p);
+		
+		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
+		assertFalse(p1.getArhiviran());
+		
 	}
-
+	
 	@Test
-	public void testGenerisiIzvjestajProjekatZaposlenik() {
-		 // TODO getter
+	public void testDaLiJeKoordinatorTrue() throws InvalidAttributeValueException, javax.management.InvalidAttributeValueException{
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("DzenanaBrisanje");
+		zh.setPrezime("prezime");
+		zh.setAdresa("DzenanaAdresa");
+		zh.setArhiviran(false);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(true);
+		zh.setLozinka("dsdasd");
+		zh.setSatnica(20d);
+		zh.setUsername("Username222");
+		
+		DalDao.DodajObjekat(zh);
+		assertTrue(zh.getKoordinator());
 	}
-
+	
 	@Test
-	public void testGenerisiIzvjestajProjekatOdjel() {
-		 // TODO gettre
-	}
-
-	@Test
-	public void testPrintajIzvjestaj() {
-		 // TODO
+	public void testDaLiJeKoordinatorFalse() throws InvalidAttributeValueException, javax.management.InvalidAttributeValueException{
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("DzenanaBrisanje");
+		zh.setPrezime("prezime");
+		zh.setAdresa("DzenanaAdresa");
+		zh.setArhiviran(false);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(false);
+		zh.setLozinka("dsdasd");
+		zh.setSatnica(20d);
+		zh.setUsername("Username222");
+		
+		DalDao.DodajObjekat(zh);
+		assertFalse(zh.getKoordinator());
 	}
 
 }

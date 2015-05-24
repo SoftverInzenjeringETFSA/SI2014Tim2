@@ -113,6 +113,7 @@ public class TaskTest {
 		Task t= new Task();
 		t.setRok(LocalDate.now());
 	}
+	
 
 }
 

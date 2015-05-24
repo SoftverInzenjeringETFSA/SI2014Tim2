@@ -37,9 +37,6 @@ public class AdministratorTest {
 					
 				}
 	}
-
-
-
 	
 	@Test
 	public void testSetLozinka() throws InvalidAttributeValueException {
@@ -109,6 +106,34 @@ public class AdministratorTest {
 	}
 	
 	@Test
+	public void testBrisanjeProjekat() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("DzenanaBrisanje");
+		zh.setPrezime("Dzenana");
+		zh.setAdresa("Dzenana");
+		zh.setArhiviran(false);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(false);
+		zh.setLozinka("dsdasd");
+		zh.setSatnica(20d);
+		zh.setUsername("Username1111");
+		DalDao.DodajObjekat(zh);
+			
+		ProjekatHibernate p = new ProjekatHibernate();
+		p.setNaziv("projekatBrisanje");
+		p.setNazivKlijenta("Edin");
+		p.setKoordinator(zh);
+		
+		DalDao.DodajObjekat(p);
+		
+		DalDao.ObrisiObjekat(p);
+		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
+		assertNull(p1);
+		
+	}
+	
+	
+	@Test
 	public void testBrisanjeZaposlenika() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
 		ZaposlenikHibernate zh = new ZaposlenikHibernate();
 		zh.setIme("Dzenana");
@@ -140,6 +165,19 @@ public class AdministratorTest {
 		OdjelHibernate o1 = DalDao.VratiOdjelPoNazivu("Odjeldzenanin1");
 		assertNotNull(o1);
 		
+	}
+	@Test
+	public void testBrisanjeOdjelaObjekat() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		OdjelHibernate o = new OdjelHibernate();
+		o.setNaziv("Odjeldzenanin1");
+		o.setMaksimalanBrojRadnika(24);
+		o.setArhiviran(true);
+		
+		DalDao.DodajObjekat(o);
+	
+		DalDao.ObrisiObjekat(o);
+		OdjelHibernate zh1 = DalDao.VratiOdjel(o.getId());
+		assertNull(zh1);
 		
 	}
 	
@@ -166,33 +204,6 @@ public class AdministratorTest {
 
 	
 
-	@Test
-	public void TestirajTest()
-	{
-		ZaposlenikHibernate zh = new ZaposlenikHibernate();
-		zh.setIme("Dzenana");
-		zh.setPrezime("Dzenana");
-		zh.setAdresa("Dzenana");
-		zh.setArhiviran(false);
-		zh.setDatumZaposlenja(LocalDate.now());
-		zh.setKoordinator(false);
-		zh.setLozinka("dsdasd");
-		zh.setSatnica(20d);
-		zh.setUsername("Username1111");
-		DalDao.DodajObjekat(zh);
-		System.out.println("  ");
-	/*	
-		ProjekatHibernate p= new ProjekatHibernate();  
-		p.setKoordinator(k);
-		p.setNaziv(naziv);
-		p.setNazivKlijenta(klijent);
-		p.setArhiviran(false);
-		
-		DalDao.DodajObjekat(p);
-		
-		ProjekatHibernate p1 = DalDao.VratiProjekat(2);
-		System.out.println(p1.getNaziv());
-		assertEquals("projekat", p1.getNaziv()); */
-	}
+	
 	
 }
