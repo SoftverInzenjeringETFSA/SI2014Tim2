@@ -1121,6 +1121,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(spinner_8);
 		
 		JList list_5 = new JList();
+		list_5.setEnabled(false);
 		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list_5.setBackground(Color.WHITE);
 		list_5.setBounds(159, 173, 141, 97);
