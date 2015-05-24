@@ -537,7 +537,7 @@ public class MainFormZaposlenik extends JFrame {
 				comboBox.removeAllItems();
 				ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
 				for(ProjekatHibernate projekat: projekti) {
-					comboBox.addItem(projekti);
+					comboBox.addItem(projekat);
 				}
 			}
 		});
@@ -551,12 +551,11 @@ public class MainFormZaposlenik extends JFrame {
 		comboBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					DefaultListModel1.removeAllElements();
 					ProjekatHibernate selectedProjec = (ProjekatHibernate)comboBox_1.getSelectedItem();
-					if(selectedProjec != null) {
 					ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(selectedProjec.getId(), Zaposlenik.getId());
 					for(TimesheetHibernate timesheet : timesheets) {
 						DefaultListModel1.addElement(timesheet);
-					}
 					}
 				}
 				catch(Exception ex) {
@@ -571,10 +570,8 @@ public class MainFormZaposlenik extends JFrame {
 				try {
 					comboBox_1.removeAllItems();
 					ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
-					comboBox_1.addItem(null);
-					//komentar
 					for(ProjekatHibernate projekat: projekti) {
-						comboBox_1.addItem(projekti);
+						comboBox_1.addItem(projekat);
 					}
 				}
 				catch(Exception ex) {

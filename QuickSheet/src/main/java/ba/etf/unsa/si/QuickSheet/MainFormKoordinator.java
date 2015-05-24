@@ -1018,11 +1018,14 @@ public class MainFormKoordinator extends JFrame {
 				
 				
 				if (comboBox_20.getSelectedIndex() == -1 || comboBox_21.getSelectedIndex() == -1 || comboBox_22.getSelectedIndex() == -1) 
-					{
-						label_17.setVisible(true);
-						label_17.setText("Morate izabrati parametre za kreiranje izvještaja");
-					}
-				new IzvjestajForm().setVisible(true);
+				{
+					label_17.setVisible(true);
+					label_17.setText("Morate izabrati parametre za kreiranje izvještaja");
+				}
+				else
+				{
+					new IzvjestajForm().setVisible(true);
+				}
 				
 			}
 		});
