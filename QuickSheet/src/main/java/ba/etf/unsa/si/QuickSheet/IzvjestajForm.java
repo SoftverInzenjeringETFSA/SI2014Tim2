@@ -2,12 +2,14 @@ package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+
 import java.awt.Color;
 
 public class IzvjestajForm extends JFrame {
@@ -40,7 +42,8 @@ public class IzvjestajForm extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		setLocationRelativeTo(null);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Izvje\u0161taj odjela", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 11, 266, 287);

@@ -102,7 +102,6 @@ public class MainFormKoordinator extends JFrame {
 		setBounds(100, 100, 765, 482);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
-		
 		 
 		//zaposlenik
 		final ZaposlenikHibernate Zaposlenik = zh;
@@ -1019,7 +1018,10 @@ public class MainFormKoordinator extends JFrame {
 				
 				
 				if (comboBox_20.getSelectedIndex() == -1 || comboBox_21.getSelectedIndex() == -1 || comboBox_22.getSelectedIndex() == -1) 
-					label_17.setVisible(true);
+					{
+						label_17.setVisible(true);
+						label_17.setText("Morate izabrati parametre za kreiranje izvještaja");
+					}
 				new IzvjestajForm().setVisible(true);
 				
 			}
