@@ -56,6 +56,7 @@ import java.awt.Toolkit;
 
 import javax.swing.DefaultComboBoxModel;
 
+import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 
@@ -64,6 +65,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
@@ -97,7 +99,7 @@ public class MainForm extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainForm frame = new MainForm();
+					MainForm frame = new MainForm(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -109,7 +111,7 @@ public class MainForm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainForm() {
+	public MainForm(AdministratorHibernate ah) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet - Administrator");
@@ -888,7 +890,7 @@ public class MainForm extends JFrame {
 		
 		final JComboBox comboBox_13 = new JComboBox();
 		comboBox_13.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox_13.setModel(new DefaultComboBoxModel(new String[] {"ime", "prezime"}));
+		comboBox_13.setModel(new DefaultComboBoxModel(new String[] {"Ime", "Prezime", "Username"}));
 		comboBox_13.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!(comboBox_13.getSelectedItem() == null)){
@@ -899,19 +901,8 @@ public class MainForm extends JFrame {
 		comboBox_13.setBounds(22, 56, 99, 23);
 		panel_1.add(comboBox_13);
 		
-		JButton btnPretraga = new JButton("Pretraži");
-		btnPretraga.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				
-				
-			}
-			});
-		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPretraga.setBounds(262, 56, 69, 23);
-		panel_1.add(btnPretraga);
-		
 		final JList list_2 = new JList();
+		list_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list_2.setModel(new AbstractListModel() {
 			String[] values = new String[] {};
@@ -925,10 +916,65 @@ public class MainForm extends JFrame {
 		list_2.setBounds(22, 114, 309, 209);
 		panel_1.add(list_2);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
+		final JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxNewCheckBox.setBounds(22, 86, 170, 23);
 		panel_1.add(chckbxNewCheckBox);
+		
+		JButton btnPretraga = new JButton("Pretraži");
+		btnPretraga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (!textField_42.getText().isEmpty())
+				{
+					
+				    DefaultListModel lista = new DefaultListModel();
+				    list_2.setModel(lista);
+					ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
+					String vrijednost = comboBox_13.getSelectedItem().toString();
+					if (chckbxNewCheckBox.isSelected())
+					{
+						if (vrijednost.equals("Ime"))
+						{
+							zaposlenici = DalDao.VratiZaposlenikePoImenu(textField_42.getText());
+						}
+						else if (vrijednost.equalsIgnoreCase("Prezime"))
+						{
+							zaposlenici = DalDao.VratiZaposlenikePoPrezimenu(textField_42.getText());
+						}
+						else
+						{
+							zaposlenici = DalDao.VratiZaposlenikePoUsername(textField_42.getText());
+						}
+					}
+					else
+					{
+						if (vrijednost.equals("Ime"))
+						{
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_42.getText());
+						}
+						else if (vrijednost.equalsIgnoreCase("Prezime"))
+						{
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoPrezimenu(textField_42.getText());
+						}
+						else
+						{
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_42.getText());
+						}
+					}
+					for (int i = 0; i < zaposlenici.size(); i++)
+					{
+						String podatak = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime();
+						lista.addElement(podatak);
+					}
+
+				}
+				
+			}
+			});
+		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnPretraga.setBounds(262, 56, 69, 23);
+		panel_1.add(btnPretraga);
 		
 		JButton btnNewButton_1 = new JButton("Prikaži profil");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 10));

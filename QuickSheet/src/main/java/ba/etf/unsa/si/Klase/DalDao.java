@@ -115,7 +115,7 @@ public class DalDao {
 			return false;
 		else return true;
 	}
-	
+		
 	static public ArrayList<ZaposlenikHibernate> VratiZaposlenikePoUsername(String username)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -193,6 +193,16 @@ public class DalDao {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		ZaposlenikHibernate results = (ZaposlenikHibernate)session.get(ZaposlenikHibernate.class, id);
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public AdministratorHibernate VratiAdministratora(long id)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		AdministratorHibernate results = (AdministratorHibernate)session.get(AdministratorHibernate.class, id);
 		transaction.commit();
 		session.close();
 		return results;
