@@ -111,4 +111,8 @@ public class ZaposlenikHibernate implements java.io.Serializable{
 	public void setKoordinator(Boolean koordinator) {
 		this.koordinator = koordinator;
 	}
+	@Override
+	public String toString() { 
+		return this.getIme() + " "+ this.getPrezime();
+	}
 }

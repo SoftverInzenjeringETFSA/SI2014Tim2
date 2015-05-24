@@ -261,19 +261,15 @@ public class ProjekatForm extends JFrame {
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnDodaj.setBounds(255, 375, 61, 23);
 		panel.add(btnDodaj);
-		/*
-		String[] koordinatori = null;
+		
+		JComboBox comboBox = new JComboBox();
 		ArrayList<ZaposlenikHibernate> zhk=DalDao.VratiSveZaposlenikeKoordinatore();
 	
 		for (int i=0;i<zhk.size();i++)
 		{
-		    String tempString = zhk.get(i).getId() + " " + zhk.get(i).getIme() + " " + zhk.get(i).getPrezime();
-		    koordinatori[i]=tempString;
+		    comboBox.addItem(zhk.get(i));
 		}
-*/
-		//JComboBox comboBox = new JComboBox(koordinatori);
-		JComboBox comboBox = new JComboBox();
-		comboBox.setSelectedIndex(0);
+		
 		comboBox.setBounds(151, 409, 165, 20);
 		panel.add(comboBox);
 		
