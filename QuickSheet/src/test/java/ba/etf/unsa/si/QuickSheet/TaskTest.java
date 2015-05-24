@@ -1,6 +1,8 @@
 package ba.etf.unsa.si.QuickSheet;
 
 
+import static org.junit.Assert.*;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
@@ -14,16 +16,10 @@ import ba.etf.unsa.si.Klase.Zaposlenik;
 import javax.management.InvalidAttributeValueException;
 
 
-//import javax.naming.directory.InvalidAttributeValueException;
-//dodao sam konstruktor bez parametara u klasu Task, jel može ovako
+
 public class TaskTest {
 
-	@Test(expected=javax.management.InvalidAttributeValueException.class)
-	public void testTask() throws  javax.management.InvalidAttributeValueException  {
-		Task a= new Task(null, null, null, null, null);
-	}
-
-
+	
 
 	@Test(expected=javax.management.InvalidAttributeValueException.class)
 	public void testSetNaziv() throws javax.management.InvalidAttributeValueException, javax.naming.directory.InvalidAttributeValueException, NoSuchAlgorithmException, InvalidKeySpecException {
