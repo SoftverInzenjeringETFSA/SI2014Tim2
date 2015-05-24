@@ -209,7 +209,7 @@ public class OdjelForm extends JFrame {
 	public OdjelForm(String odjel) {
 		String[] temp = odjel.split(" ");
 		long id = Long.parseLong(temp[0]);
-		OdjelHibernate prikaz = DalDao.VratiOdjel(id);
+		OdjelHibernate prikaz = DalDao.VratiOdjel(id); 
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("Prikaz odjela");
@@ -364,3 +364,4 @@ public class OdjelForm extends JFrame {
 		
 	}
 }
+

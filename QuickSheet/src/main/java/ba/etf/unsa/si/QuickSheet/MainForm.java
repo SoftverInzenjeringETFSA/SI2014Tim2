@@ -58,6 +58,10 @@ import javax.swing.DefaultComboBoxModel;
 
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
@@ -82,9 +86,6 @@ public class MainForm extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-
-	
-	
 
 	/**
 	 * Launch the application.
@@ -666,7 +667,6 @@ public class MainForm extends JFrame {
 		JPanel korisniciPanel = new JPanel();
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
 		korisniciPanel.setLayout(null);
-		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(30, 22, 341, 370);
@@ -766,15 +766,31 @@ public class MainForm extends JFrame {
 		list_5.setBounds(190, 127, 141, 51);
 		panel.add(list_5);
 		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+				DefaultListModel dl = new DefaultListModel();
+				list_5.setModel(dl);
+				ArrayList<OdjelHibernate> odjeli = DalDao.VratiSveArhiviraneOdjele();
+				for (int i = 0; i < odjeli.size(); i++)
+				{
+					String komponenta = odjeli.get(i).getId() + " " + odjeli.get(i).getNaziv();
+					dl.addElement(komponenta);
+				}
+			}
+		});
+		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true; 
 				String p1 = Arrays.toString(passwordField_1.getPassword());
 				String p2 = Arrays.toString(passwordField.getPassword());
+				String ime = textField_36.getText();
+				String prezime = textField_37.getText();
+				String adresa = textField_38.getText();
 				
 				
-					
 				if(textField_36.getText().equals("")){
 					label_error2.setText("Unesite ime!");
 					greska = false;}
@@ -874,17 +890,11 @@ public class MainForm extends JFrame {
 		JButton btnPretraga = new JButton("Pretraži");
 		btnPretraga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				if(comboBox_13.getSelectedItem() == null){
-					greska = false;
-					label_error2.setText("Morate označiti parametar pretrage!");
-				}
-				if(greska == false){
-					label_error2.setVisible(true);
-				}
-				else label_error2.setVisible(false);
+				
+				
+				
 			}
-		});
+			});
 		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretraga.setBounds(262, 56, 69, 23);
 		panel_1.add(btnPretraga);
@@ -892,7 +902,7 @@ public class MainForm extends JFrame {
 		final JList list_2 = new JList();
 		list_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list_2.setModel(new AbstractListModel() {
-			String[] values = new String[] {"korisnik 1", "korisnik 2"};
+			String[] values = new String[] {};
 			public int getSize() {
 				return values.length;
 			}
@@ -1051,12 +1061,7 @@ public class MainForm extends JFrame {
 		});
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_1.setBounds(193, 138, 110, 23);
-		panel_6.add(button_1);
-		
-		
-		
-		
-		
+		panel_6.add(button_1);		
 	}
 
 	private void JTable(Object rowData, TableColumnModel columnNames) {
