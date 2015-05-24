@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
@@ -58,6 +59,7 @@ import javax.swing.DefaultComboBoxModel;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class MainForm extends JFrame {
 	private JTextField textField;
@@ -152,8 +154,19 @@ public class MainForm extends JFrame {
 		textField_44.setColumns(10);
 		
 		final JList list_3 = new JList();
+		DefaultListModel listaZaposlenika = new DefaultListModel();
+		list_3.setModel(listaZaposlenika);
+		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+
+		for (int i=0;i<zaposlenici.size();i++)
+			{
+			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
+			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+				listaZaposlenika.addElement(tempString);
+			}
 		list_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		list_3.setModel(new AbstractListModel() {
+		
+		/*list_3.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik 1", "zaposlenik 5"};
 			public int getSize() {
 				return values.length;
@@ -161,7 +174,7 @@ public class MainForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list_3.setBounds(190, 61, 141, 135);
 		panel_2.add(list_3);
 	
@@ -201,6 +214,14 @@ public class MainForm extends JFrame {
 				
 				else{
 					label_error.setVisible(false);
+					OdjelHibernate odjelh = new OdjelHibernate();
+					odjelh.setNaziv(textField_43.getText());
+					odjelh.setMaksimalanBrojRadnika(Integer.parseInt(textField_44.getText()));
+					DalDao.DodajObjekat(odjelh);
+					JOptionPane.showMessageDialog(null, "Odjel je dodan.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
+					textField_43.setText("");
+					textField_44.setText("");
+					list_3.clearSelection();
 				}
 				
 				
@@ -363,7 +384,8 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error.setVisible(false);
-					new OdjelForm().setVisible(true);
+					String Odjel=list_4.getSelectedValue().toString();
+					new OdjelForm(Odjel).setVisible(true);
 					
 				}
 				
