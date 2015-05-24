@@ -53,6 +53,8 @@ import javax.swing.border.CompoundBorder;
 import java.awt.Toolkit;
 import java.awt.Rectangle;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainFormZaposlenik extends JFrame {
 	private JTextField textField;
@@ -295,6 +297,12 @@ public class MainFormZaposlenik extends JFrame {
 		panel_1.add(comboBox_2);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent arg0) {
+				
+			}
+		});
 		tabbedPane.addTab("Moj profil", null, panel_2, null);
 		panel_2.setLayout(null);
 		
