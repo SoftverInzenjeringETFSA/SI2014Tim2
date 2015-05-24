@@ -127,6 +127,7 @@ public class OdjelForm extends JFrame {
 				if(greska == false) label_1.setVisible(true);
 				else{
 					label_1.setVisible(false);
+					
 				}
 			}
 		});
@@ -167,18 +168,26 @@ public class OdjelForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
-					/*
+					
 					String selektovanaVrijednost = list.getSelectedValue().toString();
 					String[] rijeci = selektovanaVrijednost.split(" ");
 					long id = Long.parseLong(rijeci[0]);
 					ZaposlenikHibernate zh=DalDao.VratiZaposlenika(id);
 					OdjelHibernate oh=DalDao.VratiOdjelPoNazivu(textField.getText());
 					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
-					ozh.setOdjel(oh);
-					ozh.setZaposlenikOdjela(zh);
-					DalDao.ObrisiObjekat(ozh);
+					DalDao.IzbrisiZaposlenikaIzOdjela(zh.getId(), oh.getId());
 					JOptionPane.showMessageDialog(null, "Zaposlenik je uklonjen iz odjela.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
-				*/
+					
+					DefaultListModel listaZaposlenikaOdjela = new DefaultListModel();
+					list.setModel(listaZaposlenikaOdjela);
+					ArrayList<ZaposlenikHibernate> zaposleniciOdjela=DalDao.VratiZaposlenikeUOdjelu(oh.getId());
+
+					for (int i=0;i<zaposleniciOdjela.size();i++)
+						{
+						    String tempString = zaposleniciOdjela.get(i).getId() + " " + zaposleniciOdjela.get(i).getIme() + " " + zaposleniciOdjela.get(i).getPrezime()
+						    		+ " " + zaposleniciOdjela.get(i).getAdresa() + " " + zaposleniciOdjela.get(i).getSatnica();
+							listaZaposlenikaOdjela.addElement(tempString);
+						}
 				}
 			}
 		});
@@ -233,7 +242,7 @@ public class OdjelForm extends JFrame {
 	
 	public OdjelForm(String odjel) {
 		String[] temp = odjel.split(" ");
-		long id = Long.parseLong(temp[0]);
+		final long id = Long.parseLong(temp[0]);
 		OdjelHibernate prikaz = DalDao.VratiOdjel(id); 
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
@@ -306,6 +315,13 @@ public class OdjelForm extends JFrame {
 				if(greska == false) label_1.setVisible(true);
 				else{
 					label_1.setVisible(false);
+					OdjelHibernate o=new OdjelHibernate();
+					o=DalDao.VratiOdjel(id);
+					o.setNaziv(textField.getText());
+					o.setMaksimalanBrojRadnika(Integer.parseInt(textField_1.getText()));
+					DalDao.ModifikujObjekat(o);
+					JOptionPane.showMessageDialog(null, "Uspješno ste izmijenili odjel.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
+					
 				}
 			}
 		});

@@ -638,12 +638,43 @@ public class DalDao {
 		return validan;
 	}
 	
+	static public boolean ValidirajUsername (String username)
+	{
+		boolean validan = true;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "'";
+		Query query = session.createQuery(hql);
+		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		if (results.size() != 0)
+		{
+			validan = false;
+		}
+		return validan;
+	}
+	
 	static public void IzbirisiZaposlenikoveOdjele (long id)
 	{
 		ArrayList<OdjelZaposlenikHibernate> ozh = VratiOdjelZaposlenikPoZaposleniku(id);
 		for (int i = 0; i < ozh.size(); i++)
 		{
 			ObrisiObjekat(ozh.get(i));
+		}
+	}
+	
+	static public void IzbrisiZaposlenikaIzOdjela (long idZap, long idOdj)
+	{
+		ArrayList<OdjelZaposlenikHibernate> ozh = VratiOdjelZaposlenikPoZaposleniku(idZap);
+		OdjelHibernate oh=new OdjelHibernate();
+		oh=DalDao.VratiOdjel(idOdj);
+		for (int i = 0; i < ozh.size(); i++)
+		{
+			if(ozh.get(i).getOdjel()==oh){
+				ObrisiObjekat(ozh.get(i));	
+			}
+			
 		}
 	}
 }

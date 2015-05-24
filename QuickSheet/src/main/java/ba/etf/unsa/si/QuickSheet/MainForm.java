@@ -39,6 +39,9 @@ import java.awt.Button;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,6 +59,9 @@ import java.awt.ScrollPane;
 import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
+import ba.etf.unsa.si.Klase.Koordinator;
+import ba.etf.unsa.si.Klase.ProjekatRadnik;
+import ba.etf.unsa.si.Klase.Zaposlenik;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 
 import java.awt.event.FocusAdapter;
@@ -250,14 +256,6 @@ public class MainForm extends JFrame {
 		panel_2.add(btnDodaj_1);
 		
 		JButton btnOtkai = new JButton("Otkaži");
-		btnOtkai.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textField_43.setText("");
-				textField_44.setText("");
-				list_3.clearSelection();
-				label_error.setVisible(false);
-			}
-		});
 		btnOtkai.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnOtkai.setBounds(242, 309, 89, 23);
 		panel_2.add(btnOtkai);
@@ -303,17 +301,6 @@ public class MainForm extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
 				
-				/*if(comboBox_16.getSelectedItem() == null){
-					greska = false;
-					label_error.setText("Morate označiti parametar pretrage!");
-				}
-				
-				if(greska == false){
-					label_error.setVisible(true);
-				}
-				else
-					label_error.setVisible(false); */
-				//ako je textbox prazan,ona vraca sve
 				if (textField_45.getText().equalsIgnoreCase("") && chckbxNewCheckBox_1.isSelected()){
 					DefaultListModel listaArhOdjela = new DefaultListModel();
 					list_4.setModel(listaArhOdjela);
@@ -769,64 +756,185 @@ public class MainForm extends JFrame {
 		label_error2.setBounds(0, 403, 759, 14);
 		korisniciPanel.add(label_error2);
 		
+		final JCheckBox chckbxDa = new JCheckBox("Da");
+		chckbxDa.setBounds(190, 282, 97, 23);
+		panel.add(chckbxDa);
+		
+		final JSpinner spinner = new JSpinner();
+		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner.setModel(new SpinnerDateModel(new Date(1432332000000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner.setBounds(190, 99, 141, 20);
+		panel.add(spinner);
+		
+		final JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
+		spinner_1.setBounds(190, 182, 141, 20);
+		panel.add(spinner_1);
+		
+		DefaultListModel lista2 = new DefaultListModel();
+		final JList list_5 = new JList();
+		JScrollPane scrollPane = new JScrollPane(list_5, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(190, 126, 141, 50);
+		list_5.setBounds(190, 126, 141, 50);
+		list_5.setModel(lista2);
+		ArrayList<OdjelHibernate> sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
+		for (int i = 0; i < sviOdjeli.size(); i++)
+		{
+			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
+			lista2.addElement(podatak);
+		}
+		panel.add(scrollPane);
+		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true; 
-				String p1 = Arrays.toString(passwordField_1.getPassword());
-				String p2 = Arrays.toString(passwordField.getPassword());
+				String p1 = new String(passwordField_1.getPassword());
+				String p2 = new String(passwordField.getPassword());
 				String ime = textField_36.getText();
 				String prezime = textField_37.getText();
 				String adresa = textField_38.getText();
 				
+				Zaposlenik z;
+				if (chckbxDa.isSelected())
+					z = new Koordinator();
+				else 
+					z = new ProjekatRadnik();
 				
-				if(textField_36.getText().equals("")){
-					label_error2.setText("Unesite ime!");
+				try{
+					z.setIme(ime);
+				}
+				catch (Exception es){
+					label_error2.setText("Unesite ispravno ime!");
+					greska = false;
+				}
+				
+				try{
+					z.setPrezime(prezime);
+				}
+				catch (Exception es){
+					label_error2.setText("Unesite ispravno prezime!");
+					greska = false;
+				}
+				
+				try{
+					z.setAdresa(adresa);
+				}
+				catch (Exception es){
+					label_error2.setText("Unesite ispravnu adresu!");
+					greska = false;
+				}
+				
+				try
+				{
+					Date d = (Date)spinner.getValue();
+					Calendar c = Calendar.getInstance();
+					c.setTime(d);
+					LocalDate ld = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+					z.setDatumZaposlenja(ld);
+				}
+				catch (Exception es)
+				{
+					label_error2.setText("Unesite ispravan datum!");
+					greska = false;
+				}
+				
+				if(list_5.isSelectionEmpty())
+				{
+					label_error2.setText("Odaberite odjel u kojem radi zaposlenik!");
+					greska = false;
+				}
+				
+				try
+				{
+					Double satnica = (Double)spinner_1.getValue();
+					z.setSatnica(satnica);
+				}
+				catch (Exception es)
+				{
+					label_error2.setText("Izaberite ispravan unos za satnicu!");
+					greska = false;
+				}
+				
+				try
+				{
+					z.setUsername(textField_41.getText());
+					if (!DalDao.ValidirajUsername(z.getUsername()))
+					{
+						label_error2.setText("Unesite ispravno korisničko ime!");
+						greska = false;
+					}
+				}
+				catch(Exception es)
+				{
+					label_error2.setText("Unesite ispravno korisničko ime!");
+					greska = false;
+				}
+				
+				if(p1.length() >= 0 && p1.length() < 8){
+					label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;}
-				else if(textField_37.getText().equals("")){
-					label_error2.setText("Unesite prezime!");
-					greska = false;}
-				else if(textField_38.getText().equals("")){
-					label_error2.setText("Unesite adresu!");
-					greska = false;}
-				else if(textField_41.getText().equals("")){
-					label_error2.setText("Unesite korisničko ime!");
-					greska = false;}
-				else if(passwordField_1.getPassword().length == 0){
-					label_error2.setText("Unesite lozinku!");
-					greska = false;}
-				else if(passwordField.getPassword().length == 0){
-					label_error2.setText("Unesite ponovo lozinku!");
+				if(p2.length() >= 0 && p2.length() < 8){
+					label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;} 
-				else if (!p1.equals(p2)) {
+				if (!p1.equals(p2)) {
 					label_error2.setText("Lozinke se ne podudaraju!");
 					greska = false;
+					} else
+					try {
+						z.setLozinka(p1);
+					} catch (NoSuchAlgorithmException es) {
+						label_error2.setText("Lozinke se ne podudaraju!");
+						es.printStackTrace();
+					} catch (InvalidKeySpecException es) {
+						label_error2.setText("Lozinke se ne podudaraju!");
+						es.printStackTrace();
 					}
-				
-				else greska = true;
-				 
 				
 				if(greska == false){
 					label_error2.setVisible(true);	
 				}
+				
 				else{
 					label_error2.setVisible(false);
+					ZaposlenikHibernate zh = new ZaposlenikHibernate();
+					zh.setIme(z.getIme());
+					zh.setPrezime(z.getPrezime());
+					zh.setAdresa(z.getAdresa());
+					zh.setArhiviran(false);
+					zh.setKoordinator(chckbxDa.isSelected());
+					zh.setDatumZaposlenja(z.getDatumZaposlenja());
+					if (p1.length() > 7)
+					{
+						zh.setLozinka(z.getLozinka());
+					}
+					zh.setSatnica(z.getSatnica());
+					zh.setUsername(z.getUsername());
+					DalDao.DodajObjekat(zh);
+					ArrayList<String> izabrane = (ArrayList<String>) list_5.getSelectedValuesList();
+					for (int i = 0; i < izabrane.size(); i++)
+					{
+						String podatak = izabrane.get(i);
+						String[] rijeci = podatak.split(" ");
+						long id = Long.parseLong(rijeci[0]);
+						OdjelZaposlenikHibernate ozh = new OdjelZaposlenikHibernate();
+						ozh.setOdjel(DalDao.VratiOdjel(id));
+						ozh.setZaposlenikOdjela(zh);
+						DalDao.DodajObjekat(ozh);
+					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste kreirali zaposlenika", "Zaposlenik kreiran", JOptionPane.INFORMATION_MESSAGE);
 				}
-				
-				
 			}
 		});
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDodaj.setBounds(147, 336, 89, 23);
 		panel.add(btnDodaj);
 		
-		
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner.setModel(new SpinnerDateModel(new Date(1432332000000L), null, null, Calendar.DAY_OF_YEAR));
-		spinner.setBounds(190, 99, 141, 20);
-		panel.add(spinner);
+		final JSpinner spinner1 = new JSpinner();
+		spinner1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner1.setModel(new SpinnerDateModel(new Date(1432332000000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner1.setBounds(190, 99, 141, 20);
+		panel.add(spinner1);
 		
 		JButton btnOtkai_2 = new JButton("Otkaži");
 		btnOtkai_2.addActionListener(new ActionListener() {
@@ -845,33 +953,10 @@ public class MainForm extends JFrame {
 		btnOtkai_2.setBounds(242, 336, 89, 23);
 		panel.add(btnOtkai_2);
 		
-		JCheckBox chckbxDa = new JCheckBox("Da");
-		chckbxDa.setBounds(190, 282, 97, 23);
-		panel.add(chckbxDa);
-		
 		JLabel lblSatnica = new JLabel("Satnica:");
 		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblSatnica.setBounds(82, 185, 46, 14);
 		panel.add(lblSatnica);
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
-		spinner_1.setBounds(190, 182, 141, 20);
-		panel.add(spinner_1);
-		
-		DefaultListModel lista2 = new DefaultListModel();
-		final JList list_5 = new JList();
-		JScrollPane scrollPane = new JScrollPane(list_5, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(190, 126, 141, 50);
-		list_5.setBounds(190, 126, 141, 50);
-		list_5.setModel(lista2);
-		ArrayList<OdjelHibernate> sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
-		for (int i = 0; i < sviOdjeli.size(); i++)
-		{
-			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
-			lista2.addElement(podatak);
-		}
-		panel.add(scrollPane);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -970,6 +1055,16 @@ public class MainForm extends JFrame {
 		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretraga.setBounds(262, 56, 69, 23);
 		panel_1.add(btnPretraga);
+		
+		btnOtkai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_43.setText("");
+				textField_44.setText("");
+				list_3.clearSelection();
+				spinner1.setValue(new Double(0d));
+				label_error.setVisible(false);
+			}
+		});
 		
 		JButton btnNewButton_1 = new JButton("Prikaži profil");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 10));

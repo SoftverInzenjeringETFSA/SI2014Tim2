@@ -1,6 +1,8 @@
 
 package ba.etf.unsa.si.Klase;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -49,21 +51,9 @@ public abstract class Zaposlenik {
 		return lozinka;
 	}
 	
-	public void setLozinka()
+	public void setLozinka(String lozinka) throws NoSuchAlgorithmException, InvalidKeySpecException
 	{
-		char[] chars = "AaBbCcČčĆćDdĐđEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsŠšTtUuVvWwXxYyZzŽž0123456789".toCharArray();
-		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
-		for (int i = 0; i < 8; i++) {
-		    char c = chars[random.nextInt(chars.length)];
-		    sb.append(c);
-		}
-		this.lozinka = sb.toString();;
-	}
-	
-	public void setLozinka(String lozinka)
-	{
-		this.lozinka = lozinka;
+		this.lozinka = Lozinka.generateStorngPasswordHash(lozinka);
 	}
 	
 	public String getIme()
