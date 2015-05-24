@@ -368,6 +368,17 @@ public class DalDao {
 		return results;
 	}
 	
+	static public ArrayList<ProjekatHibernate> VratiArhiviraneProjektePoNazivu(String naziv)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ProjekatHibernate WHERE naziv='" + naziv + "' AND arhiviran ='1'";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
 	static public ArrayList<ProjekatHibernate> VratiProjektePoNazivuKlijenta(String nazivKlijenta)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -392,6 +403,18 @@ public class DalDao {
 		return results;
 	}
 	
+	static public ArrayList<ProjekatHibernate> VratiArhiviraneProjektePoNazivuKlijenta(String nazivKlijenta)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ProjekatHibernate WHERE nazivKlijenta='" + nazivKlijenta + "' AND arhiviran ='1'";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
 	static public ArrayList<ProjekatHibernate> VratiSveProjekte()
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -408,7 +431,19 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelHibernate WHERE arhiviran='0'";
+		String hql = "FROM ProjekatHibernate WHERE arhiviran='0'";
+		Query query = session.createQuery(hql);
+		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<ProjekatHibernate> VratiSveArhiviraneProjekte()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ProjekatHibernate WHERE arhiviran='1'";
 		Query query = session.createQuery(hql);
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();

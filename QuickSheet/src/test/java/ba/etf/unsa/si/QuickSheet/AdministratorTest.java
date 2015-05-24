@@ -1,5 +1,7 @@
 package ba.etf.unsa.si.QuickSheet;
 
+import static org.junit.Assert.assertEquals;
+
 import java.time.LocalDate;
 
 import javax.naming.directory.InvalidAttributeValueException;
@@ -9,34 +11,48 @@ import org.junit.Test;
 import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Koordinator;
+import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.Klase.Odjel;
 import ba.etf.unsa.si.Klase.Projekat;
+
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
+import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class AdministratorTest {
 
-	@Test(expected=InvalidAttributeValueException.class)
+	@Test
 	public void testSetUsername() throws InvalidAttributeValueException {
-		String username="##$$2132enis123sjdhf564#$%+-";
-		String lozinka="##$$2132enis123sjdhf564#$%";
 		
+			try {
+				AdministratorHibernate a= new AdministratorHibernate();
+				a.setUsername("user1");
 		
-			Administrator b= new Administrator(username,lozinka);
+			    AdministratorHibernate a1 = DalDao.VratiAdministratoraPoUsernamu("user1");
+				assertEquals("user1", a.getUsername());
+				}
+				catch(Exception ex) {
+					
+				}
 	}
 
-	@Test
-	public void testGetLozinka() {
-		 // TODO ovo ne treba
-	}
+
 
 	
-	@Test(expected=InvalidAttributeValueException.class)
+	@Test
 	public void testSetLozinka() throws InvalidAttributeValueException {
-		String username="Enis";
-		String lozinka="enis";
-		Administrator a= new Administrator(username,lozinka);
-		a.setLozinka(null);
+		try {
+		AdministratorHibernate a= new AdministratorHibernate();
+		a.setUsername("user1");
+		a.setLozinka("abc");
+		AdministratorHibernate a1 = DalDao.VratiAdministratoraPoUsernamu("user1");
+		assertEquals(Lozinka.validatePassword("abc", a1.getLozinka()), true);
+		}
+		catch(Exception ex) {
+			
+		}
 	}
 
 	
@@ -53,21 +69,42 @@ public class AdministratorTest {
 		//koji je stvarni maksimalni broj radnika?
 	}
 	
-	@Test(expected=InvalidAttributeValueException.class)
-	public void testKreirajProjekat() throws InvalidAttributeValueException {
-		String naziv="Timesheet$#1";
-		String klijent="Dean";
+	@Test
+	public void testKreirajOdjel1() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		OdjelHibernate o = new OdjelHibernate();
+		o.setNaziv("Odjel");
+		o.setMaksimalanBrojRadnika(24);
+		o.setArhiviran(false);
+		DalDao.DodajObjekat(o);
 		
-		LocalDate datum=LocalDate.now();
-		Koordinator k= new Koordinator(null,"Teo","Eterovic","Zmaja",datum,1000);
-		Projekat p= new Projekat(naziv,klijent,k);  
-		
-		String username="Enis";
-		String lozinka="enis";
-		Administrator a= new Administrator(username,lozinka);
-		
-		a.kreirajProjekat("string", "string", k);
+		OdjelHibernate o1 = DalDao.VratiOdjelPoNazivu("Odjel");
+		assertEquals("Odjel", o1.getNaziv());
+	}
 	
+	@Test
+	public void testKreirajProjekat() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("Dzenana");
+		zh.setPrezime("Dzenana");
+		zh.setAdresa("Dzenana");
+		zh.setArhiviran(false);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(false);
+		zh.setLozinka("dsdasd");
+		zh.setSatnica(20d);
+		zh.setUsername("Username1111");
+		DalDao.DodajObjekat(zh);
+			
+		ProjekatHibernate p = new ProjekatHibernate();
+		p.setNaziv("projekat");
+		p.setNazivKlijenta("Edin");
+		p.setKoordinator(zh);
+		
+		DalDao.DodajObjekat(p);
+		
+		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
+		
+		assertEquals("projekat", p1.getNaziv());
 		
 	}
 

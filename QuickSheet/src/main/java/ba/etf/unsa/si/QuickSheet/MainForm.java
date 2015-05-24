@@ -51,6 +51,10 @@ import java.util.Calendar;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 
 import java.awt.Component;
@@ -72,6 +76,7 @@ import java.awt.event.WindowEvent;
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+import ba.etf.unsa.si.util.HibernateUtil;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -558,7 +563,7 @@ public class MainForm extends JFrame {
 		panel_11.setBounds(392, 22, 341, 370);
 		projektiPanel.add(panel_11);
 		
-		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikazi arhivirane projekte");
+		final JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikazi arhivirane projekte");
 		chckbxPrikaziArhiviraneProjekte.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxPrikaziArhiviraneProjekte.setBounds(22, 86, 149, 23);
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
@@ -572,9 +577,23 @@ public class MainForm extends JFrame {
 			}
 		});
 		comboBox_17.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"naziv projekta", "naziv klijenta", "naziv koordinatora"}));
+		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"Naziv projekta", "Naziv klijenta"}));
 		comboBox_17.setBounds(22, 56, 99, 23);
 		panel_11.add(comboBox_17);
+		
+		final JList list_1 = new JList();
+		list_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		/*list_1.setModel(new AbstractListModel() {
+			String[] values = new String[] {"projekat 1", "projekat 2"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});*/
+		list_1.setBounds(22, 114, 309, 209);
+		panel_11.add(list_1);
 		
 		JButton btnPretrai_1 = new JButton("Pretraži");
 		btnPretrai_1.addActionListener(new ActionListener() {
@@ -590,6 +609,97 @@ public class MainForm extends JFrame {
 					label_error1.setVisible(true);
 				}
 				else label_error1.setVisible(false);
+				if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta") && textField_46.getText().equalsIgnoreCase("") && chckbxPrikaziArhiviraneProjekte.isSelected()){
+					DefaultListModel listaArhProjekata = new DefaultListModel();
+					list_1.setModel(listaArhProjekata);
+					ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiSveArhiviraneProjekte();
+
+					for (int i=0;i<arhiviraniProjekti.size();i++)
+						{
+						    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
+						    listaArhProjekata.addElement(tempString);
+						}
+				} else
+					if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta") && textField_46.getText().equalsIgnoreCase("") && chckbxPrikaziArhiviraneProjekte.isSelected()==false){
+						DefaultListModel listaArhProjekata = new DefaultListModel();
+						list_1.setModel(listaArhProjekata);
+						ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiSveNearhiviraneProjekte();
+
+						for (int i=0;i<arhiviraniProjekti.size();i++)
+							{
+							    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
+							    listaArhProjekata.addElement(tempString);
+							}
+					} else
+						if (comboBox_17.getSelectedItem().toString().equals("Naziv klijenta") && textField_46.getText().equalsIgnoreCase("") && chckbxPrikaziArhiviraneProjekte.isSelected()){
+							DefaultListModel listaArhProjekata = new DefaultListModel();
+							list_1.setModel(listaArhProjekata);
+							ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiSveArhiviraneProjekte();
+
+							for (int i=0;i<arhiviraniProjekti.size();i++)
+								{
+								    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
+								    listaArhProjekata.addElement(tempString);
+								}
+						} else
+							if (comboBox_17.getSelectedItem().toString().equals("Naziv klijenta") && textField_46.getText().equalsIgnoreCase("") && chckbxPrikaziArhiviraneProjekte.isSelected()==false){
+								DefaultListModel listaArhProjekata = new DefaultListModel();
+								list_1.setModel(listaArhProjekata);
+								ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiSveNearhiviraneProjekte();
+
+								for (int i=0;i<arhiviraniProjekti.size();i++)
+									{
+									    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
+									    listaArhProjekata.addElement(tempString);
+									}
+							} else
+								if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta") && textField_46.getText().equalsIgnoreCase("")==false && chckbxPrikaziArhiviraneProjekte.isSelected()){
+									DefaultListModel listaArhProjekata = new DefaultListModel();
+									list_1.setModel(listaArhProjekata);
+									ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiArhiviraneProjektePoNazivu(textField_46.getText());
+
+									for (int i=0;i<arhiviraniProjekti.size();i++)
+										{
+										    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
+										    listaArhProjekata.addElement(tempString);
+										}
+								} else
+									if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta") && textField_46.getText().equalsIgnoreCase("")==false && chckbxPrikaziArhiviraneProjekte.isSelected()==false){
+										DefaultListModel listaArhProjekata = new DefaultListModel();
+										list_1.setModel(listaArhProjekata);
+										ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiNearhiviraneProjektePoNazivu(textField_46.getText());
+
+										for (int i=0;i<arhiviraniProjekti.size();i++)
+											{
+											    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
+											    listaArhProjekata.addElement(tempString);
+											}
+									} else
+										if (comboBox_17.getSelectedItem().toString().equals("Naziv klijenta") && textField_46.getText().equalsIgnoreCase("")==false && chckbxPrikaziArhiviraneProjekte.isSelected()){
+											DefaultListModel listaArhProjekata = new DefaultListModel();
+											list_1.setModel(listaArhProjekata);
+											ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiArhiviraneProjektePoNazivuKlijenta(textField_46.getText());
+
+											for (int i=0;i<arhiviraniProjekti.size();i++)
+												{
+												    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
+												    listaArhProjekata.addElement(tempString);
+												}
+										} else
+											if (comboBox_17.getSelectedItem().toString().equals("Naziv klijenta") && textField_46.getText().equalsIgnoreCase("")==false && chckbxPrikaziArhiviraneProjekte.isSelected()==false){
+												DefaultListModel listaArhProjekata = new DefaultListModel();
+												list_1.setModel(listaArhProjekata);
+												ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiNearhiviraneProjektePoNazivuKlijenta(textField_46.getText());
+
+												for (int i=0;i<arhiviraniProjekti.size();i++)
+													{
+													    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
+													    listaArhProjekata.addElement(tempString);
+													}
+											}
+											
+									
+									
 			}
 		});
 		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -601,19 +711,7 @@ public class MainForm extends JFrame {
 		panel_11.add(textField_46);
 		textField_46.setColumns(10);
 		
-		final JList list_1 = new JList();
-		list_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] {"projekat 1", "projekat 2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list_1.setBounds(22, 114, 309, 209);
-		panel_11.add(list_1);
+		
 		
 		JButton btnSauvajPromjene = new JButton("Prikaži projekat");
 		btnSauvajPromjene.addActionListener(new ActionListener() {
@@ -629,7 +727,9 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error1.setVisible(false);
-					new ProjekatForm().setVisible(true);
+					//new ProjekatForm().setVisible(true);
+					String Projekat=list_1.getSelectedValue().toString();
+					new ProjekatForm(Projekat).setVisible(true);
 					
 				}
 				
@@ -653,7 +753,24 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error1.setVisible(false);
+					String selektovanaVrijednost = list_1.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					ProjekatHibernate o=DalDao.VratiProjekat(id);
+					o.setArhiviran(true);
+					DalDao.ModifikujObjekat(o);
+					JOptionPane.showMessageDialog(null, "Projekat je arhiviran.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
 					
+					DefaultListModel listaArhProjekata = new DefaultListModel();
+					list_1.setModel(listaArhProjekata);
+					ArrayList<ProjekatHibernate> nearhiviraniProjekti=DalDao.VratiSveNearhiviraneProjekte();
+
+					for (int i=0;i<nearhiviraniProjekti.size();i++)
+						{
+						    String tempString = nearhiviraniProjekti.get(i).getId() + " " + nearhiviraniProjekti.get(i).getNaziv() + " " + nearhiviraniProjekti.get(i).getNazivKlijenta();
+							listaArhProjekata.addElement(tempString);
+						}
+					textField_46.setText("");
 					
 				}
 			}

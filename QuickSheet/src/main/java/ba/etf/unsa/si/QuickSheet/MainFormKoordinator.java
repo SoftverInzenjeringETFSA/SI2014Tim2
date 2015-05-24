@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
@@ -45,6 +46,7 @@ import java.awt.Toolkit;
 import javax.swing.DefaultComboBoxModel;
 
 import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
@@ -56,6 +58,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.EmptyBorder;
 
 import java.time.Month;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainFormKoordinator extends JFrame {
 	private JTextField textField;
@@ -71,10 +75,10 @@ public class MainFormKoordinator extends JFrame {
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_12;
-	private JPasswordField passwordField_2;
 	private JTextField textField_14;
 	private JTextField textField_15;
 	private JTextField textField_16;
+	private JTextField textField_10;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -97,6 +101,10 @@ public class MainFormKoordinator extends JFrame {
 		setBounds(100, 100, 765, 482);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
+		
+		 
+		//zaposlenik
+		final ZaposlenikHibernate Zaposlenik = zh;
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 764, 453);
@@ -273,7 +281,7 @@ public class MainFormKoordinator extends JFrame {
 		label_4.setBounds(178, 30, 46, 20);
 		panel_2.add(label_4);
 		
-		JSpinner spinner_4 = new JSpinner();
+		final JSpinner spinner_4 = new JSpinner();
 		spinner_4.setModel(new SpinnerDateModel(new Date(1432159200000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_4.setBounds(35, 30, 131, 20);
@@ -1086,6 +1094,7 @@ public class MainFormKoordinator extends JFrame {
 		}
 		
 		JPanel panel_12 = new JPanel();
+		
 		tabbedPane.addTab("Moj profil", null, panel_12, null);
 		panel_12.setLayout(null);
 		
@@ -1168,7 +1177,7 @@ public class MainFormKoordinator extends JFrame {
 		textField_12.setBounds(159, 281, 141, 20);
 		panel_13.add(textField_12);
 		
-		JSpinner spinner_6 = new JSpinner();
+		final JSpinner spinner_6 = new JSpinner();
 		spinner_6.setModel(new SpinnerDateModel(new Date(1432418400000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_6.setEnabled(false);
@@ -1177,19 +1186,11 @@ public class MainFormKoordinator extends JFrame {
 		spinner_6.setBounds(159, 146, 141, 20);
 		panel_13.add(spinner_6);
 		
-		passwordField_2 = new JPasswordField();
-		passwordField_2.setEnabled(false);
-		passwordField_2.setEditable(false);
-		passwordField_2.setBorder(null);
-		passwordField_2.setBackground(Color.WHITE);
-		passwordField_2.setBounds(159, 309, 141, 20);
-		panel_13.add(passwordField_2);
-		
 		JLabel lblSatnica = new JLabel("Satnica:");
 		lblSatnica.setBounds(77, 124, 40, 14);
 		panel_13.add(lblSatnica);
 		
-		JSpinner spinner_8 = new JSpinner();
+		final JSpinner spinner_8 = new JSpinner();
 		spinner_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_8.setEnabled(false);
 		spinner_8.setBorder(new CompoundBorder());
@@ -1197,12 +1198,23 @@ public class MainFormKoordinator extends JFrame {
 		spinner_8.setBounds(159, 115, 141, 20);
 		panel_13.add(spinner_8);
 		
+		final DefaultListModel defaultListModel = new DefaultListModel();
 		JList list_5 = new JList();
+		list_5.setModel(defaultListModel);
 		list_5.setEnabled(false);
 		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list_5.setBackground(Color.WHITE);
 		list_5.setBounds(159, 173, 141, 97);
 		panel_13.add(list_5);
+		
+		textField_10 = new JTextField();
+		textField_10.setEnabled(false);
+		textField_10.setEditable(false);
+		textField_10.setColumns(10);
+		textField_10.setBorder(null);
+		textField_10.setBackground(Color.WHITE);
+		textField_10.setBounds(159, 309, 141, 20);
+		panel_13.add(textField_10);
 		
 		JPanel panel_14 = new JPanel();
 		panel_14.setLayout(null);
@@ -1248,29 +1260,46 @@ public class MainFormKoordinator extends JFrame {
 		JButton button_4 = new JButton("Spasi promjenu");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				boolean greska = true;
-				if(textField_14.getText().equals("")){
-					greska = false;
-					label_32.setText("Unesite trenutnu lozinku!");
+				try {
+					if(Lozinka.validatePassword(textField_14.getText(), Zaposlenik.getLozinka()) && 
+							!textField_14.getText().equals("") && !textField_15.getText().equals("") && 
+							!textField_16.getText().equals("") && textField_15.getText().equals(textField_16.getText())){
+								Zaposlenik.setLozinka(Lozinka.generateStorngPasswordHash(textField_16.getText()));
+								DalDao.ModifikujObjekat(Zaposlenik);
+								JOptionPane.showMessageDialog(null, "Uspjesno ste promjenili lozinku!", "Info", JOptionPane.INFORMATION_MESSAGE );
+					}
+					else if(textField_14.getText().equals("")) {
+						greska = false;
+						label_32.setText("Unesite trenutnu lozinku!");
+					}
+					else if(textField_15.getText().equals("")){
+						greska = false;
+						label_32.setText("Unesite novu lozinku!");
+					}
+					else if(textField_16.getText().equals("")){
+						greska = false;
+						label_32.setText("Unesite ponovo novu lozinku!");
+					}
+					else if(!textField_15.getText().equals(textField_16.getText())) {
+						greska = false;
+						label_32.setText("Lozinke se ne poklapaju!");
+					}
+					else if(!Lozinka.validatePassword(textField_14.getText(), Zaposlenik.getLozinka())) {
+						greska = false;
+						label_32.setText("Pogresna lozinka!");
+					}
+					else { 
+						greska = true;
+					}
+					if(greska == false){
+						label_32.setVisible(true);
+					}
+					else label_32.setVisible(false);
 				}
-				else if(textField_15.getText().equals("")){
-					greska = false;
-					label_32.setText("Unesite novu lozinku!");
+				catch(Exception ex) {
+					
 				}
-				else if(textField_16.getText().equals("")){
-					greska = false;
-					label_32.setText("Unesite ponovo novu lozinku!");
-				}
-				else if(!textField_15.getText().equals(textField_16.getText())){
-					greska = false;
-					label_32.setText("Lozinke se ne podudaraju!");
-				}
-				else greska = true;
-				if(greska == false){
-					label_32.setVisible(true);
-				}
-				else label_32.setVisible(false);
 			}
 		});
 		button_4.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -1290,6 +1319,26 @@ public class MainFormKoordinator extends JFrame {
 		button_5.setBounds(193, 138, 110, 23);
 		panel_14.add(button_5);
 		
+		panel_12.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				textField_3.setText(Zaposlenik.getIme());
+				textField_8.setText(Zaposlenik.getPrezime());
+				textField_9.setText(Zaposlenik.getAdresa());
+				spinner_8.setValue(Zaposlenik.getSatnica());
+				Calendar calendar = Calendar.getInstance();
+				calendar.set(Zaposlenik.getDatumZaposlenja().getYear(), Zaposlenik.getDatumZaposlenja().getMonthValue(), Zaposlenik.getDatumZaposlenja().getDayOfMonth());
+				Date temp = calendar.getTime();
+				spinner_6.setValue(temp);
+				ArrayList<OdjelHibernate> listaOdjela = DalDao.VratiZaposlenikoveOdjele(Zaposlenik.getId());
+				for(OdjelHibernate odjel : listaOdjela) {
+					defaultListModel.addElement(odjel);
+				}
+				textField_12.setText(Zaposlenik.getUsername());
+				textField_10.setText("Koordinator");
+			}
+		});
+				
 	}
 
 	private void JTable(Object rowData, TableColumnModel columnNames) {
