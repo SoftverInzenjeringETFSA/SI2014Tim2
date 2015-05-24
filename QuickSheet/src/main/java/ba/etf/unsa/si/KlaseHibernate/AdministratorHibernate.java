@@ -36,5 +36,7 @@ public class AdministratorHibernate implements java.io.Serializable {
 	{
 		lozinka = _lozinka;
 	}
+
+	
 		
 }
