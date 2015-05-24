@@ -188,7 +188,7 @@ public class Login extends JFrame {
 				}
 				catch(Exception ex) {
 					JOptionPane.showMessageDialog(null, "Dogodila se greska kontaktirajete administratora: " + ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE );
-				}		
+				}
 			}
 				
 		
