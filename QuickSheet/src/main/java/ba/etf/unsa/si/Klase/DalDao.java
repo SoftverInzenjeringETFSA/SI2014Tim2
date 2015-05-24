@@ -232,7 +232,7 @@ public class DalDao {
 		return oh;
 	}
 	
-	static public TimesheetHibernate VratiTimehseet(long id)
+	static public TimesheetHibernate VratiTimesheet(long id)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
