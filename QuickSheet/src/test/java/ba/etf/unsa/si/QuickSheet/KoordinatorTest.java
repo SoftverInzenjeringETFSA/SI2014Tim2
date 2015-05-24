@@ -28,24 +28,6 @@ public class KoordinatorTest {
 		
 	}
 	
-	/*@Test
-	public void testSetIme() throws InvalidAttributeValueException{
-		ZaposlenikHibernate zh = new ZaposlenikHibernate();
-		zh.setIme("HAris");
-		zh.setPrezime("Custovic");
-		zh.setAdresa("kjlkj");
-		zh.setArhiviran(true);
-		zh.setDatumZaposlenja(LocalDate.now());
-		zh.setKoordinator(true);
-		zh.setLozinka("nekjhkjha");
-		zh.setSatnica(20d);
-		zh.setUsername("nekiharis");
-		DalDao.DodajObjekat(zh);
-		
-		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenikaPoUsernamu(zh.getUsername());
-		assertEquals("HAris", zh1.getIme());
-	}*/
-
 
   
 	@Test(expected=javax.management.InvalidAttributeValueException.class)
@@ -306,46 +288,9 @@ public class KoordinatorTest {
 		DalDao.DodajObjekat(zh);
 		assertFalse(zh.getKoordinator());
 	}
-	/*@Test
-	public void testZaposlenikUsername() throws InvalidAttributeValueException, javax.management.InvalidAttributeValueException{
-		ZaposlenikHibernate zh = new ZaposlenikHibernate();
-		zh.setIme("DzenanaBrisanje1");
-		zh.setPrezime("prezime");
-		zh.setAdresa("DzenanaAdresa");
-		zh.setArhiviran(false);
-		zh.setDatumZaposlenja(LocalDate.now());
-		zh.setKoordinator(false);
-		zh.setLozinka("dsdasd");
-		zh.setSatnica(20d);
-		zh.setUsername("Username2202");
-		
-		DalDao.DodajObjekat(zh);
-		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenikaPoUsernamu("Username2202");
-		assertEquals("Username2202", zh1.getUsername());
-		
-	}*/
+
 	
-	/*@Test
-	public void testZaposlenikUsernameIzmjena() throws InvalidAttributeValueException, javax.management.InvalidAttributeValueException{
-		ZaposlenikHibernate zh = new ZaposlenikHibernate();
-		zh.setIme("DzenanaBrisanje1");
-		zh.setPrezime("prezime");
-		zh.setAdresa("DzenanaAdresa");
-		zh.setArhiviran(false);
-		zh.setDatumZaposlenja(LocalDate.now());
-		zh.setKoordinator(false);
-		zh.setLozinka("dsdasd");
-		zh.setSatnica(20d);
-		zh.setUsername("Username2202");
-		
-		DalDao.DodajObjekat(zh);
-		zh.setUsername("noviUsername");
-		DalDao.ModifikujObjekat(zh);
-		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenikaPoUsernamu("noviUsername");
-		assertEquals("noviUsername", zh1.getUsername());
-		
-	}*/
-	
+
 	
 	
 
