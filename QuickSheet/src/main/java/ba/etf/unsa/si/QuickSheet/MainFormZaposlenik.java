@@ -50,6 +50,10 @@ import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 import java.time.Month;
 import javax.swing.JTextArea;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
 public class MainFormZaposlenik extends JFrame {
 	private JTextField textField;
@@ -131,22 +135,6 @@ public class MainFormZaposlenik extends JFrame {
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if(comboBox.getSelectedIndex() == -1){
-					greska = false;
-					label_15.setText("Morate označiti parametar pretrage!");
-					
-				}
-				else greska = true;
-					
-				if(greska == false){ 
-					label_15.setVisible(true);
-					}
-				
-				else{
-					label_15.setVisible(false);
-				}
 				
 			}
 			
@@ -167,7 +155,7 @@ public class MainFormZaposlenik extends JFrame {
 		lblBrojSati.setBounds(10, 248, 116, 14);
 		panel_4.add(lblBrojSati);
 		
-		JSpinner spinner_2 = new JSpinner();
+		final JSpinner spinner_2 = new JSpinner();
 		spinner_2.setModel(new SpinnerNumberModel(1, 1, 24, 1));
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
@@ -178,6 +166,7 @@ public class MainFormZaposlenik extends JFrame {
 		panel_4.add(lblDatum);
 		
 		JSpinner spinner = new JSpinner();
+		spinner.setEnabled(false);
 		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
 		spinner.setBounds(135, 291, 210, 20);
@@ -199,11 +188,14 @@ public class MainFormZaposlenik extends JFrame {
 		lblBrojSati_1.setBounds(467, 104, 114, 14);
 		panel_4.add(lblBrojSati_1);
 		
-		JTextArea textArea = new JTextArea();
+		final JTextArea textArea = new JTextArea();
+		
 		textArea.setBounds(214, 124, 224, 114);
 		panel_4.add(textArea);
 		
-		JTextArea textArea_1 = new JTextArea();
+		final JTextArea textArea_1 = new JTextArea();
+		
+		
 		textArea_1.setBounds(450, 124, 224, 114);
 		panel_4.add(textArea_1);
 		
@@ -540,9 +532,13 @@ public class MainFormZaposlenik extends JFrame {
 				DefaultListModel4.removeAllElements();
 				ProjekatHibernate ph = (ProjekatHibernate)comboBox.getSelectedItem();
 				ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(ph.getId());
+				String temp = "";
 				for(TaskHibernate task : taskovi) {
 					DefaultListModel4.addElement(task);
+					temp += "0\n";
 				}
+				textArea.setText(temp);
+				textArea_1.setText(temp);
 			}
 		});
 		
@@ -590,6 +586,56 @@ public class MainFormZaposlenik extends JFrame {
 					for(TimesheetHibernate item : timesheets) {
 						DefaultListModel2.addElement(item);
 					}
+				}
+				catch(Exception ex) {
+					
+				}
+			}
+		});
+		textArea.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_PERIOD))) {
+					e.consume();
+				}
+				
+			}
+		});
+		textArea_1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER) || (c == KeyEvent.VK_PERIOD))) {
+					e.consume();
+				}
+			}
+		});
+		textArea_1.addInputMethodListener(new InputMethodListener() {
+			public void inputMethodTextChanged(InputMethodEvent event) {
+				try {
+					String[] sati = textArea_1.getText().split("\n");
+					spinner_2.setValue(0.0);
+					for(String sat: sati) {
+						Double temp = Double.parseDouble(sat);
+						spinner_2.setValue((Double)spinner_2.getValue() + temp);
+					}
+					
+				}
+				catch(Exception ex) {
+					
+				}
+			}
+
+			public void caretPositionChanged(InputMethodEvent event) {
+				try {
+					String[] sati = textArea_1.getText().split("\n");
+					spinner_2.setValue(0.0);
+					for(String sat: sati) {
+						Double temp = Double.parseDouble(sat);
+						spinner_2.setValue((Double)spinner_2.getValue() + temp);
+					}
+					
 				}
 				catch(Exception ex) {
 					
