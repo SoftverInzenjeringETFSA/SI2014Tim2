@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -19,6 +20,7 @@ import javax.swing.JComboBox;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.AbstractListModel;
 
@@ -131,7 +133,7 @@ public class OdjelForm extends JFrame {
 		panel.add(btnSpremiPromjene);
 		
 		final JList list = new JList();
-		list.setModel(new AbstractListModel() {
+		/*list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik1", "zaposlenik2"};
 			public int getSize() {
 				return values.length;
@@ -139,7 +141,7 @@ public class OdjelForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list.setBounds(190, 61, 141, 106);
 		panel.add(list);
 		
@@ -289,7 +291,17 @@ public class OdjelForm extends JFrame {
 		panel.add(btnSpremiPromjene);
 		
 		final JList list = new JList();
-		list.setModel(new AbstractListModel() {
+		final DefaultListModel listaZaposlenikaOdjela = new DefaultListModel();
+		list.setModel(listaZaposlenikaOdjela);
+		ArrayList<ZaposlenikHibernate> zaposleniciOdjela=DalDao.VratiZaposlenikeUOdjelu(id);
+
+		for (int i=0;i<zaposleniciOdjela.size();i++)
+			{
+			    String tempString = zaposleniciOdjela.get(i).getId() + " " + zaposleniciOdjela.get(i).getIme() + " " + zaposleniciOdjela.get(i).getPrezime()
+			    		+ " " + zaposleniciOdjela.get(i).getAdresa() + " " + zaposleniciOdjela.get(i).getSatnica();
+				listaZaposlenikaOdjela.addElement(tempString);
+			}
+		/*list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik1", "zaposlenik2"};
 			public int getSize() {
 				return values.length;
@@ -297,7 +309,7 @@ public class OdjelForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list.setBounds(190, 61, 141, 106);
 		panel.add(list);
 		
