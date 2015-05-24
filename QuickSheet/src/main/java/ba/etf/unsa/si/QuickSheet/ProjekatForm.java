@@ -269,7 +269,7 @@ public class ProjekatForm extends JFrame {
 		for(ZaposlenikHibernate z:zhk){
 			comboBox.addItem(zhk);
 			}
-		
+		comboBox.setSelectedItem(prikaz.getKoordinator());
 		comboBox.setBounds(151, 409, 165, 20);
 		panel.add(comboBox);
 		
