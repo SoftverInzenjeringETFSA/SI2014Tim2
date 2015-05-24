@@ -982,7 +982,6 @@ public class MainFormKoordinator extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
 			}
 		});
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
