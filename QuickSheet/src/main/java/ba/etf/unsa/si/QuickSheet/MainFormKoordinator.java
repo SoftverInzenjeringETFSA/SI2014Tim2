@@ -45,6 +45,7 @@ import java.awt.Toolkit;
 import javax.swing.DefaultComboBoxModel;
 
 import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
@@ -837,6 +838,12 @@ public class MainFormKoordinator extends JFrame {
 		JComboBox comboBox_20 = new JComboBox();
 		comboBox_20.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_20.setBounds(75, 58, 197, 20);
+		ArrayList<OdjelHibernate> odjeli = DalDao.VratiSveNearhiviraneOdjele();
+		for (int i = 0; i < odjeli.size(); i++)
+		{
+			String komponenta = odjeli.get(i).getId() + " " + odjeli.get(i).getNaziv();
+			comboBox_20.addItem(komponenta);
+		}
 		panel_7.add(comboBox_20);
 		
 		JLabel lblZaposlenik = new JLabel("Zaposlenik:");
@@ -846,7 +853,15 @@ public class MainFormKoordinator extends JFrame {
 		
 		JComboBox comboBox_21 = new JComboBox();
 		comboBox_21.setFont(new Font("Times New Roman", Font.PLAIN, 11));
-		comboBox_21.setBounds(75, 114, 197, 20);
+		comboBox_21.setBounds(75, 114, 197, 20);		
+		String vrijednost1 = comboBox_20.getSelectedItem().toString();
+		String[] rijeci = vrijednost1.split(" ");
+		long odjelId = Long.parseLong(rijeci[0]);
+		ArrayList<ZaposlenikHibernate> zaposleniciOdjela = DalDao.VratiZaposlenikeUOdjelu(odjelId);
+		for (int i = 0; i < zaposleniciOdjela.size(); i++)
+		{
+			String komponenta = zaposleniciOdjela.get(i).getId() + " " + zaposleniciOdjela.get(i).getIme() + " " + zaposleniciOdjela.get(i).getPrezime();
+		}
 		panel_7.add(comboBox_21);
 		
 		JComboBox comboBox_22 = new JComboBox();
