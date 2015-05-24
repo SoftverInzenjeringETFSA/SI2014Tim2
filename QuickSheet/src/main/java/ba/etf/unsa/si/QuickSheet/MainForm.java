@@ -911,7 +911,6 @@ public class MainForm extends JFrame {
 					zh.setUsername(z.getUsername());
 					DalDao.DodajObjekat(zh);
 					ArrayList<String> izabrane = (ArrayList<String>) list_5.getSelectedValuesList();
-					DalDao.IzbirisiZaposlenikoveOdjele(zh.getId());
 					for (int i = 0; i < izabrane.size(); i++)
 					{
 						String podatak = izabrane.get(i);
