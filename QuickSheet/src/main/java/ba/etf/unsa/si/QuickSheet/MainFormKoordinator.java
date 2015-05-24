@@ -308,7 +308,7 @@ public class MainFormKoordinator extends JFrame {
 		odjeliPanel.add(panel_3);
 		panel_3.setLayout(null);
 		
-		JList list_4 = new JList();
+		final JList list_4 = new JList();
 		list_4.setBounds(22, 116, 309, 243);
 		panel_3.add(list_4);
 		
@@ -340,6 +340,11 @@ public class MainFormKoordinator extends JFrame {
 		label_error.setBounds(0, 408, 759, 14);
 		odjeliPanel.add(label_error);
 		
+		final JCheckBox checkBox = new JCheckBox("Prikaži arhivirane korisnike");
+		checkBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		checkBox.setBounds(22, 86, 170, 23);
+		panel_3.add(checkBox);
+		
 		JButton button_2 = new JButton("Pretraži");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -353,6 +358,39 @@ public class MainFormKoordinator extends JFrame {
 					label_error.setVisible(true);
 				}
 				else label_error.setVisible(false);
+				if (textField_7.getText().equalsIgnoreCase("") && checkBox.isSelected()==false){
+					DefaultListModel listaArhOdjela = new DefaultListModel();
+					list_4.setModel(listaArhOdjela);
+					ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveNearhiviraneOdjele();
+
+					for (int i=0;i<arhiviraniOdjeli.size();i++)
+						{
+						    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+							listaArhOdjela.addElement(tempString);
+						}
+				} else
+					if (checkBox.isSelected()){
+						DefaultListModel listaArhOdjela = new DefaultListModel();
+						list_4.setModel(listaArhOdjela);
+						ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziArhiviraneOdjele(textField_7.getText());
+
+						for (int i=0;i<arhiviraniOdjeli.size();i++)
+							{
+							    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+								listaArhOdjela.addElement(tempString);
+							}
+					} else
+						if (checkBox.isSelected()==false){
+							DefaultListModel listaArhOdjela = new DefaultListModel();
+							list_4.setModel(listaArhOdjela);
+							ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziNearhiviraneOdjele(textField_7.getText());
+
+							for (int i=0;i<arhiviraniOdjeli.size();i++)
+								{
+								    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
+									listaArhOdjela.addElement(tempString);
+								}
+						} 
 			}
 			
 		});
@@ -360,10 +398,6 @@ public class MainFormKoordinator extends JFrame {
 		button_2.setBounds(262, 56, 69, 23);
 		panel_3.add(button_2);
 		
-		JCheckBox checkBox = new JCheckBox("Prikaži arhivirane korisnike");
-		checkBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		checkBox.setBounds(22, 86, 170, 23);
-		panel_3.add(checkBox);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setLayout(null);
@@ -398,14 +432,7 @@ public class MainFormKoordinator extends JFrame {
 		final JList list = new JList();
 		final DefaultListModel listaZaposlenika = new DefaultListModel();
 		list.setModel(listaZaposlenika);
-		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
-
-		for (int i=0;i<zaposlenici.size();i++)
-			{
-			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
-			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
-				listaZaposlenika.addElement(tempString);
-			}
+		
 		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list.setEnabled(false);
 		list.setBounds(190, 61, 141, 135);
