@@ -113,6 +113,6 @@ public class ZaposlenikHibernate implements java.io.Serializable{
 	}
 	@Override
 	public String toString() { 
-		return this.getIme() + " "+ this.getPrezime();
+		return this.getId() + " "+ this.getIme() + " "+ this.getPrezime();
 	}
 }

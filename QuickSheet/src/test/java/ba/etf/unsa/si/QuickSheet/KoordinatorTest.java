@@ -24,13 +24,10 @@ public class KoordinatorTest {
 	@Test(expected=InvalidAttributeValueException.class)
 	public void testKoordinator() throws InvalidAttributeValueException{
 		LocalDate datum=LocalDate.now();
-		Koordinator k= new Koordinator(null,"Teo","Eterovic","Zmaja",datum,1000);
+		Koordinator k = new Koordinator(null,"Teo","Eterovic","Zmaja",datum,1000);
 	}
 
-	@Test
-	public void testOdobriTimesheet() {
-		 // TODO ne treba
-	}
+
   
 	@Test(expected=javax.management.InvalidAttributeValueException.class)
 	public void testKreirajTaskProjekta() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException{

@@ -79,6 +79,79 @@ public class AdministratorTest {
 	}
 	
 	@Test
+	public void dodajZaposlenika() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("Dz");
+		zh.setPrezime("Dz");
+		zh.setAdresa("Dz");
+		zh.setArhiviran(true);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(false);
+		zh.setLozinka("nesto");
+		zh.setSatnica(20d);
+		zh.setUsername("dzbr");
+		DalDao.DodajObjekat(zh);
+		
+		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenika(zh.getId());
+		assertNotNull(zh1);
+		
+	}
+	@Test
+	public void getZaposlenikArhiviran() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("Dz");
+		zh.setPrezime("Dz");
+		zh.setAdresa("Dz");
+		zh.setArhiviran(true);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(false);
+		zh.setLozinka("nesto");
+		zh.setSatnica(20d);
+		zh.setUsername("dzbr");
+		DalDao.DodajObjekat(zh);
+		
+		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenika(zh.getId());
+		assertTrue(zh1.getArhiviran());
+		
+	}
+	@Test
+	public void getZaposlenikAdresa() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("Dz1");
+		zh.setPrezime("Dz");
+		zh.setAdresa("Dz");
+		zh.setArhiviran(true);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(false);
+		zh.setLozinka("nesto");
+		zh.setSatnica(20d);
+		zh.setUsername("dzbr");
+		DalDao.DodajObjekat(zh);
+		
+		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenika(zh.getId());
+		assertEquals(zh.getAdresa(), zh1.getAdresa());
+		
+	}
+	@Test
+	public void getZaposlenikUsername() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("Dz1");
+		zh.setPrezime("Dz");
+		zh.setAdresa("Dz");
+		zh.setArhiviran(true);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(false);
+		zh.setLozinka("nesto");
+		zh.setSatnica(20d);
+		zh.setUsername("dzbr");
+		DalDao.DodajObjekat(zh);
+		
+		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenika(zh.getId());
+		assertEquals(zh.getIme(), zh1.getIme());
+		
+	}
+	
+	@Test
 	public void testKreirajProjekat() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
 		ZaposlenikHibernate zh = new ZaposlenikHibernate();
 		zh.setIme("Dzenana");
@@ -167,7 +240,7 @@ public class AdministratorTest {
 		
 	}
 	@Test
-	public void testBrisanjeOdjelaObjekat() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
+	public void testBrisanjeOdjela() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
 		OdjelHibernate o = new OdjelHibernate();
 		o.setNaziv("Odjeldzenanin1");
 		o.setMaksimalanBrojRadnika(24);
