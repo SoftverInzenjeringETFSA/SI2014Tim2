@@ -164,14 +164,14 @@ public class Login extends JFrame {
 					boolean isError = true;
 					if(admin != null && chckbxAdministrator.isSelected()) {
 						if(Lozinka.validatePassword(pass, admin.getLozinka())) {
-							new MainForm().setVisible(true);
+							new MainForm(admin).setVisible(true);
 							isError = false;
 						}	
 					}
 					else if(zaposlenik != null) {
 						if(Lozinka.validatePassword(pass, zaposlenik.getLozinka())) {
 							if(zaposlenik.getKoordinator()) {
-								new MainFormKoordinator().setVisible(true);
+								new MainFormKoordinator(zaposlenik).setVisible(true);
 							}
 							else {
 								new MainFormZaposlenik().setVisible(true);
@@ -188,7 +188,8 @@ public class Login extends JFrame {
 				catch(Exception ex) {
 					JOptionPane.showMessageDialog(null, "Dogodila se greska kontaktirajete administratora: " + ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE );
 				}		
-			}
+			}	
+				
 		});
 		btnNewButton.setBounds(142, 271, 89, 23);
 		getContentPane().add(btnNewButton);

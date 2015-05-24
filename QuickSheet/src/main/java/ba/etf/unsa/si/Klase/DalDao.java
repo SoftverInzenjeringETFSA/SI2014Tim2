@@ -228,11 +228,11 @@ public class DalDao {
 		return results;
 	}
 	
-	static public ArrayList<OdjelHibernate> PretraziOdjele(String naziv)
+	static public ArrayList<OdjelHibernate> PretraziArhiviraneOdjele(String naziv)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "'";
+		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "' AND arhiviran='1'";
 		Query query = session.createQuery(hql);
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		transaction.commit();
@@ -240,11 +240,23 @@ public class DalDao {
 		return results;
 	}
 	
-	static public ArrayList<OdjelHibernate> VratiSveOdjele()
+	static public ArrayList<OdjelHibernate> PretraziNearhiviraneOdjele(String naziv)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelHibernate";
+		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "' AND arhiviran='0'";
+		Query query = session.createQuery(hql);
+		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<OdjelHibernate> VratiSveArhiviraneOdjele()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM OdjelHibernate WHERE arhiviran='1'";
 		Query query = session.createQuery(hql);
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		transaction.commit();
@@ -445,7 +457,7 @@ public class DalDao {
 		return projekatZaposlenici;
 	}
 	
-	static public ArrayList<TaskHibernate> VratiTaskoveKorisnikaNaProjektu(long ProjekatID, long ZaposlenikID)
+	static public ArrayList<TaskHibernate> VratiTaskoveZaposlenikaNaProjektu(long ProjekatID, long ZaposlenikID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
@@ -484,7 +496,7 @@ public class DalDao {
 	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaposlenikaNaProjektu(long ProjekatID, long ZaposlenikID)
 	{
 		ArrayList<TaskHibernate> taskovi = new ArrayList<TaskHibernate>();
-		taskovi = VratiTaskoveKorisnikaNaProjektu(ProjekatID, ZaposlenikID);
+		taskovi = VratiTaskoveZaposlenikaNaProjektu(ProjekatID, ZaposlenikID);
 		ArrayList<TimesheetHibernate> timesheetovi = new ArrayList<TimesheetHibernate>();
 		for (int i = 0; i < taskovi.size(); i++)
 		{

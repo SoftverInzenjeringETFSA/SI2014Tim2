@@ -11,19 +11,27 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JList;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+
 import java.awt.Toolkit;
+
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractListModel;
 
 public class KorisnikForm extends JFrame {
 
@@ -156,6 +164,15 @@ public class KorisnikForm extends JFrame {
 		panel.add(textField_4);
 		
 		final JList list = new JList();
+		list.setModel(new AbstractListModel() {
+			String[] values = new String[] {"odjel 1", "odjel 2"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		list.setBounds(164, 174, 167, 51);
 		panel.add(list);
 		
@@ -189,6 +206,8 @@ public class KorisnikForm extends JFrame {
 		btnSpasiIzmjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true; 
+				String p1 = Arrays.toString(passwordField_1.getPassword());
+				String p2 = Arrays.toString(passwordField.getPassword());
 				
 				if(textField.getText().equals("")){
 					label_error.setText("Unesite ime!");
@@ -211,7 +230,16 @@ public class KorisnikForm extends JFrame {
 				else if(textField_5.getText().equals("")){
 					label_error.setText("Unesite korisničko ime!");
 					greska = false;}
-				
+				else if(passwordField_1.getPassword().length == 0){
+					label_error.setText("Unesite lozinku!");
+					greska = false;}
+				else if(passwordField.getPassword().length == 0){
+					label_error.setText("Unesite ponovo lozinku!");
+					greska = false;} 
+				else if (!p1.equals(p2)) {
+					label_error.setText("Lozinke se ne podudaraju!");
+					greska = false;
+					}
 				else greska = true;
 				
 				if(greska == false){
