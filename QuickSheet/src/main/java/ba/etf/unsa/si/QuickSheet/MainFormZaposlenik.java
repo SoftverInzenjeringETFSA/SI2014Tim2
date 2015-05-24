@@ -44,8 +44,10 @@ import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
 import java.time.Month;
 
 public class MainFormZaposlenik extends JFrame {
@@ -537,26 +539,31 @@ public class MainFormZaposlenik extends JFrame {
 				comboBox.removeAllItems();
 				ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
 				for(ProjekatHibernate projekat: projekti) {
-					comboBox.addItem(projekti);
+					comboBox.addItem(projekat);
 				}
 			}
 		});
 		
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//promena na combo timesheet
+				//promjeniti 
+				ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(Long.parseUnsignedLong(comboBox.getSelectedItem().toString().split(" ")[0]));
+				for(TaskHibernate task : taskovi) {
+					
+				}
 			}
 		});
 		
 		comboBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					DefaultListModel1.removeAllElements();
 					ProjekatHibernate selectedProjec = (ProjekatHibernate)comboBox_1.getSelectedItem();
 					if(selectedProjec != null) {
-					ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(selectedProjec.getId(), Zaposlenik.getId());
-					for(TimesheetHibernate timesheet : timesheets) {
-						DefaultListModel1.addElement(timesheet);
-					}
+						ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(selectedProjec.getId(), Zaposlenik.getId());
+						for(TimesheetHibernate timesheet : timesheets) {
+							DefaultListModel1.addElement(timesheet);
+						}
 					}
 				}
 				catch(Exception ex) {
@@ -571,10 +578,8 @@ public class MainFormZaposlenik extends JFrame {
 				try {
 					comboBox_1.removeAllItems();
 					ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
-					comboBox_1.addItem(null);
-					//komentar
 					for(ProjekatHibernate projekat: projekti) {
-						comboBox_1.addItem(projekti);
+						comboBox_1.addItem(projekat);
 					}
 				}
 				catch(Exception ex) {

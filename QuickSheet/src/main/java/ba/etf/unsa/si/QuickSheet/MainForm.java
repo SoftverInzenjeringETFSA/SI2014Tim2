@@ -468,10 +468,16 @@ public class MainForm extends JFrame {
 		panel_5.add(lblDodajNadreenog);
 		
 		final JComboBox comboBox_19 = new JComboBox();
+		comboBox_19.removeAllItems();
+		ArrayList<ZaposlenikHibernate> zh=DalDao.VratiSveZaposlenikeKoordinatore();
+		for(ZaposlenikHibernate zap:zh){
+			comboBox_19.addItem(zh);
+		}
 		comboBox_19.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox_19.setModel(new DefaultComboBoxModel(new String[] {"", "nadređeni1", "nadređeni2"}));
+		//comboBox_19.setModel(new DefaultComboBoxModel(new String[] {"", "nadređeni1", "nadređeni2"}));
 		comboBox_19.setBounds(190, 248, 141, 20);
 		panel_5.add(comboBox_19);
+		
 		
 		final JList list = new JList();
 		final DefaultListModel listaZaposlenikaPr = new DefaultListModel();
@@ -534,6 +540,13 @@ public class MainForm extends JFrame {
 					ProjekatHibernate projekath = new ProjekatHibernate();
 					projekath.setNaziv(textField_47.getText());
 					projekath.setNazivKlijenta(textField_48.getText());
+					
+					String selekt=comboBox_19.getSelectedItem().toString();
+					String[] rijecis=selekt.split(" ");
+					long ids=Long.parseLong(rijecis[0]);
+					ZaposlenikHibernate zs=DalDao.VratiZaposlenika(ids);
+					
+					projekath.setKoordinator(zs);
 					DalDao.DodajObjekat(projekath);
 					int[] indeksi=list.getSelectedIndices();
 					for(int i=0;i<indeksi.length;i++){
