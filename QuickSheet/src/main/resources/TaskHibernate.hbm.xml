@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 22, 2015 4:15:54 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ba.etf.unsa.si.KlaseHibernate.TaskHibernate" table="TASKHIBERNATE">
+        <id name="id" type="long">
+            <column name="ID" />
+            <generator class="increment"/>
+        </id>
+        <many-to-one name="zaposlenik" class="ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate" fetch="join">
+            <column name="ZAPOSLENIK" />
+        </many-to-one>
+        <property name="prioritet" type="java.lang.Integer">
+            <column name="PRIORITET" />
+        </property>
+        <property name="procenatZavrsenosti" type="java.lang.Integer">
+            <column name="PROCENATZAVRSENOSTI" />
+        </property>
+        <property name="naziv" type="java.lang.String">
+            <column name="NAZIV" />
+        </property>
+        <property name="opis" type="java.lang.String">
+            <column name="OPIS" />
+        </property>
+        <property name="komentar" type="java.lang.String">
+            <column name="KOMENTAR" />
+        </property>
+        <property name="rok" type="java.time.LocalDate">
+            <column name="ROK" />
+        </property>
+        <many-to-one name="projekat" class="ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate" fetch="join">
+            <column name="PROJEKAT" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
