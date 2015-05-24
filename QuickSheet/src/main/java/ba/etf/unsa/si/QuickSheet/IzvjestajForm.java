@@ -11,8 +11,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 
 import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import ba.etf.unsa.si.Klase.IzvjestajOdjela;
+import ba.etf.unsa.si.Klase.IzvjestajZaposlenika;
+
 import java.awt.Font;
 
 public class IzvjestajForm extends JFrame {
@@ -34,7 +39,7 @@ public class IzvjestajForm extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IzvjestajForm frame = new IzvjestajForm();
+					IzvjestajForm frame = new IzvjestajForm(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +51,7 @@ public class IzvjestajForm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public IzvjestajForm() {
+	public IzvjestajForm(IzvjestajZaposlenika IZ, IzvjestajOdjela IO) {
 		setTitle("Izvještaj ");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -90,6 +95,7 @@ public class IzvjestajForm extends JFrame {
 		textField.setEnabled(false);
 		textField.setEditable(false);
 		textField.setBounds(130, 23, 126, 20);
+		textField.setText(IO.getOdjel().getNaziv());
 		panel.add(textField);
 		textField.setColumns(10);
 		
@@ -101,6 +107,7 @@ public class IzvjestajForm extends JFrame {
 		textField_1.setBorder(null);
 		textField_1.setBackground(Color.WHITE);
 		textField_1.setBounds(130, 51, 126, 20);
+		textField_1.setText(IO.getUkupanBrojTaskovaOdjela().toString());
 		panel.add(textField_1);
 		
 		textField_2 = new JTextField();
@@ -111,6 +118,7 @@ public class IzvjestajForm extends JFrame {
 		textField_2.setBorder(null);
 		textField_2.setBackground(Color.WHITE);
 		textField_2.setBounds(130, 81, 126, 20);
+		textField_2.setText(IO.getUkupnoVrijemeRada().toString());
 		panel.add(textField_2);
 		
 		textField_3 = new JTextField();
@@ -121,6 +129,7 @@ public class IzvjestajForm extends JFrame {
 		textField_3.setBorder(null);
 		textField_3.setBackground(Color.WHITE);
 		textField_3.setBounds(130, 109, 126, 20);
+		textField_3.setText(IO.getTrosak().toString());
 		panel.add(textField_3);
 		
 		JPanel panel_1 = new JPanel();
@@ -157,6 +166,7 @@ public class IzvjestajForm extends JFrame {
 		textField_4.setBorder(null);
 		textField_4.setBackground(Color.WHITE);
 		textField_4.setBounds(123, 29, 126, 20);
+		textField_4.setText(IZ.getZaposlenik().getIme() + " " + IZ.getZaposlenik().getPrezime());
 		panel_1.add(textField_4);
 		
 		textField_5 = new JTextField();
@@ -167,6 +177,7 @@ public class IzvjestajForm extends JFrame {
 		textField_5.setBorder(null);
 		textField_5.setBackground(Color.WHITE);
 		textField_5.setBounds(123, 57, 126, 20);
+		textField_5.setText(IZ.getUkupanBrojTaskova().toString());
 		panel_1.add(textField_5);
 		
 		textField_6 = new JTextField();
@@ -177,6 +188,7 @@ public class IzvjestajForm extends JFrame {
 		textField_6.setBorder(null);
 		textField_6.setBackground(Color.WHITE);
 		textField_6.setBounds(123, 85, 126, 20);
+		textField_6.setText(IZ.getUkupnoVrijemeRada().toString());
 		panel_1.add(textField_6);
 		
 		textField_7 = new JTextField();
@@ -187,6 +199,7 @@ public class IzvjestajForm extends JFrame {
 		textField_7.setBorder(null);
 		textField_7.setBackground(Color.WHITE);
 		textField_7.setBounds(123, 113, 126, 20);
+		textField_7.setText(IZ.getTrosak().toString());
 		panel_1.add(textField_7);
 	}
 }

@@ -137,7 +137,7 @@ public class MainFormZaposlenik extends JFrame {
 		
 		
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
-		
+
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton.setBounds(531, 291, 124, 29);
 		panel_4.add(btnNewButton);
@@ -529,6 +529,18 @@ public class MainFormZaposlenik extends JFrame {
 			}
 		});
 		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				spinner_2.setValue(0.0);
+				String[] sati = textArea_1.getText().split("\n");
+				spinner_2.setValue(0.0);
+				for(String sat: sati) {
+					Double temp = Double.parseDouble(sat);
+					spinner_2.setValue((Double)spinner_2.getValue() + temp);
+			}
+		}
+		});
 		comboBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -602,10 +614,11 @@ public class MainFormZaposlenik extends JFrame {
 			public void inputMethodTextChanged(InputMethodEvent event) {
 				try {
 					String[] sati = textArea_1.getText().split("\n");
-					spinner_2.setValue(0.0);
+					spinner_2.setValue(new Double(0.0));
 					for(String sat: sati) {
 						Double temp = Double.parseDouble(sat);
-						spinner_2.setValue((Double)spinner_2.getValue() + temp);
+						Double vrijednost = new Double ((Double)spinner_2.getValue() + temp);
+						spinner_2.setValue(vrijednost);
 					}
 					
 				}
@@ -613,7 +626,7 @@ public class MainFormZaposlenik extends JFrame {
 					
 				}
 			}
-
+			
 			public void caretPositionChanged(InputMethodEvent event) {
 				try {
 					String[] sati = textArea_1.getText().split("\n");
