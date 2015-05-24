@@ -1086,7 +1086,7 @@ public class MainFormKoordinator extends JFrame {
 					String vrijednost = list_6.getSelectedValue().toString();
 					String[] rijeci = vrijednost.split(" ");
 					long id = Long.parseLong(rijeci[0]);
-					TimesheetHibernate timesheet = DalDao.VratiTimehseet(id);
+					TimesheetHibernate timesheet = DalDao.VratiTimesheet(id);
 					timesheet.setValidiran(true);
 					DalDao.ModifikujObjekat(timesheet);
 					ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(id);
@@ -1116,7 +1116,7 @@ public class MainFormKoordinator extends JFrame {
 					String vrijednost = list_6.getSelectedValue().toString();
 					String[] rijeci = vrijednost.split(" ");
 					long id = Long.parseLong(rijeci[0]);
-					TimesheetHibernate timesheet = DalDao.VratiTimehseet(id);
+					TimesheetHibernate timesheet = DalDao.VratiTimesheet(id);
 					timesheet.setValidiran(true);
 					DalDao.ModifikujObjekat(timesheet);
 					ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(id);

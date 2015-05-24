@@ -170,6 +170,7 @@ public class Login extends JFrame {
 							else {
 								new MainFormZaposlenik(zaposlenik).setVisible(true);
 							}
+							Login.this.setVisible(false);
 							isError = false;
 						}
 					}
@@ -184,6 +185,7 @@ public class Login extends JFrame {
 				if(textFieldValue.equals("administrator")){
 					AdministratorHibernate ah = DalDao.VratiAdministratora(1);
 					new MainForm(ah).setVisible(true);
+					Login.this.setVisible(false);
 				}
 				}
 				catch(Exception ex) {
