@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 import java.awt.Toolkit;
@@ -263,7 +264,7 @@ public class ProjekatForm extends JFrame {
 		btnDodaj.setBounds(255, 375, 61, 23);
 		panel.add(btnDodaj);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.removeAllItems();
 		ArrayList<ZaposlenikHibernate> zhk=DalDao.VratiSveZaposlenikeKoordinatore();
 		for(ZaposlenikHibernate z:zhk){
@@ -279,6 +280,45 @@ public class ProjekatForm extends JFrame {
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		
 		JButton btnSpremiPromjene = new JButton("Spremi promjene");
+		btnSpremiPromjene.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list.isSelectionEmpty()){
+					greska = false;
+				}
+				if(greska == false){
+					label_1.setVisible(true);
+					label_1.setText("Odaberite zaposlenika!");
+				}
+				else{
+					label_1.setVisible(false);
+					ProjekatHibernate phib=DalDao.VratiProjekat(id);
+					phib.setNaziv(textField.getText());
+					phib.setNazivKlijenta(textField_1.getText());
+					
+					String s=comboBox.getSelectedItem().toString();
+					String[] rijecs=s.split(" ");
+					long l=Long.parseLong(rijecs[0]);
+					ZaposlenikHibernate zaps=DalDao.VratiZaposlenika(l);
+					
+					phib.setKoordinator(zaps);
+					DalDao.ModifikujObjekat(phib);
+					/* TODO modifikovanje taskova
+					int[] indeksi=list.getSelectedIndices();
+					for(int i=0;i<indeksi.length;i++){
+						String selektovano=listaZaposlenikaProjekta.getElementAt(indeksi[i]).toString();
+						String[] rijeciPr=selektovano.split(" ");
+						long idPr=Long.parseLong(rijeciPr[0]);
+						ZaposlenikHibernate zPr=DalDao.VratiZaposlenika(idPr);
+						TaskHibernate tPr=new TaskHibernate();
+						tPr.setProjekat(projekath);
+						tPr.setZaposlenik(zPr);
+						DalDao.DodajObjekat(tPr);
+					
+					}*/
+				}
+			}
+		});
 		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSpremiPromjene.setBounds(195, 449, 125, 23);
 		panel.add(btnSpremiPromjene);
