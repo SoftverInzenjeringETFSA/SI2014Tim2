@@ -238,16 +238,19 @@ public class MainForm extends JFrame {
 					OdjelHibernate odjelh = new OdjelHibernate();
 					odjelh.setNaziv(textField_43.getText());
 					odjelh.setMaksimalanBrojRadnika(Integer.parseInt(textField_44.getText()));
-					
-					String selektovanaVrijednost = list_3.getSelectedValue().toString();
-					String[] rijeci = selektovanaVrijednost.split(" ");
-					long id = Long.parseLong(rijeci[0]);
-					ZaposlenikHibernate z=DalDao.VratiZaposlenika(id);
-					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
-					ozh.setOdjel(odjelh);
-					ozh.setZaposlenikOdjela(z);
 					DalDao.DodajObjekat(odjelh);
-					DalDao.DodajObjekat(ozh);
+					
+					int[] indeksi=list_3.getSelectedIndices();
+					for(int i=0;i<indeksi.length;i++){
+						String selektovano=listaZaposlenika.getElementAt(indeksi[i]).toString();
+						String[] rijeciPr=selektovano.split(" ");
+						long idPr=Long.parseLong(rijeciPr[0]);
+						ZaposlenikHibernate zPr=DalDao.VratiZaposlenika(idPr);
+						OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
+						ozh.setOdjel(odjelh);
+						ozh.setZaposlenikOdjela(zPr);
+						DalDao.DodajObjekat(ozh);
+					}
 					JOptionPane.showMessageDialog(null, "Odjel je dodan.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
 					textField_43.setText("");
 					textField_44.setText("");

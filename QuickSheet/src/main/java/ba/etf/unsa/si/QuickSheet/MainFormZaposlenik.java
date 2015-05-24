@@ -49,6 +49,7 @@ import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 import java.time.Month;
+import javax.swing.JTextArea;
 
 public class MainFormZaposlenik extends JFrame {
 	private JTextField textField;
@@ -59,7 +60,6 @@ public class MainFormZaposlenik extends JFrame {
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_10;
-	private JTable table;
 	private JTextField textField_7;
 
 	
@@ -137,11 +137,6 @@ public class MainFormZaposlenik extends JFrame {
 					label_15.setText("Morate označiti parametar pretrage!");
 					
 				}
-				else if(table.getModel().getValueAt(0,0) == null || table.getModel().getValueAt(0,1) == null || table.getModel().getValueAt(0,2) == null){
-					greska = false;
-					label_15.setText("Morate popuniti barem jedan task da bi poslali timesheet na reviziju!");
-				}
-				
 				else greska = true;
 					
 				if(greska == false){ 
@@ -163,7 +158,7 @@ public class MainFormZaposlenik extends JFrame {
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
 		lblTaskovi.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblTaskovi.setBounds(80, 117, 46, 14);
+		lblTaskovi.setBounds(10, 104, 46, 14);
 		panel_4.add(lblTaskovi);
 		
 		JLabel lblBrojSati = new JLabel("Ukupan broj radnih sati:");
@@ -187,30 +182,29 @@ public class MainFormZaposlenik extends JFrame {
 		spinner.setBounds(135, 291, 210, 20);
 		panel_4.add(spinner);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(new Rectangle(0, 0, 100, 100));
-		scrollPane_1.setBounds(136, 120, 519, 106);
-		panel_4.add(scrollPane_1);
+		final DefaultListModel DefaultListModel4 = new DefaultListModel();
+		JList list_3 = new JList();
+		list_3.setModel(DefaultListModel4);
+		list_3.setBounds(10, 123, 198, 114);
+		panel_4.add(list_3);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"Naziv taska", "Procenat zavr\u0161enosti", "Broj radnih sati"
-			}
-		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(119);
-		table.getColumnModel().getColumn(1).setPreferredWidth(140);
-		table.setBounds(new Rectangle(10, 10, 100, 1000));
-		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		table.setRowSelectionAllowed(true);
-		scrollPane_1.setViewportView(table);
+		JLabel lblProcenatZavrsenosti = new JLabel("Procenat zavrsenosti:");
+		lblProcenatZavrsenosti.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblProcenatZavrsenosti.setBounds(223, 104, 114, 14);
+		panel_4.add(lblProcenatZavrsenosti);
+		
+		JLabel lblBrojSati_1 = new JLabel("Broj sati");
+		lblBrojSati_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblBrojSati_1.setBounds(467, 104, 114, 14);
+		panel_4.add(lblBrojSati_1);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(214, 124, 224, 114);
+		panel_4.add(textArea);
+		
+		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setBounds(450, 124, 224, 114);
+		panel_4.add(textArea_1);
 		
 		
 		
@@ -547,9 +541,10 @@ public class MainFormZaposlenik extends JFrame {
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//promjeniti 
-				ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(Long.parseUnsignedLong(comboBox.getSelectedItem().toString().split(" ")[0]));
+				DefaultListModel4.removeAllElements();
+				ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(((ProjekatHibernate)comboBox.getSelectedItem()).getId());
 				for(TaskHibernate task : taskovi) {
-					
+					DefaultListModel4.addElement(task);
 				}
 			}
 		});
@@ -565,6 +560,7 @@ public class MainFormZaposlenik extends JFrame {
 							DefaultListModel1.addElement(timesheet);
 						}
 					}
+					
 				}
 				catch(Exception ex) {
 					
