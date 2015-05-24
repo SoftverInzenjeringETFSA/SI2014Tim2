@@ -85,7 +85,7 @@ public abstract class Zaposlenik {
 	
 	public void setPrezime(String _prezime) throws InvalidAttributeValueException
 	{
-		if (_prezime != null && !_prezime.isEmpty() && prezime.matches("^[a-zA-Z]*$"))
+		if (_prezime != null && !_prezime.isEmpty() && _prezime.matches("^[a-zA-Z]*$"))
 			prezime = _prezime;
 		else throw new InvalidAttributeValueException();
 	}
