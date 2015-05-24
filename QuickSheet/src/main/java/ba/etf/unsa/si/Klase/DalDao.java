@@ -1,5 +1,6 @@
 package ba.etf.unsa.si.Klase;
 
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -673,6 +674,23 @@ public class DalDao {
 			}
 			
 		}
+	}
+	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaposlenika(long zaposlenikId) {
+		ArrayList<ProjekatHibernate> temp = VratiZaposlenikoveProjekte(zaposlenikId);
+		ArrayList<TimesheetHibernate> timesheets = new ArrayList<TimesheetHibernate>(); 
+		for(ProjekatHibernate item : temp) {
+			timesheets.addAll(VratiTimesheetoveZaposlenikaNaProjektu(item.getId(), zaposlenikId));
+		}
+		return timesheets;
+	}
+	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaposlenikaZaMjesec(long zaposlenikId, Month mjesec) {
+		ArrayList<TimesheetHibernate> filteredTimesheets = new ArrayList<TimesheetHibernate>();
+		for(TimesheetHibernate item : VratiTimesheetoveZaposlenika(zaposlenikId)) {
+			if(item.getDatumSlanja().getMonth().equals(mjesec)) {
+				filteredTimesheets.add(item);
+			}
+		}
+		return filteredTimesheets;
 	}
 }
 

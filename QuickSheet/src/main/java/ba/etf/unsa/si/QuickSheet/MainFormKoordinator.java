@@ -979,6 +979,11 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(lblDo_1);
 		
 		JButton btnNewButton_3 = new JButton("Generiši izvještaj");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton_3.setBounds(75, 336, 197, 23);
 		panel_7.add(btnNewButton_3);
@@ -1044,7 +1049,8 @@ public class MainFormKoordinator extends JFrame {
 				ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(timesheets.get(i).getId());
 				if (taskovi.get(0).getKomentar().isEmpty())
 				{
-					String komponenta = timesheets.get(i).getId() + " " + timesheets.get(i).getProjekat().getNaziv() + " ";
+					String ime = taskovi.get(0).getZaposlenik().getIme() + " " + taskovi.get(0).getZaposlenik().getPrezime();
+					String komponenta = timesheets.get(i).getId() + " " + "Projekat: " + timesheets.get(i).getProjekat().getNaziv() + ", Zaposlenik: " + ime + ", " + timesheets.get(i).getDatumSlanja().toString();
 					dlm.addElement(komponenta);
 				}
 			}
@@ -1177,6 +1183,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(label_28);
 		
 		textField_3 = new JTextField();
+		textField_3.setForeground(Color.BLACK);
 		textField_3.setEnabled(false);
 		textField_3.setEditable(false);
 		textField_3.setDisabledTextColor(SystemColor.textInactiveText);
@@ -1187,6 +1194,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_3);
 		
 		textField_8 = new JTextField();
+		textField_8.setForeground(Color.BLACK);
 		textField_8.setEnabled(false);
 		textField_8.setEditable(false);
 		textField_8.setDisabledTextColor(Color.LIGHT_GRAY);
@@ -1197,6 +1205,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_8);
 		
 		textField_9 = new JTextField();
+		textField_9.setForeground(Color.BLACK);
 		textField_9.setEnabled(false);
 		textField_9.setEditable(false);
 		textField_9.setColumns(10);
@@ -1206,6 +1215,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_9);
 		
 		textField_12 = new JTextField();
+		textField_12.setForeground(Color.BLACK);
 		textField_12.setEnabled(false);
 		textField_12.setEditable(false);
 		textField_12.setColumns(10);
@@ -1224,6 +1234,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(spinner_6);
 		
 		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblSatnica.setBounds(77, 124, 40, 14);
 		panel_13.add(lblSatnica);
 		
@@ -1237,6 +1248,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		final DefaultListModel defaultListModel = new DefaultListModel();
 		JList list_5 = new JList();
+		list_5.setForeground(Color.BLACK);
 		list_5.setModel(defaultListModel);
 		list_5.setEnabled(false);
 		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -1245,6 +1257,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(list_5);
 		
 		textField_10 = new JTextField();
+		textField_10.setForeground(Color.BLACK);
 		textField_10.setEnabled(false);
 		textField_10.setEditable(false);
 		textField_10.setColumns(10);

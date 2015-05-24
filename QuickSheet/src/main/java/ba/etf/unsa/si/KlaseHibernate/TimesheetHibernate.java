@@ -60,4 +60,8 @@ public class TimesheetHibernate implements java.io.Serializable{
 	{
 		this.validiran = validiran;
 	}
+	@Override
+	public String toString() {
+		return this.getId() + " " + this.getProjekat().getId() + " " + this.getDatumSlanja().toString();
+	}
 }
