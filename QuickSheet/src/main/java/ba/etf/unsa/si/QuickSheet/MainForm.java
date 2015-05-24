@@ -160,7 +160,7 @@ public class MainForm extends JFrame {
 		textField_44.setColumns(10);
 		
 		final JList list_3 = new JList();
-		DefaultListModel listaZaposlenika = new DefaultListModel();
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
 		list_3.setModel(listaZaposlenika);
 		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
 
@@ -296,17 +296,6 @@ public class MainForm extends JFrame {
 		
 		final JList list_4 = new JList();
 		list_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		
-		/*list_4.setModel(new AbstractListModel() {
-			String[] values = new String[] {"odjel1", "odjel2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-			
-		});*/
 		list_4.setBounds(22, 114, 309, 209);
 		panel_3.add(list_4);
 		
@@ -920,15 +909,14 @@ public class MainForm extends JFrame {
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxNewCheckBox.setBounds(22, 86, 170, 23);
 		panel_1.add(chckbxNewCheckBox);
-		
+		final DefaultListModel lista = new DefaultListModel();
 		JButton btnPretraga = new JButton("Pretraži");
 		btnPretraga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (!textField_42.getText().isEmpty())
 				{
-					
-				    DefaultListModel lista = new DefaultListModel();
+					lista.removeAllElements();
 				    list_2.setModel(lista);
 					ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
 					String vrijednost = comboBox_13.getSelectedItem().toString();
@@ -991,7 +979,10 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error1.setVisible(false);
-					new KorisnikForm().setVisible(true);
+					String selektovanaVrijednost = list_2.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					new KorisnikForm(id).setVisible(true);
 				}
 				
 			}
@@ -1014,8 +1005,21 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error2.setVisible(false);
-					
-					
+					String selektovanaVrijednost = list_2.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					ZaposlenikHibernate zh = DalDao.VratiZaposlenika(id);
+					if (!zh.getArhiviran())
+					{
+						zh.setArhiviran(true);
+						DalDao.ModifikujObjekat(zh);
+						lista.removeAllElements();
+						JOptionPane.showMessageDialog(null, "Uspjesno ste izbrisali zaposlenika", "Zaposlenik izbrisan", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Zaposlenik je već arhiviran", "Greška brisanja", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 			}
 		});
