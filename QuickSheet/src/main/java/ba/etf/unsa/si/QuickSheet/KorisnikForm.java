@@ -19,6 +19,7 @@ import javax.swing.JList;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 
 import java.awt.Toolkit;
 
@@ -36,8 +37,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractListModel;
 
 import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.Klase.Koordinator;
+import ba.etf.unsa.si.Klase.ProjekatRadnik;
+import ba.etf.unsa.si.Klase.Zaposlenik;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+import javax.swing.SpinnerNumberModel;
 
 public class KorisnikForm extends JFrame {
 
@@ -117,22 +122,22 @@ public class KorisnikForm extends JFrame {
 		
 		JLabel label_7 = new JLabel("Korisničko ime:");
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_7.setBounds(52, 182, 82, 14);
+		label_7.setBounds(52, 207, 82, 14);
 		panel.add(label_7);
 		
 		JLabel label_8 = new JLabel("Lozinka:");
 		label_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_8.setBounds(82, 207, 46, 14);
+		label_8.setBounds(82, 232, 46, 14);
 		panel.add(label_8);
 		
 		JLabel label_9 = new JLabel("Ponovi lozinku:");
 		label_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_9.setBounds(52, 232, 92, 14);
+		label_9.setBounds(52, 257, 92, 14);
 		panel.add(label_9);
 		
 		JLabel lblKoordinator = new JLabel("Koordinator:");
 		lblKoordinator.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblKoordinator.setBounds(62, 257, 60, 14);
+		lblKoordinator.setBounds(62, 282, 60, 14);
 		panel.add(lblKoordinator);
 		
 		textField = new JTextField();
@@ -154,34 +159,47 @@ public class KorisnikForm extends JFrame {
 		panel.add(textField_2);
 		
 		ArrayList<OdjelHibernate> oh = new ArrayList<OdjelHibernate>();
+		ArrayList<OdjelHibernate> sviOdjeli = new ArrayList<OdjelHibernate>();
 		oh = DalDao.VratiZaposlenikoveOdjele(id);
-		DefaultListModel lista = new DefaultListModel();
-		final JList list = new JList();
-		list.setBounds(164, 123, 167, 51);
-		list.setModel(lista);
+		ArrayList<String> zaposlenikoviOdjeli = new ArrayList<String>();
 		for (int i = 0; i < oh.size(); i++)
 		{
-			String podatak = oh.get(i).getNaziv();
-			lista.addElement(podatak);
+			String podatak = oh.get(i).getId() + " " + oh.get(i).getNaziv();
+			zaposlenikoviOdjeli.add(podatak);
 		}
-		panel.add(list);
+		sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
+		DefaultListModel lista = new DefaultListModel();
+		JScrollPane scrollPane = new JScrollPane();
+		final JList list = new JList();
+		scrollPane.setColumnHeaderView(list);
+		scrollPane.setBounds(164, 123, 167, 51);
+		list.setBounds(164, 123, 167, 51);
+		list.setModel(lista);
+		for (int i = 0; i < sviOdjeli.size(); i++)
+		{
+			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
+			lista.addElement(podatak);
+			if (zaposlenikoviOdjeli.contains(podatak))
+				list.setSelectedIndex(i);
+		}
+		panel.add(scrollPane);
 		
 		textField_5 = new JTextField();
 		textField_5.setColumns(10);
-		textField_5.setBounds(164, 179, 167, 20);
+		textField_5.setBounds(164, 204, 167, 20);
 		textField_5.setText(zh.getUsername());
 		panel.add(textField_5);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(164, 204, 167, 20);
+		passwordField.setBounds(164, 229, 167, 20);
 		panel.add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(164, 229, 167, 20);
+		passwordField_1.setBounds(164, 254, 167, 20);
 		panel.add(passwordField_1);
 		
-		JCheckBox chckbxDa = new JCheckBox("Da");
-		chckbxDa.setBounds(164, 253, 97, 23);
+		final JCheckBox chckbxDa = new JCheckBox("Da");
+		chckbxDa.setBounds(164, 278, 97, 23);
 		chckbxDa.setSelected(zh.getKoordinator());
 		panel.add(chckbxDa);
 		
@@ -202,39 +220,93 @@ public class KorisnikForm extends JFrame {
 		label_error.setBounds(0, 386, 386, 14);
 		contentPane.add(label_error);
 		
+		final JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
+		spinner_1.setBounds(164, 179, 167, 20);
+		panel.add(spinner_1);
+		
+		final JCheckBox chckbxDa_1 = new JCheckBox("Da");
+		chckbxDa_1.setBounds(164, 304, 97, 23);
+		panel.add(chckbxDa_1);
+		
 		JButton btnSpasiIzmjene = new JButton("Spremi izmjene");
 		btnSpasiIzmjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean greska = true; 
+				boolean greska = true;
 				String p1 = Arrays.toString(passwordField_1.getPassword());
 				String p2 = Arrays.toString(passwordField.getPassword());
+				String ime = textField.getText();
+				String prezime = textField_1.getText();
+				String adresa = textField_2.getText();
+				Zaposlenik z;
+				if (chckbxDa.isSelected())
+					z = new Koordinator();
+				else 
+					z = new ProjekatRadnik();
 				
-				if(textField.getText().equals("")){
-					label_error.setText("Unesite ime!");
+				try{
+					z.setIme(ime);
+				}
+				catch (Exception e){
+					label_error.setText("Unesite ispravno ime!");
+					greska = false;
+				}
+				
+				try{
+					z.setPrezime(prezime);
+				}
+				catch (Exception e){
+					label_error.setText("Unesite ispravno prezime!");
+					greska = false;
+				}
+				
+				try{
+					z.setAdresa(adresa);
+				}
+				catch (Exception e){
+					label_error.setText("Unesite ispravnu adresu!");
+					greska = false;
+				}
+				
+				if(list.isSelectionEmpty())
+				{
+					label_error.setText("Odaberite odjel u kojem radi zaposlenik!");
+					greska = false;
+				}
+				
+				try
+				{
+					Double satnica = (Double)spinner_1.getValue();
+					z.setSatnica(satnica);
+				}
+				catch (Exception e)
+				{
+					label_error.setText("Izaberite ispravan unos za satnicu!");
+					greska = false;
+				}
+				
+				try
+				{
+					z.setUsername(textField_5.getText());
+				}
+				catch(Exception e)
+				{
+					label_error.setText("Unesite ispravno korisničko ime!");
+					greska = false;
+				}
+				
+				if(passwordField_1.getPassword().length < 8){
+					label_error.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;}
-				else if(textField_1.getText().equals("")){
-					label_error.setText("Unesite prezime!");
-					greska = false;}
-				else if(textField_2.getText().equals("")){
-					label_error.setText("Unesite adresu!");
-					greska = false;}
-				else if(list.isSelectionEmpty()){ 
-					  label_error.setText("Odaberite odjel u kojem radi zaposlenik!");
-					  greska = false;}
-				else if(textField_5.getText().equals("")){
-					label_error.setText("Unesite korisničko ime!");
-					greska = false;}
-				else if(passwordField_1.getPassword().length == 0){
-					label_error.setText("Unesite lozinku!");
-					greska = false;}
-				else if(passwordField.getPassword().length == 0){
-					label_error.setText("Unesite ponovo lozinku!");
+				if(passwordField.getPassword().length < 8){
+					label_error.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;} 
-				else if (!p1.equals(p2)) {
+				if (!p1.equals(p2)) {
 					label_error.setText("Lozinke se ne podudaraju!");
 					greska = false;
 					}
-				else greska = true;
+				else
+					z.setLozinka(p1);
 				
 				if(greska == false){
 					label_error.setVisible(true);	
@@ -242,14 +314,24 @@ public class KorisnikForm extends JFrame {
 				
 				else{
 					label_error.setVisible(false);
+					
 				}
 				
 			}
 		});
 		btnSpasiIzmjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnSpasiIzmjene.setBounds(190, 322, 141, 23);
+		btnSpasiIzmjene.setBounds(190, 336, 141, 23);
 		panel.add(btnSpasiIzmjene);
 		
+		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblSatnica.setBounds(82, 182, 40, 14);
+		panel.add(lblSatnica);
+		
+		JLabel lblArhiviran = new JLabel("Arhiviran:");
+		lblArhiviran.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblArhiviran.setBounds(74, 307, 60, 14);
+		panel.add(lblArhiviran);		
 		
 	}
 }

@@ -11,6 +11,10 @@ public class Koordinator extends Zaposlenik{
 		super(_username, _ime, _prezime, _adresa, _datum, _cijena);
 	}
 	
+	public Koordinator(){
+		super();
+	}
+	
 	public void OdobriTimesheet(Timesheet timesheet)
 	{
 		timesheet.setValidiran(true);
