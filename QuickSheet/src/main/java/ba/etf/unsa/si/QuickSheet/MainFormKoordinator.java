@@ -47,6 +47,10 @@ import javax.swing.DefaultComboBoxModel;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+import javax.swing.JPasswordField;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.EmptyBorder;
 
 public class MainFormKoordinator extends JFrame {
 	private JTextField textField;
@@ -58,6 +62,14 @@ public class MainFormKoordinator extends JFrame {
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTable table;
+	private JTextField textField_3;
+	private JTextField textField_8;
+	private JTextField textField_9;
+	private JTextField textField_12;
+	private JPasswordField passwordField_2;
+	private JTextField textField_14;
+	private JTextField textField_15;
+	private JTextField textField_16;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -77,12 +89,12 @@ public class MainFormKoordinator extends JFrame {
 		setResizable(false);
 		setTitle("QuickSheet - Koordinator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 768, 458);
+		setBounds(100, 100, 765, 482);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 764, 450);
+		tabbedPane.setBounds(0, 0, 764, 453);
 		getContentPane().add(tabbedPane);
 		setLocationRelativeTo(null);
 		JPanel timeSheetPanel = new JPanel();
@@ -995,6 +1007,212 @@ public class MainFormKoordinator extends JFrame {
 		JList list_6 = new JList();
 		list_6.setBounds(12, 76, 315, 249);
 		panel_6.add(list_6);
+		
+		JPanel panel_12 = new JPanel();
+		tabbedPane.addTab("Moj profil", null, panel_12, null);
+		panel_12.setLayout(null);
+		
+		JPanel panel_13 = new JPanel();
+		panel_13.setLayout(null);
+		panel_13.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Moji podaci", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_13.setBounds(30, 22, 341, 370);
+		panel_12.add(panel_13);
+		
+		JLabel label_18 = new JLabel("Ime:");
+		label_18.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_18.setBounds(93, 40, 82, 14);
+		panel_13.add(label_18);
+		
+		JLabel label_19 = new JLabel("Prezime:");
+		label_19.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_19.setBounds(77, 65, 82, 14);
+		panel_13.add(label_19);
+		
+		JLabel label_20 = new JLabel("Adresa:");
+		label_20.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_20.setBounds(77, 90, 82, 14);
+		panel_13.add(label_20);
+		
+		JLabel label_23 = new JLabel("Datum zapošljavanja:");
+		label_23.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_23.setBounds(10, 149, 113, 14);
+		panel_13.add(label_23);
+		
+		JLabel label_24 = new JLabel("Odjeli:");
+		label_24.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_24.setBounds(83, 174, 40, 14);
+		panel_13.add(label_24);
+		
+		JLabel label_25 = new JLabel("Korisničko ime:");
+		label_25.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_25.setBounds(47, 284, 82, 14);
+		panel_13.add(label_25);
+		
+		JLabel label_28 = new JLabel("Vrsta korisnika:");
+		label_28.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_28.setBounds(47, 312, 82, 14);
+		panel_13.add(label_28);
+		
+		textField_3 = new JTextField();
+		textField_3.setEnabled(false);
+		textField_3.setEditable(false);
+		textField_3.setDisabledTextColor(SystemColor.textInactiveText);
+		textField_3.setColumns(10);
+		textField_3.setBorder(null);
+		textField_3.setBackground(Color.WHITE);
+		textField_3.setBounds(159, 37, 141, 20);
+		panel_13.add(textField_3);
+		
+		textField_8 = new JTextField();
+		textField_8.setEnabled(false);
+		textField_8.setEditable(false);
+		textField_8.setDisabledTextColor(Color.LIGHT_GRAY);
+		textField_8.setColumns(10);
+		textField_8.setBorder(null);
+		textField_8.setBackground(Color.WHITE);
+		textField_8.setBounds(159, 62, 141, 20);
+		panel_13.add(textField_8);
+		
+		textField_9 = new JTextField();
+		textField_9.setEnabled(false);
+		textField_9.setEditable(false);
+		textField_9.setColumns(10);
+		textField_9.setBorder(null);
+		textField_9.setBackground(Color.WHITE);
+		textField_9.setBounds(159, 87, 141, 20);
+		panel_13.add(textField_9);
+		
+		textField_12 = new JTextField();
+		textField_12.setEnabled(false);
+		textField_12.setEditable(false);
+		textField_12.setColumns(10);
+		textField_12.setBorder(null);
+		textField_12.setBackground(Color.WHITE);
+		textField_12.setBounds(159, 281, 141, 20);
+		panel_13.add(textField_12);
+		
+		JSpinner spinner_6 = new JSpinner();
+		spinner_6.setModel(new SpinnerDateModel(new Date(1432418400000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner_6.setEnabled(false);
+		spinner_6.setBorder(new CompoundBorder());
+		spinner_6.setBackground(Color.WHITE);
+		spinner_6.setBounds(159, 146, 141, 20);
+		panel_13.add(spinner_6);
+		
+		passwordField_2 = new JPasswordField();
+		passwordField_2.setEnabled(false);
+		passwordField_2.setEditable(false);
+		passwordField_2.setBorder(null);
+		passwordField_2.setBackground(Color.WHITE);
+		passwordField_2.setBounds(159, 309, 141, 20);
+		panel_13.add(passwordField_2);
+		
+		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setBounds(77, 124, 40, 14);
+		panel_13.add(lblSatnica);
+		
+		JSpinner spinner_8 = new JSpinner();
+		spinner_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner_8.setEnabled(false);
+		spinner_8.setBorder(new CompoundBorder());
+		spinner_8.setBackground(Color.WHITE);
+		spinner_8.setBounds(159, 115, 141, 20);
+		panel_13.add(spinner_8);
+		
+		JList list_5 = new JList();
+		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list_5.setBackground(Color.WHITE);
+		list_5.setBounds(159, 173, 141, 97);
+		panel_13.add(list_5);
+		
+		JPanel panel_14 = new JPanel();
+		panel_14.setLayout(null);
+		panel_14.setBorder(new TitledBorder(null, "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_14.setBounds(392, 22, 341, 370);
+		panel_12.add(panel_14);
+		
+		JLabel label_29 = new JLabel("Trenutna lozinka:");
+		label_29.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_29.setBounds(48, 38, 83, 14);
+		panel_14.add(label_29);
+		
+		textField_14 = new JTextField();
+		textField_14.setColumns(10);
+		textField_14.setBounds(162, 35, 141, 20);
+		panel_14.add(textField_14);
+		
+		textField_15 = new JTextField();
+		textField_15.setColumns(10);
+		textField_15.setBounds(162, 63, 141, 20);
+		panel_14.add(textField_15);
+		
+		JLabel label_30 = new JLabel("Nova lozinka:");
+		label_30.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_30.setBounds(67, 63, 64, 14);
+		panel_14.add(label_30);
+		
+		textField_16 = new JTextField();
+		textField_16.setColumns(10);
+		textField_16.setBounds(162, 91, 141, 20);
+		panel_14.add(textField_16);
+		
+		JLabel label_31 = new JLabel("Nova lozinka(ponovo):");
+		label_31.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_31.setBounds(23, 94, 108, 14);
+		panel_14.add(label_31);
+		
+		final JLabel label_32 = new JLabel("");
+		label_32.setVisible(false);
+		label_32.setBounds(0, 411, 759, 14);
+		panel_12.add(label_32); 
+		
+		JButton button_4 = new JButton("Spasi promjenu");
+		button_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				boolean greska = true;
+				if(textField_14.getText().equals("")){
+					greska = false;
+					label_32.setText("Unesite trenutnu lozinku!");
+				}
+				else if(textField_15.getText().equals("")){
+					greska = false;
+					label_32.setText("Unesite novu lozinku!");
+				}
+				else if(textField_16.getText().equals("")){
+					greska = false;
+					label_32.setText("Unesite ponovo novu lozinku!");
+				}
+				else if(!textField_15.getText().equals(textField_16.getText())){
+					greska = false;
+					label_32.setText("Lozinke se ne podudaraju!");
+				}
+				else greska = true;
+				if(greska == false){
+					label_32.setVisible(true);
+				}
+				else label_32.setVisible(false);
+			}
+		});
+		button_4.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		button_4.setBounds(77, 138, 110, 23);
+		panel_14.add(button_4);
+		
+		JButton button_5 = new JButton("Otkaži");
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_14.setText("");
+				textField_15.setText("");
+				textField_16.setText("");
+				label_32.setVisible(false);
+			}
+		});
+		button_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		button_5.setBounds(193, 138, 110, 23);
+		panel_14.add(button_5);
+		
+		
 		
 		
 		
