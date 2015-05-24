@@ -55,6 +55,7 @@ import java.awt.ScrollPane;
 
 import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 
 import java.awt.event.FocusAdapter;
@@ -193,7 +194,7 @@ public class MainForm extends JFrame {
 		label_error.setVisible(false);
 		
 		//administrator
-		AdministratorHibernate Admin = admin;
+		final AdministratorHibernate Admin = admin;
 		
 		JButton btnDodaj_1 = new JButton("Dodaj");
 		btnDodaj_1.addActionListener(new ActionListener() {
@@ -1091,27 +1092,45 @@ public class MainForm extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
-				if(textField_1.getText().equals("")){
-					greska = false;
-					label_error3.setText("Unesite trenutnu lozinku!");
+				try {
+					if(Lozinka.validatePassword(textField_1.getText(), Admin.getLozinka()) && 
+							!textField_1.getText().equals("") && !textField_2.getText().equals("") && 
+							!textField_3.getText().equals("") && textField_2.getText().equals(textField_3.getText())){
+								Admin.setLozinka(Lozinka.generateStorngPasswordHash(textField_3.getText()));
+								DalDao.ModifikujObjekat(Admin);
+								JOptionPane.showMessageDialog(null, "Uspjesno ste promjenili lozinku!", "Info", JOptionPane.INFORMATION_MESSAGE );
+					}
+					else if(textField_1.getText().equals("")) {
+						greska = false;
+						label_error3.setText("Unesite trenutnu lozinku!");
+					}
+					else if(textField_2.getText().equals("")){
+						greska = false;
+						label_error3.setText("Unesite novu lozinku!");
+					}
+					else if(textField_3.getText().equals("")){
+						greska = false;
+						label_error3.setText("Unesite ponovo novu lozinku!");
+					}
+					else if(!textField_2.getText().equals(textField_3.getText())) {
+						greska = false;
+						label_error3.setText("Lozinke se ne poklapaju!");
+					}
+					else if(!Lozinka.validatePassword(textField_1.getText(), Admin.getLozinka())) {
+						greska = false;
+						label_error3.setText("Pogresna lozinka!");
+					}
+					else { 
+						greska = true;
+					}
+					if(greska == false){
+						label_error3.setVisible(true);
+					}
+					else label_error3.setVisible(false);
 				}
-				else if(textField_2.getText().equals("")){
-					greska = false;
-					label_error3.setText("Unesite novu lozinku!");
+				catch(Exception ex) {
+					
 				}
-				else if(textField_3.getText().equals("")){
-					greska = false;
-					label_error3.setText("Unesite ponovo novu lozinku!");
-				}
-				else if(!textField_2.getText().equals(textField_3.getText())){
-					greska = false;
-					label_error3.setText("Lozinke se ne podudaraju!");
-				}
-				else greska = true;
-				if(greska == false){
-					label_error3.setVisible(true);
-				}
-				else label_error3.setVisible(false);
 			}
 		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 10));
