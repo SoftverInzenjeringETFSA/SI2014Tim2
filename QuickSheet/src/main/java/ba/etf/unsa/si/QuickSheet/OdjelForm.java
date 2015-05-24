@@ -173,7 +173,16 @@ public class OdjelForm extends JFrame {
 		panel.add(btnUkloni);
 		
 		final JList list_1 = new JList();
-		list_1.setModel(new AbstractListModel() {
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
+		list_1.setModel(listaZaposlenika);
+		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+
+		for (int i=0;i<zaposlenici.size();i++)
+			{
+			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
+			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+			}	
+		/*list_1.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik1\t", "zaposlenik2"};
 			public int getSize() {
 				return values.length;
@@ -181,7 +190,7 @@ public class OdjelForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list_1.setBounds(190, 207, 141, 106);
 		panel.add(list_1);
 		
@@ -341,7 +350,16 @@ public class OdjelForm extends JFrame {
 		panel.add(btnUkloni);
 		
 		final JList list_1 = new JList();
-		list_1.setModel(new AbstractListModel() {
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
+		list_1.setModel(listaZaposlenika);
+		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+
+		for (int i=0;i<zaposlenici.size();i++)
+			{
+			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
+			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+			}	
+		/*list_1.setModel(new AbstractListModel() {
 			String[] values = new String[] {"zaposlenik1\t", "zaposlenik2"};
 			public int getSize() {
 				return values.length;
@@ -349,7 +367,7 @@ public class OdjelForm extends JFrame {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});*/
 		list_1.setBounds(190, 207, 141, 106);
 		panel.add(list_1);
 		
