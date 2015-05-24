@@ -44,7 +44,9 @@ import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+import java.time.Month;
 
 public class MainFormZaposlenik extends JFrame {
 	private JTextField textField;
@@ -220,6 +222,11 @@ public class MainFormZaposlenik extends JFrame {
 		
 		
 		JPanel historijaPanel = new JPanel();
+		historijaPanel.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+			}
+		});
 		tabbedPane.addTab("Moja Historija", null, historijaPanel, null);
 		historijaPanel.setLayout(null);
 		
@@ -229,7 +236,8 @@ public class MainFormZaposlenik extends JFrame {
 		panel.setBounds(30, 22, 341, 370);
 		historijaPanel.add(panel);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		final JComboBox comboBox_1 = new JComboBox();
+		
 		comboBox_1.setBackground(Color.WHITE);
 		comboBox_1.setBounds(155, 28, 141, 20);
 		panel.add(comboBox_1);
@@ -239,14 +247,17 @@ public class MainFormZaposlenik extends JFrame {
 		label.setBounds(10, 28, 78, 20);
 		panel.add(label);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 87, 321, 272);
-		panel.add(scrollPane);
-		
 		JLabel label_1 = new JLabel("Timesheet historija:");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_1.setBounds(10, 59, 200, 20);
 		panel.add(label_1);
+		
+		final DefaultListModel DefaultListModel1 = new DefaultListModel();
+		JList list_1 = new JList();
+		list_1.setModel(DefaultListModel1);
+		list_1.setEnabled(false);
+		list_1.setBounds(10, 78, 321, 281);
+		panel.add(list_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
@@ -254,41 +265,23 @@ public class MainFormZaposlenik extends JFrame {
 		panel_1.setBounds(392, 22, 341, 370);
 		historijaPanel.add(panel_1);
 		
-		Canvas canvas = new Canvas();
-		canvas.setBackground(SystemColor.controlHighlight);
-		canvas.setBounds(10, 88, 321, 272);
-		panel_1.add(canvas);
-		
-		JLabel label_2 = new JLabel("Od");
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_2.setBounds(10, 30, 46, 20);
-		panel_1.add(label_2);
-		
-		JLabel label_3 = new JLabel("Do");
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_3.setBounds(178, 30, 46, 20);
-		panel_1.add(label_3);
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_1.setModel(new SpinnerDateModel(new Date(1432159200000L), null, null, Calendar.DAY_OF_YEAR));
-		spinner_1.setBounds(35, 30, 131, 20);
-		panel_1.add(spinner_1);
-		
-		JSpinner spinner_3 = new JSpinner();
-		spinner_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_3.setModel(new SpinnerDateModel(new Date(1432159200000L), null, null, Calendar.DAY_OF_YEAR));
-		spinner_3.setBounds(200, 30, 131, 20);
-		panel_1.add(spinner_3);
-		
-		JLabel lblIliPrikazZa = new JLabel("Ili, prikaz za određeni mjesec:");
+		JLabel lblIliPrikazZa = new JLabel("Prikaz za određeni mjesec:");
 		lblIliPrikazZa.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblIliPrikazZa.setBounds(10, 61, 156, 14);
+		lblIliPrikazZa.setBounds(10, 28, 156, 14);
 		panel_1.add(lblIliPrikazZa);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(200, 61, 131, 20);
+		final JComboBox comboBox_2 = new JComboBox();
+		
+		comboBox_2.setModel(new DefaultComboBoxModel(Month.values()));
+		comboBox_2.setBounds(200, 25, 131, 20);
 		panel_1.add(comboBox_2);
+		
+		final DefaultListModel DefaultListModel2 = new DefaultListModel();
+		JList list_2 = new JList();
+		list_2.setModel(DefaultListModel2);
+		list_2.setEnabled(false);
+		list_2.setBounds(10, 53, 321, 306);
+		panel_1.add(list_2);
 		
 		JPanel panel_2 = new JPanel();
 		
@@ -551,7 +544,54 @@ public class MainFormZaposlenik extends JFrame {
 		
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//promena na combo timesheet
+			}
+		});
+		
+		comboBox_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ProjekatHibernate selectedProjec = (ProjekatHibernate)comboBox_1.getSelectedItem();
+					ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(selectedProjec.getId(), Zaposlenik.getId());
+					for(TimesheetHibernate timesheet : timesheets) {
+						DefaultListModel1.addElement(timesheet);
+					}
+				}
+				catch(Exception ex) {
+					
+				}
+ 			}
+		});
+		
+		historijaPanel.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				try {
+					comboBox_1.removeAllItems();
+					ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
+					for(ProjekatHibernate projekat: projekti) {
+						comboBox_1.addItem(projekti);
+					}
+				}
+				catch(Exception ex) {
+					
+				}
+			}
+		});
+		
+		comboBox_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					DefaultListModel2.removeAllElements();
+					Month mjesec = (Month)comboBox_2.getSelectedItem();
+					ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaZaMjesec(Zaposlenik.getId(), mjesec);
+					for(TimesheetHibernate item : timesheets) {
+						DefaultListModel2.addElement(item);
+					}
+				}
+				catch(Exception ex) {
+					
+				}
 			}
 		});
 	}
