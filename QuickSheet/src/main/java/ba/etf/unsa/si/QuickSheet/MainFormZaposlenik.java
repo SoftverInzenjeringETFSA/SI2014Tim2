@@ -46,10 +46,14 @@ import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetTaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
+import java.time.LocalDate;
 import java.time.Month;
+
 import javax.swing.JTextArea;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputMethodListener;
@@ -133,12 +137,7 @@ public class MainFormZaposlenik extends JFrame {
 		
 		
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-			
-		});
+		
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton.setBounds(531, 291, 124, 29);
 		panel_4.add(btnNewButton);
@@ -160,20 +159,8 @@ public class MainFormZaposlenik extends JFrame {
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
 		
-		JLabel lblDatum = new JLabel("Datum:");
-		lblDatum.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDatum.setBounds(91, 298, 35, 14);
-		panel_4.add(lblDatum);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setEnabled(false);
-		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
-		spinner.setBounds(135, 291, 210, 20);
-		panel_4.add(spinner);
-		
 		final DefaultListModel DefaultListModel4 = new DefaultListModel();
-		JList list_3 = new JList();
+		final JList list_3 = new JList();
 		list_3.setModel(DefaultListModel4);
 		list_3.setBounds(10, 123, 198, 114);
 		panel_4.add(list_3);
@@ -641,6 +628,34 @@ public class MainFormZaposlenik extends JFrame {
 					
 				}
 			}
+		});
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					TimesheetHibernate timesheet = new TimesheetHibernate();
+					timesheet.setBrojRadnihSati((Integer)spinner_2.getValue());
+					timesheet.setDatumSlanja(LocalDate.now());
+					timesheet.setProjekat((ProjekatHibernate)comboBox.getSelectedItem());
+					timesheet.setValidiran(false);
+					DalDao.DodajObjekat(timesheet);
+					String[] sati = textArea_1.getText().split("\n");
+					String[] procenti = textArea_1.getText().split("\n");
+					
+					for(int i = 0; i < list_3.getModel().getSize(); i++) {
+						TaskHibernate task = (TaskHibernate)list_3.getModel().getElementAt(i);
+						task.setProcenatZavrsenosti(Integer.getInteger(procenti[i]));
+						DalDao.ModifikujObjekat(task);
+						TimesheetTaskHibernate tt = new TimesheetTaskHibernate();
+						tt.setTask(task);
+						tt.setTimesheet(timesheet);
+						DalDao.DodajObjekat(tt);
+					}
+				}
+				catch(Exception ex) {
+				}
+			}
+			
 		});
 	}
 
