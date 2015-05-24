@@ -44,6 +44,7 @@
 	</build>
 
   <dependencies>
+  
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -67,11 +68,19 @@
 	<groupId>org.eclipse</groupId>
 	<artifactId>jface</artifactId>
 	<version>3.2.1-M20060908-1000</version>
-</dependency>
+	</dependency>
+	
    <dependency>
 	<groupId>commons-codec</groupId>
 	<artifactId>commons-codec</artifactId>
 	<version>1.9</version>
-</dependency>
+	</dependency>
+	
+	<dependency>
+	<groupId>net.sf.jasperreports</groupId>
+	<artifactId>jasperreports</artifactId>
+	<version>5.0.1</version>
+	</dependency>
+	
   </dependencies>
 </project>
