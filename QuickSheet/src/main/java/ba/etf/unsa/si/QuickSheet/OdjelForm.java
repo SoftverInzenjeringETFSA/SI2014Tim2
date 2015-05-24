@@ -230,6 +230,7 @@ public class OdjelForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
+					
 				}
 			}
 		});
@@ -414,6 +415,16 @@ public class OdjelForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
+					String selektovanaVrijednost = list_1.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long idZap = Long.parseLong(rijeci[0]);
+					ZaposlenikHibernate z=DalDao.VratiZaposlenika(idZap);
+					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
+					ozh.setZaposlenikOdjela(z);
+					OdjelHibernate o=DalDao.VratiOdjel(id);
+					ozh.setOdjel(o);
+					DalDao.DodajObjekat(ozh);
+					
 				}
 			}
 		});
