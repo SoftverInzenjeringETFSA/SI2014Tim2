@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -26,6 +27,7 @@ import javax.swing.AbstractListModel;
 
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class OdjelForm extends JFrame {
@@ -165,11 +167,18 @@ public class OdjelForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
+					/*
 					String selektovanaVrijednost = list.getSelectedValue().toString();
 					String[] rijeci = selektovanaVrijednost.split(" ");
 					long id = Long.parseLong(rijeci[0]);
 					ZaposlenikHibernate zh=DalDao.VratiZaposlenika(id);
-					
+					OdjelHibernate oh=DalDao.VratiOdjelPoNazivu(textField.getText());
+					OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
+					ozh.setOdjel(oh);
+					ozh.setZaposlenikOdjela(zh);
+					DalDao.ObrisiObjekat(ozh);
+					JOptionPane.showMessageDialog(null, "Zaposlenik je uklonjen iz odjela.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
+				*/
 				}
 			}
 		});
