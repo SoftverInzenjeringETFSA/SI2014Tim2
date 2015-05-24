@@ -59,12 +59,7 @@ public class MainFormZaposlenik extends JFrame {
 	private JTextField txtGftfg;
 	private JTextField textField_2;
 	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
 	private JTextField textField_6;
-	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
-	private JTextField textField_7;
 	private JPasswordField passwordField_2;
 	private JTextField textField_8;
 	private JTextField textField_9;
@@ -324,44 +319,24 @@ public class MainFormZaposlenik extends JFrame {
 		label_6.setBounds(77, 90, 82, 14);
 		panel_3.add(label_6);
 		
-		JLabel label_7 = new JLabel("Broj Telefona:");
-		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_7.setBounds(47, 115, 97, 14);
-		panel_3.add(label_7);
-		
-		JLabel label_8 = new JLabel("Email:");
-		label_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_8.setBounds(87, 140, 46, 14);
-		panel_3.add(label_8);
-		
 		JLabel label_9 = new JLabel("Datum zapošljavanja:");
 		label_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_9.setBounds(10, 165, 113, 14);
+		label_9.setBounds(10, 140, 113, 14);
 		panel_3.add(label_9);
 		
 		JLabel label_10 = new JLabel("Odjeli:");
 		label_10.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_10.setBounds(83, 190, 40, 14);
+		label_10.setBounds(83, 166, 40, 14);
 		panel_3.add(label_10);
 		
 		JLabel label_11 = new JLabel("Korisničko ime:");
 		label_11.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_11.setBounds(47, 218, 82, 14);
+		label_11.setBounds(47, 272, 82, 14);
 		panel_3.add(label_11);
-		
-		JLabel label_12 = new JLabel("Lozinka:");
-		label_12.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_12.setBounds(77, 243, 46, 14);
-		panel_3.add(label_12);
-		
-		JLabel label_13 = new JLabel("Ponovi lozinku:");
-		label_13.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_13.setBounds(47, 268, 92, 14);
-		panel_3.add(label_13);
 		
 		JLabel label_14 = new JLabel("Vrsta korisnika:");
 		label_14.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_14.setBounds(47, 293, 82, 14);
+		label_14.setBounds(47, 302, 82, 14);
 		panel_3.add(label_14);
 		
 		txtGftfg = new JTextField();
@@ -393,48 +368,14 @@ public class MainFormZaposlenik extends JFrame {
 		textField_3.setBounds(159, 87, 141, 20);
 		panel_3.add(textField_3);
 		
-		textField_4 = new JTextField();
-		textField_4.setBorder(null);
-		textField_4.setBackground(Color.WHITE);
-		textField_4.setEnabled(false);
-		textField_4.setEditable(false);
-		textField_4.setColumns(10);
-		textField_4.setBounds(159, 113, 141, 20);
-		panel_3.add(textField_4);
-		
-		textField_5 = new JTextField();
-		textField_5.setBorder(null);
-		textField_5.setBackground(Color.WHITE);
-		textField_5.setEnabled(false);
-		textField_5.setEditable(false);
-		textField_5.setColumns(10);
-		textField_5.setBounds(159, 138, 141, 20);
-		panel_3.add(textField_5);
-		
 		textField_6 = new JTextField();
 		textField_6.setBorder(null);
 		textField_6.setBackground(Color.WHITE);
 		textField_6.setEnabled(false);
 		textField_6.setEditable(false);
 		textField_6.setColumns(10);
-		textField_6.setBounds(159, 215, 141, 20);
+		textField_6.setBounds(159, 269, 141, 20);
 		panel_3.add(textField_6);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBorder(null);
-		passwordField.setBackground(Color.WHITE);
-		passwordField.setEnabled(false);
-		passwordField.setEditable(false);
-		passwordField.setBounds(159, 240, 141, 20);
-		panel_3.add(passwordField);
-		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBorder(null);
-		passwordField_1.setBackground(Color.WHITE);
-		passwordField_1.setEnabled(false);
-		passwordField_1.setEditable(false);
-		passwordField_1.setBounds(159, 265, 141, 20);
-		panel_3.add(passwordField_1);
 		
 		JSpinner spinner_4 = new JSpinner();
 		spinner_4.setBorder(new CompoundBorder());
@@ -442,25 +383,36 @@ public class MainFormZaposlenik extends JFrame {
 		spinner_4.setEnabled(false);
 		spinner_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		spinner_4.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
-		spinner_4.setBounds(159, 162, 141, 20);
+		spinner_4.setBounds(159, 137, 141, 20);
 		panel_3.add(spinner_4);
-		
-		textField_7 = new JTextField();
-		textField_7.setBorder(null);
-		textField_7.setBackground(Color.WHITE);
-		textField_7.setEnabled(false);
-		textField_7.setEditable(false);
-		textField_7.setColumns(10);
-		textField_7.setBounds(159, 189, 141, 20);
-		panel_3.add(textField_7);
 		
 		passwordField_2 = new JPasswordField();
 		passwordField_2.setBorder(null);
 		passwordField_2.setBackground(Color.WHITE);
 		passwordField_2.setEnabled(false);
 		passwordField_2.setEditable(false);
-		passwordField_2.setBounds(159, 290, 141, 20);
+		passwordField_2.setBounds(159, 299, 141, 20);
 		panel_3.add(passwordField_2);
+		
+		JSpinner spinner_5 = new JSpinner();
+		spinner_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner_5.setEnabled(false);
+		spinner_5.setBorder(new CompoundBorder());
+		spinner_5.setBackground(Color.WHITE);
+		spinner_5.setBounds(159, 114, 141, 20);
+		panel_3.add(spinner_5);
+		
+		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblSatnica.setBounds(77, 117, 40, 14);
+		panel_3.add(lblSatnica);
+		
+		JList list = new JList();
+		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list.setEnabled(false);
+		list.setBackground(Color.WHITE);
+		list.setBounds(159, 165, 141, 97);
+		panel_3.add(list);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(null, "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, null));
