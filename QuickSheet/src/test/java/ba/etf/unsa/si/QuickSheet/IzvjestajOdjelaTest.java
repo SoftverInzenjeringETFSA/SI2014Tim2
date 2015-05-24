@@ -14,16 +14,84 @@ import ba.etf.unsa.si.Klase.IzvjestajOdjela;
 import ba.etf.unsa.si.Klase.Koordinator;
 import ba.etf.unsa.si.Klase.Odjel;
 import ba.etf.unsa.si.Klase.Projekat;
+import ba.etf.unsa.si.KlaseHibernate.IzvjestajOdjelaHibernate;
+import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetTaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class IzvjestajOdjelaTest {
 
 	
 	
+	@Test
+	public void TestVratiTimesheetove() {
+		 OdjelHibernate o = new OdjelHibernate();
+		 o.setArhiviran(false);
+		 o.setMaksimalanBrojRadnika(26);
+		 o.setNaziv("Tim2");
+		 
+		 DalDao.DodajObjekat(o);
+		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+		zh.setIme("Dzenana1");
+		zh.setPrezime("Dzenana");
+		zh.setAdresa("Dzenana");
+		zh.setArhiviran(false);
+		zh.setDatumZaposlenja(LocalDate.now());
+		zh.setKoordinator(false);
+		zh.setLozinka("dsdasd");
+		zh.setSatnica(20d);
+		zh.setUsername("Username222");
+		
+		DalDao.DodajObjekat(zh);
+			
+		ProjekatHibernate p1 = new ProjekatHibernate();
+		p1.setNaziv("projekat");
+		p1.setNazivKlijenta("Edin");
+		p1.setKoordinator(zh);
+		
+		DalDao.DodajObjekat(p1);
+		
+		IzvjestajOdjelaHibernate i = new IzvjestajOdjelaHibernate();
+		i.setProcenatZavrsenogRada(20d);
+		i.setTrosak(20d);
+		i.setUkupanBrojTaskovaOdjela(20);
+		i.setUkupnoVrijemeRada(12d);
+		i.setOdjel(o);
+		i.setProjekat(p1);
+		
+		DalDao.DodajObjekat(i);
+		
+		TaskHibernate th = new TaskHibernate();
+		th.setProjekat(p1);
+		th.setZaposlenik(zh);
+		th.setKomentar("odlicno");
+		th.setOpis("ma odlicno!");
+		th.setPrioritet(10);
+		th.setProcenatZavrsenosti(100);
+		th.setRok(LocalDate.now());
+		
+		TimesheetHibernate ts = new TimesheetHibernate();
+		ts.setBrojRadnihSati(2);
+		ts.setProjekat(p1);
+		ts.setValidiran(true);
+		ts.setDatumSlanja(LocalDate.now());
+		DalDao.DodajObjekat(ts);
+		
+		TimesheetHibernate ts1 = new TimesheetHibernate();
+		ts1.setBrojRadnihSati(2);
+		ts1.setProjekat(p1);
+		ts1.setValidiran(true);
+		ts1.setDatumSlanja(LocalDate.now());
+		DalDao.DodajObjekat(ts1);
+		
+		ArrayList<TimesheetHibernate> brojTimesheet = DalDao.VratiTimesheetoveProjekta(p1.getId());
+		Integer ukupno = brojTimesheet.size();
+		assertEquals(new Integer(2), ukupno);
 	
+	}
 
 	
 	@Test
@@ -132,14 +200,19 @@ public class IzvjestajOdjelaTest {
 		IzvjestajOdjela io=new IzvjestajOdjela(p,o);
 	}
 
-	@Test
-	public void testGetUkupanBrojTaskovaOdjela() {
-	 // TODO getter
-	}
 
 	@Test
-	public void testGetOdjel() {
-		 // TODO getter
+	public void testOdjelArhiviran() {
+		 OdjelHibernate o = new OdjelHibernate();
+		 o.setArhiviran(false);
+		 o.setMaksimalanBrojRadnika(26);
+		 o.setNaziv("Tim2");
+		 
+		 DalDao.DodajObjekat(o);
+		 
+		 OdjelHibernate o1 = DalDao.VratiOdjelPoNazivu("Tim2");
+		 assertFalse(o1.getArhiviran());
+		 
 	}
 
 	@Test(expected=javax.management.InvalidAttributeValueException.class)

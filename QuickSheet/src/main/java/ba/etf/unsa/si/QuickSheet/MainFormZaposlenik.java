@@ -552,9 +552,11 @@ public class MainFormZaposlenik extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ProjekatHibernate selectedProjec = (ProjekatHibernate)comboBox_1.getSelectedItem();
+					if(selectedProjec != null) {
 					ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(selectedProjec.getId(), Zaposlenik.getId());
 					for(TimesheetHibernate timesheet : timesheets) {
 						DefaultListModel1.addElement(timesheet);
+					}
 					}
 				}
 				catch(Exception ex) {
@@ -569,6 +571,8 @@ public class MainFormZaposlenik extends JFrame {
 				try {
 					comboBox_1.removeAllItems();
 					ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
+					comboBox_1.addItem(null);
+					//komentar
 					for(ProjekatHibernate projekat: projekti) {
 						comboBox_1.addItem(projekti);
 					}

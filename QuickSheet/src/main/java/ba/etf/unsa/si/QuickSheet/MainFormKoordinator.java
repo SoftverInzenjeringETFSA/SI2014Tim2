@@ -102,7 +102,6 @@ public class MainFormKoordinator extends JFrame {
 		setBounds(100, 100, 765, 482);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
-		
 		 
 		//zaposlenik
 		final ZaposlenikHibernate Zaposlenik = zh;
@@ -979,11 +978,6 @@ public class MainFormKoordinator extends JFrame {
 		panel_7.add(lblDo_1);
 		
 		JButton btnNewButton_3 = new JButton("Generiši izvještaj");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton_3.setBounds(75, 336, 197, 23);
 		panel_7.add(btnNewButton_3);
@@ -1019,6 +1013,19 @@ public class MainFormKoordinator extends JFrame {
 		label_17.setBounds(0, 408, 759, 14);
 		izvjestajiPanel.add(label_17);
 		
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				if (comboBox_20.getSelectedIndex() == -1 || comboBox_21.getSelectedIndex() == -1 || comboBox_22.getSelectedIndex() == -1) 
+					{
+						label_17.setVisible(true);
+						label_17.setText("Morate izabrati parametre za kreiranje izvještaja");
+					}
+				new IzvjestajForm().setVisible(true);
+				
+			}
+		});
 		
 		JButton btnPrikazi = new JButton("Prikaži");
 		btnPrikazi.setFont(new Font("Tahoma", Font.PLAIN, 10));
