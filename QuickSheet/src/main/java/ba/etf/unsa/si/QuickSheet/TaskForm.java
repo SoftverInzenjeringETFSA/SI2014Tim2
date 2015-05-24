@@ -18,11 +18,13 @@ import java.util.Date;
 import java.util.Calendar;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TaskForm extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textField_2;
 	private JTextField textField_1;
 
 	/**
@@ -49,7 +51,7 @@ public class TaskForm extends JFrame {
 		setTitle("Dodavanje taskova");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 383, 257);
+		setBounds(100, 100, 383, 260);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,10 +69,10 @@ public class TaskForm extends JFrame {
 		lblNazivTaska.setBounds(26, 25, 59, 14);
 		panel.add(lblNazivTaska);
 		
-		textField = new JTextField();
-		textField.setBounds(95, 22, 202, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		textField_2 = new JTextField();
+		textField_2.setBounds(95, 22, 202, 20);
+		panel.add(textField_2);
+		textField_2.setColumns(10);
 		
 		JLabel lblOpisTaska = new JLabel("Opis taska:");
 		lblOpisTaska.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -104,9 +106,36 @@ public class TaskForm extends JFrame {
 		spinner_1.setBounds(95, 90, 202, 20);
 		panel.add(spinner_1);
 		
+		final JLabel label = new JLabel("");
+		label.setVisible(false);
+		label.setBounds(0, 217, 377, 14);
+		contentPane.add(label);
+		
 		JButton btnNewButton = new JButton("Dodaj task");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(textField_2.getText().equals("")){
+					greska = false;
+					label.setText("Unesite naziv taska!");
+				}
+				else if(textField_1.getText().equals("")){
+					greska = false;
+					label.setText("Unesite opis taska!");
+				}
+				else greska = true;
+				if(greska == false){
+					label.setVisible(true);
+				}
+				else label.setVisible(false);
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton.setBounds(196, 154, 101, 23);
 		panel.add(btnNewButton);
+		
+		
+		
 	}
 }
