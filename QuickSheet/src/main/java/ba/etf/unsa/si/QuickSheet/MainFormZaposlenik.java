@@ -573,6 +573,7 @@ public class MainFormZaposlenik extends JFrame {
 					comboBox_1.removeAllItems();
 					ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
 					comboBox_1.addItem(null);
+					//komentar
 					for(ProjekatHibernate projekat: projekti) {
 						comboBox_1.addItem(projekti);
 					}
