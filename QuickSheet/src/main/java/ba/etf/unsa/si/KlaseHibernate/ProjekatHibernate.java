@@ -59,4 +59,9 @@ public class ProjekatHibernate implements java.io.Serializable{
 		this.arhiviran = arhiviran;
 	}
 	
+	@Override
+	public String toString() {
+		return this.getId() + " " + this.getNaziv();
+	}
+	
 }

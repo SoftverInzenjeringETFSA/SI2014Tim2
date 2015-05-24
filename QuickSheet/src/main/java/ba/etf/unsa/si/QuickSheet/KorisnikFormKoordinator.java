@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.awt.Toolkit;
+import javax.swing.JCheckBox;
 
 public class KorisnikFormKoordinator extends JFrame {
 
@@ -116,10 +117,10 @@ public class KorisnikFormKoordinator extends JFrame {
 		label_7.setBounds(52, 233, 82, 14);
 		panel.add(label_7);
 		
-		JLabel label_10 = new JLabel("Vrsta korisnika:");
-		label_10.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_10.setBounds(52, 258, 82, 14);
-		panel.add(label_10);
+		JLabel lblKoordinator = new JLabel("Koordinator:");
+		lblKoordinator.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblKoordinator.setBounds(62, 258, 82, 14);
+		panel.add(lblKoordinator);
 		
 		textField = new JTextField(prikaz.getIme());
 		textField.setBorder(null);
@@ -198,17 +199,11 @@ public class KorisnikFormKoordinator extends JFrame {
 		textField_5.setBounds(164, 230, 167, 20);
 		panel.add(textField_5);
 		
-		if (prikaz.getKoordinator())
-			textField_6 = new JTextField("koordinator");
-		else
-			textField_6 = new JTextField("projekat radnik");
-		textField_6.setEnabled(false);
-		textField_6.setEditable(false);
-		textField_6.setColumns(10);
-		textField_6.setBorder(null);
-		textField_6.setBackground(Color.WHITE);
-		textField_6.setBounds(164, 255, 167, 20);
-		panel.add(textField_6);
+		JCheckBox chckbxDa = new JCheckBox("Da");
+		chckbxDa.setEnabled(false);
+		chckbxDa.setBounds(164, 254, 97, 23);
+		chckbxDa.setSelected(prikaz.getKoordinator());
+		panel.add(chckbxDa);
 		
 		JLabel labela_error = new JLabel("");
 		labela_error.setVisible(false);
