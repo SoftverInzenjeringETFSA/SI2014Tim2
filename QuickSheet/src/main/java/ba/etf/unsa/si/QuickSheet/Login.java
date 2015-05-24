@@ -1,40 +1,26 @@
 package ba.etf.unsa.si.QuickSheet;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.naming.directory.InvalidAttributeValueException;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-
-import javax.swing.UIManager;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
-import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
-import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
-import ba.etf.unsa.si.util.HibernateUtil;
-
-import java.awt.Toolkit;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
-
-import javax.swing.JCheckBox;
-
-import java.awt.Color;
 
 public class Login extends JFrame {
 	private JTextField txtIme;
@@ -145,7 +131,7 @@ public class Login extends JFrame {
 		
 		
 		
-		JCheckBox chckbxAdministrator = new JCheckBox("Administrator");
+		final JCheckBox chckbxAdministrator = new JCheckBox("Administrator");
 		chckbxAdministrator.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxAdministrator.setForeground(UIManager.getColor("Button.highlight"));
 		chckbxAdministrator.setBackground(UIManager.getColor("Button.darkShadow"));
@@ -169,46 +155,40 @@ public class Login extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					String username = txtIme.getText();
+					@SuppressWarnings("deprecation")
+					String pass = txtPassword.getText();
+					AdministratorHibernate admin = DalDao.VratiAdministratoraPoUsernamu(username);
+					ZaposlenikHibernate zaposlenik = DalDao.VratiZaposlenikaPoUsernamu(username);
+					boolean isError = true;
+					if(admin != null && chckbxAdministrator.isSelected()) {
+						if(Lozinka.validatePassword(pass, admin.getLozinka())) {
+							new MainForm().setVisible(true);
+							isError = false;
+						}	
+					}
+					else if(zaposlenik != null) {
+						if(Lozinka.validatePassword(pass, zaposlenik.getLozinka())) {
+							if(zaposlenik.getKoordinator()) {
+								new MainFormKoordinator().setVisible(true);
+							}
+							else {
+								new MainFormZaposlenik().setVisible(true);
+							}
+							isError = false;
+						}
+					}
+					if(isError) {
+						labela1.setVisible(true);
+						labela1.setText("Pogrešan username ili password!");
+					}
 				
-				String textFieldValue = txtIme.getText();
-				boolean greska = true;
-				boolean greska_p = true;
-				if(textFieldValue.equals("administrator")){
-					
-					new MainForm().setVisible(true);
 				}
-				else if(textFieldValue.equals("koordinator")){
-					new MainFormKoordinator().setVisible(true);
-				}
-				else if(textFieldValue.equals("zaposlenik")){
-					new MainFormZaposlenik().setVisible(true);
-				}
-				else if(textFieldValue.equals("baza")){
-					//labela1.setVisible(true);
-					OdjelHibernate oh = new OdjelHibernate();
-					oh.setMaksimalanBrojRadnika(12);
-					oh.setId(4);
-					oh.setNaziv("Odjel2");
-					oh.setArhiviran(false);
-					OdjelZaposlenikHibernate ozh = new OdjelZaposlenikHibernate();
-					ozh.setOdjel(oh);
-					ozh.setZaposlenikOdjela(DalDao.VratiZaposlenika(1));
-					DalDao.DodajObjekat(ozh);
-				}
-				else{
-					greska = false;
-				}
-				if(greska == false){
-					labela1.setVisible(true);
-					labela1.setText("Unesite username!");
-				}
-				else{
-					labela1.setVisible(false);
-				}
-				
-				
-				
-		}
+				catch(Exception ex) {
+					JOptionPane.showMessageDialog(null, "Dogodila se greska kontaktirajete administratora: " + ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE );
+				}		
+			}
 		});
 		btnNewButton.setBounds(142, 271, 89, 23);
 		getContentPane().add(btnNewButton);

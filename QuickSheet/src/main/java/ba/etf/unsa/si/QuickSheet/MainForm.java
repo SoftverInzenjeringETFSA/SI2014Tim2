@@ -1,55 +1,30 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.AbstractListModel;
+import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.Button;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JPasswordField;
-import javax.swing.JCheckBox;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
-
-import java.util.Date;
-import java.util.Calendar;
-
-import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-import javax.swing.Box;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.border.LineBorder;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.TableColumnModel;
 
-import java.awt.Component;
-import java.awt.ScrollPane;
-import java.awt.Toolkit;
-
-import javax.swing.DefaultComboBoxModel;
+import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 
 public class MainForm extends JFrame {
 	private JTextField textField;
@@ -97,7 +72,7 @@ public class MainForm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainForm() {
+	public MainForm(AdministratorHibernate admin) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet - Administrator");
@@ -155,6 +130,8 @@ public class MainForm extends JFrame {
 		odjeliPanel.add(label_error);
 		label_error.setVisible(false);
 		
+		//administrator
+		AdministratorHibernate Admin = admin;
 		
 		JButton btnDodaj_1 = new JButton("Dodaj");
 		btnDodaj_1.addActionListener(new ActionListener() {

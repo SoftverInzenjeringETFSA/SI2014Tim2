@@ -18,13 +18,7 @@ import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 import ba.etf.unsa.si.util.HibernateUtil;
 
 public class DalDao {
-	
-	static public String HashirajLozinku (String lozinka)
-	{
-		Integer loz = lozinka.hashCode();
-		return loz.toString();
-	}
-	
+
 	static public void DodajObjekte(LinkedList<?> kolekcija)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -593,6 +587,29 @@ public class DalDao {
 			trebaValidirati.addAll(projekatTimesheet);
 		}
 		return trebaValidirati;
+	}
+	
+	static public ZaposlenikHibernate VratiZaposlenikaPoUsernamu(String username)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "'";
+		Query query = session.createQuery(hql);
+		ZaposlenikHibernate result = (ZaposlenikHibernate)query.uniqueResult();
+		transaction.commit();
+		session.close();
+		return result;
+	}
+	static public AdministratorHibernate VratiAdministratoraPoUsernamu(String username)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM AdministratorHibernate WHERE username='" + username + "'";
+		Query query = session.createQuery(hql);
+		AdministratorHibernate result = (AdministratorHibernate)query.uniqueResult();
+		transaction.commit();
+		session.close();
+		return result;
 	}
 }
 

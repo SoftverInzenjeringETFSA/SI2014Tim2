@@ -34,7 +34,7 @@ public class AdministratorHibernate implements java.io.Serializable {
 	
 	public void setLozinka(String _lozinka)
 	{
-		lozinka = ((Integer)_lozinka.hashCode()).toString();
+		lozinka = _lozinka;
 	}
 		
 }
