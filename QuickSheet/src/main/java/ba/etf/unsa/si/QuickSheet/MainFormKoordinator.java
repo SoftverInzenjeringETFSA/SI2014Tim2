@@ -2,6 +2,7 @@ package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
 
+import javax.naming.directory.InvalidAttributeValueException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -33,6 +34,7 @@ import javax.swing.SpinnerDateModel;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.LinkedList;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
@@ -46,7 +48,15 @@ import java.awt.Toolkit;
 import javax.swing.DefaultComboBoxModel;
 
 import ba.etf.unsa.si.Klase.DalDao;
+import ba.etf.unsa.si.Klase.IzvjestajOdjela;
+import ba.etf.unsa.si.Klase.IzvjestajZaposlenika;
+import ba.etf.unsa.si.Klase.Koordinator;
 import ba.etf.unsa.si.Klase.Lozinka;
+import ba.etf.unsa.si.Klase.Odjel;
+import ba.etf.unsa.si.Klase.Projekat;
+import ba.etf.unsa.si.Klase.ProjekatRadnik;
+import ba.etf.unsa.si.Klase.Task;
+import ba.etf.unsa.si.Klase.Timesheet;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
@@ -1009,6 +1019,133 @@ public class MainFormKoordinator extends JFrame {
 				}
 				else
 				{
+					String odjel = comboBox_20.getSelectedItem().toString();
+					String[] rijeci = odjel.split(" ");
+					long OdjelID = Long.parseLong(rijeci[0]);
+					
+					String zaposlenik = comboBox_21.getSelectedItem().toString();
+					String[] rijeci1 = zaposlenik.split(" ");
+					long ZaposlenikID = Long.parseLong(rijeci1[0]);
+					
+					String projekat = comboBox_22.getSelectedItem().toString();
+					String[] rijeci2 = projekat.split(" ");
+					long ProjekatID = Long.parseLong(rijeci2[0]);
+					
+					OdjelHibernate oh = DalDao.VratiOdjel(OdjelID);
+					ZaposlenikHibernate zh = DalDao.VratiZaposlenika(ZaposlenikID);
+					ProjekatHibernate ph = DalDao.VratiProjekat(ProjekatID);
+					
+					ZaposlenikHibernate koordinatorH = ph.getKoordinator();
+					Koordinator kkk = null;
+					try {
+						kkk = new Koordinator(koordinatorH.getUsername(), koordinatorH.getIme(), koordinatorH.getPrezime(), koordinatorH.getAdresa(), koordinatorH.getDatumZaposlenja(), koordinatorH.getSatnica());
+					} catch (InvalidAttributeValueException e2) {}
+					Projekat PROJEKAT = null;
+					try {
+						PROJEKAT = new Projekat(ph.getNaziv(), ph.getNazivKlijenta(), kkk);
+					} catch (InvalidAttributeValueException e2) {}
+					
+					ArrayList<TaskHibernate> taskoviH = DalDao.VratiSveTaskoveProjekta(ProjekatID);
+					LinkedList<Task> taskovi = new LinkedList<Task>();
+					for (int i = 0; i < taskoviH.size(); i++)
+					{
+						ZaposlenikHibernate zzz = taskoviH.get(i).getZaposlenik();
+						ProjekatRadnik _zaposlenik = null;
+						try {
+							_zaposlenik = new ProjekatRadnik(zzz.getUsername(), zzz.getIme(), zzz.getPrezime(), zzz.getAdresa(), zzz.getDatumZaposlenja(), zzz.getSatnica());
+						} catch (InvalidAttributeValueException e1) {}
+						Task novi = null;
+						try {
+							novi = new Task(taskoviH.get(i).getNaziv(), taskoviH.get(i).getOpis(), taskoviH.get(i).getPrioritet(), _zaposlenik, taskoviH.get(i).getRok());
+						} catch (javax.management.InvalidAttributeValueException e1) {}
+						taskovi.add(novi);
+					}
+					
+					try {
+						PROJEKAT.setTaskovi(taskovi);
+					} catch (InvalidAttributeValueException e1) {}
+					
+					ArrayList<ZaposlenikHibernate> zaposh = DalDao.VratiZaposlenikeNaProjektu(ProjekatID);
+					LinkedList<ProjekatRadnik> zaposlenici = new LinkedList<ProjekatRadnik>();
+					for (int i = 0; i < zaposh.size(); i++)
+					{
+						ProjekatRadnik pa = null;
+						try {
+							pa = new ProjekatRadnik(zaposh.get(i).getUsername(), zaposh.get(i).getIme(), zaposh.get(i).getPrezime(), zaposh.get(i).getAdresa(), zaposh.get(i).getDatumZaposlenja(), zaposh.get(i).getSatnica());
+						} catch (InvalidAttributeValueException e1) {}
+						zaposlenici.add(pa);
+					}
+					
+					try {
+						PROJEKAT.setZaposlenici(zaposlenici);
+					} catch (InvalidAttributeValueException e1) {}
+					
+					
+					ArrayList<TimesheetHibernate> tss = DalDao.VratiTimesheetoveProjekta(ProjekatID);
+					LinkedList<Timesheet> tim = new LinkedList<Timesheet>();
+					for (int i = 0; i < tss.size(); i++)
+					{
+						ArrayList<TaskHibernate> Taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(tss.get(i).getId());
+						LinkedList<Task> kom = new LinkedList<Task>();
+						for (int j = 0; j < Taskovi.size(); j++)
+						{
+							ZaposlenikHibernate zaaa = Taskovi.get(j).getZaposlenik();
+							ProjekatRadnik aaa = null;
+							try {
+								aaa = new ProjekatRadnik(zaaa.getUsername(), zaaa.getIme(), zaaa.getPrezime(), zaaa.getAdresa(), zaaa.getDatumZaposlenja(), zaaa.getSatnica());
+							} catch (InvalidAttributeValueException e1) {}
+							Task nono = null;
+							try {
+								nono = new Task(Taskovi.get(j).getNaziv(), Taskovi.get(j).getOpis(), Taskovi.get(j).getPrioritet(), aaa, Taskovi.get(j).getRok());
+							} catch (javax.management.InvalidAttributeValueException e1) {}
+							kom.add(nono);
+						}
+						ProjekatHibernate pp = tss.get(i).getProjekat();
+						ZaposlenikHibernate imm = pp.getKoordinator();
+						Koordinator koko = null;
+						try {
+							koko = new Koordinator(imm.getUsername(), imm.getIme(), imm.getPrezime(), imm.getAdresa(), imm.getDatumZaposlenja(), imm.getSatnica());
+						} catch (InvalidAttributeValueException e1) {}
+						Projekat ll = null;
+						try {
+							ll = new Projekat(pp.getNaziv(), pp.getNazivKlijenta(), koko);
+						} catch (InvalidAttributeValueException e1) {}
+						try {
+							Timesheet toto = new Timesheet(kom, tss.get(i).getBrojRadnihSati(), ll, tss.get(i).getDatumSlanja());
+						} catch (javax.management.InvalidAttributeValueException e1) {}
+					}
+					
+					ProjekatRadnik ZAPOSLENIK = new ProjekatRadnik();
+					try {
+						ZAPOSLENIK = new ProjekatRadnik(zh.getUsername(), zh.getIme(), zh.getPrezime(), zh.getAdresa(), zh.getDatumZaposlenja(), zh.getSatnica());
+					} catch (InvalidAttributeValueException e1) {}
+					
+					try {
+						IzvjestajZaposlenika iz = new IzvjestajZaposlenika(PROJEKAT, ZAPOSLENIK);
+					} catch (InvalidAttributeValueException e1) {}
+					
+					
+					Odjel ODJEL = null;
+					try {
+						ODJEL = new Odjel(oh.getNaziv(), oh.getMaksimalanBrojRadnika());
+					} catch (javax.management.InvalidAttributeValueException e1) {}
+					ODJEL.setArhiviran(false);
+					ArrayList<ZaposlenikHibernate> odjelZap = DalDao.VratiZaposlenikeUOdjelu(OdjelID);
+					LinkedList<ProjekatRadnik> zaki = new LinkedList<ProjekatRadnik>();
+					
+					for (int i = 0; i < odjelZap.size(); i++)
+					{
+						try {
+							ProjekatRadnik prNovi = new ProjekatRadnik(zaki.get(i).getUsername(), zaki.get(i).getIme(), zaki.get(i).getPrezime(), zaki.get(i).getAdresa(), zaki.get(i).getDatumZaposlenja(), zaki.get(i).getSatnica());
+							zaki.add(prNovi);
+						} catch (InvalidAttributeValueException e1) {}
+					
+					}
+					ODJEL.setZaposlenici(zaki);
+					try {
+						IzvjestajOdjela oz = new IzvjestajOdjela(PROJEKAT, ODJEL);
+					} catch (InvalidAttributeValueException e1) {
+					}
 					new IzvjestajForm().setVisible(true);
 				}
 				
