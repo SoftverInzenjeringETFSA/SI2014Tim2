@@ -58,10 +58,13 @@ import javax.swing.DefaultComboBoxModel;
 
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
@@ -219,6 +222,19 @@ public class MainForm extends JFrame {
 					odjelh.setNaziv(textField_43.getText());
 					odjelh.setMaksimalanBrojRadnika(Integer.parseInt(textField_44.getText()));
 					DalDao.DodajObjekat(odjelh);
+					
+					DefaultListModel listaKorisnika = new DefaultListModel();
+					list_3.setModel(listaKorisnika);
+					int indeksi[]=list_3.getSelectedIndices();
+
+					for (int i=0;i<indeksi.length;i++)
+						{
+							OdjelZaposlenikHibernate ozh=new OdjelZaposlenikHibernate();
+							ozh.setOdjel(odjelh);
+							ozh.setZaposlenikOdjela((ZaposlenikHibernate) listaKorisnika.getElementAt(indeksi[i]));
+							DalDao.DodajObjekat(ozh);
+						}
+					
 					JOptionPane.showMessageDialog(null, "Odjel je dodan.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
 					textField_43.setText("");
 					textField_44.setText("");
