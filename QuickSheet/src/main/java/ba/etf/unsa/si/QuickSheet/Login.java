@@ -58,9 +58,6 @@ public class Login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 
 		getContentPane().setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -201,9 +198,6 @@ public class Login extends JFrame {
 				else{
 					labela1.setVisible(false);
 				}
-				
-				
-				
 		}
 		});
 		btnNewButton.setBounds(142, 271, 89, 23);
