@@ -646,5 +646,19 @@ public class DalDao {
 			ObrisiObjekat(ozh.get(i));
 		}
 	}
+	
+	static public void IzbrisiZaposlenikaIzOdjela (long idZap, long idOdj)
+	{
+		ArrayList<OdjelZaposlenikHibernate> ozh = VratiOdjelZaposlenikPoZaposleniku(idZap);
+		OdjelHibernate oh=new OdjelHibernate();
+		oh=DalDao.VratiOdjel(idOdj);
+		for (int i = 0; i < ozh.size(); i++)
+		{
+			if(ozh.get(i).getOdjel()==oh){
+				ObrisiObjekat(ozh.get(i));	
+			}
+			
+		}
+	}
 }
 

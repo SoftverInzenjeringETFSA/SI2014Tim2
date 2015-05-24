@@ -167,7 +167,7 @@ public class OdjelForm extends JFrame {
 				}
 				else{
 					label_1.setVisible(false);
-					/*
+					
 					String selektovanaVrijednost = list.getSelectedValue().toString();
 					String[] rijeci = selektovanaVrijednost.split(" ");
 					long id = Long.parseLong(rijeci[0]);
@@ -178,7 +178,7 @@ public class OdjelForm extends JFrame {
 					ozh.setZaposlenikOdjela(zh);
 					DalDao.ObrisiObjekat(ozh);
 					JOptionPane.showMessageDialog(null, "Zaposlenik je uklonjen iz odjela.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
-				*/
+				
 				}
 			}
 		});
