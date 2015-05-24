@@ -43,6 +43,7 @@ import javax.swing.table.TableColumnModel;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
+import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class MainFormZaposlenik extends JFrame {
@@ -92,6 +93,7 @@ public class MainFormZaposlenik extends JFrame {
 		getContentPane().add(tabbedPane);
 		setLocationRelativeTo(null);
 		JPanel timeSheetPanel = new JPanel();
+		
 		tabbedPane.addTab("Moj Timesheet", null, timeSheetPanel, null);
 		timeSheetPanel.setLayout(null);
 		
@@ -110,6 +112,7 @@ public class MainFormZaposlenik extends JFrame {
 		panel_4.add(lblNewLabel);
 		
 		final JComboBox comboBox = new JComboBox();
+		
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"projekat 1", "projekat 2"}));
 		comboBox.setBounds(136, 69, 201, 20);
 		panel_4.add(comboBox);
@@ -535,7 +538,22 @@ public class MainFormZaposlenik extends JFrame {
 			}
 		});
 		
+		timeSheetPanel.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				comboBox.removeAllItems();
+				ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
+				for(ProjekatHibernate projekat: projekti) {
+					comboBox.addItem(projekti);
+				}
+			}
+		});
 		
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 
 	private void JTable(Object rowData, TableColumnModel columnNames) {

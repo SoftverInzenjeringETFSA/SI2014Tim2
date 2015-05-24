@@ -727,7 +727,9 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error1.setVisible(false);
-					new ProjekatForm().setVisible(true);
+					//new ProjekatForm().setVisible(true);
+					String Projekat=list_1.getSelectedValue().toString();
+					new ProjekatForm(Projekat).setVisible(true);
 					
 				}
 				
@@ -751,7 +753,24 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error1.setVisible(false);
+					String selektovanaVrijednost = list_1.getSelectedValue().toString();
+					String[] rijeci = selektovanaVrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					ProjekatHibernate o=DalDao.VratiProjekat(id);
+					o.setArhiviran(true);
+					DalDao.ModifikujObjekat(o);
+					JOptionPane.showMessageDialog(null, "Projekat je arhiviran.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
 					
+					DefaultListModel listaArhProjekata = new DefaultListModel();
+					list_1.setModel(listaArhProjekata);
+					ArrayList<ProjekatHibernate> nearhiviraniProjekti=DalDao.VratiSveNearhiviraneProjekte();
+
+					for (int i=0;i<nearhiviraniProjekti.size();i++)
+						{
+						    String tempString = nearhiviraniProjekti.get(i).getId() + " " + nearhiviraniProjekti.get(i).getNaziv() + " " + nearhiviraniProjekti.get(i).getNazivKlijenta();
+							listaArhProjekata.addElement(tempString);
+						}
+					textField_46.setText("");
 					
 				}
 			}
