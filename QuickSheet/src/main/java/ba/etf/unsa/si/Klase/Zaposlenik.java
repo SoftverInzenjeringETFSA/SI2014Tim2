@@ -28,6 +28,10 @@ public abstract class Zaposlenik {
 		arhiviran = false;
 	}
 	
+	public Zaposlenik(){
+		
+	}
+	
 	public String getUsername()
 	{
 		return username;
@@ -55,6 +59,11 @@ public abstract class Zaposlenik {
 		    sb.append(c);
 		}
 		this.lozinka = sb.toString();;
+	}
+	
+	public void setLozinka(String lozinka)
+	{
+		this.lozinka = lozinka;
 	}
 	
 	public String getIme()

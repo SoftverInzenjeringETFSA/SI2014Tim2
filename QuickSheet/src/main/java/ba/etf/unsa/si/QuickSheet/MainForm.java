@@ -703,30 +703,30 @@ public class MainForm extends JFrame {
 		
 		JLabel lblKorisnickoIme = new JLabel("Korisničko ime:");
 		lblKorisnickoIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblKorisnickoIme.setBounds(52, 186, 82, 14);
+		lblKorisnickoIme.setBounds(52, 211, 82, 14);
 		panel.add(lblKorisnickoIme);
 		
 		JLabel lblLozinka = new JLabel("Lozinka:");
 		lblLozinka.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblLozinka.setBounds(82, 211, 46, 14);
+		lblLozinka.setBounds(82, 236, 46, 14);
 		panel.add(lblLozinka);
 		
 		JLabel lblPonoviLozinku = new JLabel("Ponovi lozinku:");
 		lblPonoviLozinku.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblPonoviLozinku.setBounds(52, 236, 92, 14);
+		lblPonoviLozinku.setBounds(52, 261, 92, 14);
 		panel.add(lblPonoviLozinku);
 		
 		JLabel lblVrstaKorisnika = new JLabel("Koordinator:");
 		lblVrstaKorisnika.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblVrstaKorisnika.setBounds(62, 261, 82, 14);
+		lblVrstaKorisnika.setBounds(62, 286, 82, 14);
 		panel.add(lblVrstaKorisnika);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(190, 233, 141, 20);
+		passwordField.setBounds(190, 258, 141, 20);
 		panel.add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(190, 208, 141, 20);
+		passwordField_1.setBounds(190, 233, 141, 20);
 		panel.add(passwordField_1);
 		
 		textField_36 = new JTextField();
@@ -746,7 +746,7 @@ public class MainForm extends JFrame {
 		
 		textField_41 = new JTextField();
 		textField_41.setColumns(10);
-		textField_41.setBounds(190, 183, 141, 20);
+		textField_41.setBounds(190, 208, 141, 20);
 		panel.add(textField_41);
 		
 		final JLabel label_error2 = new JLabel("");
@@ -863,8 +863,18 @@ public class MainForm extends JFrame {
 		panel.add(btnOtkai_2);
 		
 		JCheckBox chckbxDa = new JCheckBox("Da");
-		chckbxDa.setBounds(190, 257, 97, 23);
+		chckbxDa.setBounds(190, 282, 97, 23);
 		panel.add(chckbxDa);
+		
+		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblSatnica.setBounds(82, 185, 46, 14);
+		panel.add(lblSatnica);
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
+		spinner_1.setBounds(190, 182, 141, 20);
+		panel.add(spinner_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
