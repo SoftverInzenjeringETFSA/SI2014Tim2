@@ -280,6 +280,16 @@ public class DalDao {
 		return oh;
 	}
 	
+	static public TimesheetHibernate VratiTimehseet(long id)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		TimesheetHibernate th = (TimesheetHibernate)session.get(TimesheetHibernate.class, id);
+		transaction.commit();
+		session.close();
+		return th;
+	}
+	
 	static public OdjelHibernate VratiOdjelPoNazivu(String naziv)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();

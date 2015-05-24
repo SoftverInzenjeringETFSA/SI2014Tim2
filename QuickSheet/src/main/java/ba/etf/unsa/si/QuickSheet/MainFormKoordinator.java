@@ -49,6 +49,7 @@ import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
@@ -84,7 +85,7 @@ public class MainFormKoordinator extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFormKoordinator frame = new MainFormKoordinator(null);
+					MainFormKoordinator frame = new MainFormKoordinator(DalDao.VratiZaposlenika(8));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -1016,45 +1017,10 @@ public class MainFormKoordinator extends JFrame {
 		
 		JButton btnPrikazi = new JButton("Prikaži");
 		btnPrikazi.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPrikazi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if(list_3.isSelectionEmpty()){
-					greska = false;
-					label_17.setText("Morate označiti timesheet da bi ga uklonili!");
-				}
-				if(greska == false){
-					label_17.setVisible(true);
-				}
-				else {
-					label_17.setVisible(false);
-					new PrikazTimesheeta().setVisible(true);
-				}
-				
-			}			
-		});
 		btnPrikazi.setBounds(88, 336, 74, 23);
 		panel_6.add(btnPrikazi);
 		
 		JButton btnOdobri = new JButton("Odobri");
-		btnOdobri.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				boolean greska = true;
-				
-				if(list_3.isSelectionEmpty()){
-					greska = false;
-					label_17.setText("Morate označiti timesheet da bi ga odobrili!");
-				}
-				if(greska == false){
-					label_17.setVisible(true);
-				}
-				else {
-					label_17.setVisible(false);
-					
-				}
-			}
-		});
 		btnOdobri.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnOdobri.setBounds(172, 336, 74, 23);
 		panel_6.add(btnOdobri);
@@ -1083,15 +1049,73 @@ public class MainFormKoordinator extends JFrame {
 		
 		ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaValidaciju(zh.getId());
 		DefaultListModel dlm = new DefaultListModel();
-		JList list_6 = new JList();
+		final JList list_6 = new JList();
+		list_6.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_6.setBounds(12, 76, 315, 249);
 		list_6.setModel(dlm);
 		panel_6.add(list_6);
 		for(int i = 0; i < timesheets.size(); i++)
 		{
-			String komponenta = timesheets.get(i).getId() + " " + timesheets.get(i).getProjekat().getNaziv() + " " + timesheets.get(i).getDatumSlanja().toString();
-			dlm.addElement(komponenta);
+			if (!timesheets.get(i).getValidiran())
+			{
+				ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(timesheets.get(i).getId());
+				if (taskovi.get(0).getKomentar().isEmpty())
+				{
+					String komponenta = timesheets.get(i).getId() + " " + timesheets.get(i).getProjekat().getNaziv() + " ";
+					dlm.addElement(komponenta);
+				}
+			}
 		}
+		
+		btnPrikazi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(list_6.isSelectionEmpty()){
+					greska = false;
+					label_17.setText("Morate označiti timesheet da bi ga prikazali!");
+				}
+				if(greska == false){
+					label_17.setVisible(true);
+				}
+				else {
+					label_17.setVisible(false);
+					String selektovatniTimesheet = list_6.getSelectedValue().toString();
+					new PrikazTimesheeta(selektovatniTimesheet).setVisible(true);
+				}
+				
+			}			
+		});
+		
+		btnOdobri.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				
+				if(list_6.isSelectionEmpty()){
+					greska = false;
+					label_17.setText("Morate označiti timesheet da bi ga odobrili!");
+				}
+				if(greska == false){
+					label_17.setVisible(true);
+				}
+				else {
+					label_17.setVisible(false);
+					String vrijednost = list_6.getSelectedValue().toString();
+					String[] rijeci = vrijednost.split(" ");
+					long id = Long.parseLong(rijeci[0]);
+					TimesheetHibernate timesheet = DalDao.VratiTimehseet(id);
+					timesheet.setValidiran(true);
+					DalDao.ModifikujObjekat(timesheet);
+					ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(id);
+					for (int i = 0; i < taskovi.size(); i++)
+					{
+						taskovi.get(i).setKomentar("Odobren");
+						DalDao.ModifikujObjekat(taskovi.get(i));
+					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste odobrili timesheet", "Timesheet odobren", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		
 		JPanel panel_12 = new JPanel();
 		
