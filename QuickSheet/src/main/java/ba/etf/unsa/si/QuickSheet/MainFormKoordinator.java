@@ -75,9 +75,9 @@ public class MainFormKoordinator extends JFrame {
 	public MainFormKoordinator(final ZaposlenikHibernate zh) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
-		setTitle("QuickSheet");
+		setTitle("QuickSheet - Koordinator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 768, 474);
+		setBounds(100, 100, 768, 458);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		
@@ -97,7 +97,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Projekat:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel.setBounds(56, 72, 46, 14);
+		lblNewLabel.setBounds(80, 69, 46, 14);
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		panel_4.add(lblNewLabel);
 		
@@ -152,7 +152,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
 		lblTaskovi.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblTaskovi.setBounds(56, 120, 46, 14);
+		lblTaskovi.setBounds(80, 117, 46, 14);
 		panel_4.add(lblTaskovi);
 		
 		JLabel lblBrojSati = new JLabel("Ukupan broj radnih sati:");
@@ -162,7 +162,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		JSpinner spinner_2 = new JSpinner();
 		spinner_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_2.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+		spinner_2.setModel(new SpinnerNumberModel(1, 1, 24, 1));
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
 		
@@ -171,7 +171,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		JLabel label = new JLabel("Datum:");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label.setBounds(68, 294, 35, 14);
+		label.setBounds(91, 297, 35, 14);
 		panel_4.add(label);
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
@@ -672,9 +672,25 @@ public class MainFormKoordinator extends JFrame {
 		textField_6.setBounds(128, 56, 124, 23);
 		panel_1.add(textField_6);
 		
+		final JLabel label_error2 = new JLabel("");
+		label_error2.setVisible(false);
+		label_error2.setBounds(0, 408, 759, 14);
+		korisniciPanel.add(label_error2);
+		
 		JButton button_1 = new JButton("Pretraži");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				
+				if(comboBox_4.getSelectedItem() == null){
+					greska = false;
+					label_error2.setText("Morate označiti parametar pretrage!");
+				}
+				if(greska == false){
+					label_error2.setVisible(true);
+				}
+				else {
+					label_error2.setVisible(false);
 				if (!textField_6.getText().isEmpty())
 				{
 			    DefaultListModel lista = new DefaultListModel();
@@ -683,6 +699,7 @@ public class MainFormKoordinator extends JFrame {
 				ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
 				for (int i = 0; i < projekti.size(); i++)
 				{
+					
 					ArrayList<ZaposlenikHibernate> zaps = DalDao.VratiZaposlenikeNaProjektu(projekti.get(i).getId());
 					for (int j = 0; j < zaps.size(); j++)
 					{
@@ -764,11 +781,14 @@ public class MainFormKoordinator extends JFrame {
 					lista.addElement(podatak);
 				}
 				}
-			}
+			}}
 		});
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_1.setBounds(262, 56, 69, 23);
 		panel_1.add(button_1);
+		
+		
+		
 		
 		JPanel izvjestajiPanel = new JPanel();
 		tabbedPane.addTab("Izvještaji", null, izvjestajiPanel, null);
@@ -899,23 +919,75 @@ public class MainFormKoordinator extends JFrame {
 		lblImenkoPrezimenkovic.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblImenkoPrezimenkovic.setBounds(15, 41, 240, 14);
 		panel_6.add(lblImenkoPrezimenkovic);
+		final JLabel label_17 = new JLabel("");
+		label_17.setVisible(false);
+		label_17.setBounds(0, 408, 759, 14);
+		izvjestajiPanel.add(label_17);
+		
 		
 		JButton btnPrikazi = new JButton("Prikaži");
 		btnPrikazi.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPrikazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new PrikazTimesheeta().setVisible(true);
+				boolean greska = true;
+				
+				if(list_3.isSelectionEmpty()){
+					greska = false;
+					label_17.setText("Morate označiti timesheet da bi ga uklonili!");
+				}
+				if(greska == false){
+					label_17.setVisible(true);
+				}
+				else {
+					label_17.setVisible(false);
+					new PrikazTimesheeta().setVisible(true);
+				}
+				
 			}			
 		});
 		btnPrikazi.setBounds(88, 336, 74, 23);
 		panel_6.add(btnPrikazi);
 		
 		JButton btnOdobri = new JButton("Odobri");
+		btnOdobri.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				
+				if(list_3.isSelectionEmpty()){
+					greska = false;
+					label_17.setText("Morate označiti timesheet da bi ga odobrili!");
+				}
+				if(greska == false){
+					label_17.setVisible(true);
+				}
+				else {
+					label_17.setVisible(false);
+					
+				}
+			}
+		});
 		btnOdobri.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnOdobri.setBounds(172, 336, 74, 23);
 		panel_6.add(btnOdobri);
 		
 		JButton btnNewButton_2 = new JButton("Odbij");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				
+				if(list_3.isSelectionEmpty()){
+					greska = false;
+					label_17.setText("Morate označiti timesheet da bi ga odbili!");
+				}
+				if(greska == false){
+					label_17.setVisible(true);
+				}
+				else {
+					label_17.setVisible(false);
+					
+				}
+			}
+		});
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton_2.setBounds(256, 336, 74, 23);
 		panel_6.add(btnNewButton_2);
@@ -923,6 +995,8 @@ public class MainFormKoordinator extends JFrame {
 		JList list_6 = new JList();
 		list_6.setBounds(12, 76, 315, 249);
 		panel_6.add(list_6);
+		
+		
 		
 	}
 
