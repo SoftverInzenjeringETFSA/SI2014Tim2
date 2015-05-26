@@ -1,0 +1,44 @@
+Kreirati novi scheme "tim2" unutar mysql workbencha, a zatim importovati skriptu tim2.sql unutar novokreiranog scheme-a. Kreirati privilegije za pristup bazi, prema navedenim podacima:
+username: EtfSI2014
+password: 2014SIEtf
+
+Zaposlenicima u bazi se lozinka hashira. Znaci, kad se zaposlenici dodaju kroz GUI, njihove lozinke bi trebale biti zašticene korištenjem hash funkcije, te ukoliko to nije slucaj, prijavite to kao bug. Takoder, zaposlenicima koji su arhivirani, ne bi smio biti dozvoljen login. Nisam siguran da li je to kolega koji je radio login uzeo u obzir, pa i to provjerite. 
+
+Trenutni podaci u bazi za login:
+
+Administrator:
+
+-username:Administrator
+-password:administrator
+
+Zaposlenici:
+
+-username:imePrezime
+-password:lozinka11
+
+-username:ahajdarevic1
+-password:ovojelozinka
+
+-username:mkulovic1
+-password:nekiPass12
+
+-username:amekovic1
+-password:lozinkalozinka
+
+-username:tdajevic1
+-password:ulicalozinka
+
+-username:sdajevic1
+-password:mojaLozinka222
+
+-username:ibikic1
+-password:nemampojma111
+
+-username:mnikic1
+-password:jasammirna
+
+-username:hnikic1
+-password:jasamhamza
+
+-username:lfazlic1
+-password:ovojelejla
