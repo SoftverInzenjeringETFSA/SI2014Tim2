@@ -2,9 +2,11 @@ package ba.etf.unsa.si.Klase;
 
 import java.time.Month;
 import java.util.ArrayList;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
@@ -48,8 +50,9 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE ime='" + ime + "' AND arhiviran = '1'";
+		String hql = "FROM ZaposlenikHibernate WHERE ime=:ime AND arhiviran = '1'";
 		Query query = session.createQuery(hql);
+		query.setString("ime", ime);
 		@SuppressWarnings("unchecked")
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
@@ -61,8 +64,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE ime='" + ime + "' AND arhiviran = '0'";
+		String hql = "FROM ZaposlenikHibernate WHERE ime=:ime AND arhiviran = '0'";
 		Query query = session.createQuery(hql);
+		query.setString("ime", ime);
+		@SuppressWarnings("unchecked")
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -73,8 +78,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE prezime='" + prezime + "'  AND arhiviran = '1'";
+		String hql = "FROM ZaposlenikHibernate WHERE prezime=:prezime AND arhiviran = '1'";
 		Query query = session.createQuery(hql);
+		query.setString("prezime", prezime);
+		@SuppressWarnings("unchecked")
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -85,8 +92,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE prezime='" + prezime + "' AND arhiviran = '0'";
+		String hql = "FROM ZaposlenikHibernate WHERE prezime=:prezime AND arhiviran = '0'";
 		Query query = session.createQuery(hql);
+		query.setString("prezime", prezime);
+		@SuppressWarnings("unchecked")
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -119,6 +128,7 @@ public class DalDao {
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM ZaposlenikHibernate";
 		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -131,18 +141,20 @@ public class DalDao {
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM ZaposlenikHibernate WHERE koordinator = '1' AND arhiviran = '0'";
 		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
 		return results;
 	}
 	
-	static public ArrayList<ZaposlenikHibernate> VratiSveNearhiviranaZaposlenike()
+	static public ArrayList<ZaposlenikHibernate> VratiSveNearhiviraneZaposlenike()
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM ZaposlenikHibernate WHERE arhiviran = '0'";
 		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -153,8 +165,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "' AND arhiviran='1'";
+		String hql = "FROM OdjelHibernate WHERE naziv=:naziv AND arhiviran='1'";
 		Query query = session.createQuery(hql);
+		query.setString("naziv", naziv);
+		@SuppressWarnings("unchecked")
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -165,8 +179,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "' AND arhiviran='0'";
+		String hql = "FROM OdjelHibernate WHERE naziv=:naziv AND arhiviran='0'";
 		Query query = session.createQuery(hql);
+		query.setString("naziv", naziv);
+		@SuppressWarnings("unchecked")
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -179,6 +195,7 @@ public class DalDao {
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM OdjelHibernate WHERE arhiviran='1'";
 		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -191,6 +208,7 @@ public class DalDao {
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM OdjelHibernate WHERE arhiviran='0'";
 		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -221,8 +239,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelHibernate WHERE naziv='" + naziv + "'";
+		String hql = "FROM OdjelHibernate WHERE naziv=:naziv";
 		Query query = session.createQuery(hql);
+		query.setString("naziv", naziv);
+		@SuppressWarnings("unchecked")
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		OdjelHibernate oh = results.get(0);
 		transaction.commit();
@@ -234,8 +254,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelZaposlenikHibernate WHERE odjel = " + OdjelId + "";
+		String hql = "FROM OdjelZaposlenikHibernate WHERE odjel=:OdjelId";
 		Query query = session.createQuery(hql);
+		query.setLong("OdjelId", OdjelId);
+		@SuppressWarnings("unchecked")
 		ArrayList<OdjelZaposlenikHibernate> results = (ArrayList<OdjelZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -246,8 +268,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM OdjelZaposlenikHibernate WHERE zaposlenikOdjela = " + ZaposlenikId + "";
+		String hql = "FROM OdjelZaposlenikHibernate WHERE zaposlenikOdjela=:ZaposlenikId";
 		Query query = session.createQuery(hql);
+		query.setLong("ZaposlenikId", ZaposlenikId);
+		@SuppressWarnings("unchecked")
 		ArrayList<OdjelZaposlenikHibernate> results = (ArrayList<OdjelZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -285,8 +309,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ProjekatHibernate WHERE naziv='" + naziv + "'";
+		String hql = "FROM ProjekatHibernate WHERE naziv=:naziv";
 		Query query = session.createQuery(hql);
+		query.setString("naziv", naziv);
+		@SuppressWarnings("unchecked")
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -297,8 +323,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ProjekatHibernate WHERE naziv='" + naziv + "' AND arhiviran ='0'";
+		String hql = "FROM ProjekatHibernate WHERE naziv=:naziv AND arhiviran ='0'";
 		Query query = session.createQuery(hql);
+		query.setString("naziv", naziv);
+		@SuppressWarnings("unchecked")
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -309,19 +337,24 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ProjekatHibernate WHERE naziv='" + naziv + "' AND arhiviran ='1'";
+		String hql = "FROM ProjekatHibernate WHERE naziv=:naziv AND arhiviran ='1'";
 		Query query = session.createQuery(hql);
+		query.setString("naziv", naziv);
+		@SuppressWarnings("unchecked")
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();
 		session.close();
 		return results;
 	}
+	
 	static public ArrayList<ProjekatHibernate> VratiProjektePoNazivuKlijenta(String nazivKlijenta)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ProjekatHibernate WHERE nazivKlijenta='" + nazivKlijenta + "'";
+		String hql = "FROM ProjekatHibernate WHERE nazivKlijenta=:nazivKlijenta";
 		Query query = session.createQuery(hql);
+		query.setString("nazivKlijenta", nazivKlijenta);
+		@SuppressWarnings("unchecked")
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -332,8 +365,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ProjekatHibernate WHERE nazivKlijenta='" + nazivKlijenta + "' AND arhiviran ='0'";
+		String hql = "FROM ProjekatHibernate WHERE nazivKlijenta=:nazivKlijenta AND arhiviran ='0'";
 		Query query = session.createQuery(hql);
+		query.setString("nazivKlijenta", nazivKlijenta);
+		@SuppressWarnings("unchecked")
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -344,20 +379,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ProjekatHibernate WHERE nazivKlijenta='" + nazivKlijenta + "' AND arhiviran ='1'";
+		String hql = "FROM ProjekatHibernate WHERE nazivKlijenta=:nazivKlijenta AND arhiviran ='1'";
 		Query query = session.createQuery(hql);
-		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
-		transaction.commit();
-		session.close();
-		return results;
-	}
-	
-	static public ArrayList<ProjekatHibernate> VratiSveProjekte()
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ProjekatHibernate";
-		Query query = session.createQuery(hql);
+		query.setString("nazivKlijenta", nazivKlijenta);
+		@SuppressWarnings("unchecked")
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -370,6 +395,7 @@ public class DalDao {
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM ProjekatHibernate WHERE arhiviran='0'";
 		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -382,6 +408,7 @@ public class DalDao {
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM ProjekatHibernate WHERE arhiviran='1'";
 		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -402,8 +429,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM TaskHibernate WHERE projekat =" + ProjekatID + "";
+		String hql = "FROM TaskHibernate WHERE projekat=:ProjekatID";
 		Query query = session.createQuery(hql);
+		query.setLong("ProjekatID", ProjekatID);
+		@SuppressWarnings("unchecked")
 		ArrayList<TaskHibernate> results = (ArrayList<TaskHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -428,8 +457,11 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM TaskHibernate WHERE projekat=" + ProjekatID + " AND zaposlenik =" + ZaposlenikID + "";
+		String hql = "FROM TaskHibernate WHERE projekat=:ProjekatID AND zaposlenik=:ZaposlenikID";
 		Query query = session.createQuery(hql);
+		query.setLong("ProjekatID", ProjekatID);
+		query.setLong("ZaposlenikID", ZaposlenikID);
+		@SuppressWarnings("unchecked")
 		ArrayList<TaskHibernate> results = (ArrayList<TaskHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -440,8 +472,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM TimesheetHibernate WHERE projekat=" + ProjekatID + "";
+		String hql = "FROM TimesheetHibernate WHERE projekat=:ProjekatID";
 		Query query = session.createQuery(hql);
+		query.setLong("ProjekatID", ProjekatID);
+		@SuppressWarnings("unchecked")
 		ArrayList<TimesheetHibernate> results = (ArrayList<TimesheetHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -452,8 +486,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM TimesheetHibernate WHERE projekat=" + ProjekatID + " AND validiran='0'";
+		String hql = "FROM TimesheetHibernate WHERE projekat=:ProjekatID AND validiran='0'";
 		Query query = session.createQuery(hql);
+		query.setLong("ProjekatID", ProjekatID);
+		@SuppressWarnings("unchecked")
 		ArrayList<TimesheetHibernate> results = (ArrayList<TimesheetHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -482,8 +518,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM TimesheetTaskHibernate WHERE timesheet = " + TimesheetID + "";
+		String hql = "FROM TimesheetTaskHibernate WHERE timesheet=:TimesheetID";
 		Query query = session.createQuery(hql);
+		query.setLong("TimesheetID", TimesheetID);
+		@SuppressWarnings("unchecked")
 		ArrayList<TimesheetTaskHibernate> results = (ArrayList<TimesheetTaskHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -494,8 +532,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM TimesheetTaskHibernate WHERE task = " + TaskID + "";
+		String hql = "FROM TimesheetTaskHibernate WHERE task=:TaskID";
 		Query query = session.createQuery(hql);
+		query.setLong("TaskID", TaskID);
+		@SuppressWarnings("unchecked")
 		ArrayList<TimesheetTaskHibernate> results = (ArrayList<TimesheetTaskHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -522,8 +562,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM TaskHibernate WHERE zaposlenik=" + ZaposlenikID + "";
+		String hql = "FROM TaskHibernate WHERE zaposlenik=:ZaposlenikID";
 		Query query = session.createQuery(hql);
+		query.setLong("ZaposlenikID", ZaposlenikID);
+		@SuppressWarnings("unchecked")
 		ArrayList<TaskHibernate> results = (ArrayList<TaskHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -547,8 +589,10 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ProjekatHibernate WHERE koordinator=" + KoordinatorID + "";
+		String hql = "FROM ProjekatHibernate WHERE koordinator=:KoordinatorID";
 		Query query = session.createQuery(hql);
+		query.setLong("KoordinatorID", KoordinatorID);
+		@SuppressWarnings("unchecked")
 		ArrayList<ProjekatHibernate> results = (ArrayList<ProjekatHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -572,8 +616,9 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "' AND arhiviran = '1'";
+		String hql = "FROM ZaposlenikHibernate WHERE username=:username AND arhiviran = '1'";
 		Query query = session.createQuery(hql);
+		query.setString("username", username);
 		ZaposlenikHibernate result = (ZaposlenikHibernate)query.uniqueResult();
 		transaction.commit();
 		session.close();
@@ -584,8 +629,9 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "' AND arhiviran = '0'";
+		String hql = "FROM ZaposlenikHibernate WHERE username=:username AND arhiviran = '0'";
 		Query query = session.createQuery(hql);
+		query.setString("username", username);
 		ZaposlenikHibernate result = (ZaposlenikHibernate)query.uniqueResult();
 		transaction.commit();
 		session.close();
@@ -595,8 +641,9 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM AdministratorHibernate WHERE username='" + username + "'";
+		String hql = "FROM AdministratorHibernate WHERE username=:username";
 		Query query = session.createQuery(hql);
+		query.setString("username", username);
 		AdministratorHibernate result = (AdministratorHibernate)query.uniqueResult();
 		transaction.commit();
 		session.close();
@@ -608,8 +655,10 @@ public class DalDao {
 		boolean validan = true;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "'";
+		String hql = "FROM ZaposlenikHibernate WHERE username=:username";
 		Query query = session.createQuery(hql);
+		query.setString("username", username);
+		@SuppressWarnings("unchecked")
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
@@ -627,8 +676,10 @@ public class DalDao {
 		boolean validan = true;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "'";
+		String hql = "FROM ZaposlenikHibernate WHERE username=:username";
 		Query query = session.createQuery(hql);
+		query.setString("username", username);
+		@SuppressWarnings("unchecked")
 		ArrayList<ZaposlenikHibernate> results = (ArrayList<ZaposlenikHibernate>)query.list();
 		transaction.commit();
 		session.close();
