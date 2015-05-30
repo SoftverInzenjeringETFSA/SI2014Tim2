@@ -1,34 +1,26 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JComboBox;
-
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
-import javax.swing.AbstractListModel;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
-import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 import javax.swing.UIManager;
 
@@ -37,10 +29,8 @@ public class OdjelForm extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
-
-	/**
-	 * Launch the application.
-	 */
+	protected static final Logger LOGGER = Logger.getLogger("OdjelForm");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -48,15 +38,12 @@ public class OdjelForm extends JFrame {
 					OdjelForm frame = new OdjelForm();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public OdjelForm() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
@@ -140,20 +127,12 @@ public class OdjelForm extends JFrame {
 				}
 			}
 		});
+		
 		btnSpremiPromjene.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnSpremiPromjene.setBounds(200, 396, 131, 22);
 		panel.add(btnSpremiPromjene);
 		
 		final JList list = new JList();
-		/*list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"zaposlenik1", "zaposlenik2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});*/
 		list.setBounds(190, 61, 141, 106);
 		panel.add(list);
 		
@@ -162,8 +141,6 @@ public class OdjelForm extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setBounds(30, 208, 121, 14);
 		panel.add(lblNewLabel);
-		
-		
 		
 		JButton btnUkloni = new JButton("Ukloni");
 		btnUkloni.setBackground(UIManager.getColor("TextPane.selectionBackground"));
@@ -184,6 +161,7 @@ public class OdjelForm extends JFrame {
 				}
 			}
 		});
+		
 		btnUkloni.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnUkloni.setBounds(257, 174, 74, 22);
 		panel.add(btnUkloni);
@@ -198,15 +176,7 @@ public class OdjelForm extends JFrame {
 			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
 			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
 			}	
-		/*list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] {"zaposlenik1\t", "zaposlenik2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});*/
+		
 		list_1.setBounds(190, 207, 141, 106);
 		panel.add(list_1);
 		
@@ -298,15 +268,7 @@ public class OdjelForm extends JFrame {
 			    		+ " " + zaposleniciOdjela.get(i).getAdresa() + " " + zaposleniciOdjela.get(i).getSatnica();
 				listaZaposlenikaOdjela.addElement(tempString);
 			}
-		/*list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"zaposlenik1", "zaposlenik2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});*/
+		
 		list.setBounds(190, 61, 141, 106);
 		panel.add(list);
 		
@@ -357,18 +319,15 @@ public class OdjelForm extends JFrame {
 				}
 			}
 		});
+		
 		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnSpremiPromjene.setBounds(210, 396, 121, 22);
 		panel.add(btnSpremiPromjene);
-		
-		
 		
 		JLabel lblNewLabel = new JLabel("Dodaj nove zaposlenike:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setBounds(30, 208, 121, 14);
 		panel.add(lblNewLabel);
-		
-		
 		
 		JButton btnUkloni = new JButton("Ukloni");
 		btnUkloni.addActionListener(new ActionListener() {
@@ -402,15 +361,7 @@ public class OdjelForm extends JFrame {
 			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
 			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
 			}	
-		/*list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] {"zaposlenik1\t", "zaposlenik2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});*/
+		
 		list_1.setBounds(190, 207, 141, 106);
 		panel.add(list_1);
 		
@@ -435,11 +386,10 @@ public class OdjelForm extends JFrame {
 				}
 			}
 		});
+		
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDodaj.setBounds(257, 317, 74, 22);
 		panel.add(btnDodaj);
-		
-		
 	}
 }
 

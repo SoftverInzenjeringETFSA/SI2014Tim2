@@ -6,11 +6,9 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.util.ArrayList;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,21 +16,16 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
-import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
-import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class Login extends JFrame {
 	private JTextField txtIme;
 	private JPasswordField txtPassword;
-
-	/**
-	 * Launch the application.
-	 */
+	protected static final Logger LOGGER = Logger.getLogger("Login");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,7 +33,7 @@ public class Login extends JFrame {
 					Login frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
@@ -61,18 +54,14 @@ public class Login extends JFrame {
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		JLabel lblDobrodosliUQuicksheet = new JLabel("Dobrodošli u QuickSheet - Jednostavnu aplikaciju za evidentiranje radnih sati.");
-
 		lblDobrodosliUQuicksheet.setForeground(UIManager.getColor("TextField.highlight"));
-
 		lblDobrodosliUQuicksheet.setForeground(UIManager.getColor("Button.highlight"));
-
 		lblDobrodosliUQuicksheet.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDobrodosliUQuicksheet.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblDobrodosliUQuicksheet.setBounds(0, 11, 385, 32);
 		getContentPane().add(lblDobrodosliUQuicksheet);
 		
 		txtIme = new JTextField();
-
 		txtIme.setBackground(Color.WHITE);
 		txtIme.setFont(new Font("Tahoma", Font.BOLD, 11));
 		txtIme.setForeground(UIManager.getColor("Button.foreground"));
@@ -82,21 +71,15 @@ public class Login extends JFrame {
 		txtIme.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Vaša lozinka:");
-
 		lblNewLabel.setForeground(UIManager.getColor("TextField.highlight"));
-
 		lblNewLabel.setForeground(UIManager.getColor("Button.highlight"));
-
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setBounds(155, 134, 71, 20);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblVaeKorisnikoIme = new JLabel("Vaše korisničko ime:");
-
 		lblVaeKorisnikoIme.setForeground(UIManager.getColor("TextField.highlight"));
-
 		lblVaeKorisnikoIme.setForeground(UIManager.getColor("Button.highlight"));
-
 		lblVaeKorisnikoIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblVaeKorisnikoIme.setLabelFor(txtIme);
 		lblVaeKorisnikoIme.setBounds(142, 72, 101, 20);
@@ -111,15 +94,10 @@ public class Login extends JFrame {
 		getContentPane().add(txtPassword);
 		
 		JLabel lblUkolikoSteZaboravili = new JLabel("Ukoliko ste zaboravili svoju lozinku, molimo da se obratite Vašem Administratoru.");
-
 		lblUkolikoSteZaboravili.setForeground(UIManager.getColor("TextField.highlight"));
-
 		lblUkolikoSteZaboravili.setForeground(UIManager.getColor("Button.background"));
-
 		lblUkolikoSteZaboravili.setFont(new Font("Tahoma", Font.PLAIN, 9));
-
 		lblUkolikoSteZaboravili.setBounds(21, 175, 357, 20);
-
 		lblUkolikoSteZaboravili.setBounds(27, 176, 351, 20);
 
 		getContentPane().add(lblUkolikoSteZaboravili);
@@ -132,12 +110,9 @@ public class Login extends JFrame {
 		getContentPane().add(labela1);
 		
 		JButton btnNewButton = new JButton("Prijava");
-
 		btnNewButton.setBackground(UIManager.getColor("TextArea.selectionBackground"));
-
 		btnNewButton.setBackground(UIManager.getColor("CheckBoxMenuItem.selectionBackground"));
 		btnNewButton.setForeground(UIManager.getColor("Button.foreground"));
-
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -186,12 +161,12 @@ public class Login extends JFrame {
 
 					}}
 				catch(Exception ex) {
+					LOGGER.log(Level.SEVERE,"context",ex);
 					JOptionPane.showMessageDialog(null, "Dogodila se greska kontaktirajete administratora: " + ex.getCause(), "Greska", JOptionPane.ERROR_MESSAGE );
 				}
 			}
-				
-		
 		});
+		
 		btnNewButton.setBounds(142, 271, 89, 23);
 		getContentPane().add(btnNewButton);
 

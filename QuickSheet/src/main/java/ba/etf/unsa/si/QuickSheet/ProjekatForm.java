@@ -1,28 +1,21 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
-
 import ba.etf.unsa.si.Klase.DalDao;
-import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
-
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,10 +27,8 @@ public class ProjekatForm extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
-
-	/**
-	 * Launch the application.
-	 */
+	protected static final Logger LOGGER = Logger.getLogger("ProjekatForm");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -45,15 +36,12 @@ public class ProjekatForm extends JFrame {
 					ProjekatForm frame = new ProjekatForm();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public ProjekatForm() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setTitle("Prikaz projekta");
@@ -207,6 +195,7 @@ public class ProjekatForm extends JFrame {
 			    		+ " " + zaposleniciProjekta.get(i).getAdresa() + " " + zaposleniciProjekta.get(i).getSatnica();
 				listaZaposlenikaProjekta.addElement(tempString);
 			}
+		
 		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list.setBounds(155, 83, 165, 121);
 		panel.add(list);
@@ -227,6 +216,7 @@ public class ProjekatForm extends JFrame {
 			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
 			    listaZaposlenika.addElement(tempString);
 			}
+		
 		list_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list_1.setBounds(153, 243, 165, 121);
 		panel.add(list_1);
@@ -249,6 +239,7 @@ public class ProjekatForm extends JFrame {
 				}
 			}
 		});
+		
 		btnUkloniZaposlenikaSa.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnUkloniZaposlenikaSa.setBounds(251, 209, 67, 23);
 		panel.add(btnUkloniZaposlenikaSa);
@@ -273,6 +264,7 @@ public class ProjekatForm extends JFrame {
 				}
 			}
 		});
+		
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnDodaj.setBounds(255, 375, 61, 23);
 		panel.add(btnDodaj);
@@ -280,9 +272,11 @@ public class ProjekatForm extends JFrame {
 		final JComboBox comboBox = new JComboBox();
 		comboBox.removeAllItems();
 		ArrayList<ZaposlenikHibernate> zhk=DalDao.VratiSveZaposlenikeKoordinatore();
+		
 		for(ZaposlenikHibernate z:zhk){
 			comboBox.addItem(zhk);
 			}
+		
 		comboBox.setSelectedItem(prikaz.getKoordinator());
 		comboBox.setBounds(151, 409, 165, 20);
 		panel.add(comboBox);
@@ -333,6 +327,7 @@ public class ProjekatForm extends JFrame {
 				}
 			}
 		});
+		
 		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSpremiPromjene.setBounds(195, 449, 125, 23);
 		panel.add(btnSpremiPromjene);

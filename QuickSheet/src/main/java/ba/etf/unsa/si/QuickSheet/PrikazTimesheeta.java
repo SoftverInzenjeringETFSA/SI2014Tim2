@@ -1,7 +1,6 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,30 +10,23 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.Font;
-
 import javax.swing.border.TitledBorder;
-
 import java.awt.Toolkit;
-
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
-
 import ba.etf.unsa.si.Klase.DalDao;
-import ba.etf.unsa.si.Klase.Timesheet;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import java.beans.Visibility;
 import java.awt.Color;
 import javax.swing.UIManager;
 
@@ -45,7 +37,8 @@ public class PrikazTimesheeta extends JFrame {
 	private JTextField textField_1;
 	private JList list;
 	private JTextField textField_2;
-
+	protected static final Logger LOGGER = Logger.getLogger("PrikazTimesheeta");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -60,7 +53,7 @@ public class PrikazTimesheeta extends JFrame {
 					PrikazTimesheeta frame = new PrikazTimesheeta(podatak);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
@@ -173,6 +166,7 @@ public class PrikazTimesheeta extends JFrame {
 		spinner.setValue(d);
 		DefaultListModel lista = new DefaultListModel();
 		list.setModel(lista);
+		
 		for (int i = 0; i < taskovi.size(); i++)
 		{
 			String podaci = taskovi.get(i).getId() + " " + "Naziv: " + taskovi.get(i).getNaziv() + ", Procenat završenosti: " + taskovi.get(i).getProcenatZavrsenosti().toString() + "%, Rok: " + taskovi.get(i).getRok().toString();

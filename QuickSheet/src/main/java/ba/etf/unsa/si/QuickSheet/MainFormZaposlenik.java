@@ -1,11 +1,8 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Rectangle;
-import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +11,8 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -24,22 +22,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
@@ -48,12 +39,9 @@ import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetTaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
-
 import java.time.LocalDate;
 import java.time.Month;
-
 import javax.swing.JTextArea;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputMethodListener;
@@ -69,13 +57,8 @@ public class MainFormZaposlenik extends JFrame {
 	private JTextField textField_9;
 	private JTextField textField_10;
 	private JTextField textField_7;
+	protected static final Logger LOGGER = Logger.getLogger("MainFormZaposlenik");
 
-	
-	
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -83,15 +66,12 @@ public class MainFormZaposlenik extends JFrame {
 					MainFormZaposlenik frame = new MainFormZaposlenik(new ZaposlenikHibernate());
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public MainFormZaposlenik(ZaposlenikHibernate zaposlenik) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
@@ -138,16 +118,12 @@ public class MainFormZaposlenik extends JFrame {
 		label_15.setBounds(0, 387, 759, 14);
 		timeSheetPanel.add(label_15);
 		
-		
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
 		btnNewButton.setForeground(UIManager.getColor("Button.foreground"));
 		btnNewButton.setBackground(UIManager.getColor("TextField.selectionBackground"));
-
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnNewButton.setBounds(531, 291, 124, 29);
 		panel_4.add(btnNewButton);
-		
-		
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
 		lblTaskovi.setForeground(UIManager.getColor("TextField.highlight"));
@@ -191,20 +167,8 @@ public class MainFormZaposlenik extends JFrame {
 		
 		final JTextArea textArea_1 = new JTextArea();
 		
-		
 		textArea_1.setBounds(450, 124, 224, 114);
 		panel_4.add(textArea_1);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		JPanel historijaPanel = new JPanel();
 		historijaPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -448,7 +412,6 @@ public class MainFormZaposlenik extends JFrame {
 		label_16.setBounds(0, 411, 759, 14);
 		panel_2.add(label_16);
 
-		
 		JButton btnSpasi = new JButton("Spasi promjenu");
 		btnSpasi.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnSpasi.setForeground(UIManager.getColor("Button.foreground"));
@@ -492,10 +455,11 @@ public class MainFormZaposlenik extends JFrame {
 					else label_16.setVisible(false);
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
+		
 		btnSpasi.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnSpasi.setBounds(67, 138, 120, 23);
 		panel_5.add(btnSpasi);
@@ -511,6 +475,7 @@ public class MainFormZaposlenik extends JFrame {
 				label_16.setVisible(false);
 			}
 		});
+		
 		btnOtkai.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnOtkai.setBounds(193, 138, 110, 23);
 		panel_5.add(btnOtkai);
@@ -574,6 +539,7 @@ public class MainFormZaposlenik extends JFrame {
 			}
 		}
 		});
+		
 		comboBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -588,7 +554,7 @@ public class MainFormZaposlenik extends JFrame {
 					
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
  			}
 		});
@@ -604,7 +570,7 @@ public class MainFormZaposlenik extends JFrame {
 					}
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
@@ -620,10 +586,11 @@ public class MainFormZaposlenik extends JFrame {
 					}
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
+		
 		textArea.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -634,6 +601,7 @@ public class MainFormZaposlenik extends JFrame {
 				
 			}
 		});
+		
 		textArea_1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -643,6 +611,7 @@ public class MainFormZaposlenik extends JFrame {
 				}
 			}
 		});
+		
 		textArea_1.addInputMethodListener(new InputMethodListener() {
 			public void inputMethodTextChanged(InputMethodEvent event) {
 				try {
@@ -656,7 +625,7 @@ public class MainFormZaposlenik extends JFrame {
 					
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 			
@@ -671,7 +640,7 @@ public class MainFormZaposlenik extends JFrame {
 					
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
@@ -699,14 +668,10 @@ public class MainFormZaposlenik extends JFrame {
 					}
 				}
 				catch(Exception ex) {
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 			
 		});
-	}
-
-	private void JTable(Object rowData, TableColumnModel columnNames) {
-		// TODO Auto-generated method stub
-		
 	}
 }

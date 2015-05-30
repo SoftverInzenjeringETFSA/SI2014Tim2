@@ -1,24 +1,20 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-
 import java.awt.Color;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import ba.etf.unsa.si.Klase.IzvjestajOdjela;
 import ba.etf.unsa.si.Klase.IzvjestajZaposlenika;
-
 import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class IzvjestajForm extends JFrame {
 
@@ -31,10 +27,8 @@ public class IzvjestajForm extends JFrame {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
-
-	/**
-	 * Launch the application.
-	 */
+	protected static final Logger LOGGER = Logger.getLogger("IzvjestajForm");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,15 +36,12 @@ public class IzvjestajForm extends JFrame {
 					IzvjestajForm frame = new IzvjestajForm(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public IzvjestajForm(IzvjestajZaposlenika IZ, IzvjestajOdjela IO) {
 		setTitle("Izvještaj ");
 		setResizable(false);

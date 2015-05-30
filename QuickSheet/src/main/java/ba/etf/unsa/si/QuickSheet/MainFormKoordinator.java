@@ -1,7 +1,6 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
-
 import javax.naming.directory.InvalidAttributeValueException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,39 +13,30 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.ListModel;
-
 import java.awt.Font;
-
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.LinkedList;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SpinnerNumberModel;
-
 import java.awt.Toolkit;
-
 import javax.swing.DefaultComboBoxModel;
-
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.IzvjestajOdjela;
 import ba.etf.unsa.si.Klase.IzvjestajZaposlenika;
@@ -62,12 +52,7 @@ import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
-
-import javax.swing.JPasswordField;
 import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.EmptyBorder;
-
 import java.time.Month;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -90,6 +75,7 @@ public class MainFormKoordinator extends JFrame {
 	private JTextField textField_15;
 	private JTextField textField_16;
 	private JTextField textField_10;
+	protected static final Logger LOGGER = Logger.getLogger("MainFormKoordinator");
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -98,13 +84,14 @@ public class MainFormKoordinator extends JFrame {
 					MainFormKoordinator frame = new MainFormKoordinator(DalDao.VratiZaposlenika(10));
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
 	public MainFormKoordinator(final ZaposlenikHibernate zh) {
+		final ZaposlenikHibernate Zaposlenik = zh;
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet - Koordinator");
@@ -112,9 +99,6 @@ public class MainFormKoordinator extends JFrame {
 		setBounds(100, 100, 765, 482);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
-		 
-		//zaposlenik
-		final ZaposlenikHibernate Zaposlenik = zh;
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 764, 453);
@@ -184,11 +168,10 @@ public class MainFormKoordinator extends JFrame {
 				}
 			}
 		});
+		
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.setBounds(501, 291, 154, 29);
 		panel_4.add(btnNewButton);
-		
-	
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
 		lblTaskovi.setForeground(UIManager.getColor("TextField.highlight"));
@@ -207,9 +190,6 @@ public class MainFormKoordinator extends JFrame {
 		spinner_2.setModel(new SpinnerNumberModel(1, 1, 24, 1));
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
-		
-		
-		
 		
 		JLabel label = new JLabel("Datum:");
 		label.setForeground(UIManager.getColor("TextField.highlight"));
@@ -345,6 +325,7 @@ public class MainFormKoordinator extends JFrame {
 				}
 			}
 		});
+		
 		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"Naziv"}));
 		comboBox_5.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_5);
@@ -415,10 +396,10 @@ public class MainFormKoordinator extends JFrame {
 			}
 			
 		});
+		
 		button_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_2.setBounds(262, 56, 69, 23);
 		panel_3.add(button_2);
-		
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setForeground(UIManager.getColor("TextField.highlight"));
@@ -473,10 +454,6 @@ public class MainFormKoordinator extends JFrame {
 		textField_2.setBounds(190, 207, 141, 20);
 		panel_5.add(textField_2);
 		
-		
-		
-		
-		
 		JPanel projektiPanel = new JPanel();
 		projektiPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		tabbedPane.addTab("Projekti", null, projektiPanel, null);
@@ -505,6 +482,7 @@ public class MainFormKoordinator extends JFrame {
 				}
 			}
 		});
+		
 		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"naziv projekta"}));
 		comboBox_17.setBounds(22, 45, 99, 23);
 		panel_11.add(comboBox_17);
@@ -531,6 +509,7 @@ public class MainFormKoordinator extends JFrame {
 				else label_error1.setVisible(false);
 			}
 		});
+		
 		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretrai_1.setBounds(262, 45, 69, 23);
 		panel_11.add(btnPretrai_1);
@@ -581,9 +560,6 @@ public class MainFormKoordinator extends JFrame {
 		lblZaposlenici_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblZaposlenici_1.setBounds(62, 78, 56, 14);
 		panel_8.add(lblZaposlenici_1);
-		
-		
-		
 		
 		JLabel lblNadreeni = new JLabel("Nadređeni:");
 		lblNadreeni.setForeground(UIManager.getColor("TextField.highlight"));
@@ -650,6 +626,7 @@ public class MainFormKoordinator extends JFrame {
 				else label_error1.setVisible(false);
 			}
 		});
+		
 		button.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button.setBounds(202, 336, 129, 23);
 		panel_8.add(button);
@@ -665,9 +642,6 @@ public class MainFormKoordinator extends JFrame {
 		btnUkloni.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnUkloni.setBounds(166, 237, 82, 23);
 		panel_8.add(btnUkloni);
-		
-		
-		
 		
 		JButton button_3 = new JButton("Ukloni");
 		button_3.setBackground(UIManager.getColor("TextField.selectionBackground"));
@@ -686,6 +660,7 @@ public class MainFormKoordinator extends JFrame {
 				else label_error1.setVisible(false);
 			}
 		});
+		
 		button_3.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button_3.setBounds(249, 237, 82, 23);
 		panel_8.add(button_3);
@@ -715,12 +690,10 @@ public class MainFormKoordinator extends JFrame {
 				new TaskForm().setVisible(true);
 			}
 		});
+		
 		btnDodajTask.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnDodajTask.setBounds(211, 133, 119, 23);
 		panel_9.add(btnDodajTask);
-		
-		
-		
 		
 		JPanel korisniciPanel = new JPanel();
 		korisniciPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -759,6 +732,7 @@ public class MainFormKoordinator extends JFrame {
 				}
 			}
 		});
+		
 		btnNewButton_1.setBounds(212, 336, 119, 23);
 		panel_1.add(btnNewButton_1);
 		
@@ -776,6 +750,7 @@ public class MainFormKoordinator extends JFrame {
 				}
 			}
 		});
+		
 		comboBox_4.setFont(new Font("Times New Roman", Font.PLAIN, 11));
 		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"Ime", "Prezime", "Username"}));
 		comboBox_4.setBounds(22, 56, 99, 23);
@@ -899,12 +874,10 @@ public class MainFormKoordinator extends JFrame {
 				}
 			}}
 		});
+		
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_1.setBounds(262, 56, 69, 23);
 		panel_1.add(button_1);
-		
-		
-		
 		
 		JPanel izvjestajiPanel = new JPanel();
 		izvjestajiPanel.setBackground(UIManager.getColor("Button.darkShadow"));
@@ -1012,13 +985,14 @@ public class MainFormKoordinator extends JFrame {
 		long zaposlenikID = Long.parseLong(rijeci1[0]);
 		ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(zaposlenikID);
 		comboBox_22.removeAllItems();
+		
 		for (int i = 0; i < projekti.size(); i++)
 		{
 			String komponenta = projekti.get(i).getId() + " " + projekti.get(i).getNaziv();
 			comboBox_22.addItem(komponenta);
 		}
-		panel_7.add(comboBox_22);
 		
+		panel_7.add(comboBox_22);
 		comboBox_21.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -1153,11 +1127,15 @@ public class MainFormKoordinator extends JFrame {
 					Koordinator kkk = null;
 					try {
 						kkk = new Koordinator(koordinatorH.getUsername(), koordinatorH.getIme(), koordinatorH.getPrezime(), koordinatorH.getAdresa(), koordinatorH.getDatumZaposlenja(), koordinatorH.getSatnica());
-					} catch (InvalidAttributeValueException e2) {}
+					} catch (InvalidAttributeValueException e2) {
+						LOGGER.log(Level.SEVERE,"context",e2);
+					}
 					Projekat PROJEKAT = null;
 					try {
 						PROJEKAT = new Projekat(ph.getNaziv(), ph.getNazivKlijenta(), kkk);
-					} catch (InvalidAttributeValueException e2) {}
+					} catch (InvalidAttributeValueException e2) {
+						LOGGER.log(Level.SEVERE,"context",e2);
+					}
 					
 					ArrayList<TaskHibernate> taskoviH = DalDao.VratiSveTaskoveProjekta(ProjekatID);
 					LinkedList<Task> taskovi = new LinkedList<Task>();
@@ -1167,17 +1145,23 @@ public class MainFormKoordinator extends JFrame {
 						ProjekatRadnik _zaposlenik = null;
 						try {
 							_zaposlenik = new ProjekatRadnik(zzz.getUsername(), zzz.getIme(), zzz.getPrezime(), zzz.getAdresa(), zzz.getDatumZaposlenja(), zzz.getSatnica());
-						} catch (InvalidAttributeValueException e1) {}
+						} catch (InvalidAttributeValueException e1) {
+							LOGGER.log(Level.SEVERE,"context",e1);
+						}
 						Task novi = null;
 						try {
 							novi = new Task(taskoviH.get(i).getNaziv(), taskoviH.get(i).getOpis(), taskoviH.get(i).getPrioritet(), _zaposlenik, taskoviH.get(i).getRok());
-						} catch (javax.management.InvalidAttributeValueException e1) {}
+						} catch (javax.management.InvalidAttributeValueException e1) {
+							LOGGER.log(Level.SEVERE,"context",e1);
+						}
 						taskovi.add(novi);
 					}
 					
 					try {
 						PROJEKAT.setTaskovi(taskovi);
-					} catch (InvalidAttributeValueException e1) {}
+					} catch (InvalidAttributeValueException e1) {
+						LOGGER.log(Level.SEVERE,"context",e1);
+					}
 					
 					ArrayList<ZaposlenikHibernate> zaposh = DalDao.VratiZaposlenikeNaProjektu(ProjekatID);
 					LinkedList<ProjekatRadnik> zaposlenici = new LinkedList<ProjekatRadnik>();
@@ -1186,13 +1170,17 @@ public class MainFormKoordinator extends JFrame {
 						ProjekatRadnik pa = null;
 						try {
 							pa = new ProjekatRadnik(zaposh.get(i).getUsername(), zaposh.get(i).getIme(), zaposh.get(i).getPrezime(), zaposh.get(i).getAdresa(), zaposh.get(i).getDatumZaposlenja(), zaposh.get(i).getSatnica());
-						} catch (InvalidAttributeValueException e1) {}
+						} catch (InvalidAttributeValueException e1) {
+							LOGGER.log(Level.SEVERE,"context",e1);
+						}
 						zaposlenici.add(pa);
 					}
 					
 					try {
 						PROJEKAT.setZaposlenici(zaposlenici);
-					} catch (InvalidAttributeValueException e1) {}
+					} catch (InvalidAttributeValueException e1) {
+						LOGGER.log(Level.SEVERE,"context",e1);
+					}
 					
 					
 					ArrayList<TimesheetHibernate> tss = DalDao.VratiTimesheetoveProjekta(ProjekatID);
@@ -1207,11 +1195,15 @@ public class MainFormKoordinator extends JFrame {
 							ProjekatRadnik aaa = null;
 							try {
 								aaa = new ProjekatRadnik(zaaa.getUsername(), zaaa.getIme(), zaaa.getPrezime(), zaaa.getAdresa(), zaaa.getDatumZaposlenja(), zaaa.getSatnica());
-							} catch (InvalidAttributeValueException e1) {}
+							} catch (InvalidAttributeValueException e1) {
+								LOGGER.log(Level.SEVERE,"context",e1);
+							}
 							Task nono = null;
 							try {
 								nono = new Task(Taskovi.get(j).getNaziv(), Taskovi.get(j).getOpis(), Taskovi.get(j).getPrioritet(), aaa, Taskovi.get(j).getRok());
-							} catch (javax.management.InvalidAttributeValueException e1) {}
+							} catch (javax.management.InvalidAttributeValueException e1) {
+								LOGGER.log(Level.SEVERE,"context",e1);
+							}
 							kom.add(nono);
 						}
 						ProjekatHibernate pp = tss.get(i).getProjekat();
@@ -1219,30 +1211,42 @@ public class MainFormKoordinator extends JFrame {
 						Koordinator koko = null;
 						try {
 							koko = new Koordinator(imm.getUsername(), imm.getIme(), imm.getPrezime(), imm.getAdresa(), imm.getDatumZaposlenja(), imm.getSatnica());
-						} catch (InvalidAttributeValueException e1) {}
+						} catch (InvalidAttributeValueException e1) {
+							LOGGER.log(Level.SEVERE,"context",e1);
+						}
 						Projekat ll = null;
 						try {
 							ll = new Projekat(pp.getNaziv(), pp.getNazivKlijenta(), koko);
-						} catch (InvalidAttributeValueException e1) {}
+						} catch (InvalidAttributeValueException e1) {
+							LOGGER.log(Level.SEVERE,"context",e1);
+						}
 						try {
 							Timesheet toto = new Timesheet(kom, tss.get(i).getBrojRadnihSati(), ll, tss.get(i).getDatumSlanja());
-						} catch (javax.management.InvalidAttributeValueException e1) {}
+						} catch (javax.management.InvalidAttributeValueException e1) {
+							LOGGER.log(Level.SEVERE,"context",e1);
+						}
 					}
 					
 					ProjekatRadnik ZAPOSLENIK = new ProjekatRadnik();
 					try {
 						ZAPOSLENIK = new ProjekatRadnik(zh.getUsername(), zh.getIme(), zh.getPrezime(), zh.getAdresa(), zh.getDatumZaposlenja(), zh.getSatnica());
-					} catch (InvalidAttributeValueException e1) {}
+					} catch (InvalidAttributeValueException e1) {
+						LOGGER.log(Level.SEVERE,"context",e1);
+					}
 					IzvjestajZaposlenika iz = null;
 					try {
 						iz = new IzvjestajZaposlenika(PROJEKAT, ZAPOSLENIK);
-					} catch (InvalidAttributeValueException e1) {}
+					} catch (InvalidAttributeValueException e1) {
+						LOGGER.log(Level.SEVERE,"context",e1);
+					}
 					
 					
 					Odjel ODJEL = null;
 					try {
 						ODJEL = new Odjel(oh.getNaziv(), oh.getMaksimalanBrojRadnika());
-					} catch (javax.management.InvalidAttributeValueException e1) {}
+					} catch (javax.management.InvalidAttributeValueException e1) {
+						LOGGER.log(Level.SEVERE,"context",e1);
+					}
 					ODJEL.setArhiviran(false);
 					ArrayList<ZaposlenikHibernate> odjelZap = DalDao.VratiZaposlenikeUOdjelu(OdjelID);
 					LinkedList<ProjekatRadnik> zaki = new LinkedList<ProjekatRadnik>();
@@ -1252,14 +1256,18 @@ public class MainFormKoordinator extends JFrame {
 						try {
 							ProjekatRadnik prNovi = new ProjekatRadnik(zaki.get(i).getUsername(), zaki.get(i).getIme(), zaki.get(i).getPrezime(), zaki.get(i).getAdresa(), zaki.get(i).getDatumZaposlenja(), zaki.get(i).getSatnica());
 							zaki.add(prNovi);
-						} catch (InvalidAttributeValueException e1) {}
+						} catch (InvalidAttributeValueException e1) {
+							LOGGER.log(Level.SEVERE,"context",e1);
+						}
 					
 					}
+					
 					ODJEL.setZaposlenici(zaki);
 					IzvjestajOdjela oz = null;
 					try {
 						oz = new IzvjestajOdjela(PROJEKAT, ODJEL);
 					} catch (InvalidAttributeValueException e1) {
+						LOGGER.log(Level.SEVERE,"context",e1);
 					}
 					new IzvjestajForm(iz, oz).setVisible(true);
 				}
@@ -1295,6 +1303,7 @@ public class MainFormKoordinator extends JFrame {
 		list_6.setBounds(12, 76, 315, 249);
 		list_6.setModel(dlm);
 		panel_6.add(list_6);
+		
 		for(int i = 0; i < timesheets.size(); i++)
 		{
 			if (!timesheets.get(i).getValidiran())
@@ -1619,10 +1628,11 @@ public class MainFormKoordinator extends JFrame {
 					else label_32.setVisible(false);
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
+		
 		button_4.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button_4.setBounds(67, 138, 120, 23);
 		panel_14.add(button_4);
@@ -1638,6 +1648,7 @@ public class MainFormKoordinator extends JFrame {
 				label_32.setVisible(false);
 			}
 		});
+		
 		button_5.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button_5.setBounds(193, 138, 110, 23);
 		panel_14.add(button_5);
@@ -1675,7 +1686,7 @@ public class MainFormKoordinator extends JFrame {
 					}
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
@@ -1691,7 +1702,7 @@ public class MainFormKoordinator extends JFrame {
 					}
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
@@ -1707,7 +1718,7 @@ public class MainFormKoordinator extends JFrame {
 					}
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
