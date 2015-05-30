@@ -1,8 +1,6 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,10 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.JList;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -26,10 +25,8 @@ public class TaskForm extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField_2;
 	private JTextField textField_1;
-
-	/**
-	 * Launch the application.
-	 */
+	protected static final Logger LOGGER = Logger.getLogger("TaskForm");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -37,15 +34,12 @@ public class TaskForm extends JFrame {
 					TaskForm frame = new TaskForm();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TaskForm() {
 		setResizable(false);
 		setTitle("Dodavanje taskova");
@@ -134,8 +128,5 @@ public class TaskForm extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNewButton.setBounds(196, 154, 101, 23);
 		panel.add(btnNewButton);
-		
-		
-		
 	}
 }

@@ -1,8 +1,6 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,16 +13,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.AbstractListModel;
 
 public class DodajKorisnika extends JFrame {
 
+	protected static final Logger LOGGER = Logger.getLogger("DodajKorisnika");
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -32,15 +30,12 @@ public class DodajKorisnika extends JFrame {
 					DodajKorisnika frame = new DodajKorisnika();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public DodajKorisnika() {
 		setResizable(false);
 		setTitle("Dodaj korisnika");
@@ -94,6 +89,7 @@ public class DodajKorisnika extends JFrame {
 				else label.setVisible(false);
 			}
 		});
+		
 		btnDodajKorisnika.setBounds(142, 267, 81, 23);
 		panel.add(btnDodajKorisnika);
 		

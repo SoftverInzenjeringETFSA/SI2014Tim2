@@ -1,43 +1,33 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-
 import java.awt.Toolkit;
-
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractListModel;
-
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Koordinator;
 import ba.etf.unsa.si.Klase.ProjekatRadnik;
@@ -57,10 +47,8 @@ public class KorisnikForm extends JFrame {
 	private JTextField textField_5;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
-
-	/**
-	 * Launch the application.
-	 */
+	protected static final Logger LOGGER = Logger.getLogger("KorisnikForm");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -68,16 +56,12 @@ public class KorisnikForm extends JFrame {
 					KorisnikForm frame = new KorisnikForm(1);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 * @param id 
-	 */
 	public KorisnikForm(long id) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -166,11 +150,13 @@ public class KorisnikForm extends JFrame {
 		ArrayList<OdjelHibernate> sviOdjeli = new ArrayList<OdjelHibernate>();
 		oh = DalDao.VratiZaposlenikoveOdjele(id);
 		ArrayList<String> zaposlenikoviOdjeli = new ArrayList<String>();
+		
 		for (int i = 0; i < oh.size(); i++)
 		{
 			String podatak = oh.get(i).getId() + " " + oh.get(i).getNaziv();
 			zaposlenikoviOdjeli.add(podatak);
 		}
+		
 		sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
 		DefaultListModel lista = new DefaultListModel();
 		final JList list = new JList();
@@ -180,6 +166,7 @@ public class KorisnikForm extends JFrame {
 		list.setModel(lista);
 		int[] indexi = new int[sviOdjeli.size()];
 		int brojac = 0;
+		
 		for (int i = 0; i < sviOdjeli.size(); i++)
 		{
 			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
@@ -187,6 +174,7 @@ public class KorisnikForm extends JFrame {
 			if (zaposlenikoviOdjeli.contains(podatak))
 				indexi[brojac++] = i;
 		}
+		
 		list.setSelectedIndices(indexi);
 		panel.add(scrollPane);
 		
@@ -256,6 +244,7 @@ public class KorisnikForm extends JFrame {
 					z.setIme(ime);
 				}
 				catch (Exception e){
+					LOGGER.log(Level.SEVERE,"context",e);
 					label_error.setText("Unesite ispravno ime!");
 					greska = false;
 				}
@@ -264,6 +253,7 @@ public class KorisnikForm extends JFrame {
 					z.setPrezime(prezime);
 				}
 				catch (Exception e){
+					LOGGER.log(Level.SEVERE,"context",e);
 					label_error.setText("Unesite ispravno prezime!");
 					greska = false;
 				}
@@ -272,6 +262,7 @@ public class KorisnikForm extends JFrame {
 					z.setAdresa(adresa);
 				}
 				catch (Exception e){
+					LOGGER.log(Level.SEVERE,"context",e);
 					label_error.setText("Unesite ispravnu adresu!");
 					greska = false;
 				}
@@ -286,6 +277,7 @@ public class KorisnikForm extends JFrame {
 				}
 				catch (Exception e)
 				{
+					LOGGER.log(Level.SEVERE,"context",e);
 					label_error.setText("Unesite ispravan datum!");
 					greska = false;
 				}
@@ -303,6 +295,7 @@ public class KorisnikForm extends JFrame {
 				}
 				catch (Exception e)
 				{
+					LOGGER.log(Level.SEVERE,"context",e);
 					label_error.setText("Izaberite ispravan unos za satnicu!");
 					greska = false;
 				}
@@ -318,6 +311,7 @@ public class KorisnikForm extends JFrame {
 				}
 				catch(Exception e)
 				{
+					LOGGER.log(Level.SEVERE,"context",e);
 					label_error.setText("Unesite ispravno korisničko ime!");
 					greska = false;
 				}
@@ -335,11 +329,9 @@ public class KorisnikForm extends JFrame {
 					try {
 						z.setLozinka(p1);
 					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						LOGGER.log(Level.SEVERE,"context",e);
 					} catch (InvalidKeySpecException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						LOGGER.log(Level.SEVERE,"context",e);
 					}
 				
 				if(greska == false){
@@ -379,6 +371,7 @@ public class KorisnikForm extends JFrame {
 				
 			}
 		});
+		
 		btnSpasiIzmjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnSpasiIzmjene.setBounds(190, 336, 141, 23);
 		panel.add(btnSpasiIzmjene);
@@ -392,6 +385,5 @@ public class KorisnikForm extends JFrame {
 		lblArhiviran.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblArhiviran.setBounds(74, 307, 60, 14);
 		panel.add(lblArhiviran);		
-		
 	}
 }

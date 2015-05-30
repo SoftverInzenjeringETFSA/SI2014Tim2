@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.AbstractListModel;
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
@@ -20,67 +19,35 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.SingleSelectionModel;
 import javax.swing.JScrollPane;
-
-import java.awt.Canvas;
-import java.awt.SystemColor;
-import java.awt.Button;
-
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Calendar;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
-
-import java.awt.Component;
-import java.awt.ScrollPane;
-
-import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.Klase.Koordinator;
 import ba.etf.unsa.si.Klase.ProjekatRadnik;
 import ba.etf.unsa.si.Klase.Zaposlenik;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
-
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
-import ba.etf.unsa.si.util.HibernateUtil;
-
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class MainForm extends JFrame {
 	private JTextField textField;
@@ -103,10 +70,8 @@ public class MainForm extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-
-	/**
-	 * Launch the application.
-	 */
+	protected static final Logger LOGGER = Logger.getLogger("MainForm");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -114,17 +79,14 @@ public class MainForm extends JFrame {
 					MainForm frame = new MainForm(new AdministratorHibernate());
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public MainForm(AdministratorHibernate admin) {
-
+		final AdministratorHibernate Admin = admin;
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet - Administrator");
@@ -183,20 +145,10 @@ public class MainForm extends JFrame {
 			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
 				listaZaposlenika.addElement(tempString);
 			}
-		list_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		
-		/*list_3.setModel(new AbstractListModel() {
-			String[] values = new String[] {"zaposlenik 1", "zaposlenik 5"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});*/
+		list_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list_3.setBounds(190, 61, 141, 135);
 		panel_2.add(list_3);
-	
 		
 		final JLabel label_error = new JLabel("");
 		label_error.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -204,9 +156,6 @@ public class MainForm extends JFrame {
 		label_error.setBounds(0, 405, 764, 14);
 		odjeliPanel.add(label_error);
 		label_error.setVisible(false);
-		
-		//administrator
-		final AdministratorHibernate Admin = admin;
 		
 		JButton btnDodaj_1 = new JButton("Dodaj");
 		btnDodaj_1.addActionListener(new ActionListener() {
@@ -260,6 +209,7 @@ public class MainForm extends JFrame {
 				
 			}
 		});
+		
 		btnDodaj_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDodaj_1.setBounds(147, 309, 89, 23);
 		panel_2.add(btnDodaj_1);
@@ -268,8 +218,6 @@ public class MainForm extends JFrame {
 		btnOtkai.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnOtkai.setBounds(242, 309, 89, 23);
 		panel_2.add(btnOtkai);
-		
-		
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -291,6 +239,7 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
+		
 		comboBox_16.setModel(new DefaultComboBoxModel(new String[] {"Naziv"}));
 		comboBox_16.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_16);
@@ -353,17 +302,13 @@ public class MainForm extends JFrame {
 									    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
 										listaArhOdjela.addElement(tempString);
 									}
-							} 
-							
+							} 		
 			}
 		});
+		
 		btnPretrai.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretrai.setBounds(262, 56, 69, 23);
 		panel_3.add(btnPretrai);
-		
-		
-		
-		
 		
 		JButton btnIzmjeni = new JButton("Prikaži odjel");
 		btnIzmjeni.addActionListener(new ActionListener() {
@@ -374,7 +319,6 @@ public class MainForm extends JFrame {
 					greska = false;
 					
 				}
-				
 				
 				if(greska == false){
 					
@@ -389,6 +333,7 @@ public class MainForm extends JFrame {
 				
 			}
 		});
+		
 		btnIzmjeni.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnIzmjeni.setBounds(83, 334, 119, 23);
 		panel_3.add(btnIzmjeni);
@@ -430,6 +375,7 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
+		
 		btnObrisi.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnObrisi.setBounds(212, 334, 119, 23);
 		panel_3.add(btnObrisi);
@@ -439,7 +385,6 @@ public class MainForm extends JFrame {
 		label_5.setBounds(22, 29, 170, 14);
 		panel_3.add(label_5);
 		
-	
 		JPanel projektiPanel = new JPanel();
 		tabbedPane.addTab("Projekti", null, projektiPanel, null);
 		projektiPanel.setLayout(null);
@@ -477,10 +422,8 @@ public class MainForm extends JFrame {
 			comboBox_19.addItem(zh);
 		}
 		comboBox_19.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		//comboBox_19.setModel(new DefaultComboBoxModel(new String[] {"", "nadređeni1", "nadređeni2"}));
 		comboBox_19.setBounds(190, 248, 141, 20);
 		panel_5.add(comboBox_19);
-		
 		
 		final JList list = new JList();
 		final DefaultListModel listaZaposlenikaPr = new DefaultListModel();
@@ -494,15 +437,6 @@ public class MainForm extends JFrame {
 				listaZaposlenikaPr.addElement(tempString);
 			}
 		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		/*list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Radnik1", "Radnik2", "Radnik3"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});*/
 		list.setBounds(190, 117, 141, 121);
 		panel_5.add(list);
 		
@@ -570,6 +504,7 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
+		
 		button_7.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_7.setBounds(147, 308, 89, 23);
 		panel_5.add(button_7);
@@ -598,11 +533,10 @@ public class MainForm extends JFrame {
 				label_error1.setVisible(false);
 			}
 		});
+		
 		btnOtkai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnOtkai_1.setBounds(242, 308, 89, 23);
 		panel_5.add(btnOtkai_1);
-		
-		
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setLayout(null);
@@ -623,6 +557,7 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
+		
 		comboBox_17.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"Naziv projekta", "Naziv klijenta"}));
 		comboBox_17.setBounds(22, 56, 99, 23);
@@ -630,15 +565,6 @@ public class MainForm extends JFrame {
 		
 		final JList list_1 = new JList();
 		list_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		/*list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] {"projekat 1", "projekat 2"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});*/
 		list_1.setBounds(22, 114, 309, 209);
 		panel_11.add(list_1);
 		
@@ -743,12 +669,10 @@ public class MainForm extends JFrame {
 													    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
 													    listaArhProjekata.addElement(tempString);
 													}
-											}
-											
-									
-									
+											}	
 			}
 		});
+		
 		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretrai_1.setBounds(265, 56, 69, 23);
 		panel_11.add(btnPretrai_1);
@@ -757,8 +681,6 @@ public class MainForm extends JFrame {
 		textField_46.setBounds(131, 56, 124, 23);
 		panel_11.add(textField_46);
 		textField_46.setColumns(10);
-		
-		
 		
 		JButton btnSauvajPromjene = new JButton("Prikaži projekat");
 		btnSauvajPromjene.addActionListener(new ActionListener() {
@@ -774,7 +696,6 @@ public class MainForm extends JFrame {
 				}
 				else{
 					label_error1.setVisible(false);
-					//new ProjekatForm().setVisible(true);
 					String Projekat=list_1.getSelectedValue().toString();
 					new ProjekatForm(Projekat).setVisible(true);
 					
@@ -822,6 +743,7 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
+		
 		btnObriiProjekat.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnObriiProjekat.setBounds(212, 334, 119, 23);
 		panel_11.add(btnObriiProjekat);
@@ -942,11 +864,13 @@ public class MainForm extends JFrame {
 		list_5.setBounds(190, 126, 141, 50);
 		list_5.setModel(lista2);
 		ArrayList<OdjelHibernate> sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
+		
 		for (int i = 0; i < sviOdjeli.size(); i++)
 		{
 			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
 			lista2.addElement(podatak);
 		}
+		
 		panel.add(scrollPane);
 		
 		JButton btnDodaj = new JButton("Dodaj");
@@ -969,6 +893,7 @@ public class MainForm extends JFrame {
 					z.setIme(ime);
 				}
 				catch (Exception es){
+					LOGGER.log(Level.SEVERE,"context",es);
 					label_error2.setText("Unesite ispravno ime!");
 					greska = false;
 				}
@@ -977,6 +902,7 @@ public class MainForm extends JFrame {
 					z.setPrezime(prezime);
 				}
 				catch (Exception es){
+					LOGGER.log(Level.SEVERE,"context",es);
 					label_error2.setText("Unesite ispravno prezime!");
 					greska = false;
 				}
@@ -985,6 +911,7 @@ public class MainForm extends JFrame {
 					z.setAdresa(adresa);
 				}
 				catch (Exception es){
+					LOGGER.log(Level.SEVERE,"context",es);
 					label_error2.setText("Unesite ispravnu adresu!");
 					greska = false;
 				}
@@ -999,6 +926,7 @@ public class MainForm extends JFrame {
 				}
 				catch (Exception es)
 				{
+					LOGGER.log(Level.SEVERE,"context",es);
 					label_error2.setText("Unesite ispravan datum!");
 					greska = false;
 				}
@@ -1016,6 +944,7 @@ public class MainForm extends JFrame {
 				}
 				catch (Exception es)
 				{
+					LOGGER.log(Level.SEVERE,"context",es);
 					label_error2.setText("Izaberite ispravan unos za satnicu!");
 					greska = false;
 				}
@@ -1031,6 +960,7 @@ public class MainForm extends JFrame {
 				}
 				catch(Exception es)
 				{
+					LOGGER.log(Level.SEVERE,"context",es);
 					label_error2.setText("Unesite ispravno korisničko ime!");
 					greska = false;
 				}
@@ -1048,11 +978,11 @@ public class MainForm extends JFrame {
 					try {
 						z.setLozinka(p1);
 					} catch (NoSuchAlgorithmException es) {
+						LOGGER.log(Level.SEVERE,"context",es);
 						label_error2.setText("Lozinke se ne podudaraju!");
-						es.printStackTrace();
 					} catch (InvalidKeySpecException es) {
+						LOGGER.log(Level.SEVERE,"context",es);
 						label_error2.setText("Lozinke se ne podudaraju!");
-						es.printStackTrace();
 					}
 				
 				if(greska == false){
@@ -1090,6 +1020,7 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
+		
 		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDodaj.setBounds(147, 336, 89, 23);
 		panel.add(btnDodaj);
@@ -1113,6 +1044,7 @@ public class MainForm extends JFrame {
 				label_error2.setVisible(false);
 			}
 		});
+		
 		btnOtkai_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnOtkai_2.setBounds(242, 336, 89, 23);
 		panel.add(btnOtkai_2);
@@ -1143,6 +1075,7 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
+		
 		comboBox_13.setBounds(22, 56, 99, 23);
 		panel_1.add(comboBox_13);
 		
@@ -1158,6 +1091,7 @@ public class MainForm extends JFrame {
 				return values[index];
 			}
 		});
+		
 		list_2.setBounds(22, 114, 309, 209);
 		panel_1.add(list_2);
 		
@@ -1215,7 +1149,8 @@ public class MainForm extends JFrame {
 				}
 				
 			}
-			});
+		});
+		
 		btnPretraga.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretraga.setBounds(262, 56, 69, 23);
 		panel_1.add(btnPretraga);
@@ -1253,6 +1188,7 @@ public class MainForm extends JFrame {
 				
 			}
 		});
+		
 		btnNewButton_1.setBounds(83, 334, 119, 23);
 		panel_1.add(btnNewButton_1);
 		
@@ -1289,6 +1225,7 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
+		
 		btnObriiKorisnika.setBounds(212, 334, 119, 23);
 		panel_1.add(btnObriiKorisnika);
 		
@@ -1296,9 +1233,6 @@ public class MainForm extends JFrame {
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_6.setBounds(22, 29, 170, 14);
 		panel_1.add(label_6);
-		
-		
-		
 		
 		JPanel panel_4 = new JPanel();
 		tabbedPane.addTab("Moj profil", null, panel_4, null);
@@ -1388,10 +1322,11 @@ public class MainForm extends JFrame {
 					else label_error3.setVisible(false);
 				}
 				catch(Exception ex) {
-					
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
+		
 		button.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button.setBounds(77, 138, 110, 23);
 		panel_6.add(button);

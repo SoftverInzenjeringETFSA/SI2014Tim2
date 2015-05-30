@@ -1,37 +1,28 @@
 package ba.etf.unsa.si.QuickSheet;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.JPasswordField;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-
 import java.awt.Color;
-
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
-
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.Toolkit;
+
 import javax.swing.JCheckBox;
 
 public class KorisnikFormKoordinator extends JFrame {
@@ -43,7 +34,8 @@ public class KorisnikFormKoordinator extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_5;
 	private JTextField textField_6;
-
+	protected static final Logger LOGGER = Logger.getLogger("KorisnikFormKoordinator");
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -51,15 +43,12 @@ public class KorisnikFormKoordinator extends JFrame {
 					KorisnikFormKoordinator frame = new KorisnikFormKoordinator("Test");
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public KorisnikFormKoordinator(String zaposlenik) {
 		String[] parametri = zaposlenik.split(" ");
 		long id = Long.parseLong(parametri[0]);
