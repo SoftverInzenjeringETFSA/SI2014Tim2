@@ -7,7 +7,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 import javax.swing.border.TitledBorder;
 import javax.swing.JList;
-import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
