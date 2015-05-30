@@ -22,6 +22,7 @@ import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+import javax.swing.UIManager;
 
 public class OdjelForm extends JFrame {
 
@@ -50,18 +51,21 @@ public class OdjelForm extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 402, 492);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("TextField.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel.setBounds(22, 11, 350, 435);
 		panel.setLayout(null);
-		panel.setBorder(new TitledBorder(null, "Podaci o odjelu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o odjelu", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		contentPane.add(panel);
 		
 		JLabel label = new JLabel("Naziv odjela:");
+		label.setForeground(UIManager.getColor("TextField.highlight"));
 		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label.setBounds(78, 33, 102, 14);
 		panel.add(label);
@@ -72,11 +76,13 @@ public class OdjelForm extends JFrame {
 		panel.add(textField);
 		
 		JLabel lblZaposlenici = new JLabel("Zaposlenici u odjelu:");
+		lblZaposlenici.setForeground(UIManager.getColor("TextField.highlight"));
 		lblZaposlenici.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblZaposlenici.setBounds(43, 55, 97, 29);
 		panel.add(lblZaposlenici);
 		
 		JLabel label_3 = new JLabel("Maksimalni broj zaposlenika:");
+		label_3.setForeground(UIManager.getColor("TextField.highlight"));
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_3.setBounds(10, 360, 152, 14);
 		panel.add(label_3);
@@ -92,6 +98,8 @@ public class OdjelForm extends JFrame {
 		contentPane.add(label_1);
 		
 		JButton btnSpremiPromjene = new JButton("Spremi promjene");
+		btnSpremiPromjene.setBackground(UIManager.getColor("TextPane.selectionBackground"));
+		btnSpremiPromjene.setForeground(UIManager.getColor("Button.foreground"));
 		btnSpremiPromjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
@@ -120,8 +128,8 @@ public class OdjelForm extends JFrame {
 			}
 		});
 		
-		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnSpremiPromjene.setBounds(210, 396, 121, 22);
+		btnSpremiPromjene.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnSpremiPromjene.setBounds(200, 396, 131, 22);
 		panel.add(btnSpremiPromjene);
 		
 		final JList list = new JList();
@@ -129,11 +137,14 @@ public class OdjelForm extends JFrame {
 		panel.add(list);
 		
 		JLabel lblNewLabel = new JLabel("Dodaj nove zaposlenike:");
+		lblNewLabel.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setBounds(30, 208, 121, 14);
 		panel.add(lblNewLabel);
 		
 		JButton btnUkloni = new JButton("Ukloni");
+		btnUkloni.setBackground(UIManager.getColor("TextPane.selectionBackground"));
+		btnUkloni.setForeground(UIManager.getColor("Button.foreground"));
 		btnUkloni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
@@ -151,7 +162,7 @@ public class OdjelForm extends JFrame {
 			}
 		});
 		
-		btnUkloni.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnUkloni.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnUkloni.setBounds(257, 174, 74, 22);
 		panel.add(btnUkloni);
 		
@@ -170,6 +181,8 @@ public class OdjelForm extends JFrame {
 		panel.add(list_1);
 		
 		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.setBackground(UIManager.getColor("TextPane.selectionBackground"));
+		btnDodaj.setForeground(UIManager.getColor("Button.foreground"));
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
@@ -186,7 +199,7 @@ public class OdjelForm extends JFrame {
 				}
 			}
 		});
-		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnDodaj.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnDodaj.setBounds(257, 317, 74, 22);
 		panel.add(btnDodaj);
 		

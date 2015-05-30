@@ -28,6 +28,7 @@ import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.UIManager;
 
 public class PrikazTimesheeta extends JFrame {
 
@@ -65,22 +66,26 @@ public class PrikazTimesheeta extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 699, 435);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("TextField.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Timesheet", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBackground(UIManager.getColor("TextField.darkShadow"));
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Timesheet", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel_1.setBounds(22, 11, 649, 384);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		JLabel lblImeIPrezime = new JLabel("Ime i prezime uposlenika:");
+		lblImeIPrezime.setForeground(UIManager.getColor("TextField.highlight"));
 		lblImeIPrezime.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblImeIPrezime.setBounds(10, 31, 120, 14);
 		panel_1.add(lblImeIPrezime);
 		
 		JLabel lblTimesheetZaPeriod = new JLabel("Timesheet poslan:");
+		lblTimesheetZaPeriod.setForeground(UIManager.getColor("TextField.highlight"));
 		lblTimesheetZaPeriod.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblTimesheetZaPeriod.setBounds(43, 56, 87, 14);
 		panel_1.add(lblTimesheetZaPeriod);
@@ -93,16 +98,21 @@ public class PrikazTimesheeta extends JFrame {
 		panel_1.add(spinner);
 		
 		JButton button_1 = new JButton("Odobri");
+		button_1.setForeground(UIManager.getColor("Button.foreground"));
+		button_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		button_1.setBounds(486, 350, 74, 23);
 		panel_1.add(button_1);
-		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		button_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		
 		JButton button_2 = new JButton("Odbij");
+		button_2.setForeground(UIManager.getColor("Button.foreground"));
+		button_2.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		button_2.setBounds(565, 350, 74, 23);
 		panel_1.add(button_2);
-		button_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		button_2.setFont(new Font("Tahoma", Font.BOLD, 10));
 		
 		JLabel lblBrojRadnihSati = new JLabel("Broj radnih sati:");
+		lblBrojRadnihSati.setForeground(UIManager.getColor("TextField.highlight"));
 		lblBrojRadnihSati.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblBrojRadnihSati.setBounds(53, 87, 77, 14);
 		panel_1.add(lblBrojRadnihSati);
@@ -121,6 +131,7 @@ public class PrikazTimesheeta extends JFrame {
 		panel_1.add(textField_1);
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
+		lblTaskovi.setForeground(UIManager.getColor("TextField.highlight"));
 		lblTaskovi.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblTaskovi.setBounds(10, 124, 40, 14);
 		panel_1.add(lblTaskovi);
@@ -132,6 +143,7 @@ public class PrikazTimesheeta extends JFrame {
 		panel_1.add(list);
 		
 		JLabel lblKomentar = new JLabel("Komentar:");
+		lblKomentar.setForeground(UIManager.getColor("TextField.highlight"));
 		lblKomentar.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblKomentar.setBounds(10, 314, 59, 14);
 		panel_1.add(lblKomentar);

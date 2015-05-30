@@ -20,8 +20,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.UIManager;
 
 public class ProjekatForm extends JFrame {
 
@@ -50,13 +49,15 @@ public class ProjekatForm extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 390, 534);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("TextField.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Podaci o projektu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBackground(UIManager.getColor("TextField.darkShadow"));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o projektu", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel.setBounds(22, 11, 340, 483);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -72,6 +73,7 @@ public class ProjekatForm extends JFrame {
 		panel.add(textField);
 		
 		JLabel label_1 = new JLabel("Naziv klijenta:");
+		label_1.setForeground(UIManager.getColor("TextField.highlight"));
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_1.setBounds(55, 58, 67, 14);
 		panel.add(label_1);
@@ -82,6 +84,7 @@ public class ProjekatForm extends JFrame {
 		panel.add(textField_1);
 		
 		JLabel lblZaposleniciNaProjektu = new JLabel("Zaposlenici na projektu:");
+		lblZaposleniciNaProjektu.setForeground(UIManager.getColor("TextField.highlight"));
 		lblZaposleniciNaProjektu.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblZaposleniciNaProjektu.setBounds(10, 83, 114, 14);
 		panel.add(lblZaposleniciNaProjektu);
@@ -92,6 +95,7 @@ public class ProjekatForm extends JFrame {
 		panel.add(list);
 		
 		JLabel lblDodajZaposlenike = new JLabel("Dodaj zaposlenike:");
+		lblDodajZaposlenike.setForeground(UIManager.getColor("TextField.highlight"));
 		lblDodajZaposlenike.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblDodajZaposlenike.setBounds(29, 243, 114, 14);
 		panel.add(lblDodajZaposlenike);
@@ -102,12 +106,16 @@ public class ProjekatForm extends JFrame {
 		panel.add(list_1);
 		
 		JButton btnUkloniZaposlenikaSa = new JButton("Ukloni");
-		btnUkloniZaposlenikaSa.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnUkloniZaposlenikaSa.setBackground(UIManager.getColor("TextArea.selectionBackground"));
+		btnUkloniZaposlenikaSa.setForeground(UIManager.getColor("Button.foreground"));
+		btnUkloniZaposlenikaSa.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnUkloniZaposlenikaSa.setBounds(251, 209, 67, 23);
 		panel.add(btnUkloniZaposlenikaSa);
 		
 		JButton btnDodaj = new JButton("Dodaj");
-		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnDodaj.setBackground(UIManager.getColor("TextArea.selectionBackground"));
+		btnDodaj.setForeground(UIManager.getColor("Button.foreground"));
+		btnDodaj.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnDodaj.setBounds(255, 375, 61, 23);
 		panel.add(btnDodaj);
 		
@@ -116,13 +124,16 @@ public class ProjekatForm extends JFrame {
 		panel.add(comboBox);
 		
 		JLabel label_2 = new JLabel("Nadređeni:");
+		label_2.setForeground(UIManager.getColor("TextField.highlight"));
 		label_2.setBounds(65, 412, 53, 14);
 		panel.add(label_2);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		
 		JButton btnSpremiPromjene = new JButton("Spremi promjene");
-		btnSpremiPromjene.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnSpremiPromjene.setBounds(195, 449, 125, 23);
+		btnSpremiPromjene.setBackground(UIManager.getColor("TextArea.selectionBackground"));
+		btnSpremiPromjene.setForeground(UIManager.getColor("Button.foreground"));
+		btnSpremiPromjene.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnSpremiPromjene.setBounds(188, 449, 132, 23);
 		panel.add(btnSpremiPromjene);
 	}
 	
