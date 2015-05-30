@@ -598,7 +598,7 @@ public class DalDao {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "' AND arhiviran = '0'";
+		String hql = "FROM ZaposlenikHibernate WHERE username='" + username + "'";
 		Query query = session.createQuery(hql);
 		ZaposlenikHibernate result = (ZaposlenikHibernate)query.uniqueResult();
 		transaction.commit();

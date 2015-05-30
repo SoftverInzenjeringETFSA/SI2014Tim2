@@ -53,6 +53,7 @@ public abstract class Zaposlenik {
 	
 	public void setLozinka(String lozinka) throws NoSuchAlgorithmException, InvalidKeySpecException
 	{
+		
 		this.lozinka = Lozinka.generateStorngPasswordHash(lozinka);
 	}
 	
@@ -87,7 +88,7 @@ public abstract class Zaposlenik {
 	
 	public void setAdresa(String _adresa) throws InvalidAttributeValueException
 	{
-		if (_adresa != null && !_adresa.isEmpty())
+		if (_adresa != null && !_adresa.isEmpty() && !_adresa.trim().isEmpty())
 			adresa = _adresa;
 		else throw new InvalidAttributeValueException();
 	}
