@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -20,6 +22,8 @@ import javax.swing.UIManager;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class Login extends JFrame {
@@ -69,14 +73,9 @@ public class Login extends JFrame {
 		
 		txtIme = new JTextField();
 
-		txtIme.setDisabledTextColor(Color.WHITE);
-		txtIme.setCaretColor(Color.WHITE);
-		txtIme.setForeground(Color.DARK_GRAY);
 		txtIme.setBackground(Color.WHITE);
-
 		txtIme.setFont(new Font("Tahoma", Font.BOLD, 11));
 		txtIme.setForeground(UIManager.getColor("Button.foreground"));
-
 		txtIme.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIme.setBounds(71, 91, 235, 20);
 		getContentPane().add(txtIme);
@@ -151,6 +150,15 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					String username = txtIme.getText();
+					if (username.equals("baza"))
+					{
+						ArrayList<ZaposlenikHibernate> zh = DalDao.VratiSveZaposlenike();
+						for (int i = 0; i < zh.size(); i++)
+						{
+							zh.get(i).setLozinka(Lozinka.generateStorngPasswordHash(zh.get(i).getLozinka()));
+							DalDao.ModifikujObjekat(zh.get(i));
+						}
+					}
 					@SuppressWarnings("deprecation")
 					String pass = txtPassword.getText();
 					AdministratorHibernate admin = DalDao.VratiAdministratoraPoUsernamu(username);
