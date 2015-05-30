@@ -133,21 +133,25 @@ public class MainForm extends JFrame {
 		getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(UIManager.getColor("TextField.darkShadow"));
 		tabbedPane.setBounds(0, 0, 764, 447);
 		getContentPane().add(tabbedPane);
 		setLocationRelativeTo(null);
 		
 		JPanel odjeliPanel = new JPanel();
+		odjeliPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		tabbedPane.addTab("Odjeli", null, odjeliPanel, null);
 		odjeliPanel.setLayout(null);
 		
 		panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dodaj novi odjel", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_2.setBackground(UIManager.getColor("TextField.darkShadow"));
+		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dodaj novi odjel", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel_2.setLayout(null);
 		panel_2.setBounds(30, 22, 341, 370);
 		odjeliPanel.add(panel_2);
 		
 		lblNaziv = new JLabel("Naziv odjela:");
+		lblNaziv.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNaziv.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNaziv.setBounds(78, 33, 102, 14);
 		panel_2.add(lblNaziv);
@@ -158,11 +162,13 @@ public class MainForm extends JFrame {
 		panel_2.add(textField_43);
 		
 		JLabel lblNewLabel_7 = new JLabel("Dodaj zaposlenika:");
+		lblNewLabel_7.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel_7.setBounds(50, 58, 102, 29);
 		panel_2.add(lblNewLabel_7);
 		
 		JLabel lblMaksimalniBroj = new JLabel("Maksimalni broj zaposlenika:");
+		lblMaksimalniBroj.setForeground(UIManager.getColor("TextField.highlight"));
 		lblMaksimalniBroj.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblMaksimalniBroj.setBounds(10, 210, 152, 14);
 		panel_2.add(lblMaksimalniBroj);
@@ -209,6 +215,8 @@ public class MainForm extends JFrame {
 		final AdministratorHibernate Admin = admin;
 		
 		JButton btnDodaj_1 = new JButton("Dodaj");
+		btnDodaj_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnDodaj_1.setForeground(UIManager.getColor("Button.foreground"));
 		btnDodaj_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true; 
@@ -260,19 +268,22 @@ public class MainForm extends JFrame {
 				
 			}
 		});
-		btnDodaj_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnDodaj_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnDodaj_1.setBounds(147, 309, 89, 23);
 		panel_2.add(btnDodaj_1);
 		
 		JButton btnOtkai = new JButton("Otkaži");
-		btnOtkai.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnOtkai.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnOtkai.setForeground(UIManager.getColor("Button.foreground"));
+		btnOtkai.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnOtkai.setBounds(242, 309, 89, 23);
 		panel_2.add(btnOtkai);
 		
 		
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(null, "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBackground(UIManager.getColor("TextField.darkShadow"));
+		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel_3.setBounds(392, 22, 341, 370);
 		odjeliPanel.add(panel_3);
 		panel_3.setLayout(null);
@@ -296,6 +307,8 @@ public class MainForm extends JFrame {
 		panel_3.add(comboBox_16);
 		
 		final JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Prikaži arhivirane odjele");
+		chckbxNewCheckBox_1.setForeground(UIManager.getColor("TextField.highlight"));
+		chckbxNewCheckBox_1.setBackground(UIManager.getColor("TextField.darkShadow"));
 		chckbxNewCheckBox_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxNewCheckBox_1.setBounds(22, 86, 149, 23);
 		panel_3.add(chckbxNewCheckBox_1);
@@ -306,6 +319,8 @@ public class MainForm extends JFrame {
 		panel_3.add(list_4);
 		
 		JButton btnPretrai = new JButton("Pretraži");
+		btnPretrai.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnPretrai.setForeground(UIManager.getColor("Button.foreground"));
 		btnPretrai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
@@ -366,6 +381,8 @@ public class MainForm extends JFrame {
 		
 		
 		JButton btnIzmjeni = new JButton("Prikaži odjel");
+		btnIzmjeni.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnIzmjeni.setForeground(UIManager.getColor("Button.foreground"));
 		btnIzmjeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
@@ -389,11 +406,13 @@ public class MainForm extends JFrame {
 				
 			}
 		});
-		btnIzmjeni.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnIzmjeni.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnIzmjeni.setBounds(83, 334, 119, 23);
 		panel_3.add(btnIzmjeni);
 		
 		JButton btnObrisi = new JButton("Obriši odjel");
+		btnObrisi.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnObrisi.setForeground(UIManager.getColor("Button.foreground"));
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
@@ -430,27 +449,31 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
-		btnObrisi.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnObrisi.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnObrisi.setBounds(212, 334, 119, 23);
 		panel_3.add(btnObrisi);
 		
 		JLabel label_5 = new JLabel("Izaberite parametar pretrage:");
+		label_5.setForeground(UIManager.getColor("TextField.highlight"));
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_5.setBounds(22, 29, 170, 14);
 		panel_3.add(label_5);
 		
 	
 		JPanel projektiPanel = new JPanel();
+		projektiPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		tabbedPane.addTab("Projekti", null, projektiPanel, null);
 		projektiPanel.setLayout(null);
 		
 		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dodaj novi projekat", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_5.setBackground(UIManager.getColor("TextField.darkShadow"));
+		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dodaj novi projekat", TitledBorder.LEFT, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel_5.setLayout(null);
 		panel_5.setBounds(30, 22, 341, 370);
 		projektiPanel.add(panel_5);
 		
 		JLabel lblNazivProjekta = new JLabel("Naziv projekta:");
+		lblNazivProjekta.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNazivProjekta.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNazivProjekta.setBounds(62, 36, 73, 14);
 		panel_5.add(lblNazivProjekta);
@@ -461,11 +484,13 @@ public class MainForm extends JFrame {
 		panel_5.add(textField_47);
 		
 		JLabel label_3 = new JLabel("Dodaj zaposlenika:");
+		label_3.setForeground(UIManager.getColor("TextField.highlight"));
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_3.setBounds(45, 120, 90, 14);
 		panel_5.add(label_3);
 		
 		JLabel lblDodajNadreenog = new JLabel("Dodaj nadređenog:");
+		lblDodajNadreenog.setForeground(UIManager.getColor("TextField.highlight"));
 		lblDodajNadreenog.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblDodajNadreenog.setBounds(42, 254, 93, 14);
 		panel_5.add(lblDodajNadreenog);
@@ -514,6 +539,8 @@ public class MainForm extends JFrame {
 		projektiPanel.add(label_error1);
 		
 		JButton button_7 = new JButton("Dodaj");
+		button_7.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button_7.setForeground(UIManager.getColor("Button.foreground"));
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
@@ -570,11 +597,12 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
-		button_7.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		button_7.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button_7.setBounds(147, 308, 89, 23);
 		panel_5.add(button_7);
 		
 		JLabel lblNazivKlijenta = new JLabel("Naziv klijenta:");
+		lblNazivKlijenta.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNazivKlijenta.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNazivKlijenta.setBounds(68, 81, 67, 14);
 		panel_5.add(lblNazivKlijenta);
@@ -589,6 +617,8 @@ public class MainForm extends JFrame {
 		panel_5.add(verticalBox);
 		
 		JButton btnOtkai_1 = new JButton("Otkaži");
+		btnOtkai_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnOtkai_1.setForeground(UIManager.getColor("Button.foreground"));
 		btnOtkai_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_47.setText("");
@@ -598,19 +628,22 @@ public class MainForm extends JFrame {
 				label_error1.setVisible(false);
 			}
 		});
-		btnOtkai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnOtkai_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnOtkai_1.setBounds(242, 308, 89, 23);
 		panel_5.add(btnOtkai_1);
 		
 		
 		
 		JPanel panel_11 = new JPanel();
+		panel_11.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_11.setLayout(null);
-		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga projekta", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga projekta", TitledBorder.LEFT, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel_11.setBounds(392, 22, 341, 370);
 		projektiPanel.add(panel_11);
 		
 		final JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikazi arhivirane projekte");
+		chckbxPrikaziArhiviraneProjekte.setBackground(UIManager.getColor("TextField.darkShadow"));
+		chckbxPrikaziArhiviraneProjekte.setForeground(UIManager.getColor("TextField.highlight"));
 		chckbxPrikaziArhiviraneProjekte.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxPrikaziArhiviraneProjekte.setBounds(22, 86, 149, 23);
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
@@ -643,6 +676,8 @@ public class MainForm extends JFrame {
 		panel_11.add(list_1);
 		
 		JButton btnPretrai_1 = new JButton("Pretraži");
+		btnPretrai_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnPretrai_1.setForeground(UIManager.getColor("Button.foreground"));
 		btnPretrai_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
@@ -761,6 +796,8 @@ public class MainForm extends JFrame {
 		
 		
 		JButton btnSauvajPromjene = new JButton("Prikaži projekat");
+		btnSauvajPromjene.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnSauvajPromjene.setForeground(UIManager.getColor("Button.foreground"));
 		btnSauvajPromjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
@@ -782,11 +819,13 @@ public class MainForm extends JFrame {
 				
 			}
 		});
-		btnSauvajPromjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnSauvajPromjene.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnSauvajPromjene.setBounds(83, 334, 119, 23);
 		panel_11.add(btnSauvajPromjene);
 		
 		JButton btnObriiProjekat = new JButton("Obriši projekat");
+		btnObriiProjekat.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnObriiProjekat.setForeground(UIManager.getColor("Button.foreground"));
 		btnObriiProjekat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
@@ -822,66 +861,78 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
-		btnObriiProjekat.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnObriiProjekat.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnObriiProjekat.setBounds(212, 334, 119, 23);
 		panel_11.add(btnObriiProjekat);
 		
 		JLabel label_7 = new JLabel("Izaberite parametar pretrage:");
+		label_7.setForeground(UIManager.getColor("TextField.highlight"));
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_7.setBounds(22, 29, 170, 14);
 		panel_11.add(label_7);
 		
 		JPanel korisniciPanel = new JPanel();
+		korisniciPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		
 		tabbedPane.addTab("Korisnici", null, korisniciPanel, null);
 		korisniciPanel.setLayout(null);
 		panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBackground(UIManager.getColor("TextField.darkShadow"));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel.setBounds(30, 22, 341, 370);
 		korisniciPanel.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblIme = new JLabel("Ime:");
+		lblIme.setForeground(UIManager.getColor("TextField.highlight"));
 		lblIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblIme.setBounds(98, 24, 82, 14);
 		panel.add(lblIme);
 		
 		JLabel lblPrezime = new JLabel("Prezime:");
+		lblPrezime.setForeground(UIManager.getColor("TextField.highlight"));
 		lblPrezime.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblPrezime.setBounds(82, 49, 82, 14);
 		panel.add(lblPrezime);
 		
 		JLabel lblAdresa = new JLabel("Adresa:");
+		lblAdresa.setForeground(UIManager.getColor("TextField.highlight"));
 		lblAdresa.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblAdresa.setBounds(82, 74, 82, 14);
 		panel.add(lblAdresa);
 		
 		JLabel lblNewLabel_8 = new JLabel("Datum zapošljavanja:");
+		lblNewLabel_8.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel_8.setBounds(10, 102, 104, 14);
 		panel.add(lblNewLabel_8);
 		
 		JLabel lblOdjel = new JLabel("Odjel:");
+		lblOdjel.setForeground(UIManager.getColor("TextField.highlight"));
 		lblOdjel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblOdjel.setBounds(82, 127, 46, 14);
 		panel.add(lblOdjel);
 		
 		JLabel lblKorisnickoIme = new JLabel("Korisničko ime:");
+		lblKorisnickoIme.setForeground(UIManager.getColor("TextField.highlight"));
 		lblKorisnickoIme.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblKorisnickoIme.setBounds(52, 211, 82, 14);
 		panel.add(lblKorisnickoIme);
 		
 		JLabel lblLozinka = new JLabel("Lozinka:");
+		lblLozinka.setForeground(UIManager.getColor("TextField.highlight"));
 		lblLozinka.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblLozinka.setBounds(82, 236, 46, 14);
 		panel.add(lblLozinka);
 		
 		JLabel lblPonoviLozinku = new JLabel("Ponovi lozinku:");
+		lblPonoviLozinku.setForeground(UIManager.getColor("TextField.highlight"));
 		lblPonoviLozinku.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblPonoviLozinku.setBounds(52, 261, 92, 14);
 		panel.add(lblPonoviLozinku);
 		
 		JLabel lblVrstaKorisnika = new JLabel("Koordinator:");
+		lblVrstaKorisnika.setForeground(UIManager.getColor("TextField.highlight"));
 		lblVrstaKorisnika.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblVrstaKorisnika.setBounds(62, 286, 82, 14);
 		panel.add(lblVrstaKorisnika);
@@ -921,6 +972,8 @@ public class MainForm extends JFrame {
 		korisniciPanel.add(label_error2);
 		
 		final JCheckBox chckbxDa = new JCheckBox("Da");
+		chckbxDa.setBackground(UIManager.getColor("TextField.darkShadow"));
+		chckbxDa.setForeground(UIManager.getColor("TextField.highlight"));
 		chckbxDa.setBounds(190, 282, 97, 23);
 		panel.add(chckbxDa);
 		
@@ -950,6 +1003,8 @@ public class MainForm extends JFrame {
 		panel.add(scrollPane);
 		
 		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.setBackground(UIManager.getColor("Tree.selectionBackground"));
+		btnDodaj.setForeground(UIManager.getColor("Button.foreground"));
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true; 
@@ -1091,7 +1146,7 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
-		btnDodaj.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnDodaj.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnDodaj.setBounds(147, 336, 89, 23);
 		panel.add(btnDodaj);
 		
@@ -1102,6 +1157,8 @@ public class MainForm extends JFrame {
 		panel.add(spinner1);
 		
 		JButton btnOtkai_2 = new JButton("Otkaži");
+		btnOtkai_2.setBackground(UIManager.getColor("Tree.selectionBackground"));
+		btnOtkai_2.setForeground(UIManager.getColor("Button.foreground"));
 		btnOtkai_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_36.setText("");
@@ -1114,17 +1171,19 @@ public class MainForm extends JFrame {
 				label_error2.setVisible(false);
 			}
 		});
-		btnOtkai_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnOtkai_2.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnOtkai_2.setBounds(242, 336, 89, 23);
 		panel.add(btnOtkai_2);
 		
 		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setForeground(UIManager.getColor("TextField.highlight"));
 		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblSatnica.setBounds(82, 185, 46, 14);
 		panel.add(lblSatnica);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBackground(UIManager.getColor("TextField.darkShadow"));
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel_1.setBounds(392, 22, 341, 370);
 		korisniciPanel.add(panel_1);
 		panel_1.setLayout(null);
@@ -1163,11 +1222,15 @@ public class MainForm extends JFrame {
 		panel_1.add(list_2);
 		
 		final JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
+		chckbxNewCheckBox.setForeground(UIManager.getColor("TextField.highlight"));
+		chckbxNewCheckBox.setBackground(UIManager.getColor("TextField.darkShadow"));
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxNewCheckBox.setBounds(22, 86, 170, 23);
 		panel_1.add(chckbxNewCheckBox);
 		final DefaultListModel lista = new DefaultListModel();
 		JButton btnPretraga = new JButton("Pretraži");
+		btnPretraga.setBackground(UIManager.getColor("TextArea.selectionBackground"));
+		btnPretraga.setForeground(UIManager.getColor("Button.foreground"));
 		btnPretraga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -1232,7 +1295,9 @@ public class MainForm extends JFrame {
 		});
 		
 		JButton btnNewButton_1 = new JButton("Prikaži profil");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnNewButton_1.setBackground(UIManager.getColor("Tree.selectionBackground"));
+		btnNewButton_1.setForeground(UIManager.getColor("Button.foreground"));
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
@@ -1258,7 +1323,9 @@ public class MainForm extends JFrame {
 		panel_1.add(btnNewButton_1);
 		
 		JButton btnObriiKorisnika = new JButton("Obriši korisnika");
-		btnObriiKorisnika.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnObriiKorisnika.setBackground(UIManager.getColor("Tree.selectionBackground"));
+		btnObriiKorisnika.setForeground(UIManager.getColor("Button.foreground"));
+		btnObriiKorisnika.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnObriiKorisnika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
@@ -1294,6 +1361,7 @@ public class MainForm extends JFrame {
 		panel_1.add(btnObriiKorisnika);
 		
 		JLabel label_6 = new JLabel("Izaberite parametar pretrage:");
+		label_6.setForeground(UIManager.getColor("TextField.highlight"));
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_6.setBounds(22, 29, 170, 14);
 		panel_1.add(label_6);
@@ -1302,16 +1370,19 @@ public class MainForm extends JFrame {
 		
 		
 		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(UIManager.getColor("TextField.darkShadow"));
 		tabbedPane.addTab("Moj profil", null, panel_4, null);
 		panel_4.setLayout(null);
 		
 		JPanel panel_6 = new JPanel();
+		panel_6.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_6.setLayout(null);
-		panel_6.setBorder(new TitledBorder(null, "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel_6.setBounds(30, 22, 341, 370);
 		panel_4.add(panel_6);
 		
 		JLabel label = new JLabel("Trenutna lozinka:");
+		label.setForeground(UIManager.getColor("TextField.highlight"));
 		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label.setBounds(48, 38, 83, 14);
 		panel_6.add(label);
@@ -1327,6 +1398,7 @@ public class MainForm extends JFrame {
 		panel_6.add(textField_2);
 		
 		JLabel label_1 = new JLabel("Nova lozinka:");
+		label_1.setForeground(UIManager.getColor("TextField.highlight"));
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_1.setBounds(67, 66, 64, 14);
 		panel_6.add(label_1);
@@ -1337,6 +1409,7 @@ public class MainForm extends JFrame {
 		panel_6.add(textField_3);
 		
 		JLabel label_4 = new JLabel("Nova lozinka(ponovo):");
+		label_4.setForeground(UIManager.getColor("TextField.highlight"));
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_4.setBounds(23, 94, 108, 14);
 		panel_6.add(label_4);
@@ -1349,6 +1422,8 @@ public class MainForm extends JFrame {
 		panel_4.add(label_error3);
 		
 		JButton button = new JButton("Spasi promjenu");
+		button.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button.setForeground(UIManager.getColor("Button.foreground"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
@@ -1393,11 +1468,13 @@ public class MainForm extends JFrame {
 				}
 			}
 		});
-		button.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		button.setBounds(77, 138, 110, 23);
+		button.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button.setBounds(67, 138, 120, 23);
 		panel_6.add(button);
 		
 		JButton button_1 = new JButton("Otkaži");
+		button_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button_1.setForeground(UIManager.getColor("Button.foreground"));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_1.setText("");
@@ -1406,7 +1483,7 @@ public class MainForm extends JFrame {
 				label_error3.setVisible(false);
 			}
 		});
-		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		button_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button_1.setBounds(193, 138, 110, 23);
 		panel_6.add(button_1);		
 	}

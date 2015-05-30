@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
 
 public class TaskForm extends JFrame {
 
@@ -53,18 +54,21 @@ public class TaskForm extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 383, 260);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("TextField.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel.setBounds(22, 11, 327, 197);
-		panel.setBorder(new TitledBorder(null, "Dodaj task", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dodaj task", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNazivTaska = new JLabel("Naziv taska:");
+		lblNazivTaska.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNazivTaska.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNazivTaska.setBounds(26, 25, 59, 14);
 		panel.add(lblNazivTaska);
@@ -75,6 +79,7 @@ public class TaskForm extends JFrame {
 		textField_2.setColumns(10);
 		
 		JLabel lblOpisTaska = new JLabel("Opis taska:");
+		lblOpisTaska.setForeground(UIManager.getColor("TextField.highlight"));
 		lblOpisTaska.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblOpisTaska.setBounds(31, 62, 54, 14);
 		panel.add(lblOpisTaska);
@@ -85,6 +90,7 @@ public class TaskForm extends JFrame {
 		panel.add(textField_1);
 		
 		JLabel lblPrioritet = new JLabel("Prioritet:");
+		lblPrioritet.setForeground(UIManager.getColor("TextField.highlight"));
 		lblPrioritet.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblPrioritet.setBounds(42, 121, 42, 14);
 		panel.add(lblPrioritet);
@@ -96,6 +102,7 @@ public class TaskForm extends JFrame {
 		panel.add(spinner);
 		
 		JLabel lblNewLabel = new JLabel("Rok:");
+		lblNewLabel.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setBounds(63, 96, 22, 14);
 		panel.add(lblNewLabel);
@@ -112,6 +119,8 @@ public class TaskForm extends JFrame {
 		contentPane.add(label);
 		
 		JButton btnNewButton = new JButton("Dodaj task");
+		btnNewButton.setForeground(UIManager.getColor("Button.foreground"));
+		btnNewButton.setBackground(UIManager.getColor("TextArea.selectionBackground"));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
@@ -131,7 +140,7 @@ public class TaskForm extends JFrame {
 				else label.setVisible(false);
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnNewButton.setBounds(196, 154, 101, 23);
 		panel.add(btnNewButton);
 		

@@ -47,6 +47,7 @@ import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
 
 public class KorisnikForm extends JFrame {
 
@@ -86,6 +87,7 @@ public class KorisnikForm extends JFrame {
 		setTitle("Profil zaposlenika");
 		setBounds(100, 100, 392, 429);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("TextField.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -94,52 +96,62 @@ public class KorisnikForm extends JFrame {
 		final ZaposlenikHibernate zh = DalDao.VratiZaposlenika(id);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel.setBounds(22, 11, 341, 370);
-		panel.setBorder(new TitledBorder(null, "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("Ime:");
+		label.setForeground(UIManager.getColor("TextField.highlight"));
 		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label.setBounds(98, 24, 82, 14);
 		panel.add(label);
 		
 		JLabel label_1 = new JLabel("Prezime:");
+		label_1.setForeground(UIManager.getColor("TextField.highlight"));
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_1.setBounds(82, 49, 82, 14);
 		panel.add(label_1);
 		
 		JLabel label_2 = new JLabel("Adresa:");
+		label_2.setForeground(UIManager.getColor("TextField.highlight"));
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_2.setBounds(82, 74, 82, 14);
 		panel.add(label_2);
 		
 		JLabel label_5 = new JLabel("Datum zapošljavanja:");
+		label_5.setForeground(UIManager.getColor("TextField.highlight"));
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_5.setBounds(15, 98, 113, 14);
 		panel.add(label_5);
 		
 		JLabel lblOdjeli = new JLabel("Odjeli:");
+		lblOdjeli.setForeground(UIManager.getColor("TextField.highlight"));
 		lblOdjeli.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblOdjeli.setBounds(88, 123, 40, 14);
 		panel.add(lblOdjeli);
 		
 		JLabel label_7 = new JLabel("Korisničko ime:");
+		label_7.setForeground(UIManager.getColor("TextField.highlight"));
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_7.setBounds(52, 207, 82, 14);
 		panel.add(label_7);
 		
 		JLabel label_8 = new JLabel("Lozinka:");
+		label_8.setForeground(UIManager.getColor("TextField.highlight"));
 		label_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_8.setBounds(82, 232, 46, 14);
 		panel.add(label_8);
 		
 		JLabel label_9 = new JLabel("Ponovi lozinku:");
+		label_9.setForeground(UIManager.getColor("TextField.highlight"));
 		label_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_9.setBounds(52, 257, 92, 14);
 		panel.add(label_9);
 		
 		JLabel lblKoordinator = new JLabel("Koordinator:");
+		lblKoordinator.setForeground(UIManager.getColor("TextField.highlight"));
 		lblKoordinator.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblKoordinator.setBounds(62, 282, 60, 14);
 		panel.add(lblKoordinator);
@@ -238,6 +250,8 @@ public class KorisnikForm extends JFrame {
 		panel.add(chckbxDa_1);
 		
 		JButton btnSpasiIzmjene = new JButton("Spremi izmjene");
+		btnSpasiIzmjene.setForeground(UIManager.getColor("Button.foreground"));
+		btnSpasiIzmjene.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnSpasiIzmjene.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
@@ -379,16 +393,18 @@ public class KorisnikForm extends JFrame {
 				
 			}
 		});
-		btnSpasiIzmjene.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnSpasiIzmjene.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnSpasiIzmjene.setBounds(190, 336, 141, 23);
 		panel.add(btnSpasiIzmjene);
 		
 		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setForeground(UIManager.getColor("TextField.highlight"));
 		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblSatnica.setBounds(82, 182, 40, 14);
 		panel.add(lblSatnica);
 		
 		JLabel lblArhiviran = new JLabel("Arhiviran:");
+		lblArhiviran.setForeground(UIManager.getColor("TextField.highlight"));
 		lblArhiviran.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblArhiviran.setBounds(74, 307, 60, 14);
 		panel.add(lblArhiviran);		

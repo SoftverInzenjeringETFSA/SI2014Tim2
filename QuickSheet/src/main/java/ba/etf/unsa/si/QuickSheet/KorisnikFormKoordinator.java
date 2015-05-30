@@ -33,6 +33,7 @@ import java.util.Date;
 import java.util.Calendar;
 import java.awt.Toolkit;
 import javax.swing.JCheckBox;
+import javax.swing.UIManager;
 
 public class KorisnikFormKoordinator extends JFrame {
 
@@ -71,53 +72,63 @@ public class KorisnikFormKoordinator extends JFrame {
 		setTitle("Profil zaposlenika");
 		setBounds(100, 100, 389, 355);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("TextField.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel.setBounds(22, 11, 341, 298);
-		panel.setBorder(new TitledBorder(null, "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("Ime:");
+		label.setForeground(UIManager.getColor("TextField.highlight"));
 		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label.setBounds(98, 24, 82, 14);
 		panel.add(label);
 		
 		JLabel label_1 = new JLabel("Prezime:");
+		label_1.setForeground(UIManager.getColor("TextField.highlight"));
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_1.setBounds(82, 49, 82, 14);
 		panel.add(label_1);
 		
 		JLabel label_2 = new JLabel("Adresa:");
+		label_2.setForeground(UIManager.getColor("TextField.highlight"));
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_2.setBounds(82, 74, 82, 14);
 		panel.add(label_2);
 		
 		JLabel lblSatnica = new JLabel("Satnica:");
+		lblSatnica.setForeground(UIManager.getColor("TextField.highlight"));
 		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblSatnica.setBounds(80, 99, 58, 14);
 		panel.add(lblSatnica);
 		
 		JLabel label_5 = new JLabel("Datum zapošljavanja:");
+		label_5.setForeground(UIManager.getColor("TextField.highlight"));
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_5.setBounds(15, 149, 113, 14);
 		panel.add(label_5);
 		
 		JLabel lblOdjeli = new JLabel("Odjeli:");
+		lblOdjeli.setForeground(UIManager.getColor("TextField.highlight"));
 		lblOdjeli.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblOdjeli.setBounds(88, 174, 40, 14);
 		panel.add(lblOdjeli);
 		
 		JLabel label_7 = new JLabel("Korisničko ime:");
+		label_7.setForeground(UIManager.getColor("TextField.highlight"));
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_7.setBounds(52, 233, 82, 14);
 		panel.add(label_7);
 		
 		JLabel lblKoordinator = new JLabel("Koordinator:");
+		lblKoordinator.setForeground(UIManager.getColor("TextField.highlight"));
 		lblKoordinator.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblKoordinator.setBounds(62, 258, 82, 14);
 		panel.add(lblKoordinator);
@@ -200,8 +211,10 @@ public class KorisnikFormKoordinator extends JFrame {
 		panel.add(textField_5);
 		
 		JCheckBox chckbxDa = new JCheckBox("Da");
+		chckbxDa.setForeground(UIManager.getColor("TextField.highlight"));
+		chckbxDa.setBackground(UIManager.getColor("TextField.disabledBackground"));
 		chckbxDa.setEnabled(false);
-		chckbxDa.setBounds(164, 254, 97, 23);
+		chckbxDa.setBounds(164, 254, 45, 23);
 		chckbxDa.setSelected(prikaz.getKoordinator());
 		panel.add(chckbxDa);
 		
