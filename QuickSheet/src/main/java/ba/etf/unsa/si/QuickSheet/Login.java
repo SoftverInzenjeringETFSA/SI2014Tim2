@@ -124,13 +124,6 @@ public class Login extends JFrame {
 
 		getContentPane().add(lblUkolikoSteZaboravili);
 		
-		final JCheckBox chckbxAdministrator = new JCheckBox("Administrator");
-		chckbxAdministrator.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxAdministrator.setForeground(UIManager.getColor("Button.highlight"));
-		chckbxAdministrator.setBackground(UIManager.getColor("Button.darkShadow"));
-		chckbxAdministrator.setBounds(142, 207, 97, 23);
-		getContentPane().add(chckbxAdministrator);
-		
 		final JLabel labela1 = new JLabel("");
 		labela1.setForeground(Color.RED);
 		labela1.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -150,21 +143,12 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					String username = txtIme.getText();
-					if (username.equals("baza"))
-					{
-						ArrayList<ZaposlenikHibernate> zh = DalDao.VratiSveZaposlenike();
-						for (int i = 0; i < zh.size(); i++)
-						{
-							zh.get(i).setLozinka(Lozinka.generateStorngPasswordHash(zh.get(i).getLozinka()));
-							DalDao.ModifikujObjekat(zh.get(i));
-						}
-					}
 					@SuppressWarnings("deprecation")
 					String pass = txtPassword.getText();
 					AdministratorHibernate admin = DalDao.VratiAdministratoraPoUsernamu(username);
 					ZaposlenikHibernate zaposlenik = DalDao.VratiZaposlenikaPoUsernamu(username);
 					boolean isError = true;
-					if(admin != null && chckbxAdministrator.isSelected()) {
+					if(admin != null) {
 						if(Lozinka.validatePassword(pass, admin.getLozinka())) {
 							new MainForm(admin).setVisible(true);
 							isError = false;
