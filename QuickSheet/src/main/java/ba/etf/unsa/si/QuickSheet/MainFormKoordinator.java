@@ -95,7 +95,7 @@ public class MainFormKoordinator extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFormKoordinator frame = new MainFormKoordinator(DalDao.VratiZaposlenika(8));
+					MainFormKoordinator frame = new MainFormKoordinator(DalDao.VratiZaposlenika(10));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -1218,11 +1218,11 @@ public class MainFormKoordinator extends JFrame {
 			if (!timesheets.get(i).getValidiran())
 			{
 				ArrayList<TaskHibernate> taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(timesheets.get(i).getId());
-				if (taskovi.get(0).getKomentar().isEmpty())
+				if (taskovi != null && taskovi.size() > 0 && taskovi.get(0).getKomentar() != null)
 				{
 					String ime = taskovi.get(0).getZaposlenik().getIme() + " " + taskovi.get(0).getZaposlenik().getPrezime();
 					String komponenta = timesheets.get(i).getId() + " " + "Projekat: " + timesheets.get(i).getProjekat().getNaziv() + ", Zaposlenik: " + ime + ", " + timesheets.get(i).getDatumSlanja().toString();
-					dlm.addElement(komponenta);
+					dlm.addElement(komponenta); 
 				}
 			}
 		}

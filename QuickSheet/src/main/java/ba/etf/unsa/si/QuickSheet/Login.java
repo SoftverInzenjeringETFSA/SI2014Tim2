@@ -170,18 +170,9 @@ public class Login extends JFrame {
 						labela1.setVisible(true);
 						labela1.setText("Pogrešan username ili password!");
 					}
-				
-				String textFieldValue = txtIme.getText();
-				boolean greska = true;
-				boolean greska_p = true;
-				if(textFieldValue.equals("administrator")){
-					AdministratorHibernate ah = DalDao.VratiAdministratora(1);
-					new MainForm(ah).setVisible(true);
-					Login.this.setVisible(false);
-				}
 				}
 				catch(Exception ex) {
-					JOptionPane.showMessageDialog(null, "Dogodila se greska kontaktirajete administratora: " + ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE );
+					JOptionPane.showMessageDialog(null, "Dogodila se greska kontaktirajete administratora: " + ex.getCause(), "Greska", JOptionPane.ERROR_MESSAGE );
 				}
 			}
 				
