@@ -121,7 +121,7 @@ public class Login extends JFrame {
 					@SuppressWarnings("deprecation")
 					String pass = txtPassword.getText();
 					AdministratorHibernate admin = DalDao.VratiAdministratoraPoUsernamu(username);
-					ZaposlenikHibernate zaposlenik = DalDao.VratiZaposlenikaPoUsernamu(username);
+					ZaposlenikHibernate zaposlenik = DalDao.VratiNearhiviraneZaposlenikePoUsername(username);
 					boolean isError = true;
 					if(admin != null) {
 						if(Lozinka.validatePassword(pass, admin.getLozinka())) {

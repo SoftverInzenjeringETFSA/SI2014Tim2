@@ -232,14 +232,6 @@ public class MainForm extends JFrame {
 		
 		final JComboBox comboBox_16 = new JComboBox();
 		comboBox_16.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox_16.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!(comboBox_16.getSelectedItem() == null)){
-					textField_45.setText((String) comboBox_16.getSelectedItem());
-				}
-			}
-		});
-		
 		comboBox_16.setModel(new DefaultComboBoxModel(new String[] {"Naziv"}));
 		comboBox_16.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_16);
@@ -550,14 +542,6 @@ public class MainForm extends JFrame {
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
 		
 		final JComboBox comboBox_17 = new JComboBox();
-		comboBox_17.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!(comboBox_17.getSelectedItem() == null)){
-					textField_46.setText((String) comboBox_17.getSelectedItem());
-				}
-			}
-		});
-		
 		comboBox_17.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"Naziv projekta", "Naziv klijenta"}));
 		comboBox_17.setBounds(22, 56, 99, 23);
@@ -1069,14 +1053,6 @@ public class MainForm extends JFrame {
 		final JComboBox comboBox_13 = new JComboBox();
 		comboBox_13.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox_13.setModel(new DefaultComboBoxModel(new String[] {"Ime", "Prezime", "Username"}));
-		comboBox_13.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!(comboBox_13.getSelectedItem() == null)){
-					textField_42.setText((String) comboBox_13.getSelectedItem());
-				}
-			}
-		});
-		
 		comboBox_13.setBounds(22, 56, 99, 23);
 		panel_1.add(comboBox_13);
 		
@@ -1115,15 +1091,15 @@ public class MainForm extends JFrame {
 					{
 						if (vrijednost.equals("Ime"))
 						{
-							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_42.getText());
+							zaposlenici = DalDao.VratiArhiviraneZaposlenikePoImenu(textField_42.getText());
 						}
 						else if (vrijednost.equalsIgnoreCase("Prezime"))
 						{
-							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_42.getText());
+							zaposlenici = DalDao.VratiArhiviraneZaposlenikePoPrezimenu(textField_42.getText());
 						}
 						else
 						{
-							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_42.getText());
+							zaposlenici.add(DalDao.VratiArhiviraneZaposlenikePoUsername(textField_42.getText()));
 						}
 					}
 					else
@@ -1138,13 +1114,16 @@ public class MainForm extends JFrame {
 						}
 						else
 						{
-							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_42.getText());
+							zaposlenici.add(DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_42.getText()));
 						}
 					}
 					for (int i = 0; i < zaposlenici.size(); i++)
 					{
-						String podatak = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime();
-						lista.addElement(podatak);
+						if (zaposlenici.get(i) != null)
+						{
+							String podatak = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime();
+							lista.addElement(podatak);
+						}
 					}
 
 				}

@@ -221,7 +221,7 @@ public class AdministratorTest {
 		DalDao.DodajObjekat(zh);
 		
 		DalDao.ObrisiObjekat(zh);
-		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenikaPoUsernamu("Dzenana");
+		ZaposlenikHibernate zh1 = DalDao.VratiNearhiviraneZaposlenikePoUsername("Dzenana");
 		assertNull(zh1);
 		
 	}
