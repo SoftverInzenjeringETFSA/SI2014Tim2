@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -20,6 +22,8 @@ import javax.swing.UIManager;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class Login extends JFrame {
@@ -69,14 +73,9 @@ public class Login extends JFrame {
 		
 		txtIme = new JTextField();
 
-		txtIme.setDisabledTextColor(Color.WHITE);
-		txtIme.setCaretColor(Color.WHITE);
-		txtIme.setForeground(Color.DARK_GRAY);
 		txtIme.setBackground(Color.WHITE);
-
 		txtIme.setFont(new Font("Tahoma", Font.BOLD, 11));
 		txtIme.setForeground(UIManager.getColor("Button.foreground"));
-
 		txtIme.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIme.setBounds(71, 91, 235, 20);
 		getContentPane().add(txtIme);
@@ -125,13 +124,6 @@ public class Login extends JFrame {
 
 		getContentPane().add(lblUkolikoSteZaboravili);
 		
-		final JCheckBox chckbxAdministrator = new JCheckBox("Administrator");
-		chckbxAdministrator.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxAdministrator.setForeground(UIManager.getColor("Button.highlight"));
-		chckbxAdministrator.setBackground(UIManager.getColor("Button.darkShadow"));
-		chckbxAdministrator.setBounds(142, 207, 97, 23);
-		getContentPane().add(chckbxAdministrator);
-		
 		final JLabel labela1 = new JLabel("");
 		labela1.setForeground(Color.RED);
 		labela1.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -156,7 +148,7 @@ public class Login extends JFrame {
 					AdministratorHibernate admin = DalDao.VratiAdministratoraPoUsernamu(username);
 					ZaposlenikHibernate zaposlenik = DalDao.VratiZaposlenikaPoUsernamu(username);
 					boolean isError = true;
-					if(admin != null && chckbxAdministrator.isSelected()) {
+					if(admin != null) {
 						if(Lozinka.validatePassword(pass, admin.getLozinka())) {
 							new MainForm(admin).setVisible(true);
 							isError = false;
@@ -178,6 +170,7 @@ public class Login extends JFrame {
 						labela1.setVisible(true);
 						labela1.setText("Pogrešan username ili password!");
 					}
+
 					
 					
 					else{
@@ -190,10 +183,10 @@ public class Login extends JFrame {
 						new MainForm(ah).setVisible(true);
 					}	
 					Login.this.setVisible(false);
-					}
-				}
+
+					}}
 				catch(Exception ex) {
-					JOptionPane.showMessageDialog(null, "Dogodila se greska kontaktirajete administratora: " + ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE );
+					JOptionPane.showMessageDialog(null, "Dogodila se greska kontaktirajete administratora: " + ex.getCause(), "Greska", JOptionPane.ERROR_MESSAGE );
 				}
 			}
 				

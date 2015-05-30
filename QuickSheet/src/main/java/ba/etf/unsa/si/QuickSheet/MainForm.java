@@ -1035,10 +1035,11 @@ public class MainForm extends JFrame {
 					greska = false;
 				}
 				
-				if(p1.length() >= 0 && p1.length() < 8){
+				
+				if(p1.length() >=0 && p1.length() < 7){
 					label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;}
-				if(p2.length() >= 0 && p2.length() < 8){
+				if(p2.length() >= 0 && p2.length() < 7 && p2.trim().isEmpty() && p2 == null){
 					label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;} 
 				if (!p1.equals(p2)) {
