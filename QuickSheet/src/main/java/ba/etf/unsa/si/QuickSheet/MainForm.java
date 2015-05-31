@@ -310,24 +310,22 @@ public class MainForm extends JFrame {
 		btnIzmjeni.setForeground(UIManager.getColor("Button.foreground"));
 		btnIzmjeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				boolean greska = true;
-				
-				if(list_4.isSelectionEmpty()){
+				if(list_4.isSelectionEmpty())
 					greska = false;
-					
-				}
-				
-				if(greska == false){
-					
+
+				if(greska == false)
+				{	
 					label_error.setText("Morate označiti odjel!");
 					label_error.setVisible(true);
 				}
-				else{
+				else
+				{
 					label_error.setVisible(false);
 					String Odjel=list_4.getSelectedValue().toString();
 					new OdjelForm(Odjel).setVisible(true);
 				}
-				
 			}
 		});
 		
@@ -341,36 +339,31 @@ public class MainForm extends JFrame {
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
-				if(list_4.isSelectionEmpty()){
+				if(list_4.isSelectionEmpty())
 					greska = false;
-					
-				}
-				if(greska == false){
-					
+
+				if(greska == false)
+				{	
 					label_error.setText("Morate selektovati odjel da bi ga izbrisali!");
 					label_error.setVisible(true);
 				}
-				else{
-					label_error.setVisible(false);
-					
+				else
+				{
+					label_error.setVisible(false);	
 					String selektovanaVrijednost = list_4.getSelectedValue().toString();
 					String[] rijeci = selektovanaVrijednost.split(" ");
 					long id = Long.parseLong(rijeci[0]);
 					OdjelHibernate o=DalDao.VratiOdjel(id);
-					o.setArhiviran(true);
-					DalDao.ModifikujObjekat(o);
-					JOptionPane.showMessageDialog(null, "Odjel je arhiviran.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
-					
-					DefaultListModel listaArhOdjela = new DefaultListModel();
-					list_4.setModel(listaArhOdjela);
-					ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveNearhiviraneOdjele();
-
-					for (int i=0;i<arhiviraniOdjeli.size();i++)
-						{
-						    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-							listaArhOdjela.addElement(tempString);
-						}
-					textField_45.setText("");
+					if (!o.getArhiviran())
+					{
+						o.setArhiviran(true);
+						DalDao.ModifikujObjekat(o);
+						JOptionPane.showMessageDialog(null, "Odjel je arhiviran.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
+						textField_45.setText("");
+						listaOdjela.removeAllElements();
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Odjel je već arhiviran.", "Odjel arhiviran", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -433,7 +426,7 @@ public class MainForm extends JFrame {
 		final JList list = new JList();
 		final DefaultListModel listaZaposlenikaPr = new DefaultListModel();
 		list.setModel(listaZaposlenikaPr);
-		ArrayList<ZaposlenikHibernate> zaposleniciPr=DalDao.VratiSveZaposlenike();
+		ArrayList<ZaposlenikHibernate> zaposleniciPr=DalDao.VratiSveNearhiviraneZaposlenike();
 
 		for (int i=0;i<zaposleniciPr.size();i++)
 			{
