@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.AbstractListModel;
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -148,8 +147,7 @@ public class MainForm extends JFrame {
 		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveNearhiviraneZaposlenike();
 		for (int i=0;i<zaposlenici.size();i++)
 			{
-			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
-			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
+			    String tempString = zaposlenici.get(i).toString();
 				listaZaposlenika.addElement(tempString);
 			}
 		list_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -182,12 +180,20 @@ public class MainForm extends JFrame {
 					label_error.setText("Odjel sa unesenim nazivom već postoji!");
 					greska = false;
 				}
-				if(textField_44.getText().equals("") )
+				if(textField_44.getText().equals("") || !textField_44.getText().matches("^[0-9]*$"))
 				{
 					label_error.setText("Unesite maksimalan broj zaposlenika!");
 					greska = false;
 				}
-				
+				else
+				{
+					Integer broj = Integer.parseInt(textField_44.getText());
+					if (list_3.getSelectedIndices().length > broj)
+					{
+						label_error.setText("Prekoračili ste limit odjela!");
+						greska = false;
+					}
+				}
 				if(greska == false)
 				{
 					label_error.setVisible(true);	
@@ -312,13 +318,9 @@ public class MainForm extends JFrame {
 		btnIzmjeni.setForeground(UIManager.getColor("Button.foreground"));
 		btnIzmjeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				boolean greska = true;
 				if(list_4.isSelectionEmpty())
-					greska = false;
-
-				if(greska == false)
-				{	
+				{
 					label_error.setText("Morate označiti odjel!");
 					label_error.setVisible(true);
 				}
@@ -326,6 +328,8 @@ public class MainForm extends JFrame {
 				{
 					label_error.setVisible(false);
 					String Odjel=list_4.getSelectedValue().toString();
+					listaOdjela.removeAllElements();
+					textField_45.setText("");
 					new OdjelForm(Odjel).setVisible(true);
 				}
 			}

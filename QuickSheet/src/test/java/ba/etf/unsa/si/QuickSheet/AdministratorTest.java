@@ -10,14 +10,10 @@ import org.junit.Test;
 
 import ba.etf.unsa.si.Klase.Administrator;
 import ba.etf.unsa.si.Klase.DalDao;
-import ba.etf.unsa.si.Klase.Koordinator;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.Klase.Odjel;
-import ba.etf.unsa.si.Klase.Projekat;
-
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
-import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
@@ -73,9 +69,9 @@ public class AdministratorTest {
 		o.setMaksimalanBrojRadnika(24);
 		o.setArhiviran(false);
 		DalDao.DodajObjekat(o);
-		
 		OdjelHibernate o1 = DalDao.VratiOdjelPoNazivu("Odjel");
 		assertEquals("Odjel", o1.getNaziv());
+		DalDao.ObrisiObjekat(o1);
 	}
 	
 	@Test
@@ -92,9 +88,9 @@ public class AdministratorTest {
 		zh.setUsername("dzbr");
 		DalDao.DodajObjekat(zh);
 		
-		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenika(zh.getId());
+		ZaposlenikHibernate zh1 = DalDao.VratiArhiviraneZaposlenikePoUsername(zh.getUsername());
 		assertNotNull(zh1);
-		
+		DalDao.ObrisiObjekat(zh1);
 	}
 	@Test
 	public void getZaposlenikArhiviran() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
@@ -110,9 +106,9 @@ public class AdministratorTest {
 		zh.setUsername("dzbr");
 		DalDao.DodajObjekat(zh);
 		
-		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenika(zh.getId());
+		ZaposlenikHibernate zh1 = DalDao.VratiArhiviraneZaposlenikePoUsername("dzbr");
 		assertTrue(zh1.getArhiviran());
-		
+		DalDao.ObrisiObjekat(zh1);
 	}
 	@Test
 	public void getZaposlenikAdresa() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
@@ -146,7 +142,7 @@ public class AdministratorTest {
 		zh.setUsername("dzbr");
 		DalDao.DodajObjekat(zh);
 		
-		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenika(zh.getId());
+		ZaposlenikHibernate zh1 = DalDao.VratiArhiviraneZaposlenikePoUsername("dzbr");
 		assertEquals(zh.getIme(), zh1.getIme());
 		
 	}

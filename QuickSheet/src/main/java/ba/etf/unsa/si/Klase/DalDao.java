@@ -732,15 +732,19 @@ public class DalDao {
 	
 	static public void IzbrisiZaposlenikaIzOdjela (long idZap, long idOdj)
 	{
-		ArrayList<OdjelZaposlenikHibernate> ozh = VratiOdjelZaposlenikPoZaposleniku(idZap);
-		OdjelHibernate oh=new OdjelHibernate();
-		oh=DalDao.VratiOdjel(idOdj);
-		for (int i = 0; i < ozh.size(); i++)
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM OdjelZaposlenikHibernate WHERE odjel=:ode AND zaposlenikOdjela=:zape";
+		Query query = session.createQuery(hql);
+		query.setLong("ode", idOdj);
+		query.setLong("zape", idZap);
+		@SuppressWarnings("unchecked")
+		ArrayList<OdjelZaposlenikHibernate> results = (ArrayList<OdjelZaposlenikHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		if (results != null && results.size() > 0)
 		{
-			if(ozh.get(i).getOdjel()==oh){
-				ObrisiObjekat(ozh.get(i));	
-			}
-			
+			ObrisiObjekat(results.get(0));
 		}
 	}
 	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaposlenika(long zaposlenikId) {
