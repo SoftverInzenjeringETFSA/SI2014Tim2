@@ -170,9 +170,9 @@ public class MainForm extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true; 
 				OdjelHibernate odjeli = DalDao.VratiOdjelPoNazivu(textField_43.getText());
-				if(textField_43.getText().length() < 3)
+				if(textField_43.getText().length() < 3 || !textField_43.getText().matches("^[a-zA-Z0-9]*$"))
 				{
-					label_error.setText("Unesite naziv odjela od barem tri slova!");
+					label_error.setText("Unesite ispravan naziv odjela od barem tri slova!");
 					greska = false;
 				}
 				if (odjeli != null)
@@ -435,8 +435,7 @@ public class MainForm extends JFrame {
 		ArrayList<ZaposlenikHibernate> zaposleniciPr=DalDao.VratiSveNearhiviraneZaposlenike();
 		for (int i=0;i<zaposleniciPr.size();i++)
 		{
-		    String tempString = zaposleniciPr.get(i).getId() + " " + zaposleniciPr.get(i).getIme() + " " + zaposleniciPr.get(i).getPrezime()
-		    		+ " " + zaposleniciPr.get(i).getAdresa() + " " + zaposleniciPr.get(i).getSatnica();
+		    String tempString = zaposleniciPr.get(i).toString();
 			listaZaposlenikaPr.addElement(tempString);			
 		}
 		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -458,23 +457,28 @@ public class MainForm extends JFrame {
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
-				if(textField_47.getText().equals("")){
+				if(textField_47.getText().equals("") || !textField_47.getText().matches("^[a-zA-Z0-9]*$"))
+				{
 					greska = false;
-					label_error1.setText("Morate unijeti naziv projekta!");
+					label_error1.setText("Morate unijeti ispravan naziv projekta!");
 				}
-				if(textField_48.getText().equals("")){
+				if(textField_48.getText().equals("") || !textField_48.getText().matches("^[a-zA-Z0-9]*$"))
+				{
 					greska = false;
-					label_error1.setText("Morate unijeti naziv klijenta!");
+					label_error1.setText("Morate unijeti ispravan naziv klijenta!");
 				}
-				if(comboBox_19.getSelectedItem() == null){
+				if(comboBox_19.getSelectedItem() == null)
+				{
 					greska = false;
 					label_error1.setText("Morate označiti nadređenog!");
 				}
 				
-				if(greska == false){
+				if(greska == false)
+				{
 					label_error1.setVisible(true);
 				}
-				else  {
+				else  
+				{
 					label_error1.setVisible(false);
 					ProjekatHibernate projekath = new ProjekatHibernate();
 					projekath.setNaziv(textField_47.getText());
@@ -485,24 +489,28 @@ public class MainForm extends JFrame {
 					String[] rijecis=selekt.split(" ");
 					long ids=Long.parseLong(rijecis[0]);
 					ZaposlenikHibernate zs=DalDao.VratiZaposlenika(ids);
-					
 					projekath.setKoordinator(zs);
 					DalDao.DodajObjekat(projekath);
+					
 					int[] indeksi=list.getSelectedIndices();
-					for(int i=0;i<indeksi.length;i++){
+					for(int i=0;i<indeksi.length;i++)
+					{
 						String selektovano=listaZaposlenikaPr.getElementAt(indeksi[i]).toString();
 						String[] rijeciPr=selektovano.split(" ");
 						long idPr=Long.parseLong(rijeciPr[0]);
 						ZaposlenikHibernate zPr=DalDao.VratiZaposlenika(idPr);
-						TaskHibernate tPr=new TaskHibernate();
-						tPr.setProjekat(projekath);
-						tPr.setZaposlenik(zPr);
-						tPr.setPrioritet(10);
-						tPr.setProcenatZavrsenosti(100);
-						tPr.setRok(LocalDate.now());
-						DalDao.DodajObjekat(tPr);
+						if (zPr.getId() != projekath.getKoordinator().getId())
+						{
+							TaskHibernate tPr=new TaskHibernate();
+							tPr.setProjekat(projekath);
+							tPr.setZaposlenik(zPr);
+							tPr.setPrioritet(10);
+							tPr.setProcenatZavrsenosti(100);
+							tPr.setRok(LocalDate.now());
+							DalDao.DodajObjekat(tPr);
+						}
 					}
-					JOptionPane.showMessageDialog(null, "Projekat je dodan.", "OK", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Uspjesno ste dodali projekat", "Projekat dodan", JOptionPane.INFORMATION_MESSAGE);
 					textField_47.setText("");
 					textField_48.setText("");
 					list.clearSelection();
@@ -640,8 +648,9 @@ public class MainForm extends JFrame {
 				else{
 					label_error1.setVisible(false);
 					String Projekat=list_1.getSelectedValue().toString();
+					textField_46.setText("");
+					listaArhProjekata.removeAllElements();
 					new ProjekatForm(Projekat).setVisible(true);
-					
 				}
 				
 			}
@@ -659,32 +668,25 @@ public class MainForm extends JFrame {
 				if(list_1.isSelectionEmpty()){
 					greska = false;
 					label_error1.setText("Morate označiti projekat da bi ga obrisali!");
-					
 				}
 				if(greska == false){
 					label_error1.setVisible(true);
 				}
-				else{
+				else
+				{
 					label_error1.setVisible(false);
 					String selektovanaVrijednost = list_1.getSelectedValue().toString();
 					String[] rijeci = selektovanaVrijednost.split(" ");
 					long id = Long.parseLong(rijeci[0]);
-					ProjekatHibernate o=DalDao.VratiProjekat(id);
-					o.setArhiviran(true);
-					DalDao.ModifikujObjekat(o);
-					JOptionPane.showMessageDialog(null, "Projekat je arhiviran.", "Uredu", JOptionPane.INFORMATION_MESSAGE);
-					
-					DefaultListModel listaArhProjekata = new DefaultListModel();
-					list_1.setModel(listaArhProjekata);
-					ArrayList<ProjekatHibernate> nearhiviraniProjekti=DalDao.VratiSveNearhiviraneProjekte();
-
-					for (int i=0;i<nearhiviraniProjekti.size();i++)
-						{
-						    String tempString = nearhiviraniProjekti.get(i).getId() + " " + nearhiviraniProjekti.get(i).getNaziv() + " " + nearhiviraniProjekti.get(i).getNazivKlijenta();
-							listaArhProjekata.addElement(tempString);
-						}
-					textField_46.setText("");
-					
+					ProjekatHibernate o = DalDao.VratiProjekat(id);
+					if (!o.getArhiviran())
+					{
+						o.setArhiviran(true);
+						DalDao.ModifikujObjekat(o);
+						JOptionPane.showMessageDialog(null, "Projekat uspjesno arhiviran.", "Projekat arhiviran", JOptionPane.INFORMATION_MESSAGE);
+						listaArhProjekata.removeAllElements();
+						textField_46.setText("");
+					}
 				}
 			}
 		});

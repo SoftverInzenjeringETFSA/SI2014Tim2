@@ -133,9 +133,9 @@ public class OdjelForm extends JFrame {
 				label_1.setVisible(false);
 				boolean greska = true;
 				OdjelHibernate odjeli = DalDao.VratiOdjelPoNazivu(textField.getText());
-				if(textField.getText().length() < 3){
+				if(textField.getText().length() < 3 || !textField.getText().matches("^[a-zA-Z0-9]*$")){
 					greska = false;
-					label_1.setText("Unesite naziv odjela od barem tri slova!");
+					label_1.setText("Unesite ispravan naziv odjela od barem tri slova!");
 				}
 				if (odjeli != null && odjeli.getId() != prikaz.getId())
 				{
