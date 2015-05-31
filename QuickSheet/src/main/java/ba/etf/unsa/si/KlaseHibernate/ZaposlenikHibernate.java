@@ -2,6 +2,7 @@ package ba.etf.unsa.si.KlaseHibernate;
 
 import java.time.LocalDate;
 
+@SuppressWarnings("serial")
 public class ZaposlenikHibernate implements java.io.Serializable{
 	
 	private long id;
@@ -10,6 +11,8 @@ public class ZaposlenikHibernate implements java.io.Serializable{
 	private String ime;
 	private String prezime;
 	private String adresa;
+	private String email;
+	private String telefon;
 	private LocalDate datumZaposlenja;
 	private Double satnica;
 	private Boolean arhiviran;
@@ -108,9 +111,26 @@ public class ZaposlenikHibernate implements java.io.Serializable{
 		return koordinator;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefon() {
+		return telefon;
+	}
+
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
+	}
+
 	public void setKoordinator(Boolean koordinator) {
 		this.koordinator = koordinator;
 	}
+	
 	@Override
 	public String toString() { 
 		return this.getId() + " "+ this.getIme() + " "+ this.getPrezime();

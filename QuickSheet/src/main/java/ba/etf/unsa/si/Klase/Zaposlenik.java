@@ -14,6 +14,8 @@ public abstract class Zaposlenik {
 	private String lozinka;
 	private String ime;
 	private String prezime;
+	private String Email;
+	private String Telefon;
 	private String adresa;
 	private LocalDate datumZaposlenja;
 	private Double satnica;
@@ -124,4 +126,21 @@ public abstract class Zaposlenik {
 	public void setArhiviran(Boolean arhiviran) {
 		this.arhiviran = arhiviran;
 	}
+	
+	public String getEmail() {
+		return Email;
+	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+
+	public String getTelefon() {
+		return Telefon;
+	}
+
+	public void setTelefon(String telefon) {
+		Telefon = telefon;
+	}
+
 }
