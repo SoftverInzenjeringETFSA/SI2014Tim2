@@ -244,7 +244,10 @@ public class DalDao {
 		query.setString("naziv", naziv);
 		@SuppressWarnings("unchecked")
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
-		OdjelHibernate oh = results.get(0);
+		OdjelHibernate oh = new OdjelHibernate();
+		if (results != null && results.size() != 0)
+			oh = results.get(0);
+		else oh = null;
 		transaction.commit();
 		session.close();
 		return oh;

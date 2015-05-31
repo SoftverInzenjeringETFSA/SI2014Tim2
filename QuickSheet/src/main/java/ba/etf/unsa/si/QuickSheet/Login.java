@@ -6,8 +6,10 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
@@ -42,10 +45,8 @@ public class Login extends JFrame {
 	public Login() {
 
 		getContentPane().setBackground(UIManager.getColor("TextField.darkShadow"));
-
 		setBackground(UIManager.getColor("Button.darkShadow"));
 		getContentPane().setBackground(UIManager.getColor("Button.darkShadow"));
-
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setTitle("QuickSheet - Login");
 		setResizable(false);
@@ -117,6 +118,10 @@ public class Login extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					if (txtIme.getText().equals("baza"))
+					{
+						
+					}
 					String username = txtIme.getText();
 					@SuppressWarnings("deprecation")
 					String pass = txtPassword.getText();
@@ -145,9 +150,6 @@ public class Login extends JFrame {
 						labela1.setVisible(true);
 						labela1.setText("Pogrešan username ili password!");
 					}
-
-					
-					
 					else{
 						labela1.setVisible(false);
 					String textFieldValue = txtIme.getText();

@@ -55,7 +55,6 @@ public abstract class Zaposlenik {
 	
 	public void setLozinka(String lozinka) throws NoSuchAlgorithmException, InvalidKeySpecException
 	{
-		
 		this.lozinka = Lozinka.generateStorngPasswordHash(lozinka);
 	}
 	
@@ -66,7 +65,7 @@ public abstract class Zaposlenik {
 	
 	public void setIme(String _ime) throws InvalidAttributeValueException
 	{
-		if (_ime != null && !_ime.isEmpty() && _ime.matches("^[a-zA-Z]*$"))
+		if (_ime != null && !_ime.isEmpty() && ime.matches("[^\\x00-\\x7F]+")) //_ime.matches("^[a-zA-Z]*$"))
 			ime = _ime;
 		else throw new InvalidAttributeValueException();
 	}
