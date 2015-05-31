@@ -122,7 +122,7 @@ public class MainForm extends JFrame {
 		
 		textField_43 = new JTextField();
 		textField_43.setColumns(10);
-		textField_43.setBounds(172, 55, 159, 20);
+		textField_43.setBounds(160, 55, 171, 20);
 		panel_2.add(textField_43);
 		
 		JLabel lblNewLabel_7 = new JLabel("Dodaj zaposlenika:");
@@ -138,25 +138,25 @@ public class MainForm extends JFrame {
 		panel_2.add(lblMaksimalniBroj);
 		
 		textField_44 = new JTextField();
-		textField_44.setBounds(172, 322, 159, 20);
+		textField_44.setBounds(160, 322, 171, 20);
 		panel_2.add(textField_44);
 		textField_44.setColumns(10);
-		
+		JScrollPane jsp = new JScrollPane();
 		final JList list_3 = new JList();
 		final DefaultListModel listaZaposlenika = new DefaultListModel();
 		list_3.setModel(listaZaposlenika);
 		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveNearhiviraneZaposlenike();
-
 		for (int i=0;i<zaposlenici.size();i++)
 			{
 			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
 			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
 				listaZaposlenika.addElement(tempString);
 			}
-		
 		list_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		JScrollPane scrollPane1 = new JScrollPane(list_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane1.setBounds(160, 89, 171, 222);
 		list_3.setBounds(172, 89, 159, 222);
-		panel_2.add(list_3);
+		panel_2.add(scrollPane1);
 		
 		final JLabel label_error = new JLabel("");
 		label_error.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -256,10 +256,12 @@ public class MainForm extends JFrame {
 		
 		final JList list_4 = new JList();
 		list_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		JScrollPane scrollPane2 = new JScrollPane(list_4, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane2.setBounds(22, 114, 309, 290);
 		list_4.setBounds(22, 114, 309, 290);
 		final DefaultListModel listaOdjela = new DefaultListModel();
 		list_4.setModel(listaOdjela);
-		panel_3.add(list_4);
+		panel_3.add(scrollPane2);
 		
 		JButton btnPretrai = new JButton("Pretraži");
 		btnPretrai.setBackground(UIManager.getColor("TextField.selectionBackground"));
@@ -393,50 +395,51 @@ public class MainForm extends JFrame {
 		JLabel lblNazivProjekta = new JLabel("Naziv projekta:");
 		lblNazivProjekta.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNazivProjekta.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNazivProjekta.setBounds(45, 75, 73, 14);
+		lblNazivProjekta.setBounds(26, 75, 73, 14);
 		panel_5.add(lblNazivProjekta);
 		
 		textField_47 = new JTextField();
 		textField_47.setColumns(10);
-		textField_47.setBounds(169, 72, 162, 20);
+		textField_47.setBounds(149, 72, 182, 20);
 		panel_5.add(textField_47);
 		
 		JLabel label_3 = new JLabel("Dodaj zaposlenika:");
 		label_3.setForeground(UIManager.getColor("TextField.highlight"));
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_3.setBounds(45, 154, 90, 14);
+		label_3.setBounds(26, 155, 90, 14);
 		panel_5.add(label_3);
 		
 		JLabel lblDodajNadreenog = new JLabel("Dodaj nadređenog:");
 		lblDodajNadreenog.setForeground(UIManager.getColor("TextField.highlight"));
 		lblDodajNadreenog.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDodajNadreenog.setBounds(45, 353, 93, 14);
+		lblDodajNadreenog.setBounds(26, 353, 93, 14);
 		panel_5.add(lblDodajNadreenog);
 		
 		final JComboBox comboBox_19 = new JComboBox();
 		comboBox_19.removeAllItems();
 		ArrayList<ZaposlenikHibernate> zh=DalDao.VratiSveZaposlenikeKoordinatore();
 		for(ZaposlenikHibernate zap:zh){
-			comboBox_19.addItem(zh);
+			comboBox_19.addItem(zap.toString());
 		}
 		comboBox_19.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox_19.setBounds(169, 350, 162, 20);
+		comboBox_19.setBounds(149, 350, 182, 20);
 		panel_5.add(comboBox_19);
 		
 		final JList list = new JList();
 		final DefaultListModel listaZaposlenikaPr = new DefaultListModel();
 		list.setModel(listaZaposlenikaPr);
 		ArrayList<ZaposlenikHibernate> zaposleniciPr=DalDao.VratiSveNearhiviraneZaposlenike();
-
 		for (int i=0;i<zaposleniciPr.size();i++)
-			{
-			    String tempString = zaposleniciPr.get(i).getId() + " " + zaposleniciPr.get(i).getIme() + " " + zaposleniciPr.get(i).getPrezime()
-			    		+ " " + zaposleniciPr.get(i).getAdresa() + " " + zaposleniciPr.get(i).getSatnica();
-				listaZaposlenikaPr.addElement(tempString);
-			}
+		{
+		    String tempString = zaposleniciPr.get(i).getId() + " " + zaposleniciPr.get(i).getIme() + " " + zaposleniciPr.get(i).getPrezime()
+		    		+ " " + zaposleniciPr.get(i).getAdresa() + " " + zaposleniciPr.get(i).getSatnica();
+			listaZaposlenikaPr.addElement(tempString);			
+		}
 		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		JScrollPane scrollPane3 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane3.setBounds(149, 153, 182, 175);
 		list.setBounds(169, 153, 162, 175);
-		panel_5.add(list);
+		panel_5.add(scrollPane3);
 		
 		final JLabel label_error1 = new JLabel("");
 		label_error1.setForeground(Color.RED);
@@ -455,19 +458,14 @@ public class MainForm extends JFrame {
 					greska = false;
 					label_error1.setText("Morate unijeti naziv projekta!");
 				}
-				else if(textField_48.getText().equals("")){
+				if(textField_48.getText().equals("")){
 					greska = false;
 					label_error1.setText("Morate unijeti naziv klijenta!");
 				}
-				else if(list.isSelectionEmpty()){
-					greska = false;
-					label_error1.setText("Morate označiti zaposlenike!");
-				}
-				else if(comboBox_19.getSelectedItem() == null){
+				if(comboBox_19.getSelectedItem() == null){
 					greska = false;
 					label_error1.setText("Morate označiti nadređenog!");
 				}
-				else greska = true;
 				
 				if(greska == false){
 					label_error1.setVisible(true);
@@ -477,6 +475,7 @@ public class MainForm extends JFrame {
 					ProjekatHibernate projekath = new ProjekatHibernate();
 					projekath.setNaziv(textField_47.getText());
 					projekath.setNazivKlijenta(textField_48.getText());
+					projekath.setArhiviran(false);
 					
 					String selekt=comboBox_19.getSelectedItem().toString();
 					String[] rijecis=selekt.split(" ");
@@ -494,9 +493,11 @@ public class MainForm extends JFrame {
 						TaskHibernate tPr=new TaskHibernate();
 						tPr.setProjekat(projekath);
 						tPr.setZaposlenik(zPr);
+						tPr.setPrioritet(10);
+						tPr.setProcenatZavrsenosti(100);
+						tPr.setRok(LocalDate.now());
 						DalDao.DodajObjekat(tPr);
 					}
-					
 					JOptionPane.showMessageDialog(null, "Projekat je dodan.", "OK", JOptionPane.INFORMATION_MESSAGE);
 					textField_47.setText("");
 					textField_48.setText("");
@@ -512,12 +513,12 @@ public class MainForm extends JFrame {
 		JLabel lblNazivKlijenta = new JLabel("Naziv klijenta:");
 		lblNazivKlijenta.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNazivKlijenta.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNazivKlijenta.setBounds(45, 115, 67, 14);
+		lblNazivKlijenta.setBounds(26, 115, 67, 14);
 		panel_5.add(lblNazivKlijenta);
 		
 		textField_48 = new JTextField();
 		textField_48.setColumns(10);
-		textField_48.setBounds(169, 112, 162, 20);
+		textField_48.setBounds(149, 112, 182, 20);
 		panel_5.add(textField_48);
 		
 		Box verticalBox = Box.createVerticalBox();
@@ -563,113 +564,49 @@ public class MainForm extends JFrame {
 		
 		final JList list_1 = new JList();
 		list_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		JScrollPane scrollPane4 = new JScrollPane(list_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane4.setBounds(22, 114, 309, 291);
 		list_1.setBounds(22, 114, 309, 291);
-		panel_11.add(list_1);
-		
+		final DefaultListModel listaArhProjekata = new DefaultListModel();
+		list_1.setModel(listaArhProjekata);
+		panel_11.add(scrollPane4);
 		JButton btnPretrai_1 = new JButton("Pretraži");
 		btnPretrai_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnPretrai_1.setForeground(UIManager.getColor("Button.foreground"));
 		btnPretrai_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-
-				if(comboBox_17.getSelectedItem() == null){
-					greska = false;
-					label_error1.setText("Morate označiti parametar pretrage!");
-				}
-				if(greska == false){
-					label_error1.setVisible(true);
-				}
-				else label_error1.setVisible(false);
-				if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta") && textField_46.getText().equalsIgnoreCase("") && chckbxPrikaziArhiviraneProjekte.isSelected()){
-					DefaultListModel listaArhProjekata = new DefaultListModel();
-					list_1.setModel(listaArhProjekata);
-					ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiSveArhiviraneProjekte();
-
+				listaArhProjekata.removeAllElements();
+				ArrayList<ProjekatHibernate> arhiviraniProjekti = new ArrayList<ProjekatHibernate>();
+				if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta"))
+				{
+					if (chckbxPrikaziArhiviraneProjekte.isSelected())
+						arhiviraniProjekti = DalDao.VratiSveArhiviraneProjekte();
+					else 
+						arhiviraniProjekti = DalDao.VratiSveNearhiviraneProjekte();
 					for (int i=0;i<arhiviraniProjekti.size();i++)
+					{
+						if (arhiviraniProjekti.get(i).getNaziv().equals(textField_46.getText()))
 						{
-						    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
+						    String tempString = arhiviraniProjekti.get(i).getId() + " Projekat: " + arhiviraniProjekti.get(i).getNaziv() + ", Klijent: " + arhiviraniProjekti.get(i).getNazivKlijenta();
 						    listaArhProjekata.addElement(tempString);
 						}
-				} else
-					if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta") && textField_46.getText().equalsIgnoreCase("") && chckbxPrikaziArhiviraneProjekte.isSelected()==false){
-						DefaultListModel listaArhProjekata = new DefaultListModel();
-						list_1.setModel(listaArhProjekata);
-						ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiSveNearhiviraneProjekte();
-
-						for (int i=0;i<arhiviraniProjekti.size();i++)
-							{
-							    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
-							    listaArhProjekata.addElement(tempString);
-							}
-					} else
-						if (comboBox_17.getSelectedItem().toString().equals("Naziv klijenta") && textField_46.getText().equalsIgnoreCase("") && chckbxPrikaziArhiviraneProjekte.isSelected()){
-							DefaultListModel listaArhProjekata = new DefaultListModel();
-							list_1.setModel(listaArhProjekata);
-							ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiSveArhiviraneProjekte();
-
-							for (int i=0;i<arhiviraniProjekti.size();i++)
-								{
-								    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
-								    listaArhProjekata.addElement(tempString);
-								}
-						} else
-							if (comboBox_17.getSelectedItem().toString().equals("Naziv klijenta") && textField_46.getText().equalsIgnoreCase("") && chckbxPrikaziArhiviraneProjekte.isSelected()==false){
-								DefaultListModel listaArhProjekata = new DefaultListModel();
-								list_1.setModel(listaArhProjekata);
-								ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiSveNearhiviraneProjekte();
-
-								for (int i=0;i<arhiviraniProjekti.size();i++)
-									{
-									    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
-									    listaArhProjekata.addElement(tempString);
-									}
-							} else
-								if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta") && textField_46.getText().equalsIgnoreCase("")==false && chckbxPrikaziArhiviraneProjekte.isSelected()){
-									DefaultListModel listaArhProjekata = new DefaultListModel();
-									list_1.setModel(listaArhProjekata);
-									ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiArhiviraneProjektePoNazivu(textField_46.getText());
-
-									for (int i=0;i<arhiviraniProjekti.size();i++)
-										{
-										    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
-										    listaArhProjekata.addElement(tempString);
-										}
-								} else
-									if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta") && textField_46.getText().equalsIgnoreCase("")==false && chckbxPrikaziArhiviraneProjekte.isSelected()==false){
-										DefaultListModel listaArhProjekata = new DefaultListModel();
-										list_1.setModel(listaArhProjekata);
-										ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiNearhiviraneProjektePoNazivu(textField_46.getText());
-
-										for (int i=0;i<arhiviraniProjekti.size();i++)
-											{
-											    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
-											    listaArhProjekata.addElement(tempString);
-											}
-									} else
-										if (comboBox_17.getSelectedItem().toString().equals("Naziv klijenta") && textField_46.getText().equalsIgnoreCase("")==false && chckbxPrikaziArhiviraneProjekte.isSelected()){
-											DefaultListModel listaArhProjekata = new DefaultListModel();
-											list_1.setModel(listaArhProjekata);
-											ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiArhiviraneProjektePoNazivuKlijenta(textField_46.getText());
-
-											for (int i=0;i<arhiviraniProjekti.size();i++)
-												{
-												    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
-												    listaArhProjekata.addElement(tempString);
-												}
-										} else
-											if (comboBox_17.getSelectedItem().toString().equals("Naziv klijenta") && textField_46.getText().equalsIgnoreCase("")==false && chckbxPrikaziArhiviraneProjekte.isSelected()==false){
-												DefaultListModel listaArhProjekata = new DefaultListModel();
-												list_1.setModel(listaArhProjekata);
-												ArrayList<ProjekatHibernate> arhiviraniProjekti=DalDao.VratiNearhiviraneProjektePoNazivuKlijenta(textField_46.getText());
-
-												for (int i=0;i<arhiviraniProjekti.size();i++)
-													{
-													    String tempString = arhiviraniProjekti.get(i).getId() + " " + arhiviraniProjekti.get(i).getNaziv() + " " + arhiviraniProjekti.get(i).getNazivKlijenta();
-													    listaArhProjekata.addElement(tempString);
-													}
-											}	
+					}
+				} 
+				else
+				{
+					if (chckbxPrikaziArhiviraneProjekte.isSelected())
+						arhiviraniProjekti = DalDao.VratiSveArhiviraneProjekte();
+					else 
+						arhiviraniProjekti = DalDao.VratiSveNearhiviraneProjekte();
+					for (int i=0;i<arhiviraniProjekti.size();i++)
+					{
+						if (arhiviraniProjekti.get(i).getNazivKlijenta().equals(textField_46.getText()))
+						{
+						    String tempString = arhiviraniProjekti.get(i).getId() + " Projekat: " + arhiviraniProjekti.get(i).getNaziv() + ", Klijent: " + arhiviraniProjekti.get(i).getNazivKlijenta();
+						    listaArhProjekata.addElement(tempString);
+						}
+					}
+				}
 			}
 		});
 		
@@ -1112,18 +1049,10 @@ public class MainForm extends JFrame {
 		final JList list_2 = new JList();
 		list_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		list_2.setModel(new AbstractListModel() {
-			String[] values = new String[] {};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		
+		JScrollPane scrollPane5 = new JScrollPane(list_2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane5.setBounds(22, 114, 309, 308);
 		list_2.setBounds(22, 114, 309, 308);
-		panel_1.add(list_2);
+		panel_1.add(scrollPane5);
 		
 		final JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
 		chckbxNewCheckBox.setForeground(UIManager.getColor("TextField.highlight"));

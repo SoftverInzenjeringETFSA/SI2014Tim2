@@ -247,9 +247,10 @@ public class OdjelForm extends JFrame {
 		label_3.setBounds(10, 360, 152, 14);
 		panel.add(label_3);
 		
-		textField_1 = new JTextField(prikaz.getMaksimalanBrojRadnika());
+		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		textField_1.setBounds(190, 357, 141, 20);
+		textField_1.setText(prikaz.getMaksimalanBrojRadnika().toString());
 		panel.add(textField_1);
 		
 		final JLabel label_1 = new JLabel("");

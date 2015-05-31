@@ -120,7 +120,9 @@ public class Login extends JFrame {
 				try {
 					if (txtIme.getText().equals("baza"))
 					{
-						
+						ZaposlenikHibernate zh = new ZaposlenikHibernate();
+						zh.setAdresa("Dobrinja 22");
+						zh.setArhiviran(false);
 					}
 					String username = txtIme.getText();
 					@SuppressWarnings("deprecation")
