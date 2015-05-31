@@ -243,7 +243,7 @@ public class MainForm extends JFrame {
 		
 		final JComboBox comboBox_16 = new JComboBox();
 		comboBox_16.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox_16.setModel(new DefaultComboBoxModel(new String[] {"Naziv"}));
+		comboBox_16.setModel(new DefaultComboBoxModel(new String[] {"Naziv", "Max br. zaposlenika"}));
 		comboBox_16.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_16);
 		
@@ -257,6 +257,8 @@ public class MainForm extends JFrame {
 		final JList list_4 = new JList();
 		list_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list_4.setBounds(22, 114, 309, 290);
+		final DefaultListModel listaOdjela = new DefaultListModel();
+		list_4.setModel(listaOdjela);
 		panel_3.add(list_4);
 		
 		JButton btnPretrai = new JButton("Pretraži");
@@ -264,52 +266,38 @@ public class MainForm extends JFrame {
 		btnPretrai.setForeground(UIManager.getColor("Button.foreground"));
 		btnPretrai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if (textField_45.getText().equalsIgnoreCase("") && chckbxNewCheckBox_1.isSelected()){
-					DefaultListModel listaArhOdjela = new DefaultListModel();
-					list_4.setModel(listaArhOdjela);
-					ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveArhiviraneOdjele();
-
-					for (int i=0;i<arhiviraniOdjeli.size();i++)
+				ArrayList<OdjelHibernate> odjeli = new ArrayList<OdjelHibernate>();
+				listaOdjela.removeAllElements();
+				if (comboBox_16.getSelectedItem().toString().equals("Naziv"))
+				{
+					if (chckbxNewCheckBox_1.isSelected())
+					{
+						odjeli = DalDao.PretraziArhiviraneOdjelePoNazivu(textField_45.getText());
+					}
+					else 
+					{
+						odjeli = DalDao.PretraziNearhiviraneOdjelePoNazivu(textField_45.getText());
+					}
+				}
+				else
+				{
+					if (textField_45.getText().matches("^[0-9]*$"))
+					{
+						if (chckbxNewCheckBox_1.isSelected())
 						{
-						    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-							listaArhOdjela.addElement(tempString);
+							odjeli = DalDao.PretraziArhiviraneOdjelePoKapacitetu(Integer.parseInt(textField_45.getText()));
 						}
-				} else 
-					if (textField_45.getText().equalsIgnoreCase("") && chckbxNewCheckBox_1.isSelected()==false){
-						DefaultListModel listaArhOdjela = new DefaultListModel();
-						list_4.setModel(listaArhOdjela);
-						ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveNearhiviraneOdjele();
-
-						for (int i=0;i<arhiviraniOdjeli.size();i++)
-							{
-							    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-								listaArhOdjela.addElement(tempString);
-							}
-					} else
-						if (chckbxNewCheckBox_1.isSelected()){
-							DefaultListModel listaArhOdjela = new DefaultListModel();
-							list_4.setModel(listaArhOdjela);
-							ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziArhiviraneOdjele(textField_45.getText());
-
-							for (int i=0;i<arhiviraniOdjeli.size();i++)
-								{
-								    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-									listaArhOdjela.addElement(tempString);
-								}
-						} else
-							if (chckbxNewCheckBox_1.isSelected()==false){
-								DefaultListModel listaArhOdjela = new DefaultListModel();
-								list_4.setModel(listaArhOdjela);
-								ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziNearhiviraneOdjele(textField_45.getText());
-
-								for (int i=0;i<arhiviraniOdjeli.size();i++)
-									{
-									    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-										listaArhOdjela.addElement(tempString);
-									}
-							} 		
+						else 
+						{
+							odjeli = DalDao.PretraziNearhiviraneOdjelePoKapacitetu(Integer.parseInt(textField_45.getText()));
+						}
+					}
+				}
+				for (int i=0; i < odjeli.size(); i++)
+				{
+				    String tempString = odjeli.get(i).getId() + " " + odjeli.get(i).getNaziv();
+				    listaOdjela.addElement(tempString);
+				}
 			}
 		});
 		

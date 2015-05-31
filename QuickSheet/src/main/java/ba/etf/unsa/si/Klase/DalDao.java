@@ -161,7 +161,7 @@ public class DalDao {
 		return results;
 	}
 	
-	static public ArrayList<OdjelHibernate> PretraziArhiviraneOdjele(String naziv)
+	static public ArrayList<OdjelHibernate> PretraziArhiviraneOdjelePoNazivu(String naziv)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
@@ -175,13 +175,41 @@ public class DalDao {
 		return results;
 	}
 	
-	static public ArrayList<OdjelHibernate> PretraziNearhiviraneOdjele(String naziv)
+	static public ArrayList<OdjelHibernate> PretraziNearhiviraneOdjelePoNazivu(String naziv)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		String hql = "FROM OdjelHibernate WHERE naziv=:naziv AND arhiviran='0'";
 		Query query = session.createQuery(hql);
 		query.setString("naziv", naziv);
+		@SuppressWarnings("unchecked")
+		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<OdjelHibernate> PretraziArhiviraneOdjelePoKapacitetu(int maxBroj)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM OdjelHibernate WHERE maksimalanBrojRadnika=:maxBroj AND arhiviran='1'";
+		Query query = session.createQuery(hql);
+		query.setInteger("maxBroj", maxBroj);
+		@SuppressWarnings("unchecked")
+		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
+	static public ArrayList<OdjelHibernate> PretraziNearhiviraneOdjelePoKapacitetu(int maxBroj)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM OdjelHibernate WHERE maksimalanBrojRadnika=:maxBroj AND arhiviran='0'";
+		Query query = session.createQuery(hql);
+		query.setInteger("maxBroj", maxBroj);
 		@SuppressWarnings("unchecked")
 		ArrayList<OdjelHibernate> results = (ArrayList<OdjelHibernate>)query.list();
 		transaction.commit();

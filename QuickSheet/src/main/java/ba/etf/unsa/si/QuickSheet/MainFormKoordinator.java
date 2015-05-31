@@ -374,7 +374,7 @@ public class MainFormKoordinator extends JFrame {
 					if (checkBox.isSelected()){
 						DefaultListModel listaArhOdjela = new DefaultListModel();
 						list_4.setModel(listaArhOdjela);
-						ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziArhiviraneOdjele(textField_7.getText());
+						ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziArhiviraneOdjelePoNazivu(textField_7.getText());
 
 						for (int i=0;i<arhiviraniOdjeli.size();i++)
 							{
@@ -385,7 +385,7 @@ public class MainFormKoordinator extends JFrame {
 						if (checkBox.isSelected()==false){
 							DefaultListModel listaArhOdjela = new DefaultListModel();
 							list_4.setModel(listaArhOdjela);
-							ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziNearhiviraneOdjele(textField_7.getText());
+							ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziNearhiviraneOdjelePoNazivu(textField_7.getText());
 
 							for (int i=0;i<arhiviraniOdjeli.size();i++)
 								{
