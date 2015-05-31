@@ -205,6 +205,8 @@ public class KorisnikForm extends JFrame {
 		panel.add(passwordField_1);
 		
 		final JCheckBox chckbxDa = new JCheckBox("Da");
+		chckbxDa.setForeground(UIManager.getColor("Button.highlight"));
+		chckbxDa.setBackground(UIManager.getColor("Button.darkShadow"));
 		chckbxDa.setBounds(164, 278, 97, 23);
 		chckbxDa.setSelected(zh.getKoordinator());
 		panel.add(chckbxDa);
@@ -233,6 +235,8 @@ public class KorisnikForm extends JFrame {
 		panel.add(spinner_1);
 		
 		final JCheckBox chckbxDa_1 = new JCheckBox("Da");
+		chckbxDa_1.setBackground(UIManager.getColor("Button.darkShadow"));
+		chckbxDa_1.setForeground(UIManager.getColor("Button.highlight"));
 		chckbxDa_1.setBounds(164, 304, 97, 23);
 		chckbxDa_1.setSelected(zh.getArhiviran());
 		panel.add(chckbxDa_1);

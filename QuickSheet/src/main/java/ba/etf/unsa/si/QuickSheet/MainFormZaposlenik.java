@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -22,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -31,6 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
+
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
@@ -39,9 +42,12 @@ import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetTaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
 import java.time.LocalDate;
 import java.time.Month;
+
 import javax.swing.JTextArea;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputMethodListener;
@@ -145,8 +151,10 @@ public class MainFormZaposlenik extends JFrame {
 		final DefaultListModel DefaultListModel4 = new DefaultListModel();
 		final JList list_3 = new JList();
 		list_3.setModel(DefaultListModel4);
+		JScrollPane scrollPane4 = new JScrollPane(list_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane4.setBounds(12, 122, 198, 114);
 		list_3.setBounds(12, 122, 198, 114);
-		panel_4.add(list_3);
+		panel_4.add(scrollPane4);
 		
 		JLabel lblProcenatZavrsenosti = new JLabel("Procenat zavrsenosti:");
 		lblProcenatZavrsenosti.setForeground(UIManager.getColor("TextField.highlight"));
@@ -161,14 +169,16 @@ public class MainFormZaposlenik extends JFrame {
 		panel_4.add(lblBrojSati_1);
 		
 		final JTextArea textArea = new JTextArea();
-		
+		JScrollPane scrollPane5 = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane5.setBounds(216, 123, 224, 114);
 		textArea.setBounds(216, 123, 224, 114);
-		panel_4.add(textArea);
+		panel_4.add(scrollPane5);
 		
 		final JTextArea textArea_1 = new JTextArea();
-		
+		JScrollPane scrollPane6 = new JScrollPane(textArea_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane6.setBounds(450, 124, 224, 114);
 		textArea_1.setBounds(450, 124, 224, 114);
-		panel_4.add(textArea_1);
+		panel_4.add(scrollPane6);
 		
 		JPanel historijaPanel = new JPanel();
 		historijaPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -204,8 +214,10 @@ public class MainFormZaposlenik extends JFrame {
 		JList list_1 = new JList();
 		list_1.setModel(DefaultListModel1);
 		list_1.setEnabled(false);
+		JScrollPane scrollPane3 = new JScrollPane(list_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane3.setBounds(10, 78, 321, 281);
 		list_1.setBounds(10, 78, 321, 281);
-		panel.add(list_1);
+		panel.add(scrollPane3);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -230,8 +242,10 @@ public class MainFormZaposlenik extends JFrame {
 		JList list_2 = new JList();
 		list_2.setModel(DefaultListModel2);
 		list_2.setEnabled(false);
+		JScrollPane scrollPane2 = new JScrollPane(list_2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane2.setBounds(10, 79, 321, 280);
 		list_2.setBounds(10, 79, 321, 280);
-		panel_1.add(list_2);
+		panel_1.add(scrollPane2);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -355,8 +369,10 @@ public class MainFormZaposlenik extends JFrame {
 		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list.setEnabled(false);
 		list.setBackground(Color.WHITE);
+		JScrollPane scrollPane1 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane1.setBounds(159, 165, 141, 97);
 		list.setBounds(159, 165, 141, 97);
-		panel_3.add(list);
+		panel_3.add(scrollPane1);
 		
 		textField_7 = new JTextField();
 		textField_7.setEnabled(false);

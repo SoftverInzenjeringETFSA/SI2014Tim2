@@ -263,8 +263,10 @@ public class MainFormKoordinator extends JFrame {
 		final DefaultListModel DefaultListModel1 = new DefaultListModel(); 
 		JList list_8 = new JList();
 		list_8.setModel(DefaultListModel1);
+		JScrollPane scrollPane9 = new JScrollPane(list_8, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane9.setBounds(20, 90, 297, 269);
 		list_8.setBounds(20, 90, 297, 269);
-		panel.add(list_8);
+		panel.add(scrollPane9);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -289,8 +291,10 @@ public class MainFormKoordinator extends JFrame {
 		final DefaultListModel DefaultListModel2 = new DefaultListModel();
 		JList list_9 = new JList();
 		list_9.setModel(DefaultListModel2);
+		JScrollPane scrollPane8 = new JScrollPane(list_9, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane8.setBounds(20, 93, 311, 266);
 		list_9.setBounds(20, 93, 311, 266);
-		panel_2.add(list_9);
+		panel_2.add(scrollPane8);
 		
 		JPanel odjeliPanel = new JPanel();
 		odjeliPanel.setForeground(UIManager.getColor("TextField.highlight"));
@@ -307,8 +311,10 @@ public class MainFormKoordinator extends JFrame {
 		panel_3.setLayout(null);
 		
 		final JList list_4 = new JList();
+		JScrollPane scrollPane7 = new JScrollPane(list_4, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane7.setBounds(22, 116, 309, 243);
 		list_4.setBounds(22, 116, 309, 243);
-		panel_3.add(list_4);
+		panel_3.add(scrollPane7);
 		
 		JLabel label_16 = new JLabel("Izaberite parametar pretrage:");
 		label_16.setForeground(UIManager.getColor("TextField.highlight"));
@@ -442,8 +448,10 @@ public class MainFormKoordinator extends JFrame {
 		
 		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list.setEnabled(false);
+		JScrollPane scrollPane6 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane6.setBounds(190, 61, 141, 135);
 		list.setBounds(190, 61, 141, 135);
-		panel_5.add(list);
+		panel_5.add(scrollPane6);
 		
 		textField_2 = new JTextField();
 		textField_2.setEnabled(false);
@@ -520,8 +528,10 @@ public class MainFormKoordinator extends JFrame {
 		textField_46.setColumns(10);
 		
 		JList list_1 = new JList();
+		JScrollPane scrollPane4 = new JScrollPane(list_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane4.setBounds(22, 105, 309, 85);
 		list_1.setBounds(22, 105, 309, 85);
-		panel_11.add(list_1);
+		panel_11.add(scrollPane4);
 		
 		JLabel lblIzaberiteParametarPretrage = new JLabel("Izaberite parametar pretrage:");
 		lblIzaberiteParametarPretrage.setForeground(UIManager.getColor("TextField.highlight"));
@@ -591,8 +601,10 @@ public class MainFormKoordinator extends JFrame {
 		final JList list_3 = new JList();
 		list_3.setBackground(Color.WHITE);
 		list_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		JScrollPane scrollPane3 = new JScrollPane(list_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane3.setBounds(166, 78, 165, 148);
 		list_3.setBounds(166, 78, 165, 148);
-		panel_8.add(list_3);
+		panel_8.add(scrollPane3);
 		
 		JButton button = new JButton("Sačuvaj promjene");
 		button.setBackground(UIManager.getColor("TextField.selectionBackground"));
@@ -679,8 +691,10 @@ public class MainFormKoordinator extends JFrame {
 		panel_9.add(lblPrikazTaskova);
 		
 		JList list_7 = new JList();
+		JScrollPane scrollPane5 = new JScrollPane(list_7, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane5.setBounds(21, 37, 309, 85);
 		list_7.setBounds(21, 37, 309, 85);
-		panel_9.add(list_7);
+		panel_9.add(scrollPane5);
 		
 		JButton btnDodajTask = new JButton("Dodaj task");
 		btnDodajTask.setBackground(UIManager.getColor("TextField.selectionBackground"));
@@ -709,8 +723,10 @@ public class MainFormKoordinator extends JFrame {
 		
 	    final JList list_2 = new JList();
 	    list_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    JScrollPane scrollPane2 = new JScrollPane(list_2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane2.setBounds(22, 116, 309, 209);
 		list_2.setBounds(22, 116, 309, 209);
-		panel_1.add(list_2);
+		panel_1.add(scrollPane2);
 		
 		final JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
 		chckbxNewCheckBox.setForeground(UIManager.getColor("TextField.highlight"));
@@ -1300,9 +1316,11 @@ public class MainFormKoordinator extends JFrame {
 		DefaultListModel dlm = new DefaultListModel();
 		final JList list_6 = new JList();
 		list_6.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane scrollPane1 = new JScrollPane(list_6, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane1.setBounds(12, 76, 315, 249);
 		list_6.setBounds(12, 76, 315, 249);
 		list_6.setModel(dlm);
-		panel_6.add(list_6);
+		panel_6.add(scrollPane1);
 		
 		for(int i = 0; i < timesheets.size(); i++)
 		{

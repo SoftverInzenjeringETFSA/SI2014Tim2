@@ -1,22 +1,32 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Toolkit;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.JList;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.UIManager;
 import javax.swing.AbstractListModel;
+
 import java.awt.SystemColor;
+import java.awt.Color;
 
 public class DodajKorisnika extends JFrame {
 
@@ -37,9 +47,9 @@ public class DodajKorisnika extends JFrame {
 	}
 
 	public DodajKorisnika() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("Dodaj korisnika");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\dzenana\\git\\SI2014Tim2\\QuickSheet\\qs.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 293, 366);
 		contentPane = new JPanel();
@@ -58,7 +68,7 @@ public class DodajKorisnika extends JFrame {
 		panel.setLayout(null);
 		
 		final JList list = new JList();
-		list.setForeground(UIManager.getColor("TextField.highlight"));
+		list.setForeground(Color.BLACK);
 		list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"korisnik 1", "korisnik 2"};
 			public int getSize() {
@@ -68,10 +78,12 @@ public class DodajKorisnika extends JFrame {
 				return values[index];
 			}
 		});
+		JScrollPane scrollPane1 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane1.setBounds(20, 46, 203, 210);
 		list.setBounds(20, 46, 203, 210);
 		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		list.setBackground(UIManager.getColor("TextField.darkShadow"));
-		panel.add(list);
+		list.setBackground(Color.WHITE);
+		panel.add(scrollPane1);
 		
 		final JLabel label = new JLabel("");
 		label.setVisible(false);

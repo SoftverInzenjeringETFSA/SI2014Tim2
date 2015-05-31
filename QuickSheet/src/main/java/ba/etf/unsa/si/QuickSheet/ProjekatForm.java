@@ -1,27 +1,34 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.DefaultListModel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
+
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.UIManager;
 
 public class ProjekatForm extends JFrame {
@@ -65,6 +72,7 @@ public class ProjekatForm extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("Naziv:");
+		label.setForeground(UIManager.getColor("Button.disabledShadow"));
 		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label.setBounds(92, 30, 30, 14);
 		panel.add(label);
@@ -93,8 +101,10 @@ public class ProjekatForm extends JFrame {
 		
 		JList list = new JList();
 		list.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		JScrollPane scrollPane1 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane1.setBounds(155, 83, 165, 121);
 		list.setBounds(155, 83, 165, 121);
-		panel.add(list);
+		panel.add(scrollPane1);
 		
 		JLabel lblDodajZaposlenike = new JLabel("Dodaj zaposlenike:");
 		lblDodajZaposlenike.setForeground(UIManager.getColor("TextField.highlight"));
@@ -104,8 +114,10 @@ public class ProjekatForm extends JFrame {
 		
 		JList list_1 = new JList();
 		list_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		JScrollPane scrollPane2 = new JScrollPane(list_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane2.setBounds(153, 243, 165, 121);
 		list_1.setBounds(153, 243, 165, 121);
-		panel.add(list_1);
+		panel.add(scrollPane2);
 		
 		JButton btnUkloniZaposlenikaSa = new JButton("Ukloni");
 		btnUkloniZaposlenikaSa.setBackground(UIManager.getColor("TextArea.selectionBackground"));

@@ -1,21 +1,29 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+
 import java.awt.Color;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
@@ -181,6 +189,8 @@ public class KorisnikFormKoordinator extends JFrame {
 		JList list = new JList();
 		list.setBackground(Color.WHITE);
 		list.setEnabled(false);
+		JScrollPane scrollPane1 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane1.setBounds(164, 173, 167, 51);
 		list.setBounds(164, 173, 167, 51);
 		list.setModel(lista);
 		for (int i = 0; i < oh.size(); i++)
@@ -188,7 +198,7 @@ public class KorisnikFormKoordinator extends JFrame {
 			String podatak = oh.get(i).getNaziv();
 			lista.addElement(podatak);
 		}
-		panel.add(list);
+		panel.add(scrollPane1);
 		
 		textField_5 = new JTextField(prikaz.getUsername());
 		textField_5.setEnabled(false);
@@ -200,9 +210,9 @@ public class KorisnikFormKoordinator extends JFrame {
 		panel.add(textField_5);
 		
 		JCheckBox chckbxDa = new JCheckBox("Da");
-		chckbxDa.setForeground(UIManager.getColor("TextField.highlight"));
-		chckbxDa.setBackground(UIManager.getColor("TextField.disabledBackground"));
 		chckbxDa.setEnabled(false);
+		chckbxDa.setForeground(UIManager.getColor("Button.disabledShadow"));
+		chckbxDa.setBackground(UIManager.getColor("Button.background"));
 		chckbxDa.setBounds(164, 254, 45, 23);
 		chckbxDa.setSelected(prikaz.getKoordinator());
 		panel.add(chckbxDa);

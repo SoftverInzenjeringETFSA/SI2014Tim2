@@ -1,27 +1,34 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
 import javax.swing.UIManager;
 
 public class OdjelForm extends JFrame {
@@ -133,8 +140,10 @@ public class OdjelForm extends JFrame {
 		panel.add(btnSpremiPromjene);
 		
 		final JList list = new JList();
+		JScrollPane scrollPane = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(190, 61, 141, 106);
 		list.setBounds(190, 61, 141, 106);
-		panel.add(list);
+		panel.add(scrollPane);
 		
 		JLabel lblNewLabel = new JLabel("Dodaj nove zaposlenike:");
 		lblNewLabel.setForeground(UIManager.getColor("TextField.highlight"));
@@ -170,15 +179,15 @@ public class OdjelForm extends JFrame {
 		final DefaultListModel listaZaposlenika = new DefaultListModel();
 		list_1.setModel(listaZaposlenika);
 		ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
-
 		for (int i=0;i<zaposlenici.size();i++)
-			{
-			    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
-			    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();
-			}	
-		
+		{
+		    String tempString = zaposlenici.get(i).getId() + " " + zaposlenici.get(i).getIme() + " " + zaposlenici.get(i).getPrezime()
+		    		+ " " + zaposlenici.get(i).getAdresa() + " " + zaposlenici.get(i).getSatnica();	
+		}	
+		JScrollPane scrollPane1 = new JScrollPane(list_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane1.setBounds(190, 207, 141, 106);
 		list_1.setBounds(190, 207, 141, 106);
-		panel.add(list_1);
+		panel.add(scrollPane1);
 		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.setBackground(UIManager.getColor("TextPane.selectionBackground"));

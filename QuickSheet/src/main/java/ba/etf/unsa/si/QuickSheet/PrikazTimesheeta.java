@@ -1,6 +1,7 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -8,8 +9,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,17 +20,23 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Font;
+
 import javax.swing.border.TitledBorder;
+
 import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+
 import javax.swing.UIManager;
 
 public class PrikazTimesheeta extends JFrame {
@@ -139,8 +148,10 @@ public class PrikazTimesheeta extends JFrame {
 		list = new JList();
 		list.setEnabled(false);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane scrollPane1 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane1.setBounds(67, 141, 553, 158);
 		list.setBounds(67, 141, 553, 158);
-		panel_1.add(list);
+		panel_1.add(scrollPane1);
 		
 		JLabel lblKomentar = new JLabel("Komentar:");
 		lblKomentar.setForeground(UIManager.getColor("TextField.highlight"));
