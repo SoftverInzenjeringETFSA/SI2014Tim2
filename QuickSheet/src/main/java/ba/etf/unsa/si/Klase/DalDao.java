@@ -668,6 +668,7 @@ public class DalDao {
 		session.close();
 		return result;
 	}
+	
 	static public AdministratorHibernate VratiAdministratoraPoUsernamu(String username)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
