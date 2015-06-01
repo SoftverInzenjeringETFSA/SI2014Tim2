@@ -112,6 +112,16 @@ public class DalDao {
 		return results;
 	}
 	
+	static public TaskHibernate VratiTask(long id)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		TaskHibernate results = (TaskHibernate)session.get(TaskHibernate.class, id);
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
 	static public AdministratorHibernate VratiAdministratora(long id)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -331,7 +341,7 @@ public class DalDao {
 		for (int i = 0; i < odjeliZap.size(); i++)
 		{
 			if (!odjeli.contains(odjeliZap.get(i).getOdjel()))
-			odjeli.add(odjeliZap.get(i).getOdjel());
+				odjeli.add(odjeliZap.get(i).getOdjel());
 		}
 		return odjeli;
 	}
@@ -538,14 +548,20 @@ public class DalDao {
 			for (int j = 0; j < timeshe.size(); j++)
 			{
 				TimesheetHibernate th = timeshe.get(j).getTimesheet();
-				if (!timesheetovi.contains(th))
+				boolean vecPostoji = false;
+				for (int z = 0; z < timesheetovi.size(); z++)
+				{
+					if (timesheetovi.get(z).getId() == th.getId())
+						vecPostoji = true;
+				}
+				if (!vecPostoji)
 					timesheetovi.add(th);
 			}
 		}
 		return timesheetovi;
 	}
 	
-	static private ArrayList<TimesheetTaskHibernate> VratiTimesheetTaskove(long TimesheetID)
+	static public ArrayList<TimesheetTaskHibernate> VratiTimesheetTaskove(long TimesheetID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
@@ -668,6 +684,7 @@ public class DalDao {
 		session.close();
 		return result;
 	}
+	
 	static public AdministratorHibernate VratiAdministratoraPoUsernamu(String username)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -681,7 +698,7 @@ public class DalDao {
 		return result;
 	}
 	
-	static public boolean ValidirajUsername (String username, long id)
+	static public boolean ValidirajUsernameKorisnik (String username, long id)
 	{
 		boolean validan = true;
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -702,7 +719,7 @@ public class DalDao {
 		return validan;
 	}
 	
-	static public boolean ValidirajUsername (String username)
+	static public boolean ValidirajUsernameKorisnik (String username)
 	{
 		boolean validan = true;
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -715,8 +732,44 @@ public class DalDao {
 		transaction.commit();
 		session.close();
 		if (results.size() != 0)
-		{
 			validan = false;
+		return validan;
+	}
+	
+	static public boolean ValidirajUsernameAdmin (String username)
+	{
+		boolean validan = true;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM AdministratorHibernate WHERE username=:username";
+		Query query = session.createQuery(hql);
+		query.setString("username", username);
+		@SuppressWarnings("unchecked")
+		ArrayList<AdministratorHibernate> results = (ArrayList<AdministratorHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		if (results.size() != 0)
+			validan = false;
+		return validan;
+	}
+	
+	static public boolean ValidirajUsernameAdmin (String username, long id)
+	{
+		boolean validan = true;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM AdministratorHibernate WHERE username=:username";
+		Query query = session.createQuery(hql);
+		query.setString("username", username);
+		@SuppressWarnings("unchecked")
+		ArrayList<AdministratorHibernate> results = (ArrayList<AdministratorHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		if (results.size() != 0)
+		{
+			Long rezultatID = results.get(0).getId();
+			if (!rezultatID.equals(id))
+				validan = false;
 		}
 		return validan;
 	}
@@ -755,6 +808,7 @@ public class DalDao {
 		}
 		return timesheets;
 	}
+	
 	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaposlenikaZaMjesec(long zaposlenikId, Month mjesec) {
 		ArrayList<TimesheetHibernate> filteredTimesheets = new ArrayList<TimesheetHibernate>();
 		for(TimesheetHibernate item : VratiTimesheetoveZaposlenika(zaposlenikId)) {
@@ -763,6 +817,33 @@ public class DalDao {
 			}
 		}
 		return filteredTimesheets;
+	}
+	
+	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaposlenikaZaMjesec(long zaposlenikId, long projekatID, Month mjesec) {
+		ArrayList<TimesheetHibernate> filteredTimesheets = new ArrayList<TimesheetHibernate>();
+		for(TimesheetHibernate item : VratiTimesheetoveZaposlenikaNaProjektu(projekatID, zaposlenikId)) {
+			if(item.getDatumSlanja() != null && item.getDatumSlanja().getMonth().equals(mjesec)) {
+				filteredTimesheets.add(item);
+			}
+		}
+		return filteredTimesheets;
+	}
+	
+	static public void obrisiTimesheetTaskove(long taskId)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "FROM TimesheetTaskHibernate WHERE task=:taskID";
+		Query query = session.createQuery(hql);
+		query.setLong("taskID", taskId);
+		@SuppressWarnings("unchecked")
+		ArrayList<TimesheetTaskHibernate> results = (ArrayList<TimesheetTaskHibernate>)query.list();
+		transaction.commit();
+		session.close();
+		for (TimesheetTaskHibernate tsh: results)
+		{
+			DalDao.ObrisiObjekat(tsh);
+		}
 	}
 }
 

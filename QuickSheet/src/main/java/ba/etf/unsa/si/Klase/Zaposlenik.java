@@ -53,9 +53,11 @@ public abstract class Zaposlenik {
 		return lozinka;
 	}
 	
-	public void setLozinka(String lozinka) throws NoSuchAlgorithmException, InvalidKeySpecException
+	public void setLozinka(String lozinka) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAttributeValueException
 	{
-		this.lozinka = Lozinka.generateStorngPasswordHash(lozinka);
+		if (lozinka != null && !lozinka.isEmpty() && lozinka.matches("^[a-zA-Z0-9]*$"))
+			this.lozinka = Lozinka.generateStorngPasswordHash(lozinka);
+		else throw new InvalidAttributeValueException(); 
 	}
 	
 	public String getIme()
@@ -65,7 +67,7 @@ public abstract class Zaposlenik {
 	
 	public void setIme(String _ime) throws InvalidAttributeValueException
 	{
-		if (_ime != null && !_ime.isEmpty() && ime.matches("[^\\x00-\\x7F]+")) //_ime.matches("^[a-zA-Z]*$"))
+		if (_ime != null && !_ime.isEmpty() && _ime.matches("^[a-zA-Z]*$"))
 			ime = _ime;
 		else throw new InvalidAttributeValueException();
 	}
@@ -89,7 +91,7 @@ public abstract class Zaposlenik {
 	
 	public void setAdresa(String _adresa) throws InvalidAttributeValueException
 	{
-		if (_adresa != null && !_adresa.isEmpty() && !_adresa.trim().isEmpty())
+		if (_adresa != null && _adresa.length() > 3 && !_adresa.trim().isEmpty())
 			adresa = _adresa;
 		else throw new InvalidAttributeValueException();
 	}
@@ -118,28 +120,38 @@ public abstract class Zaposlenik {
 		else throw new InvalidAttributeValueException();
 	}
 	
-	public Boolean getArhiviran() {
+	public Boolean getArhiviran() 
+	{
 		return arhiviran;
 	}
 
-	public void setArhiviran(Boolean arhiviran) {
+	public void setArhiviran(Boolean arhiviran) 
+	{
 		this.arhiviran = arhiviran;
 	}
 	
-	public String getEmail() {
+	public String getEmail() 
+	{
 		return Email;
 	}
 
-	public void setEmail(String email) {
-		Email = email;
+	public void setEmail(String email) throws InvalidAttributeValueException 
+	{
+		if (email != null && email.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
+			Email = email;
+		else throw new InvalidAttributeValueException();
 	}
 
-	public String getTelefon() {
+	public String getTelefon() 
+	{
 		return Telefon;
 	}
 
-	public void setTelefon(String telefon) {
-		Telefon = telefon;
+	public void setTelefon(String telefon) throws InvalidAttributeValueException 
+	{
+		if (telefon != null && telefon.matches("^\\d{9,15}$"))
+			Telefon = telefon;
+		else throw new InvalidAttributeValueException();
 	}
 
 }

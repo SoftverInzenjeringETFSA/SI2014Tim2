@@ -22,6 +22,7 @@ import javax.swing.UIManager;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class Login extends JFrame {
@@ -118,12 +119,6 @@ public class Login extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					if (txtIme.getText().equals("baza"))
-					{
-						ZaposlenikHibernate zh = new ZaposlenikHibernate();
-						zh.setAdresa("Dobrinja 22");
-						zh.setArhiviran(false);
-					}
 					String username = txtIme.getText();
 					@SuppressWarnings("deprecation")
 					String pass = txtPassword.getText();
@@ -137,7 +132,8 @@ public class Login extends JFrame {
 						}	
 					}
 					else if(zaposlenik != null) {
-						if(Lozinka.validatePassword(pass, zaposlenik.getLozinka())) {
+						if(Lozinka.validatePassword(pass, zaposlenik.getLozinka())) 
+						{
 							if(zaposlenik.getKoordinator()) {
 								new MainFormKoordinator(zaposlenik).setVisible(true);
 							}

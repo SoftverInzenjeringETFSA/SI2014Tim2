@@ -178,7 +178,7 @@ public class OdjelForm extends JFrame {
 						tPr.setZaposlenikOdjela(zPr);
 						DalDao.DodajObjekat(tPr);
 					}
-					JOptionPane.showMessageDialog(null, "Uspješno ste izmijenili odjel.", "OK", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Uspješno ste izmijenili odjel.", "Odjel izmijenjen", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});

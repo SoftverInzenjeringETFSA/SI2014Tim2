@@ -32,7 +32,9 @@ import javax.swing.SpinnerDateModel;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,6 +59,8 @@ import ba.etf.unsa.si.Klase.Projekat;
 import ba.etf.unsa.si.Klase.ProjekatRadnik;
 import ba.etf.unsa.si.Klase.Task;
 import ba.etf.unsa.si.Klase.Timesheet;
+import ba.etf.unsa.si.KlaseHibernate.IzvjestajOdjelaHibernate;
+import ba.etf.unsa.si.KlaseHibernate.IzvjestajZaposlenikaHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
@@ -77,6 +81,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
+import javax.swing.JPasswordField;
+
 
 public class MainFormKoordinator extends JFrame {
 	private JTextField textField;
@@ -91,11 +97,16 @@ public class MainFormKoordinator extends JFrame {
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_12;
-	private JTextField textField_14;
-	private JTextField textField_15;
-	private JTextField textField_16;
 	private JTextField textField_10;
 	protected static final Logger LOGGER = Logger.getLogger("MainFormKoordinator");
+	private JTextField textField_11;
+	private JTextField textField_13;
+	private JPasswordField passwordField;
+	private JPasswordField passwordField_1;
+	private JPasswordField passwordField_2;
+	private JTextField textField_14;
+	private JTextField textField_15;
+	private JList list_11;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -112,16 +123,17 @@ public class MainFormKoordinator extends JFrame {
 
 	public MainFormKoordinator(final ZaposlenikHibernate zh) {
 		final ZaposlenikHibernate Zaposlenik = zh;
+		final ProjekatHibernate Projekatt = new ProjekatHibernate();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet - Koordinator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 765, 482);
+		setBounds(100, 100, 765, 556);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 764, 453);
+		tabbedPane.setBounds(0, 0, 764, 527);
 		getContentPane().add(tabbedPane);
 		setLocationRelativeTo(null);
 		JPanel timeSheetPanel = new JPanel();
@@ -206,10 +218,10 @@ public class MainFormKoordinator extends JFrame {
 		panel_4.add(label);
 		
 		final DefaultListModel DefaultListModel4 = new DefaultListModel();
-		JList list_10 = new JList();
-		list_10.setModel(DefaultListModel4);
-		list_10.setBounds(10, 123, 210, 105);
-		panel_4.add(list_10);
+		list_11 = new JList();
+		list_11.setModel(DefaultListModel4);
+		list_11.setBounds(10, 123, 210, 105);
+		panel_4.add(list_11);
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
 		lblTaskovi.setForeground(Color.WHITE);
@@ -355,6 +367,23 @@ public class MainFormKoordinator extends JFrame {
 		list_9.setBounds(20, 93, 311, 266);
 		panel_2.add(scrollPane8);
 		
+		JButton button_6 = new JButton("Odjava");
+		button_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_6.setForeground(UIManager.getColor("Button.foreground"));
+		button_6.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_6.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button_6.setBounds(616, 400, 89, 23);
+		historijaPanel.add(button_6);
+		
 		JPanel odjeliPanel = new JPanel();
 		odjeliPanel.setForeground(UIManager.getColor("TextField.highlight"));
 		odjeliPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -365,13 +394,15 @@ public class MainFormKoordinator extends JFrame {
 		panel_3.setForeground(UIManager.getColor("TextField.highlight"));
 		panel_3.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_3.setBounds(30, 22, 355, 370);
+		panel_3.setBounds(30, 22, 355, 398);
 		odjeliPanel.add(panel_3);
 		panel_3.setLayout(null);
 		
 		final JList list_4 = new JList();
 		JScrollPane scrollPane7 = new JScrollPane(list_4, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane7.setBounds(22, 116, 309, 243);
+		scrollPane7.setBounds(22, 116, 309, 233);
+		final DefaultListModel dlm_1 = new DefaultListModel();
+		list_4.setModel(dlm_1);
 		list_4.setBounds(22, 116, 309, 243);
 		panel_3.add(scrollPane7);
 		
@@ -382,16 +413,8 @@ public class MainFormKoordinator extends JFrame {
 		panel_3.add(label_16);
 		
 		final JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setFont(new Font("Times New Roman", Font.PLAIN, 11));
-		comboBox_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(!(comboBox_5.getSelectedItem() == null)){
-					textField_7.setText((String) comboBox_5.getSelectedItem());
-				}
-			}
-		});
-		
-		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"Naziv"}));
+		comboBox_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"Naziv", "Max br. zaposlenika"}));
 		comboBox_5.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_5);
 		
@@ -401,8 +424,9 @@ public class MainFormKoordinator extends JFrame {
 		panel_3.add(textField_7);
 		
 		final JLabel label_error = new JLabel("");
+		label_error.setForeground(Color.RED);
 		label_error.setVisible(false);
-		label_error.setBounds(0, 408, 759, 14);
+		label_error.setBounds(0, 459, 759, 25);
 		odjeliPanel.add(label_error);
 		
 		final JCheckBox checkBox = new JCheckBox("Prikaži arhivirane korisnike");
@@ -415,63 +439,58 @@ public class MainFormKoordinator extends JFrame {
 		JButton button_2 = new JButton("Pretraži");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean greska = true;
 				
-				if(comboBox_5.getSelectedItem() == null){
-					greska = false;
-					label_error.setText("Morate označiti parametar pretrage!");
+				ArrayList<OdjelHibernate> odjeli = new ArrayList<OdjelHibernate>();
+				dlm_1.removeAllElements();
+				if (comboBox_5.getSelectedItem().toString().equals("Naziv"))
+				{
+					if (checkBox.isSelected())
+					{
+						odjeli = DalDao.PretraziArhiviraneOdjelePoNazivu(textField_7.getText());
+					}
+					else 
+					{
+						odjeli = DalDao.PretraziNearhiviraneOdjelePoNazivu(textField_7.getText());
+					}
 				}
-				if(greska == false){
-					label_error.setVisible(true);
-				}
-				else label_error.setVisible(false);
-				if (textField_7.getText().equalsIgnoreCase("") && checkBox.isSelected()==false){
-					DefaultListModel listaArhOdjela = new DefaultListModel();
-					list_4.setModel(listaArhOdjela);
-					ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveNearhiviraneOdjele();
-
-					for (int i=0;i<arhiviraniOdjeli.size();i++)
+				else
+				{
+					if (textField_7.getText().matches("^[0-9]*$"))
+					{
+						if (checkBox.isSelected())
 						{
-						    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-							listaArhOdjela.addElement(tempString);
+							odjeli = DalDao.PretraziArhiviraneOdjelePoKapacitetu(Integer.parseInt(textField_7.getText()));
 						}
-				} else
-					if (checkBox.isSelected()){
-						DefaultListModel listaArhOdjela = new DefaultListModel();
-						list_4.setModel(listaArhOdjela);
-						ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziArhiviraneOdjelePoNazivu(textField_7.getText());
-
-						for (int i=0;i<arhiviraniOdjeli.size();i++)
-							{
-							    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-								listaArhOdjela.addElement(tempString);
-							}
-					} else
-						if (checkBox.isSelected()==false){
-							DefaultListModel listaArhOdjela = new DefaultListModel();
-							list_4.setModel(listaArhOdjela);
-							ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziNearhiviraneOdjelePoNazivu(textField_7.getText());
-
-							for (int i=0;i<arhiviraniOdjeli.size();i++)
-								{
-								    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-									listaArhOdjela.addElement(tempString);
-								}
-						} 
+						else 
+						{
+							odjeli = DalDao.PretraziNearhiviraneOdjelePoKapacitetu(Integer.parseInt(textField_7.getText()));
+						}
+					}
+				}
+				for (int i=0; i < odjeli.size(); i++)
+				{
+				    String tempString = odjeli.get(i).getId() + " " + odjeli.get(i).getNaziv();
+				    dlm_1.addElement(tempString);
+				}
+				
 			}
-			
 		});
 		
 		button_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_2.setBounds(262, 56, 69, 23);
 		panel_3.add(button_2);
 		
+		JButton btnPrikaiOdjel = new JButton("Prikaži odjel");
+		btnPrikaiOdjel.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnPrikaiOdjel.setBounds(230, 360, 101, 23);
+		panel_3.add(btnPrikaiOdjel);
+		
 		JPanel panel_5 = new JPanel();
 		panel_5.setForeground(UIManager.getColor("TextField.highlight"));
 		panel_5.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_5.setLayout(null);
 		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o odjelu", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_5.setBounds(392, 22, 341, 370);
+		panel_5.setBounds(392, 22, 341, 398);
 		odjeliPanel.add(panel_5);
 		
 		JLabel label_6 = new JLabel("Naziv odjela:");
@@ -481,6 +500,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_5.add(label_6);
 		
 		textField_1 = new JTextField();
+		textField_1.setDisabledTextColor(Color.BLACK);
 		textField_1.setBorder(null);
 		textField_1.setBackground(Color.WHITE);
 		textField_1.setEnabled(false);
@@ -498,28 +518,73 @@ public class MainFormKoordinator extends JFrame {
 		JLabel label_9 = new JLabel("Maksimalni broj zaposlenika:");
 		label_9.setForeground(UIManager.getColor("TextField.highlight"));
 		label_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_9.setBounds(10, 207, 152, 14);
+		label_9.setBounds(10, 298, 152, 14);
 		panel_5.add(label_9);
 		
 		final JList list = new JList();
-		final DefaultListModel listaZaposlenika = new DefaultListModel();
-		list.setModel(listaZaposlenika);
-		
+		final DefaultListModel listaZaposlenikaOdjela = new DefaultListModel();
+		list.setModel(listaZaposlenikaOdjela);
 		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list.setEnabled(false);
 		JScrollPane scrollPane6 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane6.setBounds(190, 61, 141, 135);
+		scrollPane6.setBounds(190, 61, 141, 226);
 		list.setBounds(190, 61, 141, 135);
 		panel_5.add(scrollPane6);
 		
+		btnPrikaiOdjel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listaZaposlenikaOdjela.removeAllElements();
+				boolean greska = true;
+				if(list_4.isSelectionEmpty())
+				{
+					label_error.setText("Morate označiti odjel!");
+					label_error.setVisible(true);
+				}
+				else
+				{
+					label_error.setVisible(false);
+					String Odjel=list_4.getSelectedValue().toString();
+					String[] temp = Odjel.split(" ");
+					final long id = Long.parseLong(temp[0]);
+					final OdjelHibernate prikaz = DalDao.VratiOdjel(id); 
+					ArrayList<ZaposlenikHibernate> zaposleniciOdjela=DalDao.VratiZaposlenikeUOdjelu(id);
+					for (int i=0;i<zaposleniciOdjela.size();i++)
+					{
+					    String tempString = zaposleniciOdjela.get(i).toString();
+						listaZaposlenikaOdjela.addElement(tempString);
+					}
+					textField_1.setText(prikaz.getNaziv());
+					textField_2.setText(prikaz.getMaksimalanBrojRadnika().toString());
+				}
+			}
+		});
+		
 		textField_2 = new JTextField();
+		textField_2.setDisabledTextColor(Color.BLACK);
 		textField_2.setEnabled(false);
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBorder(null);
 		textField_2.setBackground(Color.WHITE);
-		textField_2.setBounds(190, 207, 141, 20);
+		textField_2.setBounds(190, 298, 141, 20);
 		panel_5.add(textField_2);
+		
+		JButton button_7 = new JButton("Odjava");
+		button_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_7.setForeground(UIManager.getColor("Button.foreground"));
+		button_7.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_7.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button_7.setBounds(624, 425, 89, 23);
+		odjeliPanel.add(button_7);
 		
 		JPanel projektiPanel = new JPanel();
 		projektiPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -530,10 +595,10 @@ public class MainFormKoordinator extends JFrame {
 		panel_11.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_11.setLayout(null);
 		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga projekta", TitledBorder.LEFT, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_11.setBounds(30, 22, 355, 201);
+		panel_11.setBounds(30, 22, 355, 249);
 		projektiPanel.add(panel_11);
 		
-		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikaži arhivirane projekte");
+		final JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikaži arhivirane projekte");
 		chckbxPrikaziArhiviraneProjekte.setBackground(UIManager.getColor("TextField.darkShadow"));
 		chckbxPrikaziArhiviraneProjekte.setForeground(UIManager.getColor("TextField.highlight"));
 		chckbxPrikaziArhiviraneProjekte.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -541,42 +606,20 @@ public class MainFormKoordinator extends JFrame {
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
 		
 		final JComboBox comboBox_17 = new JComboBox();
-		comboBox_17.setFont(new Font("Times New Roman", Font.PLAIN, 11));
-		comboBox_17.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!(comboBox_17.getSelectedItem() == null)){
-					textField_46.setText((String) comboBox_17.getSelectedItem());
-				}
-			}
-		});
-		
-		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"naziv projekta"}));
+		comboBox_17.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"Naziv projekta", "Naziv klijenta"}));
 		comboBox_17.setBounds(22, 45, 99, 23);
 		panel_11.add(comboBox_17);
 		
 		final JLabel label_error1 = new JLabel("");
+		label_error1.setForeground(Color.RED);
 		label_error1.setVisible(false);
-		label_error1.setBounds(0, 403, 759, 14);
+		label_error1.setBounds(0, 481, 759, 18);
 		projektiPanel.add(label_error1);
 		
 		JButton btnPretrai_1 = new JButton("Pretraži");
 		btnPretrai_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnPretrai_1.setForeground(UIManager.getColor("Button.foreground"));
-		btnPretrai_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if(comboBox_17.getSelectedItem() == null){
-					greska = false;
-					label_error1.setText("Morate označiti parametar pretrage!");
-				}
-				if(greska == false){
-					label_error1.setVisible(true);
-				}
-				else label_error1.setVisible(false);
-			}
-		});
-		
 		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretrai_1.setBounds(262, 45, 69, 23);
 		panel_11.add(btnPretrai_1);
@@ -586,10 +629,12 @@ public class MainFormKoordinator extends JFrame {
 		panel_11.add(textField_46);
 		textField_46.setColumns(10);
 		
-		JList list_1 = new JList();
+		final JList list_1 = new JList();
 		JScrollPane scrollPane4 = new JScrollPane(list_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane4.setBounds(22, 105, 309, 85);
 		list_1.setBounds(22, 105, 309, 85);
+		final DefaultListModel dlm2 = new DefaultListModel();
+		list_1.setModel(dlm2);
 		panel_11.add(scrollPane4);
 		
 		JLabel lblIzaberiteParametarPretrage = new JLabel("Izaberite parametar pretrage:");
@@ -598,10 +643,17 @@ public class MainFormKoordinator extends JFrame {
 		lblIzaberiteParametarPretrage.setBounds(22, 22, 170, 14);
 		panel_11.add(lblIzaberiteParametarPretrage);
 		
+		JButton btnPrikaiProjekat = new JButton("Prikaži projekat");
+		btnPrikaiProjekat.setForeground(Color.BLACK);
+		btnPrikaiProjekat.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnPrikaiProjekat.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnPrikaiProjekat.setBounds(215, 215, 116, 23);
+		panel_11.add(btnPrikaiProjekat);
+		
 		JPanel panel_8 = new JPanel();
 		panel_8.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_8.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o projektu", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_8.setBounds(392, 22, 341, 370);
+		panel_8.setBounds(392, 22, 341, 426);
 		projektiPanel.add(panel_8);
 		panel_8.setLayout(null);
 		
@@ -633,7 +685,7 @@ public class MainFormKoordinator extends JFrame {
 		JLabel lblNadreeni = new JLabel("Nadređeni:");
 		lblNadreeni.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNadreeni.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNadreeni.setBounds(66, 271, 102, 14);
+		lblNadreeni.setBounds(66, 339, 102, 14);
 		panel_8.add(lblNadreeni);
 		
 		textField_5 = new JTextField();
@@ -646,23 +698,27 @@ public class MainFormKoordinator extends JFrame {
 		JLabel lblArhivirajProjekat = new JLabel("Arhiviraj projekat:");
 		lblArhivirajProjekat.setForeground(UIManager.getColor("TextField.highlight"));
 		lblArhivirajProjekat.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblArhivirajProjekat.setBounds(30, 306, 102, 14);
+		lblArhivirajProjekat.setBounds(30, 367, 102, 14);
 		panel_8.add(lblArhivirajProjekat);
 		
-		JCheckBox chckbxArhiviraj = new JCheckBox("");
-		chckbxArhiviraj.setBounds(162, 302, 97, 23);
+		final JCheckBox chckbxArhiviraj = new JCheckBox("Da");
+		chckbxArhiviraj.setBackground(UIManager.getColor("Button.darkShadow"));
+		chckbxArhiviraj.setForeground(Color.WHITE);
+		chckbxArhiviraj.setBounds(166, 363, 97, 23);
 		panel_8.add(chckbxArhiviraj);
 		
 		final JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(166, 268, 165, 20);
+		comboBox_3.setBounds(166, 336, 165, 20);
 		panel_8.add(comboBox_3);
 		
 		final JList list_3 = new JList();
 		list_3.setBackground(Color.WHITE);
 		list_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		JScrollPane scrollPane3 = new JScrollPane(list_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane3.setBounds(166, 78, 165, 148);
+		scrollPane3.setBounds(166, 78, 165, 88);
 		list_3.setBounds(166, 78, 165, 148);
+		final DefaultListModel listaZaposlenikaProjekta = new DefaultListModel();
+		list_3.setModel(listaZaposlenikaProjekta);
 		panel_8.add(scrollPane3);
 		
 		JButton button = new JButton("Sačuvaj promjene");
@@ -672,46 +728,68 @@ public class MainFormKoordinator extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
 				
-				if(textField_4.getText().equals("")){
+				if(textField_4.getText().equals("") || !textField_4.getText().matches("^[a-zA-Z0-9]*$"))
+				{
 					greska = false;
 					label_error1.setText("Unesite naziv projekta!");
 				}
-				else if(textField_5.getText().equals("")){
+				if(textField_5.getText().equals("") || !textField_5.getText().matches("^[a-zA-Z0-9]*$"))
+				{
 					greska = false;
 					label_error1.setText("Unesite naziv klijenta!");
 				}
-				else if(list_3.getModel().getSize() == 0){
+				if(list_3.getModel().getSize() == 0){
 					greska = false;
 					label_error1.setText("Dodajte zaposlenike na projekat!");
 				}
-			
 				
-				else if(comboBox_3.getSelectedItem() == null){
+				if (comboBox_3.getSelectedIndex() == -1)
+				{
 					greska = false;
-					label_error1.setText("Morate označiti nadređenog!");
+					label_error1.setText("Morate označiti koordinatora projekta!");
 				}
-				else greska = true;
-				if(greska == false){
+				
+				if(greska == false)
+				{
 					label_error1.setVisible(true);
 				}
-				else label_error1.setVisible(false);
+				else 
+				{
+					label_error1.setVisible(false);
+					ProjekatHibernate phib = DalDao.VratiProjekat(Projekatt.getId());
+					phib.setNaziv(textField_4.getText());
+					phib.setNazivKlijenta(textField_5.getText());
+					phib.setArhiviran(chckbxArhiviraj.isSelected());
+					String s = comboBox_3.getSelectedItem().toString();
+					String[] rijecs=s.split(" ");
+					long l=Long.parseLong(rijecs[0]);
+					ZaposlenikHibernate zaps=DalDao.VratiZaposlenika(l);
+					phib.setKoordinator(zaps);
+					DalDao.ModifikujObjekat(phib);
+					
+					if (listaZaposlenikaProjekta.contains(s))
+					{
+						listaZaposlenikaProjekta.removeElement(s);
+						ArrayList<TaskHibernate> tajmovi = DalDao.VratiTaskoveZaposlenikaNaProjektu(Projekatt.getId(), l);
+						for (int i = 0; i < tajmovi.size(); i++)
+						{
+							DalDao.ObrisiObjekat(tajmovi.get(i));
+						}
+					}
+					JOptionPane.showMessageDialog(null, "Uspješno ste izmijenili projekat", "Projekat izmijenjen", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		
 		button.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button.setBounds(202, 336, 129, 23);
+		button.setBounds(202, 392, 129, 23);
 		panel_8.add(button);
 		
 		JButton btnUkloni = new JButton("Dodaj");
 		btnUkloni.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnUkloni.setForeground(UIManager.getColor("Button.foreground"));
-		btnUkloni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new DodajKorisnika().setVisible(true);
-			}
-		});
 		btnUkloni.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnUkloni.setBounds(166, 237, 82, 23);
+		btnUkloni.setBounds(249, 306, 82, 23);
 		panel_8.add(btnUkloni);
 		
 		JButton button_3 = new JButton("Ukloni");
@@ -719,27 +797,106 @@ public class MainFormKoordinator extends JFrame {
 		button_3.setForeground(UIManager.getColor("Button.foreground"));
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if(list_3.isSelectionEmpty()){
-					greska = false;
-					label_error1.setText("Morate označiti korisnika da bi ga uklonili!");
-				}
-				if(greska == false){
+				if(list_3.isSelectionEmpty())
+				{	
 					label_error1.setVisible(true);
+					label_error1.setText("Odaberite zaposlenika!");
 				}
-				else label_error1.setVisible(false);
+				else
+				{
+					label_error1.setVisible(false);
+					int[] temp=list_3.getSelectedIndices();
+					for (int index:temp)
+					{
+						String ll = listaZaposlenikaProjekta.get(index).toString();
+						String[] rijeci = ll.split(" ");
+						long ID = Long.parseLong(rijeci[0]);
+						ArrayList<TimesheetHibernate> tajmovii = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(Projekatt.getId(), ID);
+						for (int i = 0; i < tajmovii.size(); i++)
+						{
+							if (!tajmovii.get(i).getValidiran())
+							{
+								tajmovii.get(i).setValidiran(true);
+								DalDao.ModifikujObjekat(tajmovii.get(i));
+							}
+						}
+						ArrayList<TaskHibernate> tajmovi = DalDao.VratiTaskoveZaposlenikaNaProjektu(Projekatt.getId(), ID);
+						for (int i = 0; i < tajmovi.size(); i++)
+						{
+							DalDao.ObrisiObjekat(tajmovi.get(i));
+						}
+					}
+					for (int i = temp.length-1; i >= 0; i--)
+					{
+						listaZaposlenikaProjekta.removeElementAt(temp[i]);
+					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste uklonili zaposlenike sa projekta!", "Zaposlenici uklonjeni", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		
 		button_3.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button_3.setBounds(249, 237, 82, 23);
+		button_3.setBounds(249, 175, 82, 23);
 		panel_8.add(button_3);
+		
+		final JList list_10 = new JList();
+		list_10.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list_10.setBackground(Color.WHITE);
+		JScrollPane scrollPaneX = new JScrollPane(list_10, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneX.setBounds(166, 209, 165, 86);
+		list_10.setBounds(166, 209, 146, 86);
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
+		list_10.setModel(listaZaposlenika);
+		panel_8.add(scrollPaneX);
+		
+		btnUkloni.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list_10.isSelectionEmpty())
+				{
+					label_error1.setVisible(true);
+					label_error1.setText("Odaberite zaposlenika!");
+				}
+				else
+				{
+					label_error1.setVisible(false);
+					int[] temp =  list_10.getSelectedIndices();
+					int brojac = 0;
+					for (int index: temp)
+					{
+						if (!listaZaposlenikaProjekta.contains(listaZaposlenika.getElementAt(index)))
+						{
+							brojac++;
+						}
+					}
+					for (int index: temp)
+					{
+						if (!listaZaposlenikaProjekta.contains(listaZaposlenika.getElementAt(index)))
+						{
+							String dodavanje = listaZaposlenika.getElementAt(index).toString();
+							String[] rijeci = dodavanje.split(" ");
+							long noviZaposlenikID = Long.parseLong(rijeci[0]);
+							TaskHibernate ozh = new TaskHibernate();
+							ozh.setZaposlenik(DalDao.VratiZaposlenika(noviZaposlenikID));
+							ozh.setProjekat(DalDao.VratiProjekat(Projekatt.getId()));
+							ozh.setPrioritet(10);
+							ozh.setProcenatZavrsenosti(100);
+							ozh.setRok(LocalDate.now());
+							ozh.setNaziv("Zaposlenik dodan u projekat");
+							DalDao.DodajObjekat(ozh);
+							listaZaposlenikaProjekta.addElement(listaZaposlenika.getElementAt(index));
+						}
+					}
+					if (brojac != 0)
+						JOptionPane.showMessageDialog(null, "Uspjesno ste dodali zaposlenike u projekat!" , "Zaposlenici dodani", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_9.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Taskovi", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_9.setBounds(30, 226, 355, 166);
+		panel_9.setBounds(30, 282, 355, 166);
 		projektiPanel.add(panel_9);
 		panel_9.setLayout(null);
 		
@@ -749,24 +906,155 @@ public class MainFormKoordinator extends JFrame {
 		lblPrikazTaskova.setBounds(21, 22, 82, 14);
 		panel_9.add(lblPrikazTaskova);
 		
-		JList list_7 = new JList();
+		final JList list_7 = new JList();
+		list_7.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane5 = new JScrollPane(list_7, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane5.setBounds(21, 37, 309, 85);
 		list_7.setBounds(21, 37, 309, 85);
+		final DefaultListModel dll = new DefaultListModel();
+		list_7.setModel(dll);
 		panel_9.add(scrollPane5);
+		
+		btnPrikaiProjekat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				boolean greska = true;
+				if(list_1.isSelectionEmpty()){
+					greska = false;
+					label_error1.setText("Morate označiti projekat!");
+				}
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else{
+					listaZaposlenikaProjekta.removeAllElements();
+					listaZaposlenika.removeAllElements();
+					label_error1.setVisible(false);
+					String Projekat = list_1.getSelectedValue().toString();
+					textField_46.setText("");
+					dlm2.removeAllElements();
+					dll.removeAllElements();
+					String[] temp = Projekat.split(" ");
+					final long id = Long.parseLong(temp[0]);
+					ProjekatHibernate prikaz = DalDao.VratiProjekat(id);
+					Projekatt.setId(prikaz.getId());
+					Projekatt.setArhiviran(prikaz.getArhiviran());
+					Projekatt.setKoordinator(prikaz.getKoordinator());
+					Projekatt.setNaziv(prikaz.getNaziv());
+					Projekatt.setNazivKlijenta(prikaz.getNazivKlijenta());
+					ArrayList<ZaposlenikHibernate> zaposleniciProjekta=DalDao.VratiZaposlenikeNaProjektu(id);
+					for (int i=0;i<zaposleniciProjekta.size();i++)
+					{
+					    String tempString = zaposleniciProjekta.get(i).toString();
+						listaZaposlenikaProjekta.addElement(tempString);
+					}
+					ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+					for (int i=0;i<zaposlenici.size();i++)
+					{
+					    String tempString = zaposlenici.get(i).toString();
+					    listaZaposlenika.addElement(tempString);
+					}
+					textField_4.setText(prikaz.getNaziv());
+					textField_5.setText(prikaz.getNazivKlijenta());
+					ArrayList<ZaposlenikHibernate> koo = DalDao.VratiSveZaposlenikeKoordinatore();
+					for (int i = 0; i < koo.size(); i++)
+						comboBox_3.addItem(koo.get(i).toString());
+					comboBox_3.setSelectedItem(Zaposlenik.toString());
+					chckbxArhiviraj.setSelected(prikaz.getArhiviran());
+					ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(id);
+					for (int i = 0; i < taskovi.size(); i++)
+					{
+						String komponenta = taskovi.get(i).getId() + " Naziv: " + taskovi.get(i).getNaziv() + ", Zaposlenik: " + taskovi.get(i).getZaposlenik().toString() + ", Procenat: " + taskovi.get(i).getProcenatZavrsenosti() + "%";
+						dll.addElement(komponenta);
+					}
+				}
+			}
+		});
 		
 		JButton btnDodajTask = new JButton("Dodaj task");
 		btnDodajTask.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnDodajTask.setForeground(UIManager.getColor("Button.foreground"));
 		btnDodajTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new TaskForm().setVisible(true);
+				if (Projekatt.getNaziv() == null)
+				{
+					label_error1.setVisible(true);
+					label_error1.setText("Morate izabrati projekat!");
+				}
+				else 
+				{
+					label_error1.setVisible(false);
+					ArrayList<ProjekatHibernate> pj = new ArrayList<ProjekatHibernate>();
+					if (Projekatt.getArhiviran())
+						pj = DalDao.VratiArhiviraneProjektePoNazivu(Projekatt.getNaziv());
+					else
+						pj = DalDao.VratiNearhiviraneProjektePoNazivu(Projekatt.getNaziv());
+					new TaskForm(pj.get(0), dll).setVisible(true);
+				}
 			}
 		});
 		
 		btnDodajTask.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnDodajTask.setBounds(211, 133, 119, 23);
+		btnDodajTask.setBounds(82, 132, 119, 23);
 		panel_9.add(btnDodajTask);
+		
+		JButton btnIzbriiTask = new JButton("Izbriši task");
+		btnIzbriiTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				label_error1.setVisible(false);
+				boolean postojiGreska = false;
+				TaskHibernate th = new TaskHibernate();
+				if (list_7.isSelectionEmpty())
+				{
+					postojiGreska = true;
+					label_error1.setText("Morate izabrati task!");
+				}
+				else
+				{
+					String izabraniTask = list_7.getSelectedValue().toString();
+					String[] rijeci = izabraniTask.split(" ");
+					long ide = Long.parseLong(rijeci[0]);
+					th = DalDao.VratiTask(ide);
+					if (th.getProcenatZavrsenosti().equals(100))
+					{
+						postojiGreska = true;
+						label_error1.setText("Ne možete izbrisati urađen task!");
+					}
+				}
+				if (postojiGreska)
+					label_error1.setVisible(true);
+				else
+				{
+					DalDao.obrisiTimesheetTaskove(th.getId());
+					DalDao.ObrisiObjekat(th);
+					String komponenta = th.getId() + " Naziv: " + th.getNaziv() + ", Zaposlenik: " + th.getZaposlenik().toString() + ", Procenat: " + th.getProcenatZavrsenosti() + "%";
+					dll.removeElement(komponenta);
+					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali task", "Task obrisan", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		btnIzbriiTask.setForeground(Color.BLACK);
+		btnIzbriiTask.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnIzbriiTask.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnIzbriiTask.setBounds(211, 132, 119, 23);
+		panel_9.add(btnIzbriiTask);
+		
+		JButton button_8 = new JButton("Odjava");
+		button_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_8.setForeground(UIManager.getColor("Button.foreground"));
+		button_8.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_8.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button_8.setBounds(627, 452, 89, 23);
+		projektiPanel.add(button_8);
 		
 		JPanel korisniciPanel = new JPanel();
 		korisniciPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -776,15 +1064,17 @@ public class MainFormKoordinator extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_1.setBounds(30, 22, 355, 370);
+		panel_1.setBounds(30, 22, 355, 403);
 		korisniciPanel.add(panel_1);
 		panel_1.setLayout(null);
 		
 	    final JList list_2 = new JList();
 	    list_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	    JScrollPane scrollPane2 = new JScrollPane(list_2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane2.setBounds(22, 116, 309, 209);
+		scrollPane2.setBounds(22, 116, 309, 241);
 		list_2.setBounds(22, 116, 309, 209);
+		final DefaultListModel lista = new DefaultListModel();
+	    list_2.setModel(lista);
 		panel_1.add(scrollPane2);
 		
 		final JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
@@ -808,7 +1098,7 @@ public class MainFormKoordinator extends JFrame {
 			}
 		});
 		
-		btnNewButton_1.setBounds(212, 336, 119, 23);
+		btnNewButton_1.setBounds(212, 369, 119, 23);
 		panel_1.add(btnNewButton_1);
 		
 		JLabel label_11 = new JLabel("Izaberite parametar pretrage:");
@@ -818,15 +1108,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_1.add(label_11);
 		
 		final JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!(comboBox_4.getSelectedItem() == null)){
-					textField_6.setText((String) comboBox_4.getSelectedItem());
-				}
-			}
-		});
-		
-		comboBox_4.setFont(new Font("Times New Roman", Font.PLAIN, 11));
+		comboBox_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"Ime", "Prezime", "Username"}));
 		comboBox_4.setBounds(22, 56, 99, 23);
 		panel_1.add(comboBox_4);
@@ -838,7 +1120,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		final JLabel label_error2 = new JLabel("");
 		label_error2.setVisible(false);
-		label_error2.setBounds(0, 408, 759, 14);
+		label_error2.setBounds(0, 473, 759, 25);
 		korisniciPanel.add(label_error2);
 		
 		JButton button_1 = new JButton("Pretraži");
@@ -846,113 +1128,87 @@ public class MainFormKoordinator extends JFrame {
 		button_1.setForeground(new Color(0, 0, 0));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean greska = true;
 				
-				if(comboBox_4.getSelectedItem() == null){
-					greska = false;
-					label_error2.setText("Morate označiti parametar pretrage!");
-				}
-				if(greska == false){
-					label_error2.setVisible(true);
-				}
-				else {
-					label_error2.setVisible(false);
 				if (!textField_6.getText().isEmpty())
 				{
-			    DefaultListModel lista = new DefaultListModel();
-			    list_2.setModel(lista);
-			    ArrayList<ProjekatHibernate> projekti = DalDao.VratiSveKoordinatorskeProjekte(zh.getId());
-				ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
-				for (int i = 0; i < projekti.size(); i++)
-				{
-					
-					ArrayList<ZaposlenikHibernate> zaps = DalDao.VratiZaposlenikeNaProjektu(projekti.get(i).getId());
-					for (int j = 0; j < zaps.size(); j++)
+					lista.removeAllElements();
+					ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
+					String vrijednost = comboBox_4.getSelectedItem().toString();
+					if (chckbxNewCheckBox.isSelected())
 					{
-						if (!zaposlenici.contains(zaps.get(j)))
-							zaposlenici.add(zaps.get(j));
-					}
-				}
-				ArrayList<ZaposlenikHibernate> filterZaposlenici = new ArrayList<ZaposlenikHibernate>();
-				String vrijednost = comboBox_4.getSelectedItem().toString();
-				if (chckbxNewCheckBox.isSelected())
-				{
-					if (vrijednost.equals("Ime"))
-					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						if (vrijednost.equals("Ime"))
 						{
-							if (zaposlenici.get(i).getIme().equals(textField_6.getText()))
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							zaposlenici = DalDao.VratiArhiviraneZaposlenikePoImenu(textField_6.getText());
 						}
-					}
-					else if (vrijednost.equalsIgnoreCase("Prezime"))
-					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						else if (vrijednost.equalsIgnoreCase("Prezime"))
 						{
-							if (zaposlenici.get(i).getPrezime().equals(textField_6.getText()))
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							zaposlenici = DalDao.VratiArhiviraneZaposlenikePoPrezimenu(textField_6.getText());
+						}
+						else
+						{
+							zaposlenici.add(DalDao.VratiArhiviraneZaposlenikePoUsername(textField_6.getText()));
 						}
 					}
 					else
 					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						if (vrijednost.equals("Ime"))
 						{
-							if (zaposlenici.get(i).getUsername().equals(textField_6.getText()))
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_6.getText());
+						}
+						else if (vrijednost.equalsIgnoreCase("Prezime"))
+						{
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoPrezimenu(textField_6.getText());
+						}
+						else
+						{
+							zaposlenici.add(DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_6.getText()));
 						}
 					}
-				}
-				else
-				{
-					if (vrijednost.equals("Ime"))
+					ArrayList<ProjekatHibernate> projekti = DalDao.VratiSveKoordinatorskeProjekte(Zaposlenik.getId());
+					ArrayList<String> dopusteniZaposlenici = new ArrayList<String>();
+					for (int index = 0; index < projekti.size(); index++)
 					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						ArrayList<ZaposlenikHibernate> zata = DalDao.VratiZaposlenikeNaProjektu(projekti.get(index).getId());
+						for (ZaposlenikHibernate zz: zata)
 						{
-							if (zaposlenici.get(i).getIme().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							if (!dopusteniZaposlenici.contains(zz))
+								dopusteniZaposlenici.add(zz.toString());
 						}
 					}
-					else if (vrijednost.equalsIgnoreCase("Prezime"))
+					for (int i = 0; i < zaposlenici.size(); i++)
 					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						if (zaposlenici.get(i) != null)
 						{
-							if (zaposlenici.get(i).getPrezime().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							String podatak = zaposlenici.get(i).toString();
+							if (dopusteniZaposlenici.contains(podatak))
+								lista.addElement(podatak);
 						}
 					}
-					else
-					{
-						for (int i = 0; i < zaposlenici.size(); i++)
-						{
-							if (zaposlenici.get(i).getUsername().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
-						}					
-					}
+
 				}
-				for (int i = 0; i < filterZaposlenici.size(); i++)
-				{
-					String podatak = filterZaposlenici.get(i).getId() + " " + filterZaposlenici.get(i).getIme() + " " + filterZaposlenici.get(i).getPrezime();
-					lista.addElement(podatak);
-				}
-				}
-			}}
+			}
 		});
 		
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_1.setBounds(262, 56, 69, 23);
 		panel_1.add(button_1);
+		
+		JButton button_9 = new JButton("Odjava");
+		button_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_9.setForeground(UIManager.getColor("Button.foreground"));
+		button_9.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_9.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button_9.setBounds(651, 436, 89, 23);
+		korisniciPanel.add(button_9);
 		
 		JPanel izvjestajiPanel = new JPanel();
 		izvjestajiPanel.setBackground(UIManager.getColor("Button.darkShadow"));
@@ -1097,7 +1353,7 @@ public class MainFormKoordinator extends JFrame {
 		lblProjekat_1.setBounds(75, 145, 57, 14);
 		panel_7.add(lblProjekat_1);
 		
-		JComboBox comboBox_23 = new JComboBox();
+		final JComboBox comboBox_23 = new JComboBox();
 		comboBox_23.setBackground(Color.WHITE);
 		comboBox_23.setModel(new DefaultComboBoxModel(Month.values()));
 		comboBox_23.setFont(new Font("Times New Roman", Font.PLAIN, 11));
@@ -1113,42 +1369,13 @@ public class MainFormKoordinator extends JFrame {
 		JLabel label_15 = new JLabel("");
 		label_15.setBounds(203, 229, 46, 14);
 		panel_7.add(label_15);
-		JLabel lblIliIzvjestajZa = new JLabel("Ili, izvještaj za vremenski period:");
-		lblIliIzvjestajZa.setForeground(UIManager.getColor("TextField.highlight"));
-		lblIliIzvjestajZa.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblIliIzvjestajZa.setBounds(75, 264, 197, 14);
-		panel_7.add(lblIliIzvjestajZa);
-		
-		JLabel lblOd = new JLabel("Od:");
-		lblOd.setForeground(UIManager.getColor("TextField.highlight"));
-		lblOd.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblOd.setBounds(76, 289, 46, 14);
-		panel_7.add(lblOd);
-		
-		JLabel lblDo_1 = new JLabel("Do:");
-		lblDo_1.setForeground(UIManager.getColor("TextField.highlight"));
-		lblDo_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblDo_1.setBounds(177, 289, 46, 14);
-		panel_7.add(lblDo_1);
 		
 		JButton btnNewButton_3 = new JButton("Generiši izvještaj");
 		btnNewButton_3.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnNewButton_3.setForeground(UIManager.getColor("Button.foreground"));
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnNewButton_3.setBounds(75, 336, 197, 23);
+		btnNewButton_3.setBounds(75, 281, 197, 23);
 		panel_7.add(btnNewButton_3);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner.setModel(new SpinnerDateModel(new Date(1431986400000L), new Date(1431986400000L), null, Calendar.YEAR));
-		spinner.setBounds(106, 286, 61, 20);
-		panel_7.add(spinner);
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_1.setModel(new SpinnerDateModel(new Date(1431986400000L), new Date(1431986400000L), null, Calendar.DAY_OF_YEAR));
-		spinner_1.setBounds(203, 286, 61, 20);
-		panel_7.add(spinner_1);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(24, 380, 309, -349);
@@ -1167,8 +1394,10 @@ public class MainFormKoordinator extends JFrame {
 		lblImenkoPrezimenkovic.setBounds(15, 41, 240, 14);
 		panel_6.add(lblImenkoPrezimenkovic);
 		final JLabel label_17 = new JLabel("");
+		label_17.setForeground(Color.RED);
 		label_17.setVisible(false);
-		label_17.setBounds(0, 408, 759, 14);
+
+		label_17.setBounds(0, 435, 759, 14);
 		izvjestajiPanel.add(label_17);
 		
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -1194,159 +1423,90 @@ public class MainFormKoordinator extends JFrame {
 					String[] rijeci2 = projekat.split(" ");
 					long ProjekatID = Long.parseLong(rijeci2[0]);
 					
+					Month mjesec = (Month)comboBox_23.getSelectedItem();
+					
 					OdjelHibernate oh = DalDao.VratiOdjel(OdjelID);
 					ZaposlenikHibernate zh = DalDao.VratiZaposlenika(ZaposlenikID);
 					ProjekatHibernate ph = DalDao.VratiProjekat(ProjekatID);
 					
-					ZaposlenikHibernate koordinatorH = ph.getKoordinator();
-					Koordinator kkk = null;
-					try {
-						kkk = new Koordinator(koordinatorH.getUsername(), koordinatorH.getIme(), koordinatorH.getPrezime(), koordinatorH.getAdresa(), koordinatorH.getDatumZaposlenja(), koordinatorH.getSatnica());
-					} catch (InvalidAttributeValueException e2) {
-						LOGGER.log(Level.SEVERE,"context",e2);
-					}
-					Projekat PROJEKAT = null;
-					try {
-						PROJEKAT = new Projekat(ph.getNaziv(), ph.getNazivKlijenta(), kkk);
-					} catch (InvalidAttributeValueException e2) {
-						LOGGER.log(Level.SEVERE,"context",e2);
-					}
-					
-					ArrayList<TaskHibernate> taskoviH = DalDao.VratiSveTaskoveProjekta(ProjekatID);
-					LinkedList<Task> taskovi = new LinkedList<Task>();
-					for (int i = 0; i < taskoviH.size(); i++)
+					ArrayList<TaskHibernate> taskovi = new ArrayList<TaskHibernate>();
+					taskovi = DalDao.VratiTaskoveZaposlenikaNaProjektu(ph.getId(), ZaposlenikID);
+					int ukupanBrojTaskovaZaposlenikaNaProjektu = taskovi.size();
+					ArrayList<TimesheetHibernate> tajmovi = new ArrayList<TimesheetHibernate>();
+					tajmovi = DalDao.VratiTimesheetoveZaposlenikaZaMjesec(ZaposlenikID, ProjekatID, mjesec);
+					Hashtable<Long, Double> taskoviZaposlenik = new Hashtable<Long, Double>();
+					Integer ukupnoVrijemeNaProjektu = 0;
+					for (TimesheetHibernate th: tajmovi)
 					{
-						ZaposlenikHibernate zzz = taskoviH.get(i).getZaposlenik();
-						ProjekatRadnik _zaposlenik = null;
-						try {
-							_zaposlenik = new ProjekatRadnik(zzz.getUsername(), zzz.getIme(), zzz.getPrezime(), zzz.getAdresa(), zzz.getDatumZaposlenja(), zzz.getSatnica());
-						} catch (InvalidAttributeValueException e1) {
-							LOGGER.log(Level.SEVERE,"context",e1);
-						}
-						Task novi = null;
-						try {
-							novi = new Task(taskoviH.get(i).getNaziv(), taskoviH.get(i).getOpis(), taskoviH.get(i).getPrioritet(), _zaposlenik, taskoviH.get(i).getRok());
-						} catch (javax.management.InvalidAttributeValueException e1) {
-							LOGGER.log(Level.SEVERE,"context",e1);
-						}
-						taskovi.add(novi);
-					}
-					
-					try {
-						PROJEKAT.setTaskovi(taskovi);
-					} catch (InvalidAttributeValueException e1) {
-						LOGGER.log(Level.SEVERE,"context",e1);
-					}
-					
-					ArrayList<ZaposlenikHibernate> zaposh = DalDao.VratiZaposlenikeNaProjektu(ProjekatID);
-					LinkedList<ProjekatRadnik> zaposlenici = new LinkedList<ProjekatRadnik>();
-					for (int i = 0; i < zaposh.size(); i++)
-					{
-						ProjekatRadnik pa = null;
-						try {
-							pa = new ProjekatRadnik(zaposh.get(i).getUsername(), zaposh.get(i).getIme(), zaposh.get(i).getPrezime(), zaposh.get(i).getAdresa(), zaposh.get(i).getDatumZaposlenja(), zaposh.get(i).getSatnica());
-						} catch (InvalidAttributeValueException e1) {
-							LOGGER.log(Level.SEVERE,"context",e1);
-						}
-						zaposlenici.add(pa);
-					}
-					
-					try {
-						PROJEKAT.setZaposlenici(zaposlenici);
-					} catch (InvalidAttributeValueException e1) {
-						LOGGER.log(Level.SEVERE,"context",e1);
-					}
-					
-					
-					ArrayList<TimesheetHibernate> tss = DalDao.VratiTimesheetoveProjekta(ProjekatID);
-					LinkedList<Timesheet> tim = new LinkedList<Timesheet>();
-					for (int i = 0; i < tss.size(); i++)
-					{
-						ArrayList<TaskHibernate> Taskovi = DalDao.VratiTimesheetTaskoveZaposlenika(tss.get(i).getId());
-						LinkedList<Task> kom = new LinkedList<Task>();
-						for (int j = 0; j < Taskovi.size(); j++)
+						ukupnoVrijemeNaProjektu += th.getBrojRadnihSati();
+						if (th.getValidiran())
 						{
-							ZaposlenikHibernate zaaa = Taskovi.get(j).getZaposlenik();
-							ProjekatRadnik aaa = null;
-							try {
-								aaa = new ProjekatRadnik(zaaa.getUsername(), zaaa.getIme(), zaaa.getPrezime(), zaaa.getAdresa(), zaaa.getDatumZaposlenja(), zaaa.getSatnica());
-							} catch (InvalidAttributeValueException e1) {
-								LOGGER.log(Level.SEVERE,"context",e1);
+							ArrayList<TimesheetTaskHibernate> tth = DalDao.VratiTimesheetTaskove(th.getId());
+							for (TimesheetTaskHibernate tata: tth)
+							{
+								taskoviZaposlenik.put(tata.getTask().getId(), (double)tata.getTask().getProcenatZavrsenosti() / 100);
 							}
-							Task nono = null;
-							try {
-								nono = new Task(Taskovi.get(j).getNaziv(), Taskovi.get(j).getOpis(), Taskovi.get(j).getPrioritet(), aaa, Taskovi.get(j).getRok());
-							} catch (javax.management.InvalidAttributeValueException e1) {
-								LOGGER.log(Level.SEVERE,"context",e1);
-							}
-							kom.add(nono);
-						}
-						ProjekatHibernate pp = tss.get(i).getProjekat();
-						ZaposlenikHibernate imm = pp.getKoordinator();
-						Koordinator koko = null;
-						try {
-							koko = new Koordinator(imm.getUsername(), imm.getIme(), imm.getPrezime(), imm.getAdresa(), imm.getDatumZaposlenja(), imm.getSatnica());
-						} catch (InvalidAttributeValueException e1) {
-							LOGGER.log(Level.SEVERE,"context",e1);
-						}
-						Projekat ll = null;
-						try {
-							ll = new Projekat(pp.getNaziv(), pp.getNazivKlijenta(), koko);
-						} catch (InvalidAttributeValueException e1) {
-							LOGGER.log(Level.SEVERE,"context",e1);
-						}
-						try {
-							Timesheet toto = new Timesheet(kom, tss.get(i).getBrojRadnihSati(), ll, tss.get(i).getDatumSlanja());
-						} catch (javax.management.InvalidAttributeValueException e1) {
-							LOGGER.log(Level.SEVERE,"context",e1);
 						}
 					}
-					
-					ProjekatRadnik ZAPOSLENIK = new ProjekatRadnik();
-					try {
-						ZAPOSLENIK = new ProjekatRadnik(zh.getUsername(), zh.getIme(), zh.getPrezime(), zh.getAdresa(), zh.getDatumZaposlenja(), zh.getSatnica());
-					} catch (InvalidAttributeValueException e1) {
-						LOGGER.log(Level.SEVERE,"context",e1);
-					}
-					IzvjestajZaposlenika iz = null;
-					try {
-						iz = new IzvjestajZaposlenika(PROJEKAT, ZAPOSLENIK);
-					} catch (InvalidAttributeValueException e1) {
-						LOGGER.log(Level.SEVERE,"context",e1);
-					}
-					
-					
-					Odjel ODJEL = null;
-					try {
-						ODJEL = new Odjel(oh.getNaziv(), oh.getMaksimalanBrojRadnika());
-					} catch (javax.management.InvalidAttributeValueException e1) {
-						LOGGER.log(Level.SEVERE,"context",e1);
-					}
-					ODJEL.setArhiviran(false);
-					ArrayList<ZaposlenikHibernate> odjelZap = DalDao.VratiZaposlenikeUOdjelu(OdjelID);
-					LinkedList<ProjekatRadnik> zaki = new LinkedList<ProjekatRadnik>();
-					
-					for (int i = 0; i < odjelZap.size(); i++)
+					Set<Long> keys = taskoviZaposlenik.keySet();
+					Double procenatZavrsenogRada = 0.0;
+					for (Long key: keys)
 					{
-						try {
-							ProjekatRadnik prNovi = new ProjekatRadnik(zaki.get(i).getUsername(), zaki.get(i).getIme(), zaki.get(i).getPrezime(), zaki.get(i).getAdresa(), zaki.get(i).getDatumZaposlenja(), zaki.get(i).getSatnica());
-							zaki.add(prNovi);
-						} catch (InvalidAttributeValueException e1) {
-							LOGGER.log(Level.SEVERE,"context",e1);
+						procenatZavrsenogRada += taskoviZaposlenik.get(key);
+					}
+					procenatZavrsenogRada += 1;
+					procenatZavrsenogRada /= ukupanBrojTaskovaZaposlenikaNaProjektu;
+					IzvjestajZaposlenikaHibernate izh = new IzvjestajZaposlenikaHibernate();
+					izh.setProcenatZavrsenogRada(procenatZavrsenogRada);
+					izh.setProjekat(ph);
+					izh.setUkupanBrojTaskova(ukupanBrojTaskovaZaposlenikaNaProjektu);
+					izh.setUkupnoVrijemeRada((double)ukupnoVrijemeNaProjektu);
+					izh.setTrosak(ukupnoVrijemeNaProjektu*zh.getSatnica());	
+					izh.setZaposlenik(zh);
+					
+					IzvjestajOdjelaHibernate ioh = new IzvjestajOdjelaHibernate();
+					ioh.setProjekat(ph);
+					ioh.setOdjel(oh);
+					int ukupanBrojTaskovaOdjela = 0;
+					ArrayList<ZaposlenikHibernate> zaposleniciOdjela = DalDao.VratiZaposlenikeUOdjelu(oh.getId());
+					ArrayList<TimesheetHibernate> tajmoviOdjelZaposlenik = new ArrayList<TimesheetHibernate>();
+					Hashtable<Long, Double> taskoviOdjela = new Hashtable<Long, Double>();
+					Integer ukupnoVrijemeOdjelaNaProjektu = 0;
+					Double cijenaOdjela = 0.0;
+					Double procenatZavrsenogRadaOdjela = 0.0;
+					for (ZaposlenikHibernate zapa: zaposleniciOdjela)
+					{
+						procenatZavrsenogRadaOdjela += 1;
+						ukupanBrojTaskovaOdjela += DalDao.VratiTaskoveZaposlenikaNaProjektu(ph.getId(),zapa.getId()).size();
+						tajmoviOdjelZaposlenik = DalDao.VratiTimesheetoveZaposlenikaZaMjesec(zapa.getId(), ProjekatID, mjesec);
+						int ukupnoVrijemeRadnika = 0;
+						for (TimesheetHibernate tito: tajmoviOdjelZaposlenik)
+						{
+							ukupnoVrijemeOdjelaNaProjektu += tito.getBrojRadnihSati();
+							ukupnoVrijemeRadnika += tito.getBrojRadnihSati();
+							if (tito.getValidiran())
+							{
+								ArrayList<TimesheetTaskHibernate> ttho = DalDao.VratiTimesheetTaskove(tito.getId());
+								for (TimesheetTaskHibernate tata: ttho)
+								{
+									taskoviOdjela.put(tata.getTask().getId(), (double)tata.getTask().getProcenatZavrsenosti() / 100);
+								}
+							}
 						}
-					
+						cijenaOdjela += ukupnoVrijemeRadnika * zapa.getSatnica();
 					}
-					
-					ODJEL.setZaposlenici(zaki);
-					IzvjestajOdjela oz = null;
-					try {
-						oz = new IzvjestajOdjela(PROJEKAT, ODJEL);
-					} catch (InvalidAttributeValueException e1) {
-						LOGGER.log(Level.SEVERE,"context",e1);
+					ioh.setUkupanBrojTaskovaOdjela(ukupanBrojTaskovaOdjela);
+					Set<Long> keysOdjel = taskoviOdjela.keySet();
+					for (Long key: keysOdjel)
+					{
+						procenatZavrsenogRadaOdjela += taskoviOdjela.get(key);
 					}
-					new IzvjestajForm(iz, oz).setVisible(true);
+					procenatZavrsenogRadaOdjela /= ukupanBrojTaskovaOdjela;
+					ioh.setProcenatZavrsenogRada(procenatZavrsenogRadaOdjela);
+					ioh.setUkupnoVrijemeRada((double)ukupnoVrijemeOdjelaNaProjektu);
+					ioh.setTrosak(cijenaOdjela);
+					new IzvjestajForm(izh, ioh).setVisible(true);
 				}
-				
 			}
 		});
 		
@@ -1380,6 +1540,66 @@ public class MainFormKoordinator extends JFrame {
 		list_6.setBounds(12, 76, 315, 249);
 		list_6.setModel(dlm);
 		panel_6.add(scrollPane1);
+		
+		JButton button_10 = new JButton("Odjava");
+		button_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_10.setForeground(UIManager.getColor("Button.foreground"));
+		button_10.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_10.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button_10.setBounds(622, 398, 89, 23);
+		izvjestajiPanel.add(button_10);
+		
+		btnPretrai_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dlm2.removeAllElements();
+				ArrayList<ProjekatHibernate> phovci = new ArrayList<ProjekatHibernate>();
+				if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta"))
+				{
+					if (chckbxPrikaziArhiviraneProjekte.isSelected())
+						phovci = DalDao.VratiSveArhiviraneProjekte();
+					else 
+						phovci = DalDao.VratiSveNearhiviraneProjekte();
+					for (int i=0;i<phovci.size();i++)
+					{
+						if (phovci.get(i).getNaziv().equals(textField_46.getText()))
+						{
+							if (phovci.get(i).getKoordinator().toString().equals(Zaposlenik.toString()))
+							{
+							    String tempString = phovci.get(i).getId() + " Projekat: " + phovci.get(i).getNaziv() + ", Klijent: " + phovci.get(i).getNazivKlijenta();
+							    dlm2.addElement(tempString);
+							}
+						}
+					}
+				} 
+				else
+				{
+					if (chckbxPrikaziArhiviraneProjekte.isSelected())
+						phovci = DalDao.VratiSveArhiviraneProjekte();
+					else 
+						phovci = DalDao.VratiSveNearhiviraneProjekte();
+					for (int i=0;i<phovci.size();i++)
+					{
+						if (phovci.get(i).getNazivKlijenta().equals(textField_46.getText()))
+						{
+							if (phovci.get(i).getKoordinator().toString().equals(Zaposlenik.toString()))
+							{
+							    String tempString = phovci.get(i).getId() + " Projekat: " + phovci.get(i).getNaziv() + ", Klijent: " + phovci.get(i).getNazivKlijenta();
+							    dlm2.addElement(tempString);
+							}
+						}
+					}
+				}
+			}
+		});
 		
 		for(int i = 0; i < timesheets.size(); i++)
 		{
@@ -1486,7 +1706,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_13.setLayout(null);
 		panel_13.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Moji podaci", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_13.setBounds(30, 22, 341, 370);
+		panel_13.setBounds(30, 22, 341, 407);
 		panel_12.add(panel_13);
 		
 		JLabel label_18 = new JLabel("Ime:");
@@ -1510,32 +1730,32 @@ public class MainFormKoordinator extends JFrame {
 		JLabel label_23 = new JLabel("Datum zapošljavanja:");
 		label_23.setForeground(UIManager.getColor("TextField.highlight"));
 		label_23.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_23.setBounds(10, 149, 113, 14);
+		label_23.setBounds(10, 201, 113, 14);
 		panel_13.add(label_23);
 		
 		JLabel label_24 = new JLabel("Odjeli:");
 		label_24.setForeground(UIManager.getColor("TextField.highlight"));
 		label_24.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_24.setBounds(83, 174, 40, 14);
+		label_24.setBounds(83, 229, 40, 14);
 		panel_13.add(label_24);
 		
 		JLabel label_25 = new JLabel("Korisničko ime:");
 		label_25.setForeground(UIManager.getColor("TextField.highlight"));
 		label_25.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_25.setBounds(47, 284, 82, 14);
+		label_25.setBounds(47, 340, 82, 14);
 		panel_13.add(label_25);
 		
 		JLabel label_28 = new JLabel("Vrsta korisnika:");
 		label_28.setForeground(UIManager.getColor("TextField.highlight"));
 		label_28.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_28.setBounds(47, 312, 82, 14);
+		label_28.setBounds(47, 368, 82, 14);
 		panel_13.add(label_28);
 		
 		textField_3 = new JTextField();
 		textField_3.setForeground(Color.BLACK);
 		textField_3.setEnabled(false);
 		textField_3.setEditable(false);
-		textField_3.setDisabledTextColor(SystemColor.textInactiveText);
+		textField_3.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_3.setColumns(10);
 		textField_3.setBorder(null);
 		textField_3.setBackground(Color.WHITE);
@@ -1546,7 +1766,7 @@ public class MainFormKoordinator extends JFrame {
 		textField_8.setForeground(Color.BLACK);
 		textField_8.setEnabled(false);
 		textField_8.setEditable(false);
-		textField_8.setDisabledTextColor(Color.LIGHT_GRAY);
+		textField_8.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_8.setColumns(10);
 		textField_8.setBorder(null);
 		textField_8.setBackground(Color.WHITE);
@@ -1554,8 +1774,9 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_8);
 		
 		textField_9 = new JTextField();
-		textField_9.setForeground(Color.BLACK);
+		textField_9.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_9.setEnabled(false);
+		textField_9.setForeground(UIManager.getColor("Button.darkShadow"));
 		textField_9.setEditable(false);
 		textField_9.setColumns(10);
 		textField_9.setBorder(null);
@@ -1564,37 +1785,21 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_9);
 		
 		textField_12 = new JTextField();
+		textField_12.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_12.setForeground(Color.BLACK);
 		textField_12.setEnabled(false);
 		textField_12.setEditable(false);
 		textField_12.setColumns(10);
 		textField_12.setBorder(null);
 		textField_12.setBackground(Color.WHITE);
-		textField_12.setBounds(159, 281, 141, 20);
+		textField_12.setBounds(159, 337, 141, 20);
 		panel_13.add(textField_12);
-		
-		final JSpinner spinner_6 = new JSpinner();
-		spinner_6.setModel(new SpinnerDateModel(new Date(1432418400000L), null, null, Calendar.DAY_OF_YEAR));
-		spinner_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_6.setEnabled(false);
-		spinner_6.setBorder(new CompoundBorder());
-		spinner_6.setBackground(Color.WHITE);
-		spinner_6.setBounds(159, 146, 141, 20);
-		panel_13.add(spinner_6);
 		
 		JLabel lblSatnica = new JLabel("Satnica:");
 		lblSatnica.setForeground(UIManager.getColor("TextField.highlight"));
 		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblSatnica.setBounds(77, 124, 40, 14);
+		lblSatnica.setBounds(77, 176, 40, 14);
 		panel_13.add(lblSatnica);
-		
-		final JSpinner spinner_8 = new JSpinner();
-		spinner_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_8.setEnabled(false);
-		spinner_8.setBorder(new CompoundBorder());
-		spinner_8.setBackground(Color.WHITE);
-		spinner_8.setBounds(159, 115, 141, 20);
-		panel_13.add(spinner_8);
 		
 		final DefaultListModel defaultListModel = new DefaultListModel();
 		JList list_5 = new JList();
@@ -1603,25 +1808,84 @@ public class MainFormKoordinator extends JFrame {
 		list_5.setEnabled(false);
 		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list_5.setBackground(Color.WHITE);
-		list_5.setBounds(159, 173, 141, 97);
-		panel_13.add(list_5);
+		JScrollPane scrollPane_3 = new JScrollPane(list_5, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane_3.setBounds(159, 229, 141, 97);
+		list_5.setBounds(159, 229, 141, 97);
+		panel_13.add(scrollPane_3);
 		
 		textField_10 = new JTextField();
+		textField_10.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_10.setForeground(Color.BLACK);
 		textField_10.setEnabled(false);
 		textField_10.setEditable(false);
 		textField_10.setColumns(10);
 		textField_10.setBorder(null);
 		textField_10.setBackground(Color.WHITE);
-		textField_10.setBounds(159, 309, 141, 20);
+		textField_10.setBounds(159, 365, 141, 20);
 		panel_13.add(textField_10);
+		
+		textField_11 = new JTextField();
+		textField_11.setForeground(SystemColor.controlDkShadow);
+		textField_11.setEnabled(false);
+		textField_11.setEditable(false);
+		textField_11.setDisabledTextColor(Color.BLACK);
+		textField_11.setColumns(10);
+		textField_11.setBorder(null);
+		textField_11.setBackground(Color.WHITE);
+		textField_11.setBounds(159, 170, 141, 20);
+		panel_13.add(textField_11);
+		
+		textField_13 = new JTextField();
+		textField_13.setForeground(SystemColor.controlDkShadow);
+		textField_13.setEnabled(false);
+		textField_13.setEditable(false);
+		textField_13.setDisabledTextColor(Color.BLACK);
+		textField_13.setColumns(10);
+		textField_13.setBorder(null);
+		textField_13.setBackground(Color.WHITE);
+		textField_13.setBounds(159, 198, 141, 20);
+		panel_13.add(textField_13);
+		
+		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setForeground(Color.WHITE);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblEmail.setBounds(87, 117, 58, 14);
+		panel_13.add(lblEmail);
+		
+		JLabel lblTelefon = new JLabel("Telefon:");
+		lblTelefon.setForeground(Color.WHITE);
+		lblTelefon.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblTelefon.setBounds(77, 145, 82, 14);
+		panel_13.add(lblTelefon);
+		
+		textField_14 = new JTextField();
+		textField_14.setForeground(SystemColor.controlDkShadow);
+		textField_14.setEnabled(false);
+		textField_14.setEditable(false);
+		textField_14.setDisabledTextColor(Color.BLACK);
+		textField_14.setColumns(10);
+		textField_14.setBorder(null);
+		textField_14.setBackground(Color.WHITE);
+		textField_14.setBounds(159, 114, 141, 20);
+		panel_13.add(textField_14);
+		
+		textField_15 = new JTextField();
+		textField_15.setForeground(SystemColor.controlDkShadow);
+		textField_15.setEnabled(false);
+		textField_15.setEditable(false);
+		textField_15.setDisabledTextColor(Color.BLACK);
+		textField_15.setColumns(10);
+		textField_15.setBorder(null);
+		textField_15.setBackground(Color.WHITE);
+		textField_15.setBounds(159, 142, 141, 20);
+		panel_13.add(textField_15);
 		
 		JPanel panel_14 = new JPanel();
 		panel_14.setForeground(UIManager.getColor("TextField.highlight"));
 		panel_14.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_14.setLayout(null);
 		panel_14.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_14.setBounds(392, 22, 341, 370);
+		panel_14.setBounds(392, 22, 341, 407);
 		panel_12.add(panel_14);
 		
 		JLabel label_29 = new JLabel("Trenutna lozinka:");
@@ -1630,26 +1894,11 @@ public class MainFormKoordinator extends JFrame {
 		label_29.setBounds(48, 38, 83, 14);
 		panel_14.add(label_29);
 		
-		textField_14 = new JTextField();
-		textField_14.setColumns(10);
-		textField_14.setBounds(162, 35, 141, 20);
-		panel_14.add(textField_14);
-		
-		textField_15 = new JTextField();
-		textField_15.setColumns(10);
-		textField_15.setBounds(162, 63, 141, 20);
-		panel_14.add(textField_15);
-		
 		JLabel label_30 = new JLabel("Nova lozinka:");
 		label_30.setForeground(UIManager.getColor("TextField.highlight"));
 		label_30.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_30.setBounds(67, 63, 64, 14);
+		label_30.setBounds(67, 66, 64, 14);
 		panel_14.add(label_30);
-		
-		textField_16 = new JTextField();
-		textField_16.setColumns(10);
-		textField_16.setBounds(162, 91, 141, 20);
-		panel_14.add(textField_16);
 		
 		JLabel label_31 = new JLabel("Nova lozinka(ponovo):");
 		label_31.setForeground(UIManager.getColor("TextField.highlight"));
@@ -1658,8 +1907,9 @@ public class MainFormKoordinator extends JFrame {
 		panel_14.add(label_31);
 		
 		final JLabel label_32 = new JLabel("");
+		label_32.setForeground(Color.RED);
 		label_32.setVisible(false);
-		label_32.setBounds(0, 411, 759, 14);
+		label_32.setBounds(0, 474, 759, 25);
 		panel_12.add(label_32); 
 		
 		JButton button_4 = new JButton("Spasi promjenu");
@@ -1669,40 +1919,41 @@ public class MainFormKoordinator extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
 				try {
-					if(Lozinka.validatePassword(textField_14.getText(), Zaposlenik.getLozinka()) && 
-							!textField_14.getText().equals("") && !textField_15.getText().equals("") && 
-							!textField_16.getText().equals("") && textField_15.getText().equals(textField_16.getText())){
-								Zaposlenik.setLozinka(Lozinka.generateStorngPasswordHash(textField_16.getText()));
-								DalDao.ModifikujObjekat(Zaposlenik);
-								JOptionPane.showMessageDialog(null, "Uspjesno ste promjenili lozinku!", "Info", JOptionPane.INFORMATION_MESSAGE );
-					}
-					else if(textField_14.getText().equals("")) {
+					String staraLozinka = new String(passwordField.getPassword());
+					String novaLozinka = new String(passwordField_1.getPassword());
+					String novaLozinkaRepeat = new String(passwordField_2.getPassword());
+					
+					if(staraLozinka.length() < 7) {
 						greska = false;
 						label_32.setText("Unesite trenutnu lozinku!");
 					}
-					else if(textField_15.getText().equals("")){
+					if (!Lozinka.validatePassword(staraLozinka, zh.getLozinka()))
+					{
 						greska = false;
-						label_32.setText("Unesite novu lozinku!");
+						label_32.setText("Neispravan unos trenutne lozinke!");
 					}
-					else if(textField_16.getText().equals("")){
+					if(novaLozinka.length() < 7 || novaLozinkaRepeat.length() < 7){
 						greska = false;
-						label_32.setText("Unesite ponovo novu lozinku!");
+						label_32.setText("Lozinka mora imati najmanje 7 karaktera!");
 					}
-					else if(!textField_15.getText().equals(textField_16.getText())) {
+					if(!novaLozinka.equals(novaLozinkaRepeat)) {
 						greska = false;
 						label_32.setText("Lozinke se ne poklapaju!");
 					}
-					else if(!Lozinka.validatePassword(textField_14.getText(), Zaposlenik.getLozinka())) {
+					if(!novaLozinka.matches("^[a-zA-Z0-9]*$")) {
 						greska = false;
-						label_32.setText("Pogresna lozinka!");
-					}
-					else { 
-						greska = true;
+						label_32.setText("Neispravan format lozinke (koristite samo slova engleskog alfabeta i brojeve)!");
 					}
 					if(greska == false){
 						label_32.setVisible(true);
 					}
-					else label_32.setVisible(false);
+					else 
+					{
+						label_32.setVisible(false);
+						zh.setLozinka(Lozinka.generateStorngPasswordHash(novaLozinka));
+						DalDao.ModifikujObjekat(zh);
+						JOptionPane.showMessageDialog(null, "Uspjesno ste promjenili lozinku!", "Lozinka promjenjena", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 				catch(Exception ex) {
 					LOGGER.log(Level.SEVERE,"context",ex);
@@ -1719,9 +1970,9 @@ public class MainFormKoordinator extends JFrame {
 		button_5.setForeground(UIManager.getColor("Button.foreground"));
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textField_14.setText("");
-				textField_15.setText("");
-				textField_16.setText("");
+				passwordField.setText("");
+				passwordField_1.setText("");
+				passwordField_2.setText("");
 				label_32.setVisible(false);
 			}
 		});
@@ -1730,23 +1981,60 @@ public class MainFormKoordinator extends JFrame {
 		button_5.setBounds(193, 138, 110, 23);
 		panel_14.add(button_5);
 		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(156, 35, 147, 20);
+		panel_14.add(passwordField);
+		
+		passwordField_1 = new JPasswordField();
+		passwordField_1.setBounds(156, 63, 147, 20);
+		panel_14.add(passwordField_1);
+		
+		passwordField_2 = new JPasswordField();
+		passwordField_2.setBounds(156, 91, 147, 20);
+		panel_14.add(passwordField_2);
+		
+		JButton button_11 = new JButton("Odjava");
+		button_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_11.setForeground(UIManager.getColor("Button.foreground"));
+		button_11.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_11.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button_11.setBounds(624, 438, 89, 23);
+		panel_12.add(button_11);
+		
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewButton.setBounds(501, 291, 154, 29);
+		panel_4.add(btnNewButton);
+		
+		
 		panel_12.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
 				textField_3.setText(Zaposlenik.getIme());
 				textField_8.setText(Zaposlenik.getPrezime());
 				textField_9.setText(Zaposlenik.getAdresa());
-				spinner_8.setValue(Zaposlenik.getSatnica());
+				Double satnica = Zaposlenik.getSatnica();
+				textField_11.setText(satnica.toString());
 				Calendar calendar = Calendar.getInstance();
 				calendar.set(Zaposlenik.getDatumZaposlenja().getYear(), Zaposlenik.getDatumZaposlenja().getMonthValue(), Zaposlenik.getDatumZaposlenja().getDayOfMonth());
-				Date temp = calendar.getTime();
-				spinner_6.setValue(temp);
+				textField_1.setText(calendar.toString());
 				ArrayList<OdjelHibernate> listaOdjela = DalDao.VratiZaposlenikoveOdjele(Zaposlenik.getId());
 				for(OdjelHibernate odjel : listaOdjela) {
 					defaultListModel.addElement(odjel);
 				}
+				textField_13.setText(Zaposlenik.getDatumZaposlenja().toString());
 				textField_12.setText(Zaposlenik.getUsername());
 				textField_10.setText("Koordinator");
+				textField_14.setText(Zaposlenik.getEmail());
+				textField_15.setText(Zaposlenik.getTelefon());
 			}
 		});
 		
@@ -1814,8 +2102,9 @@ public class MainFormKoordinator extends JFrame {
 					textArea.setText(temp);
 					textArea_1.setText(temp);
 				}
-				catch(Exception ex) {
-					
+				catch(Exception ex) 
+				{
+					LOGGER.log(Level.SEVERE,"context",ex);
 				}
 			}
 		});
@@ -1853,7 +2142,7 @@ public class MainFormKoordinator extends JFrame {
 		});
 				
 	}
-
+	
 	private void JTable(Object rowData, TableColumnModel columnNames) {
 		// TODO Auto-generated method stub
 		
