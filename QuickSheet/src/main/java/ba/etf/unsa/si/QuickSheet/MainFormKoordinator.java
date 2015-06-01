@@ -1,6 +1,7 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
+
 import javax.naming.directory.InvalidAttributeValueException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,30 +14,39 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SpinnerNumberModel;
+
 import java.awt.Toolkit;
+
 import javax.swing.DefaultComboBoxModel;
+
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.IzvjestajOdjela;
 import ba.etf.unsa.si.Klase.IzvjestajZaposlenika;
@@ -52,10 +62,14 @@ import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
 import javax.swing.border.CompoundBorder;
+
 import java.time.Month;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+
+import javax.swing.JPasswordField;
 
 public class MainFormKoordinator extends JFrame {
 	private JTextField textField;
@@ -71,11 +85,15 @@ public class MainFormKoordinator extends JFrame {
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_12;
-	private JTextField textField_14;
-	private JTextField textField_15;
-	private JTextField textField_16;
 	private JTextField textField_10;
 	protected static final Logger LOGGER = Logger.getLogger("MainFormKoordinator");
+	private JTextField textField_11;
+	private JTextField textField_13;
+	private JPasswordField passwordField;
+	private JPasswordField passwordField_1;
+	private JPasswordField passwordField_2;
+	private JTextField textField_14;
+	private JTextField textField_15;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -96,12 +114,12 @@ public class MainFormKoordinator extends JFrame {
 		setResizable(false);
 		setTitle("QuickSheet - Koordinator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 765, 482);
+		setBounds(100, 100, 765, 541);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 764, 453);
+		tabbedPane.setBounds(0, 0, 764, 512);
 		getContentPane().add(tabbedPane);
 		setLocationRelativeTo(null);
 		JPanel timeSheetPanel = new JPanel();
@@ -1427,7 +1445,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_13.setLayout(null);
 		panel_13.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Moji podaci", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_13.setBounds(30, 22, 341, 370);
+		panel_13.setBounds(30, 22, 341, 426);
 		panel_12.add(panel_13);
 		
 		JLabel label_18 = new JLabel("Ime:");
@@ -1451,32 +1469,32 @@ public class MainFormKoordinator extends JFrame {
 		JLabel label_23 = new JLabel("Datum zapošljavanja:");
 		label_23.setForeground(UIManager.getColor("TextField.highlight"));
 		label_23.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_23.setBounds(10, 149, 113, 14);
+		label_23.setBounds(10, 201, 113, 14);
 		panel_13.add(label_23);
 		
 		JLabel label_24 = new JLabel("Odjeli:");
 		label_24.setForeground(UIManager.getColor("TextField.highlight"));
 		label_24.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_24.setBounds(83, 174, 40, 14);
+		label_24.setBounds(83, 229, 40, 14);
 		panel_13.add(label_24);
 		
 		JLabel label_25 = new JLabel("Korisničko ime:");
 		label_25.setForeground(UIManager.getColor("TextField.highlight"));
 		label_25.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_25.setBounds(47, 284, 82, 14);
+		label_25.setBounds(47, 340, 82, 14);
 		panel_13.add(label_25);
 		
 		JLabel label_28 = new JLabel("Vrsta korisnika:");
 		label_28.setForeground(UIManager.getColor("TextField.highlight"));
 		label_28.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_28.setBounds(47, 312, 82, 14);
+		label_28.setBounds(47, 368, 82, 14);
 		panel_13.add(label_28);
 		
 		textField_3 = new JTextField();
 		textField_3.setForeground(Color.BLACK);
 		textField_3.setEnabled(false);
 		textField_3.setEditable(false);
-		textField_3.setDisabledTextColor(SystemColor.textInactiveText);
+		textField_3.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_3.setColumns(10);
 		textField_3.setBorder(null);
 		textField_3.setBackground(Color.WHITE);
@@ -1487,7 +1505,7 @@ public class MainFormKoordinator extends JFrame {
 		textField_8.setForeground(Color.BLACK);
 		textField_8.setEnabled(false);
 		textField_8.setEditable(false);
-		textField_8.setDisabledTextColor(Color.LIGHT_GRAY);
+		textField_8.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_8.setColumns(10);
 		textField_8.setBorder(null);
 		textField_8.setBackground(Color.WHITE);
@@ -1495,8 +1513,9 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_8);
 		
 		textField_9 = new JTextField();
-		textField_9.setForeground(Color.BLACK);
+		textField_9.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_9.setEnabled(false);
+		textField_9.setForeground(UIManager.getColor("Button.darkShadow"));
 		textField_9.setEditable(false);
 		textField_9.setColumns(10);
 		textField_9.setBorder(null);
@@ -1505,37 +1524,21 @@ public class MainFormKoordinator extends JFrame {
 		panel_13.add(textField_9);
 		
 		textField_12 = new JTextField();
+		textField_12.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_12.setForeground(Color.BLACK);
 		textField_12.setEnabled(false);
 		textField_12.setEditable(false);
 		textField_12.setColumns(10);
 		textField_12.setBorder(null);
 		textField_12.setBackground(Color.WHITE);
-		textField_12.setBounds(159, 281, 141, 20);
+		textField_12.setBounds(159, 337, 141, 20);
 		panel_13.add(textField_12);
-		
-		final JSpinner spinner_6 = new JSpinner();
-		spinner_6.setModel(new SpinnerDateModel(new Date(1432418400000L), null, null, Calendar.DAY_OF_YEAR));
-		spinner_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_6.setEnabled(false);
-		spinner_6.setBorder(new CompoundBorder());
-		spinner_6.setBackground(Color.WHITE);
-		spinner_6.setBounds(159, 146, 141, 20);
-		panel_13.add(spinner_6);
 		
 		JLabel lblSatnica = new JLabel("Satnica:");
 		lblSatnica.setForeground(UIManager.getColor("TextField.highlight"));
 		lblSatnica.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblSatnica.setBounds(77, 124, 40, 14);
+		lblSatnica.setBounds(77, 176, 40, 14);
 		panel_13.add(lblSatnica);
-		
-		final JSpinner spinner_8 = new JSpinner();
-		spinner_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_8.setEnabled(false);
-		spinner_8.setBorder(new CompoundBorder());
-		spinner_8.setBackground(Color.WHITE);
-		spinner_8.setBounds(159, 115, 141, 20);
-		panel_13.add(spinner_8);
 		
 		final DefaultListModel defaultListModel = new DefaultListModel();
 		JList list_5 = new JList();
@@ -1544,25 +1547,84 @@ public class MainFormKoordinator extends JFrame {
 		list_5.setEnabled(false);
 		list_5.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list_5.setBackground(Color.WHITE);
-		list_5.setBounds(159, 173, 141, 97);
-		panel_13.add(list_5);
+		JScrollPane scrollPane_3 = new JScrollPane(list_5, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane_3.setBounds(159, 229, 141, 97);
+		list_5.setBounds(159, 229, 141, 97);
+		panel_13.add(scrollPane_3);
 		
 		textField_10 = new JTextField();
+		textField_10.setDisabledTextColor(UIManager.getColor("Button.foreground"));
 		textField_10.setForeground(Color.BLACK);
 		textField_10.setEnabled(false);
 		textField_10.setEditable(false);
 		textField_10.setColumns(10);
 		textField_10.setBorder(null);
 		textField_10.setBackground(Color.WHITE);
-		textField_10.setBounds(159, 309, 141, 20);
+		textField_10.setBounds(159, 365, 141, 20);
 		panel_13.add(textField_10);
+		
+		textField_11 = new JTextField();
+		textField_11.setForeground(SystemColor.controlDkShadow);
+		textField_11.setEnabled(false);
+		textField_11.setEditable(false);
+		textField_11.setDisabledTextColor(Color.BLACK);
+		textField_11.setColumns(10);
+		textField_11.setBorder(null);
+		textField_11.setBackground(Color.WHITE);
+		textField_11.setBounds(159, 170, 141, 20);
+		panel_13.add(textField_11);
+		
+		textField_13 = new JTextField();
+		textField_13.setForeground(SystemColor.controlDkShadow);
+		textField_13.setEnabled(false);
+		textField_13.setEditable(false);
+		textField_13.setDisabledTextColor(Color.BLACK);
+		textField_13.setColumns(10);
+		textField_13.setBorder(null);
+		textField_13.setBackground(Color.WHITE);
+		textField_13.setBounds(159, 198, 141, 20);
+		panel_13.add(textField_13);
+		
+		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setForeground(Color.WHITE);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblEmail.setBounds(87, 117, 58, 14);
+		panel_13.add(lblEmail);
+		
+		JLabel lblTelefon = new JLabel("Telefon:");
+		lblTelefon.setForeground(Color.WHITE);
+		lblTelefon.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblTelefon.setBounds(77, 145, 82, 14);
+		panel_13.add(lblTelefon);
+		
+		textField_14 = new JTextField();
+		textField_14.setForeground(SystemColor.controlDkShadow);
+		textField_14.setEnabled(false);
+		textField_14.setEditable(false);
+		textField_14.setDisabledTextColor(Color.BLACK);
+		textField_14.setColumns(10);
+		textField_14.setBorder(null);
+		textField_14.setBackground(Color.WHITE);
+		textField_14.setBounds(159, 114, 141, 20);
+		panel_13.add(textField_14);
+		
+		textField_15 = new JTextField();
+		textField_15.setForeground(SystemColor.controlDkShadow);
+		textField_15.setEnabled(false);
+		textField_15.setEditable(false);
+		textField_15.setDisabledTextColor(Color.BLACK);
+		textField_15.setColumns(10);
+		textField_15.setBorder(null);
+		textField_15.setBackground(Color.WHITE);
+		textField_15.setBounds(159, 142, 141, 20);
+		panel_13.add(textField_15);
 		
 		JPanel panel_14 = new JPanel();
 		panel_14.setForeground(UIManager.getColor("TextField.highlight"));
 		panel_14.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_14.setLayout(null);
 		panel_14.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_14.setBounds(392, 22, 341, 370);
+		panel_14.setBounds(392, 22, 341, 426);
 		panel_12.add(panel_14);
 		
 		JLabel label_29 = new JLabel("Trenutna lozinka:");
@@ -1571,26 +1633,11 @@ public class MainFormKoordinator extends JFrame {
 		label_29.setBounds(48, 38, 83, 14);
 		panel_14.add(label_29);
 		
-		textField_14 = new JTextField();
-		textField_14.setColumns(10);
-		textField_14.setBounds(162, 35, 141, 20);
-		panel_14.add(textField_14);
-		
-		textField_15 = new JTextField();
-		textField_15.setColumns(10);
-		textField_15.setBounds(162, 63, 141, 20);
-		panel_14.add(textField_15);
-		
 		JLabel label_30 = new JLabel("Nova lozinka:");
 		label_30.setForeground(UIManager.getColor("TextField.highlight"));
 		label_30.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_30.setBounds(67, 63, 64, 14);
+		label_30.setBounds(67, 66, 64, 14);
 		panel_14.add(label_30);
-		
-		textField_16 = new JTextField();
-		textField_16.setColumns(10);
-		textField_16.setBounds(162, 91, 141, 20);
-		panel_14.add(textField_16);
 		
 		JLabel label_31 = new JLabel("Nova lozinka(ponovo):");
 		label_31.setForeground(UIManager.getColor("TextField.highlight"));
@@ -1599,8 +1646,9 @@ public class MainFormKoordinator extends JFrame {
 		panel_14.add(label_31);
 		
 		final JLabel label_32 = new JLabel("");
+		label_32.setForeground(Color.RED);
 		label_32.setVisible(false);
-		label_32.setBounds(0, 411, 759, 14);
+		label_32.setBounds(0, 459, 759, 25);
 		panel_12.add(label_32); 
 		
 		JButton button_4 = new JButton("Spasi promjenu");
@@ -1610,40 +1658,41 @@ public class MainFormKoordinator extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean greska = true;
 				try {
-					if(Lozinka.validatePassword(textField_14.getText(), Zaposlenik.getLozinka()) && 
-							!textField_14.getText().equals("") && !textField_15.getText().equals("") && 
-							!textField_16.getText().equals("") && textField_15.getText().equals(textField_16.getText())){
-								Zaposlenik.setLozinka(Lozinka.generateStorngPasswordHash(textField_16.getText()));
-								DalDao.ModifikujObjekat(Zaposlenik);
-								JOptionPane.showMessageDialog(null, "Uspjesno ste promjenili lozinku!", "Info", JOptionPane.INFORMATION_MESSAGE );
-					}
-					else if(textField_14.getText().equals("")) {
+					String staraLozinka = new String(passwordField.getPassword());
+					String novaLozinka = new String(passwordField_1.getPassword());
+					String novaLozinkaRepeat = new String(passwordField_2.getPassword());
+					
+					if(staraLozinka.length() < 7) {
 						greska = false;
 						label_32.setText("Unesite trenutnu lozinku!");
 					}
-					else if(textField_15.getText().equals("")){
+					if (!Lozinka.validatePassword(staraLozinka, zh.getLozinka()))
+					{
 						greska = false;
-						label_32.setText("Unesite novu lozinku!");
+						label_32.setText("Neispravan unos trenutne lozinke!");
 					}
-					else if(textField_16.getText().equals("")){
+					if(novaLozinka.length() < 7 || novaLozinkaRepeat.length() < 7){
 						greska = false;
-						label_32.setText("Unesite ponovo novu lozinku!");
+						label_32.setText("Lozinka mora imati najmanje 7 karaktera!");
 					}
-					else if(!textField_15.getText().equals(textField_16.getText())) {
+					if(!novaLozinka.equals(novaLozinkaRepeat)) {
 						greska = false;
 						label_32.setText("Lozinke se ne poklapaju!");
 					}
-					else if(!Lozinka.validatePassword(textField_14.getText(), Zaposlenik.getLozinka())) {
+					if(!novaLozinka.matches("^[a-zA-Z0-9]*$")) {
 						greska = false;
-						label_32.setText("Pogresna lozinka!");
-					}
-					else { 
-						greska = true;
+						label_32.setText("Neispravan format lozinke (koristite samo slova engleskog alfabeta i brojeve)!");
 					}
 					if(greska == false){
 						label_32.setVisible(true);
 					}
-					else label_32.setVisible(false);
+					else 
+					{
+						label_32.setVisible(false);
+						zh.setLozinka(Lozinka.generateStorngPasswordHash(novaLozinka));
+						DalDao.ModifikujObjekat(zh);
+						JOptionPane.showMessageDialog(null, "Uspjesno ste promjenili lozinku!", "Lozinka promjenjena", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 				catch(Exception ex) {
 					LOGGER.log(Level.SEVERE,"context",ex);
@@ -1660,9 +1709,9 @@ public class MainFormKoordinator extends JFrame {
 		button_5.setForeground(UIManager.getColor("Button.foreground"));
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textField_14.setText("");
-				textField_15.setText("");
-				textField_16.setText("");
+				passwordField.setText("");
+				passwordField_1.setText("");
+				passwordField_2.setText("");
 				label_32.setVisible(false);
 			}
 		});
@@ -1671,23 +1720,38 @@ public class MainFormKoordinator extends JFrame {
 		button_5.setBounds(193, 138, 110, 23);
 		panel_14.add(button_5);
 		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(156, 35, 147, 20);
+		panel_14.add(passwordField);
+		
+		passwordField_1 = new JPasswordField();
+		passwordField_1.setBounds(156, 63, 147, 20);
+		panel_14.add(passwordField_1);
+		
+		passwordField_2 = new JPasswordField();
+		passwordField_2.setBounds(156, 91, 147, 20);
+		panel_14.add(passwordField_2);
+		
 		panel_12.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
 				textField_3.setText(Zaposlenik.getIme());
 				textField_8.setText(Zaposlenik.getPrezime());
 				textField_9.setText(Zaposlenik.getAdresa());
-				spinner_8.setValue(Zaposlenik.getSatnica());
+				Double satnica = Zaposlenik.getSatnica();
+				textField_11.setText(satnica.toString());
 				Calendar calendar = Calendar.getInstance();
 				calendar.set(Zaposlenik.getDatumZaposlenja().getYear(), Zaposlenik.getDatumZaposlenja().getMonthValue(), Zaposlenik.getDatumZaposlenja().getDayOfMonth());
-				Date temp = calendar.getTime();
-				spinner_6.setValue(temp);
+				textField_1.setText(calendar.toString());
 				ArrayList<OdjelHibernate> listaOdjela = DalDao.VratiZaposlenikoveOdjele(Zaposlenik.getId());
 				for(OdjelHibernate odjel : listaOdjela) {
 					defaultListModel.addElement(odjel);
 				}
+				textField_13.setText(Zaposlenik.getDatumZaposlenja().toString());
 				textField_12.setText(Zaposlenik.getUsername());
 				textField_10.setText("Koordinator");
+				textField_14.setText(Zaposlenik.getEmail());
+				textField_15.setText(Zaposlenik.getTelefon());
 			}
 		});
 		
