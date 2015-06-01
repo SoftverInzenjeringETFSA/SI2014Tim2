@@ -2,11 +2,9 @@ package ba.etf.unsa.si.Klase;
 
 import java.time.Month;
 import java.util.ArrayList;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelHibernate;
 import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
