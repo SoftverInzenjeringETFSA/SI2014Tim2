@@ -198,9 +198,9 @@ public class MainFormZaposlenik extends JFrame {
 				loginW.setVisible(true);
 			}
 		});
-		button.setForeground(Color.BLACK);
+		button.setForeground(UIManager.getColor("Button.foreground"));
 		button.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button.setBackground(SystemColor.textHighlight);
+		button.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		button.setBounds(613, 384, 89, 23);
 		timeSheetPanel.add(button);
 		
@@ -282,9 +282,9 @@ public class MainFormZaposlenik extends JFrame {
 				loginW.setVisible(true);
 			}
 		});
-		button_1.setForeground(Color.BLACK);
+		button_1.setForeground(UIManager.getColor("Button.foreground"));
 		button_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button_1.setBackground(SystemColor.textHighlight);
+		button_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		button_1.setBounds(622, 398, 89, 23);
 		historijaPanel.add(button_1);
 		
@@ -587,9 +587,9 @@ public class MainFormZaposlenik extends JFrame {
 				loginW.setVisible(true);
 			}
 		});
-		button_2.setForeground(Color.BLACK);
+		button_2.setForeground(UIManager.getColor("Button.foreground"));
 		button_2.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button_2.setBackground(SystemColor.textHighlight);
+		button_2.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		button_2.setBounds(626, 438, 89, 23);
 		panel_2.add(button_2);
 		
