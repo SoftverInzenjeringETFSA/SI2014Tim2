@@ -220,8 +220,10 @@ public class MainFormKoordinator extends JFrame {
 		final DefaultListModel DefaultListModel4 = new DefaultListModel();
 		list_11 = new JList();
 		list_11.setModel(DefaultListModel4);
+		JScrollPane scrollPane9x = new JScrollPane(list_11, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane9x.setBounds(10, 123, 210, 105);
 		list_11.setBounds(10, 123, 210, 105);
-		panel_4.add(list_11);
+		panel_4.add(scrollPane9x);
 		
 		JLabel lblTaskovi = new JLabel("Taskovi:");
 		lblTaskovi.setForeground(Color.WHITE);
@@ -240,8 +242,10 @@ public class MainFormKoordinator extends JFrame {
 				
 			}
 		});
+		JScrollPane scrollPane9y = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane9y.setBounds(241, 124, 221, 105);
 		textArea.setBounds(241, 124, 221, 105);
-		panel_4.add(textArea);
+		panel_4.add(scrollPane9y);
 		
 		final JTextArea textArea_1 = new JTextArea();
 		textArea_1.addInputMethodListener(new InputMethodListener() {
@@ -285,8 +289,10 @@ public class MainFormKoordinator extends JFrame {
 				}
 			}
 		});
+		JScrollPane scrollPane9z = new JScrollPane(textArea_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane9z.setBounds(472, 124, 221, 105);
 		textArea_1.setBounds(472, 124, 221, 105);
-		panel_4.add(textArea_1);
+		panel_4.add(scrollPane9z);
 		
 		JLabel lblProcenatZavrsenosti = new JLabel("Procenat zavrsenosti:");
 		lblProcenatZavrsenosti.setForeground(Color.WHITE);
