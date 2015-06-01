@@ -64,14 +64,6 @@ public class IzvjestajOdjelaTest {
 		
 		DalDao.DodajObjekat(i);
 		
-		TaskHibernate th = new TaskHibernate();
-		th.setProjekat(p1);
-		th.setZaposlenik(zh);
-		th.setKomentar("odlicno");
-		th.setOpis("ma odlicno!");
-		th.setPrioritet(10);
-		th.setProcenatZavrsenosti(100);
-		th.setRok(LocalDate.now());
 		
 		TimesheetHibernate ts = new TimesheetHibernate();
 		ts.setBrojRadnihSati(2);
@@ -90,6 +82,15 @@ public class IzvjestajOdjelaTest {
 		ArrayList<TimesheetHibernate> brojTimesheet = DalDao.VratiTimesheetoveProjekta(p1.getId());
 		Integer ukupno = brojTimesheet.size();
 		assertEquals(new Integer(2), ukupno);
+		DalDao.ObrisiObjekat(ts);
+		DalDao.ObrisiObjekat(ts1);
+		DalDao.ObrisiObjekat(i);
+		DalDao.ObrisiObjekat(o);
+		
+		DalDao.ObrisiObjekat(p1);
+		DalDao.ObrisiObjekat(zh);
+
+		
 	
 	}
 
@@ -139,6 +140,11 @@ public class IzvjestajOdjelaTest {
 		Integer cijena = 0;
 		cijena = (int) (zh.getSatnica()) * ukupno;
 		assertEquals(new Integer(80), cijena);
+		DalDao.ObrisiObjekat(ts);
+		DalDao.ObrisiObjekat(ts1);
+		DalDao.ObrisiObjekat(p1);
+		
+		DalDao.ObrisiObjekat(zh);
 	}
 
 
@@ -186,6 +192,11 @@ public class IzvjestajOdjelaTest {
 		
 		assertEquals(new Integer(4), ukupno);
 		
+		DalDao.ObrisiObjekat(ts);
+		DalDao.ObrisiObjekat(ts1);
+		DalDao.ObrisiObjekat(p);
+		DalDao.ObrisiObjekat(zh);
+		
 		
 	}
 
@@ -212,6 +223,8 @@ public class IzvjestajOdjelaTest {
 		 
 		 OdjelHibernate o1 = DalDao.VratiOdjelPoNazivu("Tim2");
 		 assertFalse(o1.getArhiviran());
+		 DalDao.ObrisiObjekat(o);
+
 		 
 	}
 
