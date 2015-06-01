@@ -353,7 +353,7 @@ public class KorisnikForm extends JFrame {
 				try
 				{
 					z.setUsername(textField_5.getText());
-					if (!DalDao.ValidirajUsername(z.getUsername(), zh.getId()))
+					if (DalDao.ValidirajUsernameKorisnik(z.getUsername(), zh.getId()) == false || DalDao.ValidirajUsernameAdmin(z.getUsername(), zh.getId()) == false)
 					{
 						label_error.setText("Korisničko ime koje ste unijeli je već u upotrebi!");
 						greska = false;

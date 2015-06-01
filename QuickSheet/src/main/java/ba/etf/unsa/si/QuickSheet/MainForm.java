@@ -935,7 +935,7 @@ public class MainForm extends JFrame {
 				try
 				{
 					z.setUsername(textField_41.getText());
-					if (!DalDao.ValidirajUsername(z.getUsername()))
+					if (!DalDao.ValidirajUsernameKorisnik(z.getUsername()) || !DalDao.ValidirajUsernameAdmin(z.getUsername()))
 					{
 						label_error2.setText("Korisničko ime koje ste unijeli je već u upotrebi!");
 						greska = false;
@@ -1003,17 +1003,21 @@ public class MainForm extends JFrame {
 					zh.setTelefon(z.getTelefon());
 					DalDao.DodajObjekat(zh);
 					
-					ArrayList<String> izabrane = (ArrayList<String>) list_5.getSelectedValuesList();
-					for (int i = 0; i < izabrane.size(); i++)
+					if (!list_5.isSelectionEmpty())
 					{
-						String podatak = izabrane.get(i);
-						String[] rijeci = podatak.split(" ");
-						long id = Long.parseLong(rijeci[0]);
-						OdjelZaposlenikHibernate ozh = new OdjelZaposlenikHibernate();
-						ozh.setOdjel(DalDao.VratiOdjel(id));
-						ozh.setZaposlenikOdjela(zh);
-						DalDao.DodajObjekat(ozh);
+						ArrayList<String> izabrane = (ArrayList<String>) list_5.getSelectedValuesList();
+						for (int i = 0; i < izabrane.size(); i++)
+						{
+							String podatak = izabrane.get(i);
+							String[] rijeci = podatak.split(" ");
+							long id = Long.parseLong(rijeci[0]);
+							OdjelZaposlenikHibernate ozh = new OdjelZaposlenikHibernate();
+							ozh.setOdjel(DalDao.VratiOdjel(id));
+							ozh.setZaposlenikOdjela(zh);
+							DalDao.DodajObjekat(ozh);
+						}
 					}
+					
 					JOptionPane.showMessageDialog(null, "Uspjesno ste kreirali zaposlenika", "Zaposlenik kreiran", JOptionPane.INFORMATION_MESSAGE);
 					textField_36.setText("");
 					textField_37.setText("");

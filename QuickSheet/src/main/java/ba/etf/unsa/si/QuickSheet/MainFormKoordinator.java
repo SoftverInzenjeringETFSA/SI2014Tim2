@@ -1,7 +1,6 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
-
 import javax.naming.directory.InvalidAttributeValueException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,39 +13,30 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SpinnerNumberModel;
-
 import java.awt.Toolkit;
-
 import javax.swing.DefaultComboBoxModel;
-
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.IzvjestajOdjela;
 import ba.etf.unsa.si.Klase.IzvjestajZaposlenika;
@@ -62,18 +52,11 @@ import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
-
-import javax.swing.border.CompoundBorder;
-
 import java.time.Month;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
 import javax.swing.JPasswordField;
 
-import java.awt.Component;
-
-import javax.swing.ScrollPaneConstants;
 
 public class MainFormKoordinator extends JFrame {
 	private JTextField textField;
@@ -212,7 +195,7 @@ public class MainFormKoordinator extends JFrame {
 		spinner_2.setModel(new SpinnerNumberModel(1, 1, 24, 1));
 		spinner_2.setBounds(136, 245, 210, 20);
 		panel_4.add(spinner_2);
-		
+
 		JLabel label = new JLabel("Datum:");
 		label.setForeground(UIManager.getColor("TextField.highlight"));
 		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -856,6 +839,7 @@ public class MainFormKoordinator extends JFrame {
 					label_error1.setVisible(true);
 				else
 				{
+					DalDao.obrisiTimesheetTaskove(th.getId());
 					DalDao.ObrisiObjekat(th);
 					String komponenta = th.getId() + " Naziv: " + th.getNaziv() + ", Zaposlenik: " + th.getZaposlenik().toString() + ", Procenat: " + th.getProcenatZavrsenosti() + "%";
 					dll.removeElement(komponenta);
