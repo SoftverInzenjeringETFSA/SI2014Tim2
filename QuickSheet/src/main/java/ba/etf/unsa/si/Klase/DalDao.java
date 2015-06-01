@@ -112,6 +112,16 @@ public class DalDao {
 		return results;
 	}
 	
+	static public TaskHibernate VratiTask(long id)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		TaskHibernate results = (TaskHibernate)session.get(TaskHibernate.class, id);
+		transaction.commit();
+		session.close();
+		return results;
+	}
+	
 	static public AdministratorHibernate VratiAdministratora(long id)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();

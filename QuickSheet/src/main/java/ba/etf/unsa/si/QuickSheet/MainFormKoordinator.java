@@ -71,6 +71,10 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JPasswordField;
 
+import java.awt.Component;
+
+import javax.swing.ScrollPaneConstants;
+
 public class MainFormKoordinator extends JFrame {
 	private JTextField textField;
 	private JTextField textField_46;
@@ -516,10 +520,10 @@ public class MainFormKoordinator extends JFrame {
 		panel_11.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_11.setLayout(null);
 		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga projekta", TitledBorder.LEFT, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_11.setBounds(30, 22, 355, 201);
+		panel_11.setBounds(30, 22, 355, 249);
 		projektiPanel.add(panel_11);
 		
-		JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikaži arhivirane projekte");
+		final JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikaži arhivirane projekte");
 		chckbxPrikaziArhiviraneProjekte.setBackground(UIManager.getColor("TextField.darkShadow"));
 		chckbxPrikaziArhiviraneProjekte.setForeground(UIManager.getColor("TextField.highlight"));
 		chckbxPrikaziArhiviraneProjekte.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -527,7 +531,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_11.add(chckbxPrikaziArhiviraneProjekte);
 		
 		final JComboBox comboBox_17 = new JComboBox();
-		comboBox_17.setFont(new Font("Times New Roman", Font.PLAIN, 11));
+		comboBox_17.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox_17.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!(comboBox_17.getSelectedItem() == null)){
@@ -536,33 +540,19 @@ public class MainFormKoordinator extends JFrame {
 			}
 		});
 		
-		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"naziv projekta"}));
+		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"Naziv projekta", "Naziv klijenta"}));
 		comboBox_17.setBounds(22, 45, 99, 23);
 		panel_11.add(comboBox_17);
 		
 		final JLabel label_error1 = new JLabel("");
+		label_error1.setForeground(Color.RED);
 		label_error1.setVisible(false);
-		label_error1.setBounds(0, 403, 759, 14);
+		label_error1.setBounds(0, 459, 759, 25);
 		projektiPanel.add(label_error1);
 		
 		JButton btnPretrai_1 = new JButton("Pretraži");
 		btnPretrai_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnPretrai_1.setForeground(UIManager.getColor("Button.foreground"));
-		btnPretrai_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if(comboBox_17.getSelectedItem() == null){
-					greska = false;
-					label_error1.setText("Morate označiti parametar pretrage!");
-				}
-				if(greska == false){
-					label_error1.setVisible(true);
-				}
-				else label_error1.setVisible(false);
-			}
-		});
-		
 		btnPretrai_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPretrai_1.setBounds(262, 45, 69, 23);
 		panel_11.add(btnPretrai_1);
@@ -572,10 +562,12 @@ public class MainFormKoordinator extends JFrame {
 		panel_11.add(textField_46);
 		textField_46.setColumns(10);
 		
-		JList list_1 = new JList();
+		final JList list_1 = new JList();
 		JScrollPane scrollPane4 = new JScrollPane(list_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane4.setBounds(22, 105, 309, 85);
 		list_1.setBounds(22, 105, 309, 85);
+		final DefaultListModel dlm2 = new DefaultListModel();
+		list_1.setModel(dlm2);
 		panel_11.add(scrollPane4);
 		
 		JLabel lblIzaberiteParametarPretrage = new JLabel("Izaberite parametar pretrage:");
@@ -584,10 +576,17 @@ public class MainFormKoordinator extends JFrame {
 		lblIzaberiteParametarPretrage.setBounds(22, 22, 170, 14);
 		panel_11.add(lblIzaberiteParametarPretrage);
 		
+		JButton btnPrikaiProjekat = new JButton("Prikaži projekat");
+		btnPrikaiProjekat.setForeground(Color.BLACK);
+		btnPrikaiProjekat.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnPrikaiProjekat.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnPrikaiProjekat.setBounds(215, 215, 116, 23);
+		panel_11.add(btnPrikaiProjekat);
+		
 		JPanel panel_8 = new JPanel();
 		panel_8.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_8.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o projektu", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_8.setBounds(392, 22, 341, 370);
+		panel_8.setBounds(392, 22, 341, 426);
 		projektiPanel.add(panel_8);
 		panel_8.setLayout(null);
 		
@@ -619,7 +618,7 @@ public class MainFormKoordinator extends JFrame {
 		JLabel lblNadreeni = new JLabel("Nadređeni:");
 		lblNadreeni.setForeground(UIManager.getColor("TextField.highlight"));
 		lblNadreeni.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNadreeni.setBounds(66, 271, 102, 14);
+		lblNadreeni.setBounds(66, 339, 102, 14);
 		panel_8.add(lblNadreeni);
 		
 		textField_5 = new JTextField();
@@ -632,23 +631,27 @@ public class MainFormKoordinator extends JFrame {
 		JLabel lblArhivirajProjekat = new JLabel("Arhiviraj projekat:");
 		lblArhivirajProjekat.setForeground(UIManager.getColor("TextField.highlight"));
 		lblArhivirajProjekat.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblArhivirajProjekat.setBounds(30, 306, 102, 14);
+		lblArhivirajProjekat.setBounds(30, 367, 102, 14);
 		panel_8.add(lblArhivirajProjekat);
 		
-		JCheckBox chckbxArhiviraj = new JCheckBox("");
-		chckbxArhiviraj.setBounds(162, 302, 97, 23);
+		final JCheckBox chckbxArhiviraj = new JCheckBox("Da");
+		chckbxArhiviraj.setBackground(UIManager.getColor("Button.darkShadow"));
+		chckbxArhiviraj.setForeground(Color.WHITE);
+		chckbxArhiviraj.setBounds(166, 363, 97, 23);
 		panel_8.add(chckbxArhiviraj);
 		
 		final JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(166, 268, 165, 20);
+		comboBox_3.setBounds(166, 336, 165, 20);
 		panel_8.add(comboBox_3);
 		
 		final JList list_3 = new JList();
 		list_3.setBackground(Color.WHITE);
 		list_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		JScrollPane scrollPane3 = new JScrollPane(list_3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane3.setBounds(166, 78, 165, 148);
+		scrollPane3.setBounds(166, 78, 165, 88);
 		list_3.setBounds(166, 78, 165, 148);
+		final DefaultListModel listaZaposlenikaProjekta = new DefaultListModel();
+		list_3.setModel(listaZaposlenikaProjekta);
 		panel_8.add(scrollPane3);
 		
 		JButton button = new JButton("Sačuvaj promjene");
@@ -685,7 +688,7 @@ public class MainFormKoordinator extends JFrame {
 		});
 		
 		button.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button.setBounds(202, 336, 129, 23);
+		button.setBounds(202, 392, 129, 23);
 		panel_8.add(button);
 		
 		JButton btnUkloni = new JButton("Dodaj");
@@ -697,7 +700,7 @@ public class MainFormKoordinator extends JFrame {
 			}
 		});
 		btnUkloni.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnUkloni.setBounds(166, 237, 82, 23);
+		btnUkloni.setBounds(249, 306, 82, 23);
 		panel_8.add(btnUkloni);
 		
 		JButton button_3 = new JButton("Ukloni");
@@ -719,13 +722,23 @@ public class MainFormKoordinator extends JFrame {
 		});
 		
 		button_3.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button_3.setBounds(249, 237, 82, 23);
+		button_3.setBounds(249, 175, 82, 23);
 		panel_8.add(button_3);
+		
+		JList list_10 = new JList();
+		list_10.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		list_10.setBackground(Color.WHITE);
+		JScrollPane scrollPaneX = new JScrollPane(list_10, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneX.setBounds(166, 209, 165, 86);
+		list_10.setBounds(166, 209, 146, 86);
+		final DefaultListModel listaZaposlenika = new DefaultListModel();
+		list_10.setModel(listaZaposlenika);
+		panel_8.add(scrollPaneX);
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_9.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Taskovi", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_9.setBounds(30, 226, 355, 166);
+		panel_9.setBounds(30, 282, 355, 166);
 		projektiPanel.add(panel_9);
 		panel_9.setLayout(null);
 		
@@ -735,24 +748,126 @@ public class MainFormKoordinator extends JFrame {
 		lblPrikazTaskova.setBounds(21, 22, 82, 14);
 		panel_9.add(lblPrikazTaskova);
 		
-		JList list_7 = new JList();
+		final JList list_7 = new JList();
+		list_7.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane5 = new JScrollPane(list_7, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane5.setBounds(21, 37, 309, 85);
 		list_7.setBounds(21, 37, 309, 85);
+		final DefaultListModel dll = new DefaultListModel();
+		list_7.setModel(dll);
 		panel_9.add(scrollPane5);
+		
+		btnPrikaiProjekat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				boolean greska = true;
+				if(list_1.isSelectionEmpty()){
+					greska = false;
+					label_error1.setText("Morate označiti projekat!");
+				}
+				if(greska == false){
+					label_error1.setVisible(true);
+				}
+				else{
+					label_error1.setVisible(false);
+					String Projekat = list_1.getSelectedValue().toString();
+					textField_46.setText("");
+					dlm2.removeAllElements();
+					dll.removeAllElements();
+					String[] temp = Projekat.split(" ");
+					final long id = Long.parseLong(temp[0]);
+					ProjekatHibernate prikaz = DalDao.VratiProjekat(id);
+					ArrayList<ZaposlenikHibernate> zaposleniciProjekta=DalDao.VratiZaposlenikeNaProjektu(id);
+					for (int i=0;i<zaposleniciProjekta.size();i++)
+					{
+					    String tempString = zaposleniciProjekta.get(i).toString();
+						listaZaposlenikaProjekta.addElement(tempString);
+					}
+					ArrayList<ZaposlenikHibernate> zaposlenici=DalDao.VratiSveZaposlenike();
+					for (int i=0;i<zaposlenici.size();i++)
+					{
+					    String tempString = zaposlenici.get(i).toString();
+					    listaZaposlenika.addElement(tempString);
+					}
+					textField_4.setText(prikaz.getNaziv());
+					textField_5.setText(prikaz.getNazivKlijenta());
+					ArrayList<ZaposlenikHibernate> koo = DalDao.VratiSveZaposlenikeKoordinatore();
+					for (int i = 0; i < koo.size(); i++)
+						comboBox_3.addItem(koo.get(i).toString());
+					comboBox_3.setSelectedItem(Zaposlenik.toString());
+					chckbxArhiviraj.setSelected(prikaz.getArhiviran());
+					ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(id);
+					for (int i = 0; i < taskovi.size(); i++)
+					{
+						String komponenta = taskovi.get(i).getId() + " Naziv: " + taskovi.get(i).getNaziv() + ", Zaposlenik: " + taskovi.get(i).getZaposlenik().toString() + ", Procenat: " + taskovi.get(i).getProcenatZavrsenosti() + "%";
+						dll.addElement(komponenta);
+					}
+				}
+			}
+		});
 		
 		JButton btnDodajTask = new JButton("Dodaj task");
 		btnDodajTask.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnDodajTask.setForeground(UIManager.getColor("Button.foreground"));
 		btnDodajTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new TaskForm().setVisible(true);
+				if (textField_4.getText() == null || textField_4.getText().isEmpty() || textField_4.getText() == "")
+				{
+					label_error1.setVisible(true);
+					label_error1.setText("Morate izabrati projekat!");
+				}
+				else 
+				{
+					label_error1.setVisible(false);
+					ArrayList<ProjekatHibernate> pj = DalDao.VratiArhiviraneProjektePoNazivu(textField_4.getText());
+					new TaskForm(pj.get(0), dll).setVisible(true);
+				}
 			}
 		});
 		
 		btnDodajTask.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnDodajTask.setBounds(211, 133, 119, 23);
+		btnDodajTask.setBounds(82, 132, 119, 23);
 		panel_9.add(btnDodajTask);
+		
+		JButton btnIzbriiTask = new JButton("Izbriši task");
+		btnIzbriiTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				label_error1.setVisible(false);
+				boolean postojiGreska = false;
+				TaskHibernate th = new TaskHibernate();
+				if (list_7.isSelectionEmpty())
+				{
+					postojiGreska = true;
+					label_error1.setText("Morate izabrati task!");
+				}
+				else
+				{
+					String izabraniTask = list_7.getSelectedValue().toString();
+					String[] rijeci = izabraniTask.split(" ");
+					long ide = Long.parseLong(rijeci[0]);
+					th = DalDao.VratiTask(ide);
+					if (th.getProcenatZavrsenosti().equals(100))
+					{
+						postojiGreska = true;
+						label_error1.setText("Ne možete izbrisati urađen task!");
+					}
+				}
+				if (postojiGreska)
+					label_error1.setVisible(true);
+				else
+				{
+					DalDao.ObrisiObjekat(th);
+					String komponenta = th.getId() + " Naziv: " + th.getNaziv() + ", Zaposlenik: " + th.getZaposlenik().toString() + ", Procenat: " + th.getProcenatZavrsenosti() + "%";
+					dll.removeElement(komponenta);
+					JOptionPane.showMessageDialog(null, "Uspjesno ste obrisali task", "Task obrisan", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		btnIzbriiTask.setForeground(Color.BLACK);
+		btnIzbriiTask.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnIzbriiTask.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnIzbriiTask.setBounds(211, 132, 119, 23);
+		panel_9.add(btnIzbriiTask);
 		
 		JPanel korisniciPanel = new JPanel();
 		korisniciPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -1318,6 +1433,49 @@ public class MainFormKoordinator extends JFrame {
 		list_6.setModel(dlm);
 		panel_6.add(scrollPane1);
 		
+		btnPretrai_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dlm2.removeAllElements();
+				ArrayList<ProjekatHibernate> phovci = new ArrayList<ProjekatHibernate>();
+				if (comboBox_17.getSelectedItem().toString().equals("Naziv projekta"))
+				{
+					if (chckbxPrikaziArhiviraneProjekte.isSelected())
+						phovci = DalDao.VratiSveArhiviraneProjekte();
+					else 
+						phovci = DalDao.VratiSveNearhiviraneProjekte();
+					for (int i=0;i<phovci.size();i++)
+					{
+						if (phovci.get(i).getNaziv().equals(textField_46.getText()))
+						{
+							if (phovci.get(i).getKoordinator().toString().equals(Zaposlenik.toString()))
+							{
+							    String tempString = phovci.get(i).getId() + " Projekat: " + phovci.get(i).getNaziv() + ", Klijent: " + phovci.get(i).getNazivKlijenta();
+							    dlm2.addElement(tempString);
+							}
+						}
+					}
+				} 
+				else
+				{
+					if (chckbxPrikaziArhiviraneProjekte.isSelected())
+						phovci = DalDao.VratiSveArhiviraneProjekte();
+					else 
+						phovci = DalDao.VratiSveNearhiviraneProjekte();
+					for (int i=0;i<phovci.size();i++)
+					{
+						if (phovci.get(i).getNazivKlijenta().equals(textField_46.getText()))
+						{
+							if (phovci.get(i).getKoordinator().toString().equals(Zaposlenik.toString()))
+							{
+							    String tempString = phovci.get(i).getId() + " Projekat: " + phovci.get(i).getNaziv() + ", Klijent: " + phovci.get(i).getNazivKlijenta();
+							    dlm2.addElement(tempString);
+							}
+						}
+					}
+				}
+			}
+		});
+		
 		for(int i = 0; i < timesheets.size(); i++)
 		{
 			if (!timesheets.get(i).getValidiran())
@@ -1784,7 +1942,7 @@ public class MainFormKoordinator extends JFrame {
 		});
 				
 	}
-
+	
 	private void JTable(Object rowData, TableColumnModel columnNames) {
 		// TODO Auto-generated method stub
 		
