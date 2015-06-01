@@ -548,14 +548,20 @@ public class DalDao {
 			for (int j = 0; j < timeshe.size(); j++)
 			{
 				TimesheetHibernate th = timeshe.get(j).getTimesheet();
-				if (!timesheetovi.contains(th))
+				boolean vecPostoji = false;
+				for (int z = 0; z < timesheetovi.size(); z++)
+				{
+					if (timesheetovi.get(z).getId() == th.getId())
+						vecPostoji = true;
+				}
+				if (!vecPostoji)
 					timesheetovi.add(th);
 			}
 		}
 		return timesheetovi;
 	}
 	
-	static private ArrayList<TimesheetTaskHibernate> VratiTimesheetTaskove(long TimesheetID)
+	static public ArrayList<TimesheetTaskHibernate> VratiTimesheetTaskove(long TimesheetID)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
@@ -807,6 +813,16 @@ public class DalDao {
 		ArrayList<TimesheetHibernate> filteredTimesheets = new ArrayList<TimesheetHibernate>();
 		for(TimesheetHibernate item : VratiTimesheetoveZaposlenika(zaposlenikId)) {
 			if(item.getDatumSlanja().getMonth().equals(mjesec)) {
+				filteredTimesheets.add(item);
+			}
+		}
+		return filteredTimesheets;
+	}
+	
+	static public ArrayList<TimesheetHibernate> VratiTimesheetoveZaposlenikaZaMjesec(long zaposlenikId, long projekatID, Month mjesec) {
+		ArrayList<TimesheetHibernate> filteredTimesheets = new ArrayList<TimesheetHibernate>();
+		for(TimesheetHibernate item : VratiTimesheetoveZaposlenikaNaProjektu(projekatID, zaposlenikId)) {
+			if(item.getDatumSlanja() != null && item.getDatumSlanja().getMonth().equals(mjesec)) {
 				filteredTimesheets.add(item);
 			}
 		}
