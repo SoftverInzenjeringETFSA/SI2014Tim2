@@ -52,6 +52,7 @@ import ba.etf.unsa.si.KlaseHibernate.OdjelZaposlenikHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+import java.awt.SystemColor;
 
 public class MainForm extends JFrame {
 	private JTextField textField;
@@ -115,7 +116,7 @@ public class MainForm extends JFrame {
 		panel_2.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dodaj novi odjel", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel_2.setLayout(null);
-		panel_2.setBounds(29, 22, 341, 461);
+		panel_2.setBounds(29, 22, 341, 435);
 		odjeliPanel.add(panel_2);
 		
 		lblNaziv = new JLabel("Naziv odjela:");
@@ -230,20 +231,20 @@ public class MainForm extends JFrame {
 		});
 		
 		btnDodaj_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnDodaj_1.setBounds(147, 416, 89, 23);
+		btnDodaj_1.setBounds(149, 395, 89, 23);
 		panel_2.add(btnDodaj_1);
 		
 		JButton btnOtkai = new JButton("Otkaži");
 		btnOtkai.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnOtkai.setForeground(UIManager.getColor("Button.foreground"));
 		btnOtkai.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnOtkai.setBounds(242, 416, 89, 23);
+		btnOtkai.setBounds(242, 395, 89, 23);
 		panel_2.add(btnOtkai);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_3.setBounds(393, 22, 341, 461);
+		panel_3.setBounds(393, 22, 341, 435);
 		odjeliPanel.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -268,7 +269,7 @@ public class MainForm extends JFrame {
 		final JList list_4 = new JList();
 		list_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		JScrollPane scrollPane2 = new JScrollPane(list_4, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane2.setBounds(22, 114, 309, 290);
+		scrollPane2.setBounds(22, 114, 309, 270);
 		list_4.setBounds(22, 114, 309, 290);
 		final DefaultListModel listaOdjela = new DefaultListModel();
 		list_4.setModel(listaOdjela);
@@ -341,7 +342,7 @@ public class MainForm extends JFrame {
 		});
 		
 		btnIzmjeni.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnIzmjeni.setBounds(83, 415, 119, 23);
+		btnIzmjeni.setBounds(83, 395, 119, 23);
 		panel_3.add(btnIzmjeni);
 		
 		JButton btnObrisi = new JButton("Obriši odjel");
@@ -380,7 +381,7 @@ public class MainForm extends JFrame {
 		});
 		
 		btnObrisi.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnObrisi.setBounds(212, 415, 119, 23);
+		btnObrisi.setBounds(212, 395, 119, 23);
 		panel_3.add(btnObrisi);
 		
 		JLabel label_5 = new JLabel("Izaberite parametar pretrage:");
@@ -388,6 +389,23 @@ public class MainForm extends JFrame {
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_5.setBounds(22, 29, 170, 14);
 		panel_3.add(label_5);
+		
+		JButton btnOdjava = new JButton("Odjava");
+		btnOdjava.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		btnOdjava.setForeground(Color.BLACK);
+		btnOdjava.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnOdjava.setBackground(SystemColor.textHighlight);
+		btnOdjava.setBounds(623, 464, 89, 23);
+		odjeliPanel.add(btnOdjava);
 		
 		JPanel projektiPanel = new JPanel();
 		projektiPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -398,7 +416,7 @@ public class MainForm extends JFrame {
 		panel_5.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dodaj novi projekat", TitledBorder.LEFT, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
 		panel_5.setLayout(null);
-		panel_5.setBounds(30, 22, 341, 461);
+		panel_5.setBounds(30, 22, 341, 437);
 		projektiPanel.add(panel_5);
 		
 		JLabel lblNazivProjekta = new JLabel("Naziv projekta:");
@@ -524,7 +542,7 @@ public class MainForm extends JFrame {
 		});
 		
 		button_7.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button_7.setBounds(142, 414, 89, 23);
+		button_7.setBounds(142, 398, 89, 23);
 		panel_5.add(button_7);
 		
 		JLabel lblNazivKlijenta = new JLabel("Naziv klijenta:");
@@ -556,14 +574,14 @@ public class MainForm extends JFrame {
 		});
 		
 		btnOtkai_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnOtkai_1.setBounds(242, 414, 89, 23);
+		btnOtkai_1.setBounds(241, 398, 89, 23);
 		panel_5.add(btnOtkai_1);
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_11.setLayout(null);
 		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga projekta", TitledBorder.LEFT, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_11.setBounds(392, 22, 341, 461);
+		panel_11.setBounds(392, 22, 341, 437);
 		projektiPanel.add(panel_11);
 		
 		final JCheckBox chckbxPrikaziArhiviraneProjekte = new JCheckBox("Prikazi arhivirane projekte");
@@ -582,7 +600,7 @@ public class MainForm extends JFrame {
 		final JList list_1 = new JList();
 		list_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		JScrollPane scrollPane4 = new JScrollPane(list_1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane4.setBounds(22, 114, 309, 291);
+		scrollPane4.setBounds(22, 114, 309, 273);
 		list_1.setBounds(22, 114, 309, 291);
 		final DefaultListModel listaArhProjekata = new DefaultListModel();
 		list_1.setModel(listaArhProjekata);
@@ -661,7 +679,7 @@ public class MainForm extends JFrame {
 			}
 		});
 		btnSauvajPromjene.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnSauvajPromjene.setBounds(83, 416, 119, 23);
+		btnSauvajPromjene.setBounds(83, 398, 119, 23);
 		panel_11.add(btnSauvajPromjene);
 		
 		JButton btnObriiProjekat = new JButton("Obriši projekat");
@@ -697,7 +715,7 @@ public class MainForm extends JFrame {
 		});
 		
 		btnObriiProjekat.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnObriiProjekat.setBounds(212, 416, 119, 23);
+		btnObriiProjekat.setBounds(212, 398, 119, 23);
 		panel_11.add(btnObriiProjekat);
 		
 		JLabel label_7 = new JLabel("Izaberite parametar pretrage:");
@@ -705,6 +723,181 @@ public class MainForm extends JFrame {
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		label_7.setBounds(22, 29, 170, 14);
 		panel_11.add(label_7);
+		
+		final JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
+		spinner_1.setBounds(190, 269, 141, 20);
+		panel.add(spinner_1);
+		
+		JButton button_2 = new JButton("Odjava");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_2.setForeground(Color.BLACK);
+		button_2.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_2.setBackground(SystemColor.textHighlight);
+		button_2.setBounds(620, 464, 89, 23);
+		projektiPanel.add(button_2);
+		
+		DefaultListModel lista2 = new DefaultListModel();
+		ArrayList<OdjelHibernate> sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
+		
+		for (int i = 0; i < sviOdjeli.size(); i++)
+		{
+			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
+			lista2.addElement(podatak);
+		}
+		final DefaultListModel lista = new DefaultListModel();
+		
+		btnOtkai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_43.setText("");
+				textField_44.setText("");
+				list_3.clearSelection();
+				spinner_1.setValue(new Double(0d));
+				label_error.setVisible(false);
+			}
+		});
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(UIManager.getColor("TextField.darkShadow"));
+		tabbedPane.addTab("Moj profil", null, panel_4, null);
+		panel_4.setLayout(null);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setBackground(UIManager.getColor("TextField.darkShadow"));
+		panel_6.setLayout(null);
+		panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
+		panel_6.setBounds(29, 23, 341, 431);
+		panel_4.add(panel_6);
+		
+		JLabel label = new JLabel("Trenutna lozinka:");
+		label.setForeground(UIManager.getColor("TextField.highlight"));
+		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label.setBounds(48, 38, 83, 14);
+		panel_6.add(label);
+		
+		JLabel label_1 = new JLabel("Nova lozinka:");
+		label_1.setForeground(UIManager.getColor("TextField.highlight"));
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_1.setBounds(67, 66, 64, 14);
+		panel_6.add(label_1);
+		
+		JLabel label_4 = new JLabel("Nova lozinka(ponovo):");
+		label_4.setForeground(UIManager.getColor("TextField.highlight"));
+		label_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_4.setBounds(23, 94, 108, 14);
+		panel_6.add(label_4);
+		
+		final JLabel label_error3 = new JLabel("");
+		label_error3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_error3.setForeground(Color.RED);
+		label_error3.setVisible(false);
+		label_error3.setBounds(0, 494, 749, 25);
+		panel_4.add(label_error3);
+		
+		passwordField_2 = new JPasswordField();
+		passwordField_2.setBounds(162, 35, 141, 20);
+		panel_6.add(passwordField_2);
+		
+		passwordField_3 = new JPasswordField();
+		passwordField_3.setBounds(162, 63, 141, 20);
+		panel_6.add(passwordField_3);
+		
+		passwordField_4 = new JPasswordField();
+		passwordField_4.setBounds(162, 91, 141, 20);
+		panel_6.add(passwordField_4);
+		
+		JButton button = new JButton("Spasi promjenu");
+		button.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button.setForeground(UIManager.getColor("Button.foreground"));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean greska = true;
+				try {
+					String staraLozinka = new String(passwordField_2.getPassword());
+					String novaLozinka = new String(passwordField_3.getPassword());
+					String novaLozinkaRepeat = new String(passwordField_4.getPassword());
+					if(staraLozinka.length() < 7) {
+						greska = false;
+						label_error3.setText("Unesite trenutnu lozinku!");
+					}
+					if (!Lozinka.validatePassword(staraLozinka, Admin.getLozinka()))
+					{
+						greska = false;
+						label_error3.setText("Neispravan unos trenutne lozinke!");
+					}
+					if(novaLozinka.length() < 7 || novaLozinkaRepeat.length() < 7){
+						greska = false;
+						label_error3.setText("Lozinka mora imati najmanje 7 karaktera!");
+					}
+					if(!novaLozinka.equals(novaLozinkaRepeat)) {
+						greska = false;
+						label_error3.setText("Lozinke se ne poklapaju!");
+					}
+					if(!novaLozinka.matches("^[a-zA-Z0-9]*$")) {
+						greska = false;
+						label_error3.setText("Neispravan format lozinke (koristite samo slova engleskog alfabeta i brojeve)!");
+					}
+					if(greska == false){
+						label_error3.setVisible(true);
+					}
+					else 
+					{
+						label_error3.setVisible(false);
+						Admin.setLozinka(Lozinka.generateStorngPasswordHash(novaLozinka));
+						DalDao.ModifikujObjekat(Admin);
+						JOptionPane.showMessageDialog(null, "Uspjesno ste promjenili lozinku!", "Lozinka promjenjena", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+				catch(Exception ex) {
+					LOGGER.log(Level.SEVERE,"context",ex);
+				}
+			}
+		});
+		
+		button.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button.setBounds(67, 138, 120, 23);
+		panel_6.add(button);
+		
+		JButton button_1 = new JButton("Otkaži");
+		button_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		button_1.setForeground(UIManager.getColor("Button.foreground"));
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				passwordField_2.setText("");
+				passwordField_3.setText("");
+				passwordField_4.setText("");
+				label_error3.setVisible(false);
+			}
+		});
+		button_1.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_1.setBounds(193, 138, 110, 23);
+		panel_6.add(button_1);		
+		
+		JButton button_4 = new JButton("Odjava");
+		button_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_4.setForeground(Color.BLACK);
+		button_4.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_4.setBackground(SystemColor.textHighlight);
+		button_4.setBounds(620, 458, 89, 23);
+		panel_4.add(button_4);
 		
 		JPanel korisniciPanel = new JPanel();
 		korisniciPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -714,7 +907,7 @@ public class MainForm extends JFrame {
 		panel = new JPanel();
 		panel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o korisniku", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel.setBounds(30, 22, 341, 467);
+		panel.setBounds(30, 22, 341, 443);
 		korisniciPanel.add(panel);
 		panel.setLayout(null);
 		
@@ -803,7 +996,7 @@ public class MainForm extends JFrame {
 		final JLabel label_error2 = new JLabel("");
 		label_error2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		label_error2.setForeground(Color.RED);
-		label_error2.setBounds(0, 489, 759, 30);
+		label_error2.setBounds(0, 494, 759, 25);
 		korisniciPanel.add(label_error2);
 		
 		final JCheckBox chckbxDa = new JCheckBox("Da");
@@ -818,24 +1011,12 @@ public class MainForm extends JFrame {
 		spinner.setBounds(190, 149, 141, 20);
 		panel.add(spinner);
 		
-		final JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
-		spinner_1.setBounds(190, 269, 141, 20);
-		panel.add(spinner_1);
 		
-		DefaultListModel lista2 = new DefaultListModel();
 		final JList list_5 = new JList();
 		JScrollPane scrollPane = new JScrollPane(list_5, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(190, 178, 141, 80);
 		list_5.setBounds(190, 126, 141, 50);
 		list_5.setModel(lista2);
-		ArrayList<OdjelHibernate> sviOdjeli = DalDao.VratiSveNearhiviraneOdjele();
-		
-		for (int i = 0; i < sviOdjeli.size(); i++)
-		{
-			String podatak = sviOdjeli.get(i).getId() + " " + sviOdjeli.get(i).getNaziv();
-			lista2.addElement(podatak);
-		}
 		
 		panel.add(scrollPane);
 		
@@ -1034,7 +1215,7 @@ public class MainForm extends JFrame {
 		});
 		
 		btnDodaj.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnDodaj.setBounds(143, 433, 89, 23);
+		btnDodaj.setBounds(143, 409, 89, 23);
 		panel.add(btnDodaj);
 		
 		JButton btnOtkai_2 = new JButton("Otkaži");
@@ -1057,7 +1238,7 @@ public class MainForm extends JFrame {
 		});
 		
 		btnOtkai_2.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnOtkai_2.setBounds(242, 433, 89, 23);
+		btnOtkai_2.setBounds(242, 410, 89, 23);
 		panel.add(btnOtkai_2);
 		
 		JLabel lblSatnica = new JLabel("Satnica:");
@@ -1091,7 +1272,7 @@ public class MainForm extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_1.setBounds(392, 22, 341, 467);
+		panel_1.setBounds(392, 22, 341, 443);
 		korisniciPanel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -1110,7 +1291,7 @@ public class MainForm extends JFrame {
 		list_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		JScrollPane scrollPane5 = new JScrollPane(list_2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane5.setBounds(22, 114, 309, 308);
+		scrollPane5.setBounds(22, 114, 309, 285);
 		list_2.setBounds(22, 114, 309, 308);
 		panel_1.add(scrollPane5);
 		
@@ -1120,7 +1301,6 @@ public class MainForm extends JFrame {
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxNewCheckBox.setBounds(22, 86, 170, 23);
 		panel_1.add(chckbxNewCheckBox);
-		final DefaultListModel lista = new DefaultListModel();
 		JButton btnPretraga = new JButton("Pretraži");
 		btnPretraga.setBackground(UIManager.getColor("TextArea.selectionBackground"));
 		btnPretraga.setForeground(UIManager.getColor("Button.foreground"));
@@ -1181,16 +1361,6 @@ public class MainForm extends JFrame {
 		btnPretraga.setBounds(262, 56, 69, 23);
 		panel_1.add(btnPretraga);
 		
-		btnOtkai.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textField_43.setText("");
-				textField_44.setText("");
-				list_3.clearSelection();
-				spinner_1.setValue(new Double(0d));
-				label_error.setVisible(false);
-			}
-		});
-		
 		JButton btnNewButton_1 = new JButton("Prikaži profil");
 		btnNewButton_1.setBackground(UIManager.getColor("Tree.selectionBackground"));
 		btnNewButton_1.setForeground(UIManager.getColor("Button.foreground"));
@@ -1217,7 +1387,7 @@ public class MainForm extends JFrame {
 			}
 		});
 		
-		btnNewButton_1.setBounds(83, 433, 119, 23);
+		btnNewButton_1.setBounds(83, 410, 119, 23);
 		panel_1.add(btnNewButton_1);
 		
 		JButton btnObriiKorisnika = new JButton("Obriši korisnika");
@@ -1255,7 +1425,7 @@ public class MainForm extends JFrame {
 			}
 		});
 		
-		btnObriiKorisnika.setBounds(212, 433, 119, 23);
+		btnObriiKorisnika.setBounds(212, 410, 119, 23);
 		panel_1.add(btnObriiKorisnika);
 		
 		JLabel label_6 = new JLabel("Izaberite parametar pretrage:");
@@ -1264,121 +1434,22 @@ public class MainForm extends JFrame {
 		label_6.setBounds(22, 29, 170, 14);
 		panel_1.add(label_6);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(UIManager.getColor("TextField.darkShadow"));
-		tabbedPane.addTab("Moj profil", null, panel_4, null);
-		panel_4.setLayout(null);
-		
-		JPanel panel_6 = new JPanel();
-		panel_6.setBackground(UIManager.getColor("TextField.darkShadow"));
-		panel_6.setLayout(null);
-		panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_6.setBounds(29, 23, 341, 444);
-		panel_4.add(panel_6);
-		
-		JLabel label = new JLabel("Trenutna lozinka:");
-		label.setForeground(UIManager.getColor("TextField.highlight"));
-		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label.setBounds(48, 38, 83, 14);
-		panel_6.add(label);
-		
-		JLabel label_1 = new JLabel("Nova lozinka:");
-		label_1.setForeground(UIManager.getColor("TextField.highlight"));
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_1.setBounds(67, 66, 64, 14);
-		panel_6.add(label_1);
-		
-		JLabel label_4 = new JLabel("Nova lozinka(ponovo):");
-		label_4.setForeground(UIManager.getColor("TextField.highlight"));
-		label_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_4.setBounds(23, 94, 108, 14);
-		panel_6.add(label_4);
-		
-		final JLabel label_error3 = new JLabel("");
-		label_error3.setFont(new Font("Tahoma", Font.BOLD, 11));
-		label_error3.setForeground(Color.RED);
-		label_error3.setVisible(false);
-		label_error3.setBounds(0, 494, 749, 25);
-		panel_4.add(label_error3);
-		
-		passwordField_2 = new JPasswordField();
-		passwordField_2.setBounds(162, 35, 141, 20);
-		panel_6.add(passwordField_2);
-		
-		passwordField_3 = new JPasswordField();
-		passwordField_3.setBounds(162, 63, 141, 20);
-		panel_6.add(passwordField_3);
-		
-		passwordField_4 = new JPasswordField();
-		passwordField_4.setBounds(162, 91, 141, 20);
-		panel_6.add(passwordField_4);
-		
-		JButton button = new JButton("Spasi promjenu");
-		button.setBackground(UIManager.getColor("TextField.selectionBackground"));
-		button.setForeground(UIManager.getColor("Button.foreground"));
-		button.addActionListener(new ActionListener() {
+		JButton button_3 = new JButton("Odjava");
+		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				try {
-					String staraLozinka = new String(passwordField_2.getPassword());
-					String novaLozinka = new String(passwordField_3.getPassword());
-					String novaLozinkaRepeat = new String(passwordField_4.getPassword());
-					if(staraLozinka.length() < 7) {
-						greska = false;
-						label_error3.setText("Unesite trenutnu lozinku!");
-					}
-					if (!Lozinka.validatePassword(staraLozinka, Admin.getLozinka()))
-					{
-						greska = false;
-						label_error3.setText("Neispravan unos trenutne lozinke!");
-					}
-					if(novaLozinka.length() < 7 || novaLozinkaRepeat.length() < 7){
-						greska = false;
-						label_error3.setText("Lozinka mora imati najmanje 7 karaktera!");
-					}
-					if(!novaLozinka.equals(novaLozinkaRepeat)) {
-						greska = false;
-						label_error3.setText("Lozinke se ne poklapaju!");
-					}
-					if(!novaLozinka.matches("^[a-zA-Z0-9]*$")) {
-						greska = false;
-						label_error3.setText("Neispravan format lozinke (koristite samo slova engleskog alfabeta i brojeve)!");
-					}
-					if(greska == false){
-						label_error3.setVisible(true);
-					}
-					else 
-					{
-						label_error3.setVisible(false);
-						Admin.setLozinka(Lozinka.generateStorngPasswordHash(novaLozinka));
-						DalDao.ModifikujObjekat(Admin);
-						JOptionPane.showMessageDialog(null, "Uspjesno ste promjenili lozinku!", "Lozinka promjenjena", JOptionPane.INFORMATION_MESSAGE);
-					}
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
 				}
-				catch(Exception ex) {
-					LOGGER.log(Level.SEVERE,"context",ex);
-				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
 			}
 		});
-		
-		button.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button.setBounds(67, 138, 120, 23);
-		panel_6.add(button);
-		
-		JButton button_1 = new JButton("Otkaži");
-		button_1.setBackground(UIManager.getColor("TextField.selectionBackground"));
-		button_1.setForeground(UIManager.getColor("Button.foreground"));
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				passwordField_2.setText("");
-				passwordField_3.setText("");
-				passwordField_4.setText("");
-				label_error3.setVisible(false);
-			}
-		});
-		button_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button_1.setBounds(193, 138, 110, 23);
-		panel_6.add(button_1);		
+		button_3.setForeground(Color.BLACK);
+		button_3.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_3.setBackground(SystemColor.textHighlight);
+		button_3.setBounds(621, 467, 89, 23);
+		korisniciPanel.add(button_3);
 	}
 
 	private void JTable(Object rowData, TableColumnModel columnNames) {
