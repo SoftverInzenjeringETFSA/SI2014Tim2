@@ -68,11 +68,19 @@ import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetTaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
+import javax.swing.border.CompoundBorder;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import javax.swing.JTextArea;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 import javax.swing.JPasswordField;
 
 
@@ -85,7 +93,6 @@ public class MainFormKoordinator extends JFrame {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
-	private JTable table;
 	private JTextField textField_3;
 	private JTextField textField_8;
 	private JTextField textField_9;
@@ -99,6 +106,7 @@ public class MainFormKoordinator extends JFrame {
 	private JPasswordField passwordField_2;
 	private JTextField textField_14;
 	private JTextField textField_15;
+	private JList list_11;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -128,6 +136,169 @@ public class MainFormKoordinator extends JFrame {
 		tabbedPane.setBounds(0, 0, 764, 527);
 		getContentPane().add(tabbedPane);
 		setLocationRelativeTo(null);
+		JPanel timeSheetPanel = new JPanel();
+		
+		timeSheetPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
+		tabbedPane.addTab("Moj Timesheet", null, timeSheetPanel, null);
+		timeSheetPanel.setLayout(null);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(UIManager.getColor("TextField.darkShadow"));
+		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Timesheet podaci", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
+		panel_4.setBounds(30, 22, 703, 348);
+		timeSheetPanel.add(panel_4);
+		panel_4.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Projekat:");
+		lblNewLabel.setForeground(UIManager.getColor("TextField.highlight"));
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel.setBounds(80, 69, 46, 14);
+		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
+		panel_4.add(lblNewLabel);
+		
+		final JLabel label_8 = new JLabel("");
+		label_8.setVisible(false);
+		label_8.setBounds(0, 389, 759, 14);
+		timeSheetPanel.add(label_8);
+		
+		final JComboBox comboBox = new JComboBox();
+		
+		comboBox.setFont(new Font("Times New Roman", Font.PLAIN, 11));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"projekat1", "projekat2"}));
+		comboBox.setBounds(136, 69, 201, 20);
+		panel_4.add(comboBox);
+		
+		timeSheetPanel.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				try {
+				comboBox.removeAllItems();
+				ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
+				for(ProjekatHibernate projekat: projekti) {
+					comboBox.addItem(projekat);
+				}
+				}
+				catch(Exception ex) {
+					LOGGER.log(Level.SEVERE,"context",ex);
+				}
+			}
+		});
+		
+		final JSpinner spinner_3 = new JSpinner();
+		spinner_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner_3.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
+		spinner_3.setBounds(135, 294, 210, 20);
+		panel_4.add(spinner_3);
+		
+		JButton btnNewButton = new JButton("Pošalji na reviziju");
+		btnNewButton.setForeground(UIManager.getColor("Button.foreground"));
+		btnNewButton.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		
+		
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewButton.setBounds(501, 291, 154, 29);
+		panel_4.add(btnNewButton);
+		
+		JLabel lblBrojSati = new JLabel("Ukupan broj radnih sati:");
+		lblBrojSati.setForeground(UIManager.getColor("TextField.highlight"));
+		lblBrojSati.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblBrojSati.setBounds(10, 248, 116, 14);
+		panel_4.add(lblBrojSati);
+		
+		final JSpinner spinner_2 = new JSpinner();
+		spinner_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		spinner_2.setModel(new SpinnerNumberModel(1, 1, 24, 1));
+		spinner_2.setBounds(136, 245, 210, 20);
+		panel_4.add(spinner_2);
+		
+		JLabel label = new JLabel("Datum:");
+		label.setForeground(UIManager.getColor("TextField.highlight"));
+		label.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label.setBounds(91, 297, 35, 14);
+		panel_4.add(label);
+		
+		final DefaultListModel DefaultListModel4 = new DefaultListModel();
+		list_11 = new JList();
+		list_11.setModel(DefaultListModel4);
+		list_11.setBounds(10, 123, 210, 105);
+		panel_4.add(list_11);
+		
+		JLabel lblTaskovi = new JLabel("Taskovi:");
+		lblTaskovi.setForeground(Color.WHITE);
+		lblTaskovi.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblTaskovi.setBounds(10, 104, 116, 14);
+		panel_4.add(lblTaskovi);
+		
+		final JTextArea textArea = new JTextArea();
+		textArea.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_PERIOD))) {
+					e.consume();
+				}
+				
+			}
+		});
+		textArea.setBounds(241, 124, 221, 105);
+		panel_4.add(textArea);
+		
+		final JTextArea textArea_1 = new JTextArea();
+		textArea_1.addInputMethodListener(new InputMethodListener() {
+			public void inputMethodTextChanged(InputMethodEvent event) {
+				try {
+					String[] sati = textArea_1.getText().split("\n");
+					spinner_2.setValue(new Double(0.0));
+					for(String sat: sati) {
+						Double temp = Double.parseDouble(sat);
+						Double vrijednost = new Double ((Double)spinner_2.getValue() + temp);
+						spinner_2.setValue(vrijednost);
+					}
+					
+				}
+				catch(Exception ex) {
+					LOGGER.log(Level.SEVERE,"context",ex);
+				}
+			}
+			
+			public void caretPositionChanged(InputMethodEvent event) {
+				try {
+					String[] sati = textArea_1.getText().split("\n");
+					spinner_2.setValue(0.0);
+					for(String sat: sati) {
+						Double temp = Double.parseDouble(sat);
+						spinner_2.setValue((Double)spinner_2.getValue() + temp);
+					}
+					
+				}
+				catch(Exception ex) {
+					LOGGER.log(Level.SEVERE,"context",ex);
+				}
+			}
+		});
+		textArea_1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER) || (c == KeyEvent.VK_PERIOD))) {
+					e.consume();
+				}
+			}
+		});
+		textArea_1.setBounds(472, 124, 221, 105);
+		panel_4.add(textArea_1);
+		
+		JLabel lblProcenatZavrsenosti = new JLabel("Procenat zavrsenosti:");
+		lblProcenatZavrsenosti.setForeground(Color.WHITE);
+		lblProcenatZavrsenosti.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblProcenatZavrsenosti.setBounds(241, 104, 116, 14);
+		panel_4.add(lblProcenatZavrsenosti);
+		
+		JLabel lblBrojSati_1 = new JLabel("Broj sati:");
+		lblBrojSati_1.setForeground(Color.WHITE);
+		lblBrojSati_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblBrojSati_1.setBounds(472, 104, 116, 14);
+		panel_4.add(lblBrojSati_1);
 		
 		JPanel historijaPanel = new JPanel();
 		historijaPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -1837,146 +2008,11 @@ public class MainFormKoordinator extends JFrame {
 		button_11.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		button_11.setBounds(624, 438, 89, 23);
 		panel_12.add(button_11);
-		JPanel timeSheetPanel = new JPanel();
-		timeSheetPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
-		tabbedPane.addTab("Moj Timesheet", null, timeSheetPanel, null);
-		timeSheetPanel.setLayout(null);
-		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(UIManager.getColor("TextField.darkShadow"));
-		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Timesheet podaci", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_4.setBounds(30, 22, 703, 348);
-		timeSheetPanel.add(panel_4);
-		panel_4.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Projekat:");
-		lblNewLabel.setForeground(UIManager.getColor("TextField.highlight"));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel.setBounds(80, 69, 46, 14);
-		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		panel_4.add(lblNewLabel);
-		
-		final JLabel label_8 = new JLabel("");
-		label_8.setVisible(false);
-		label_8.setBounds(0, 413, 759, 14);
-		timeSheetPanel.add(label_8);
-		
-		final JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Times New Roman", Font.PLAIN, 11));
-		comboBox.setBounds(136, 69, 201, 20);
-		panel_4.add(comboBox);
-		
-		final JSpinner spinner_3 = new JSpinner();
-		spinner_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_3.setModel(new SpinnerDateModel(new Date(1432072800000L), null, null, Calendar.DAY_OF_YEAR));
-		spinner_3.setBounds(135, 294, 210, 20);
-		panel_4.add(spinner_3);
-		
-		JButton btnNewButton = new JButton("Pošalji na reviziju");
-		btnNewButton.setForeground(UIManager.getColor("Button.foreground"));
-		btnNewButton.setBackground(UIManager.getColor("TextField.selectionBackground"));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if(comboBox.getSelectedItem()==null){
-					greska = false;
-					label_8.setText("Morate označiti parametar pretrage!");
-					
-				}
-				else if(table.getModel().getValueAt(0,0) == null || table.getModel().getValueAt(0,1) == null || table.getModel().getValueAt(0,2) == null){
-					greska = false;
-					label_8.setText("Morate popuniti barem jedan task da bi poslali timesheet na reviziju!");
-				}
-				
-				else greska = true;
-					
-				if(greska == false){ 
-					label_8.setVisible(true);
-					}
-				
-				else{
-					label_8.setVisible(false);
-				}
-			}
-		});
 		
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.setBounds(501, 291, 154, 29);
 		panel_4.add(btnNewButton);
 		
-		JLabel lblTaskovi = new JLabel("Taskovi:");
-		lblTaskovi.setForeground(UIManager.getColor("TextField.highlight"));
-		lblTaskovi.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblTaskovi.setBounds(80, 117, 46, 14);
-		panel_4.add(lblTaskovi);
-		
-		JLabel lblBrojSati = new JLabel("Ukupan broj radnih sati:");
-		lblBrojSati.setForeground(UIManager.getColor("TextField.highlight"));
-		lblBrojSati.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblBrojSati.setBounds(10, 248, 116, 14);
-		panel_4.add(lblBrojSati);
-		
-		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		spinner_2.setModel(new SpinnerNumberModel(1, 1, 24, 1));
-		spinner_2.setBounds(136, 245, 210, 20);
-		panel_4.add(spinner_2);
-		
-				JLabel label = new JLabel("Datum:");
-				label.setForeground(UIManager.getColor("TextField.highlight"));
-				label.setFont(new Font("Tahoma", Font.PLAIN, 11));
-				label.setBounds(91, 297, 35, 14);
-				panel_4.add(label);
-				
-				JScrollPane scrollPane_2 = new JScrollPane();
-				scrollPane_2.setBounds(136, 120, 519, 106);
-				panel_4.add(scrollPane_2);
-				
-				table = new JTable();
-				table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-				table.setRowSelectionAllowed(true);
-				
-				scrollPane_2.setViewportView(table);
-				table.setModel(new DefaultTableModel(
-					new Object[][] {
-						{null, null, null},
-						{null, null, null},
-						{null, null, null},
-						{null, null, null},
-						{null, null, null},
-					},
-					new String[] {
-						"Naziv taska", "Procenat zavr\u0161enosti", "Broj radnih sati"
-					}
-				) {
-					Class[] columnTypes = new Class[] {
-						String.class, Integer.class, Double.class
-					};
-					public Class getColumnClass(int columnIndex) {
-						return columnTypes[columnIndex];
-					}
-				});
-				
-				JButton button_12 = new JButton("Odjava");
-				button_12.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						java.awt.Window win[] = java.awt.Window.getWindows();
-						for (int i = 0; i < win.length; i++) {
-							win[i].dispose();
-						}
-						Login loginW = new Login();
-						loginW.setVisible(true);
-					}
-				});
-				button_12.setForeground(UIManager.getColor("Button.foreground"));
-				button_12.setFont(new Font("Tahoma", Font.BOLD, 10));
-				button_12.setBackground(UIManager.getColor("TextField.selectionBackground"));
-				button_12.setBounds(617, 379, 89, 23);
-				timeSheetPanel.add(button_12);
-				table.getColumnModel().getColumn(0).setPreferredWidth(123);
-				table.getColumnModel().getColumn(1).setPreferredWidth(126);
-				table.getColumnModel().getColumn(2).setPreferredWidth(120);
 		
 		panel_12.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -2043,6 +2079,59 @@ public class MainFormKoordinator extends JFrame {
 					ArrayList<TimesheetHibernate> timesheets = DalDao.VratiTimesheetoveZaposlenikaZaMjesec(Zaposlenik.getId(), mjesec);
 					for(TimesheetHibernate item : timesheets) {
 						DefaultListModel2.addElement(item);
+					}
+				}
+				catch(Exception ex) {
+					LOGGER.log(Level.SEVERE,"context",ex);
+				}
+			}
+		});
+		
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					DefaultListModel4.removeAllElements();
+					ProjekatHibernate ph = (ProjekatHibernate)comboBox.getSelectedItem();
+					ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(ph.getId());
+					String temp = "";
+					for(TaskHibernate task : taskovi) {
+						DefaultListModel4.addElement(task);
+						temp += "0\n";
+					}
+					textArea.setText(temp);
+					textArea_1.setText(temp);
+				}
+				catch(Exception ex) 
+				{
+					LOGGER.log(Level.SEVERE,"context",ex);
+				}
+			}
+		});
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					TimesheetHibernate timesheet = new TimesheetHibernate();
+					timesheet.setBrojRadnihSati((Integer)spinner_2.getValue());
+					timesheet.setDatumSlanja(LocalDate.now());
+					timesheet.setProjekat((ProjekatHibernate)comboBox.getSelectedItem());
+					timesheet.setValidiran(false);
+					DalDao.DodajObjekat(timesheet);
+					String[] sati = textArea_1.getText().split("\n");
+					String[] procenti = textArea_1.getText().split("\n");
+					spinner_2.setValue(0.0);
+					for(String sat: sati) {
+						Double temp = Double.parseDouble(sat);
+						spinner_2.setValue((Double)spinner_2.getValue() + temp);
+					}
+					
+					for(int i = 0; i < list_3.getModel().getSize(); i++) {
+						TaskHibernate task = (TaskHibernate)list_3.getModel().getElementAt(i);
+						task.setProcenatZavrsenosti(Integer.getInteger(procenti[i]));
+						DalDao.ModifikujObjekat(task);
+						TimesheetTaskHibernate tt = new TimesheetTaskHibernate();
+						tt.setTask(task);
+						tt.setTimesheet(timesheet);
+						DalDao.DodajObjekat(tt);
 					}
 				}
 				catch(Exception ex) {

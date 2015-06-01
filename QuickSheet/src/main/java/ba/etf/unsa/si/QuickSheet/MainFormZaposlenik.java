@@ -643,15 +643,13 @@ public class MainFormZaposlenik extends JFrame {
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				spinner_2.setValue(0.0);
-				String[] sati = textArea_1.getText().split("\n");
-				spinner_2.setValue(0.0);
-				for(String sat: sati) {
-					Double temp = Double.parseDouble(sat);
-					spinner_2.setValue((Double)spinner_2.getValue() + temp);
+				try {
+					
+				}
+				catch(Exception ex) {
+					LOGGER.log(Level.SEVERE,"context",ex);
+				}
 			}
-		}
 		});
 		
 		comboBox_1.addActionListener(new ActionListener() {
@@ -770,6 +768,11 @@ public class MainFormZaposlenik extends JFrame {
 					DalDao.DodajObjekat(timesheet);
 					String[] sati = textArea_1.getText().split("\n");
 					String[] procenti = textArea_1.getText().split("\n");
+					spinner_2.setValue(0.0);
+					for(String sat: sati) {
+						Double temp = Double.parseDouble(sat);
+						spinner_2.setValue((Double)spinner_2.getValue() + temp);
+					}
 					
 					for(int i = 0; i < list_3.getModel().getSize(); i++) {
 						TaskHibernate task = (TaskHibernate)list_3.getModel().getElementAt(i);
