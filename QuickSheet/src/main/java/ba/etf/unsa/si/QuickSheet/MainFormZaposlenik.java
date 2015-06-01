@@ -54,6 +54,7 @@ import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 
 import javax.swing.JPasswordField;
+import java.awt.SystemColor;
 
 public class MainFormZaposlenik extends JFrame {
 	private JTextField textField;
@@ -127,7 +128,7 @@ public class MainFormZaposlenik extends JFrame {
 		
 		final JLabel label_15 = new JLabel("");
 		label_15.setVisible(false);
-		label_15.setBounds(0, 387, 759, 14);
+		label_15.setBounds(9, 414, 759, 14);
 		timeSheetPanel.add(label_15);
 		
 		JButton btnNewButton = new JButton("Pošalji na reviziju");
@@ -185,6 +186,23 @@ public class MainFormZaposlenik extends JFrame {
 		scrollPane6.setBounds(450, 124, 224, 114);
 		textArea_1.setBounds(450, 124, 224, 114);
 		panel_4.add(scrollPane6);
+		
+		JButton button = new JButton("Odjava");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button.setForeground(Color.BLACK);
+		button.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button.setBackground(SystemColor.textHighlight);
+		button.setBounds(613, 384, 89, 23);
+		timeSheetPanel.add(button);
 		
 		JPanel historijaPanel = new JPanel();
 		historijaPanel.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -253,6 +271,23 @@ public class MainFormZaposlenik extends JFrame {
 		list_2.setBounds(10, 79, 321, 280);
 		panel_1.add(scrollPane2);
 		
+		JButton button_1 = new JButton("Odjava");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_1.setForeground(Color.BLACK);
+		button_1.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_1.setBackground(SystemColor.textHighlight);
+		button_1.setBounds(622, 398, 89, 23);
+		historijaPanel.add(button_1);
+		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(UIManager.getColor("TextField.darkShadow"));
 		
@@ -263,7 +298,7 @@ public class MainFormZaposlenik extends JFrame {
 		panel_3.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_3.setLayout(null);
 		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Moji podaci", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_3.setBounds(30, 22, 341, 433);
+		panel_3.setBounds(30, 22, 341, 412);
 		panel_2.add(panel_3);
 		
 		JLabel label_4 = new JLabel("Ime:");
@@ -430,7 +465,7 @@ public class MainFormZaposlenik extends JFrame {
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Promjena lozinke", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_5.setBounds(392, 22, 341, 433);
+		panel_5.setBounds(392, 22, 341, 412);
 		panel_2.add(panel_5);
 		panel_5.setLayout(null);
 		
@@ -455,7 +490,7 @@ public class MainFormZaposlenik extends JFrame {
 		final JLabel label_16 = new JLabel("");
 		label_16.setForeground(Color.RED);
 		label_16.setVisible(false);
-		label_16.setBounds(0, 466, 759, 25);
+		label_16.setBounds(0, 469, 759, 22);
 		panel_2.add(label_16);
 
 		JButton btnSpasi = new JButton("Spasi promjenu");
@@ -540,6 +575,23 @@ public class MainFormZaposlenik extends JFrame {
 		passwordField_2 = new JPasswordField();
 		passwordField_2.setBounds(164, 85, 139, 20);
 		panel_5.add(passwordField_2);
+		
+		JButton button_2 = new JButton("Odjava");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.Window win[] = java.awt.Window.getWindows();
+				for (int i = 0; i < win.length; i++) {
+					win[i].dispose();
+				}
+				Login loginW = new Login();
+				loginW.setVisible(true);
+			}
+		});
+		button_2.setForeground(Color.BLACK);
+		button_2.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_2.setBackground(SystemColor.textHighlight);
+		button_2.setBounds(626, 438, 89, 23);
+		panel_2.add(button_2);
 		
 		panel_2.addComponentListener(new ComponentAdapter() {
 			@Override
