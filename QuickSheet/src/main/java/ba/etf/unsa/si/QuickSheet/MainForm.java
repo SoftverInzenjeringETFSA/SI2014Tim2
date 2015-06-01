@@ -403,7 +403,7 @@ public class MainForm extends JFrame {
 		});
 		btnOdjava.setForeground(Color.BLACK);
 		btnOdjava.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnOdjava.setBackground(SystemColor.textHighlight);
+		btnOdjava.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnOdjava.setBounds(623, 464, 89, 23);
 		odjeliPanel.add(btnOdjava);
 		
@@ -724,11 +724,6 @@ public class MainForm extends JFrame {
 		label_7.setBounds(22, 29, 170, 14);
 		panel_11.add(label_7);
 		
-		final JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
-		spinner_1.setBounds(190, 269, 141, 20);
-		panel.add(spinner_1);
-		
 		JButton button_2 = new JButton("Odjava");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -742,7 +737,7 @@ public class MainForm extends JFrame {
 		});
 		button_2.setForeground(Color.BLACK);
 		button_2.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button_2.setBackground(SystemColor.textHighlight);
+		button_2.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		button_2.setBounds(620, 464, 89, 23);
 		projektiPanel.add(button_2);
 		
@@ -755,16 +750,6 @@ public class MainForm extends JFrame {
 			lista2.addElement(podatak);
 		}
 		final DefaultListModel lista = new DefaultListModel();
-		
-		btnOtkai.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textField_43.setText("");
-				textField_44.setText("");
-				list_3.clearSelection();
-				spinner_1.setValue(new Double(0d));
-				label_error.setVisible(false);
-			}
-		});
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -895,7 +880,7 @@ public class MainForm extends JFrame {
 		});
 		button_4.setForeground(Color.BLACK);
 		button_4.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button_4.setBackground(SystemColor.textHighlight);
+		button_4.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		button_4.setBounds(620, 458, 89, 23);
 		panel_4.add(button_4);
 		
@@ -1011,6 +996,20 @@ public class MainForm extends JFrame {
 		spinner.setBounds(190, 149, 141, 20);
 		panel.add(spinner);
 		
+		final JSpinner spinner_1 = new JSpinner();
+		spinner_1.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
+		spinner_1.setBounds(190, 269, 141, 20);
+		panel.add(spinner_1);
+		
+		btnOtkai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_43.setText("");
+				textField_44.setText("");
+				list_3.clearSelection();
+				spinner_1.setValue(new Double(0d));
+				label_error.setVisible(false);
+			}
+		});
 		
 		final JList list_5 = new JList();
 		JScrollPane scrollPane = new JScrollPane(list_5, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -1447,7 +1446,7 @@ public class MainForm extends JFrame {
 		});
 		button_3.setForeground(Color.BLACK);
 		button_3.setFont(new Font("Tahoma", Font.BOLD, 10));
-		button_3.setBackground(SystemColor.textHighlight);
+		button_3.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		button_3.setBounds(621, 467, 89, 23);
 		korisniciPanel.add(button_3);
 	}

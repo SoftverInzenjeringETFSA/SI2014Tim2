@@ -344,14 +344,6 @@ public class MainFormKoordinator extends JFrame {
 		
 		final JComboBox comboBox_5 = new JComboBox();
 		comboBox_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(!(comboBox_5.getSelectedItem() == null)){
-					textField_7.setText((String) comboBox_5.getSelectedItem());
-				}
-			}
-		});
-		
 		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"Naziv", "Max br. zaposlenika"}));
 		comboBox_5.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_5);
@@ -528,14 +520,6 @@ public class MainFormKoordinator extends JFrame {
 		
 		final JComboBox comboBox_17 = new JComboBox();
 		comboBox_17.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox_17.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!(comboBox_17.getSelectedItem() == null)){
-					textField_46.setText((String) comboBox_17.getSelectedItem());
-				}
-			}
-		});
-		
 		comboBox_17.setModel(new DefaultComboBoxModel(new String[] {"Naziv projekta", "Naziv klijenta"}));
 		comboBox_17.setBounds(22, 45, 99, 23);
 		panel_11.add(comboBox_17);
