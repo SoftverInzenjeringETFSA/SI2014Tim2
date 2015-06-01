@@ -94,7 +94,7 @@ public class AdministratorTest {
 	}
 	@Test
 	public void getZaposlenikArhiviran() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
-		ZaposlenikHibernate zh = new ZaposlenikHibernate();
+	   ZaposlenikHibernate zh = new ZaposlenikHibernate();
 		zh.setIme("Dz");
 		zh.setPrezime("Dz");
 		zh.setAdresa("Dz");
@@ -108,7 +108,10 @@ public class AdministratorTest {
 		
 		ZaposlenikHibernate zh1 = DalDao.VratiArhiviraneZaposlenikePoUsername("dzbr");
 		assertTrue(zh1.getArhiviran());
-		DalDao.ObrisiObjekat(zh1);
+		
+		DalDao.ObrisiObjekat(zh);
+		
+		
 	}
 	@Test
 	public void getZaposlenikAdresa() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
@@ -126,6 +129,7 @@ public class AdministratorTest {
 		
 		ZaposlenikHibernate zh1 = DalDao.VratiZaposlenika(zh.getId());
 		assertEquals(zh.getAdresa(), zh1.getAdresa());
+		DalDao.ObrisiObjekat(zh);
 		
 	}
 	@Test
@@ -144,6 +148,7 @@ public class AdministratorTest {
 		
 		ZaposlenikHibernate zh1 = DalDao.VratiArhiviraneZaposlenikePoUsername("dzbr");
 		assertEquals(zh.getIme(), zh1.getIme());
+		DalDao.ObrisiObjekat(zh);
 		
 	}
 	
@@ -171,6 +176,9 @@ public class AdministratorTest {
 		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
 		
 		assertEquals("projekat", p1.getNaziv());
+		DalDao.ObrisiObjekat(p);
+		DalDao.ObrisiObjekat(zh);
+		
 		
 	}
 	
@@ -185,12 +193,12 @@ public class AdministratorTest {
 		zh.setKoordinator(false);
 		zh.setLozinka("dsdasd");
 		zh.setSatnica(20d);
-		zh.setUsername("Username1111");
+		zh.setUsername("username");
 		DalDao.DodajObjekat(zh);
 			
 		ProjekatHibernate p = new ProjekatHibernate();
 		p.setNaziv("projekatBrisanje");
-		p.setNazivKlijenta("Edin");
+		p.setNazivKlijenta("DzenanaNeka");
 		p.setKoordinator(zh);
 		
 		DalDao.DodajObjekat(p);
@@ -198,6 +206,7 @@ public class AdministratorTest {
 		DalDao.ObrisiObjekat(p);
 		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
 		assertNull(p1);
+		DalDao.ObrisiObjekat(zh);
 		
 	}
 	
@@ -214,10 +223,12 @@ public class AdministratorTest {
 		zh.setLozinka("dsdasd");
 		zh.setSatnica(20d);
 		zh.setUsername("Username1111");
+		
 		DalDao.DodajObjekat(zh);
 		
 		DalDao.ObrisiObjekat(zh);
-		ZaposlenikHibernate zh1 = DalDao.VratiNearhiviraneZaposlenikePoUsername("Dzenana");
+		
+		ZaposlenikHibernate zh1 = DalDao.VratiNearhiviraneZaposlenikePoUsername("Username1111");
 		assertNull(zh1);
 		
 	}
@@ -225,20 +236,20 @@ public class AdministratorTest {
 	@Test
 	public void testDodavanjeOdjelaObjekat() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
 		OdjelHibernate o = new OdjelHibernate();
-		o.setNaziv("Odjeldzenanin1");
+		o.setNaziv("Odjeldzenanin8");
 		o.setMaksimalanBrojRadnika(24);
 		o.setArhiviran(true);
 		
 		DalDao.DodajObjekat(o);
 	
-		OdjelHibernate o1 = DalDao.VratiOdjelPoNazivu("Odjeldzenanin1");
+		OdjelHibernate o1 = DalDao.VratiOdjelPoNazivu("Odjeldzenanin8");
 		assertNotNull(o1);
-		
+		DalDao.ObrisiObjekat(o);
 	}
 	@Test
 	public void testBrisanjeOdjela() throws javax.management.InvalidAttributeValueException, InvalidAttributeValueException {
 		OdjelHibernate o = new OdjelHibernate();
-		o.setNaziv("Odjeldzenanin1");
+		o.setNaziv("Odjeldzenanin5");
 		o.setMaksimalanBrojRadnika(24);
 		o.setArhiviran(true);
 		
@@ -265,6 +276,8 @@ public class AdministratorTest {
 		Integer i =  o1.getMaksimalanBrojRadnika();
 		
 		assertEquals(new Integer(26), i);	
+		DalDao.ObrisiObjekat(o);
+		
 		
 	}
 

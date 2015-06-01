@@ -88,6 +88,9 @@ public class KoordinatorTest {
 		
 		
 		assertEquals("usernameDzBr", zh1.getUsername());
+		DalDao.ObrisiObjekat(p);
+		DalDao.ObrisiObjekat(zh2);
+		DalDao.ObrisiObjekat(zh);
 	}
 	
 	@Test
@@ -117,6 +120,8 @@ public class KoordinatorTest {
 		ZaposlenikHibernate zh1 = p1.getKoordinator();
 		
 		assertEquals(zh1.getIme(), zh.getIme());
+		DalDao.ObrisiObjekat(p);
+		DalDao.ObrisiObjekat(zh);
 	}
 
 	@Test
@@ -143,7 +148,8 @@ public class KoordinatorTest {
 		
 		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
 		assertTrue(p1.getArhiviran());
-		
+		DalDao.ObrisiObjekat(p);
+		DalDao.ObrisiObjekat(zh);
 	}
 	@Test
 	public void testProjekatNaziv() throws InvalidAttributeValueException, javax.management.InvalidAttributeValueException{
@@ -169,6 +175,8 @@ public class KoordinatorTest {
 		
 		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
 		assertEquals("projekatTestiranjeImena", p1.getNaziv());
+		DalDao.ObrisiObjekat(p);
+		DalDao.ObrisiObjekat(zh);
 		
 	}
 	@Test
@@ -195,6 +203,8 @@ public class KoordinatorTest {
 		
 		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
 		assertEquals("Dean", p1.getNazivKlijenta());
+		DalDao.ObrisiObjekat(p);
+		DalDao.ObrisiObjekat(zh);
 		
 	}
 
@@ -222,6 +232,8 @@ public class KoordinatorTest {
 		
 		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
 		assertFalse(p1.getArhiviran());
+		DalDao.ObrisiObjekat(p);
+		DalDao.ObrisiObjekat(zh);
 		
 	}
 	
@@ -252,6 +264,8 @@ public class KoordinatorTest {
 		
 		ProjekatHibernate p1 = DalDao.VratiProjekat(p.getId());
 		assertEquals("projekaTestiranje1", p1.getNaziv());
+		DalDao.ObrisiObjekat(p);
+		DalDao.ObrisiObjekat(zh);
 		
 	}
 	
@@ -270,6 +284,7 @@ public class KoordinatorTest {
 		
 		DalDao.DodajObjekat(zh);
 		assertTrue(zh.getKoordinator());
+		DalDao.ObrisiObjekat(zh);
 	}
 	
 	@Test
@@ -287,6 +302,7 @@ public class KoordinatorTest {
 		
 		DalDao.DodajObjekat(zh);
 		assertFalse(zh.getKoordinator());
+		DalDao.ObrisiObjekat(zh);
 	}
 
 	
