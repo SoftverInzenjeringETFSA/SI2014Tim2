@@ -22,6 +22,7 @@ import javax.swing.UIManager;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
+import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
 
 public class Login extends JFrame {

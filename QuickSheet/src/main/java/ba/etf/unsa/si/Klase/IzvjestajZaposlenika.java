@@ -28,7 +28,7 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 	
 	public void setZaposlenik(Zaposlenik zaposlenik) throws InvalidAttributeValueException 
 	{
-		if (zaposlenik != null && projekat.getZaposlenici().contains(zaposlenik))
+		if (zaposlenik != null && projekat != null && projekat.getZaposlenici().contains(zaposlenik))
 		{
 			this.zaposlenik = zaposlenik;
 			ukupanBrojTaskova = 0;
@@ -57,7 +57,7 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 		Hashtable<String, Double> taskoviZaposlenik = new Hashtable<String, Double>();
 		for (ba.etf.unsa.si.Klase.Task ta: taskovi)
 		{
-			if (ta.getZaposlenik().equals(zaposlenik))
+			if (ta != null && ta.getZaposlenik().equals(zaposlenik))
 				ukupanBrojTaskova++;
 		}
 		for (Timesheet t : projekat.getTimesheetList())
@@ -82,8 +82,11 @@ public class IzvjestajZaposlenika extends Izvjestaj{
 
 	@Override
 	public void IzracunajTrosak() {
-		IzracunajUkupnoVrijemeRada();		
-		trosak = zaposlenik.getSatnica() * ukupnoVrijemeRada;
+		if (zaposlenik != null)
+		{
+			IzracunajUkupnoVrijemeRada();		
+			trosak = zaposlenik.getSatnica() * ukupnoVrijemeRada;
+		}
 	}
 
 	@Override

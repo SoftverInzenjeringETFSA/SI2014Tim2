@@ -52,16 +52,19 @@ public class IzvjestajOdjela extends Izvjestaj{
 	public void IzracunajProcenatZavrsenogRada() throws InvalidAttributeValueException
 	{
 		double ukupanProcenatOdjela = 0.0;
-		for (Zaposlenik zap: odjel.getZaposlenici())
+		if (odjel != null)
 		{
-			if (projekat.getZaposlenici().contains(zap))
+			for (Zaposlenik zap: odjel.getZaposlenici())
 			{
-				IzvjestajZaposlenika iz = new IzvjestajZaposlenika(projekat, zap);
-				ukupanBrojTaskovaOdjela += iz.getUkupanBrojTaskova();
-				ukupanProcenatOdjela += iz.decimalanProcenat;
+				if (projekat != null && projekat.getZaposlenici().contains(zap))
+				{
+					IzvjestajZaposlenika iz = new IzvjestajZaposlenika(projekat, zap);
+					ukupanBrojTaskovaOdjela += iz.getUkupanBrojTaskova();
+					ukupanProcenatOdjela += iz.decimalanProcenat;
+				}
 			}
+			procenatZavrsenogRada = ukupanProcenatOdjela / ukupanBrojTaskovaOdjela;
 		}
-		procenatZavrsenogRada = ukupanProcenatOdjela / ukupanBrojTaskovaOdjela;
 	}
 	
 	@Override

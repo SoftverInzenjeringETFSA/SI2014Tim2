@@ -2,16 +2,23 @@ package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import ba.etf.unsa.si.Klase.IzvjestajOdjela;
 import ba.etf.unsa.si.Klase.IzvjestajZaposlenika;
+import ba.etf.unsa.si.KlaseHibernate.IzvjestajOdjelaHibernate;
+import ba.etf.unsa.si.KlaseHibernate.IzvjestajZaposlenikaHibernate;
+
 import java.awt.Font;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +35,8 @@ public class IzvjestajForm extends JFrame {
 	private JTextField textField_6;
 	private JTextField textField_7;
 	protected static final Logger LOGGER = Logger.getLogger("IzvjestajForm");
+	private JTextField textField_8;
+	private JTextField textField_9;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -42,11 +51,11 @@ public class IzvjestajForm extends JFrame {
 		});
 	}
 
-	public IzvjestajForm(IzvjestajZaposlenika IZ, IzvjestajOdjela IO) {
+	public IzvjestajForm(IzvjestajZaposlenikaHibernate IZ, IzvjestajOdjelaHibernate IO) {
 		setTitle("Izvještaj ");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 574, 217);
+		setBounds(100, 100, 574, 249);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("TextField.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,7 +67,7 @@ public class IzvjestajForm extends JFrame {
 		panel.setForeground(UIManager.getColor("TextField.highlight"));
 		panel.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Izvje\u0161taj odjela", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel.setBounds(10, 11, 266, 162);
+		panel.setBounds(10, 11, 266, 198);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -87,6 +96,7 @@ public class IzvjestajForm extends JFrame {
 		panel.add(label_3);
 		
 		textField = new JTextField();
+		textField.setDisabledTextColor(Color.BLACK);
 		textField.setBackground(Color.WHITE);
 		textField.setBorder(null);
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -98,6 +108,7 @@ public class IzvjestajForm extends JFrame {
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setDisabledTextColor(Color.BLACK);
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textField_1.setEnabled(false);
 		textField_1.setEditable(false);
@@ -109,6 +120,7 @@ public class IzvjestajForm extends JFrame {
 		panel.add(textField_1);
 		
 		textField_2 = new JTextField();
+		textField_2.setDisabledTextColor(Color.BLACK);
 		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textField_2.setEnabled(false);
 		textField_2.setEditable(false);
@@ -120,6 +132,7 @@ public class IzvjestajForm extends JFrame {
 		panel.add(textField_2);
 		
 		textField_3 = new JTextField();
+		textField_3.setDisabledTextColor(Color.BLACK);
 		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textField_3.setEnabled(false);
 		textField_3.setEditable(false);
@@ -130,10 +143,29 @@ public class IzvjestajForm extends JFrame {
 		textField_3.setText(IO.getTrosak().toString());
 		panel.add(textField_3);
 		
+		JLabel label_1 = new JLabel("Procenat urađenog:");
+		label_1.setForeground(Color.WHITE);
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label_1.setBounds(17, 140, 103, 14);
+		panel.add(label_1);
+		
+		textField_9 = new JTextField();
+		textField_9.setText((String) null);
+		textField_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textField_9.setEnabled(false);
+		textField_9.setEditable(false);
+		textField_9.setDisabledTextColor(Color.BLACK);
+		textField_9.setColumns(10);
+		textField_9.setBorder(null);
+		textField_9.setBackground(Color.WHITE);
+		textField_9.setBounds(130, 137, 126, 20);
+		textField_9.setText(IO.getProcenatZavrsenogRada().toString());
+		panel.add(textField_9);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(UIManager.getColor("TextField.highlight"));
 		panel_1.setBackground(UIManager.getColor("TextField.darkShadow"));
-		panel_1.setBounds(282, 11, 266, 162);
+		panel_1.setBounds(282, 11, 266, 198);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Izvje\u0161taj zaposlenika", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
@@ -163,6 +195,7 @@ public class IzvjestajForm extends JFrame {
 		panel_1.add(lblUkupanTro);
 		
 		textField_4 = new JTextField();
+		textField_4.setDisabledTextColor(Color.BLACK);
 		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textField_4.setEnabled(false);
 		textField_4.setEditable(false);
@@ -174,6 +207,7 @@ public class IzvjestajForm extends JFrame {
 		panel_1.add(textField_4);
 		
 		textField_5 = new JTextField();
+		textField_5.setDisabledTextColor(Color.BLACK);
 		textField_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textField_5.setEnabled(false);
 		textField_5.setEditable(false);
@@ -185,6 +219,7 @@ public class IzvjestajForm extends JFrame {
 		panel_1.add(textField_5);
 		
 		textField_6 = new JTextField();
+		textField_6.setDisabledTextColor(Color.BLACK);
 		textField_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textField_6.setEnabled(false);
 		textField_6.setEditable(false);
@@ -196,6 +231,7 @@ public class IzvjestajForm extends JFrame {
 		panel_1.add(textField_6);
 		
 		textField_7 = new JTextField();
+		textField_7.setDisabledTextColor(Color.BLACK);
 		textField_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textField_7.setEnabled(false);
 		textField_7.setEditable(false);
@@ -205,5 +241,24 @@ public class IzvjestajForm extends JFrame {
 		textField_7.setBounds(123, 113, 126, 20);
 		textField_7.setText(IZ.getTrosak().toString());
 		panel_1.add(textField_7);
+		
+		JLabel lblProcenatZavrenogRada = new JLabel("Procenat urađenog:");
+		lblProcenatZavrenogRada.setForeground(Color.WHITE);
+		lblProcenatZavrenogRada.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblProcenatZavrenogRada.setBounds(22, 147, 103, 14);
+		panel_1.add(lblProcenatZavrenogRada);
+		
+		textField_8 = new JTextField();
+		textField_8.setDisabledTextColor(Color.BLACK);
+		textField_8.setText((String) null);
+		textField_8.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textField_8.setEnabled(false);
+		textField_8.setEditable(false);
+		textField_8.setColumns(10);
+		textField_8.setBorder(null);
+		textField_8.setBackground(Color.WHITE);
+		textField_8.setBounds(123, 144, 126, 20);
+		textField_8.setText(IZ.getProcenatZavrsenogRada().toString());
+		panel_1.add(textField_8);
 	}
 }
