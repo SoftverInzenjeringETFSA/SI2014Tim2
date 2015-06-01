@@ -20,8 +20,21 @@ import ba.etf.unsa.si.KlaseHibernate.IzvjestajOdjelaHibernate;
 import ba.etf.unsa.si.KlaseHibernate.IzvjestajZaposlenikaHibernate;
 
 import java.awt.Font;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JButton;
+
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.builder.DynamicReports;
+import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
+import net.sf.dynamicreports.report.exception.DRException;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class IzvjestajForm extends JFrame {
 
@@ -42,20 +55,22 @@ public class IzvjestajForm extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					IzvjestajForm frame = new IzvjestajForm(null, null);
+					IzvjestajForm frame = new IzvjestajForm(null, null, null);
 					frame.setVisible(true);
-				} catch (Exception e) {
+				} 
+				catch (Exception e) 
+				{
 					LOGGER.log(Level.SEVERE,"context",e);
 				}
 			}
 		});
 	}
 
-	public IzvjestajForm(IzvjestajZaposlenikaHibernate IZ, IzvjestajOdjelaHibernate IO) {
+	public IzvjestajForm(final IzvjestajZaposlenikaHibernate IZ, final IzvjestajOdjelaHibernate IO, final Month mjesec) {
 		setTitle("Izvještaj ");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 574, 249);
+		setBounds(100, 100, 574, 277);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("TextField.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -260,5 +275,61 @@ public class IzvjestajForm extends JFrame {
 		textField_8.setBounds(123, 144, 126, 20);
 		textField_8.setText(IZ.getProcenatZavrsenogRada().toString());
 		panel_1.add(textField_8);
+		
+		JButton btnKreirajpdf = new JButton("Kreiraj .pdf");
+		btnKreirajpdf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					GenerisiIzvjestaj(IZ, IO, mjesec);
+				} catch (DRException e) {
+					LOGGER.log(Level.SEVERE,"context",e);
+				}
+			}
+		});
+
+		btnKreirajpdf.setBackground(UIManager.getColor("TextField.selectionBackground"));
+		btnKreirajpdf.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnKreirajpdf.setBounds(230, 214, 99, 23);
+		contentPane.add(btnKreirajpdf);
+	}
+	
+	public void GenerisiIzvjestaj(IzvjestajZaposlenikaHibernate zaza, IzvjestajOdjelaHibernate dodo, Month mjesec) throws DRException
+	{
+		JasperReportBuilder report = DynamicReports.report(); 
+		TextFieldBuilder<String> title1 = DynamicReports.cmp.text("  Quicksheet, d.o.o\n"); 
+		report.title(title1); 
+		TextFieldBuilder<String> title2 = DynamicReports.cmp.text("  Zmaja od Bosne 6, Kampus Univerziteta u Sarajevu, 71 000 Sarajevo\n"); 
+		report.title(title2); 
+		TextFieldBuilder<String> title3 = DynamicReports.cmp.text("  Tel: ++387 33 666 999\n"); 
+		report.title(title3);
+		TextFieldBuilder<String> title3x = DynamicReports.cmp.text("  Klijent: " + dodo.getProjekat().getNazivKlijenta() + "\n\n\n\n"); 
+		report.title(title3x);
+		TextFieldBuilder<String> title4 =DynamicReports.cmp.text("   Izvještaj za rad odjela: " + dodo.getOdjel().getNaziv() + ", za mjesec " + mjesec.toString() + " na projektu: " + dodo.getProjekat().getNaziv() + ".\n\n\n");
+		report.title(title4);
+		TextFieldBuilder<String> title5 =DynamicReports.cmp.text("   -Ukupan broj taskova odjela: " + dodo.getUkupanBrojTaskovaOdjela() + "\n");
+		report.title(title5);
+		TextFieldBuilder<String> title6 =DynamicReports.cmp.text("   -Ukupno vrijeme rada odjela: " + dodo.getUkupnoVrijemeRada() + "\n");
+		report.title(title6);
+		TextFieldBuilder<String> title7 =DynamicReports.cmp.text("   -Procenat urađenog rada odjela: " + dodo.getProcenatZavrsenogRada() + "\n");
+		report.title(title7);
+		TextFieldBuilder<String> title8 =DynamicReports.cmp.text("   -Ukupni trošak odjela: " + dodo.getTrosak() + "\n\n\n");
+		report.title(title8);
+		TextFieldBuilder<String> title9 =DynamicReports.cmp.text("   Izvještaj za rad zaposlenika: " + zaza.getZaposlenik().getIme() + " " + zaza.getZaposlenik().getPrezime() + ", za mjesec " + mjesec.toString() + " na projektu: " + zaza.getProjekat().getNaziv() + ".\n\n\n");
+		report.title(title9);
+		TextFieldBuilder<String> title10 =DynamicReports.cmp.text("   -Ukupan broj taskova zaposlenika: " + zaza.getUkupanBrojTaskova() + "\n");
+		report.title(title10);
+		TextFieldBuilder<String> title11 =DynamicReports.cmp.text("   -Ukupno vrijeme rada zaposlenika: " + zaza.getUkupnoVrijemeRada() + "\n");
+		report.title(title11);
+		TextFieldBuilder<String> title12 =DynamicReports.cmp.text("   -Procenat urađenog rada zaposlenika: " + zaza.getProcenatZavrsenogRada() + "\n");
+		report.title(title12);
+		TextFieldBuilder<String> title13 =DynamicReports.cmp.text("   -Ukupni trošak zaposlenika: " + zaza.getTrosak() + "\n\n\n");
+		report.title(title13);
+		TextFieldBuilder<String> titley =DynamicReports.cmp.text("Potpis ovlaštenog lica: ___________________ \n");
+		report.title(titley);
+		TextFieldBuilder<String> titlez =DynamicReports.cmp.text("Datum: " + LocalDate.now().toString() + "\n");
+		report.title(titlez);
+		report.show(false); 		
 	}
 }
+

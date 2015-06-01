@@ -58,22 +58,40 @@
         <version>4.3.10.Final</version>
     </dependency>
    
-   <dependency>
-	<groupId>mysql</groupId>
-	<artifactId>mysql-connector-java</artifactId>
-	<version>5.1.35</version>
+   	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.35</version>
 	</dependency>
    
-   <dependency>
-	<groupId>org.eclipse</groupId>
-	<artifactId>jface</artifactId>
-	<version>3.2.1-M20060908-1000</version>
+   	<dependency>
+		<groupId>org.eclipse</groupId>
+		<artifactId>jface</artifactId>
+		<version>3.2.1-M20060908-1000</version>
 	</dependency>
 	
-   <dependency>
-	<groupId>commons-codec</groupId>
-	<artifactId>commons-codec</artifactId>
-	<version>1.9</version>
+   	<dependency>
+		<groupId>commons-codec</groupId>
+		<artifactId>commons-codec</artifactId>
+		<version>1.9</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>net.sourceforge.dynamicreports</groupId>
+		<artifactId>dynamicreports-core</artifactId>
+		<version>4.0.0</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>net.sourceforge.dynamicreports</groupId>
+		<artifactId>dynamicreports-adhoc</artifactId>
+		<version>4.0.0</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>jasperreports</groupId>
+		<artifactId>jasperreports</artifactId>
+		<version>3.0.0</version>
 	</dependency>
 	
   </dependencies>

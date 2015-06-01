@@ -12,7 +12,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="main/java/|test/java/" kind="src" path="src">
+	<classpathentry excluding="main/java/|test/java/" including="**/*.java" kind="src" path="src">
 		<attributes>
 			<attribute name="ignore_optional_problems" value="true"/>
 		</attributes>

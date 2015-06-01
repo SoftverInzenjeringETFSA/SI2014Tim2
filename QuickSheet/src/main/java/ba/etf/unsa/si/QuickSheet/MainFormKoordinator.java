@@ -1312,7 +1312,6 @@ public class MainFormKoordinator extends JFrame {
 						for (TimesheetHibernate tito: tajmoviOdjelZaposlenik)
 						{
 							ukupnoVrijemeOdjelaNaProjektu += tito.getBrojRadnihSati();
-							ukupnoVrijemeRadnika += tito.getBrojRadnihSati();
 							if (tito.getValidiran())
 							{
 								ArrayList<TimesheetTaskHibernate> ttho = DalDao.VratiTimesheetTaskove(tito.getId());
@@ -1334,7 +1333,7 @@ public class MainFormKoordinator extends JFrame {
 					ioh.setProcenatZavrsenogRada(procenatZavrsenogRadaOdjela);
 					ioh.setUkupnoVrijemeRada((double)ukupnoVrijemeOdjelaNaProjektu);
 					ioh.setTrosak(cijenaOdjela);
-					new IzvjestajForm(izh, ioh).setVisible(true);
+					new IzvjestajForm(izh, ioh, (Month)comboBox_2.getSelectedItem()).setVisible(true);
 				}
 			}
 		});
