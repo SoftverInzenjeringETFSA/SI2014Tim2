@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.naming.directory.InvalidAttributeValueException;
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -26,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
@@ -34,8 +37,10 @@ import java.util.Date;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+
 import ba.etf.unsa.si.KlaseHibernate.AdministratorHibernate;
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.Lozinka;
@@ -845,37 +850,63 @@ public class MainForm extends JFrame {
 				String ime = textField_36.getText();
 				String prezime = textField_37.getText();
 				String adresa = textField_38.getText();
-				
+				String mail = textField_5.getText();
+				String telefon = textField_4.getText();
 				Zaposlenik z;
 				if (chckbxDa.isSelected())
 					z = new Koordinator();
 				else 
 					z = new ProjekatRadnik();
-				try{
+				try
+				{
 					z.setIme(ime);
 				}
-				catch (Exception es){
+				catch (Exception es)
+				{
 					LOGGER.log(Level.SEVERE,"context",es);
 					label_error2.setText("Unesite ispravno ime!");
 					greska = false;
 				}
-				try{
+				try
+				{
 					z.setPrezime(prezime);
 				}
-				catch (Exception es){
+				catch (Exception es)
+				{
 					LOGGER.log(Level.SEVERE,"context",es);
 					label_error2.setText("Unesite ispravno prezime!");
 					greska = false;
 				}
-				try{
+				try
+				{
 					z.setAdresa(adresa);
 				}
-				catch (Exception es){
+				catch (Exception es)
+				{
 					LOGGER.log(Level.SEVERE,"context",es);
 					label_error2.setText("Unesite ispravnu adresu!");
 					greska = false;
 				}
-				
+				try
+				{
+					z.setTelefon(telefon);
+				}
+				catch (Exception es)
+				{
+					LOGGER.log(Level.SEVERE,"context",es);
+					label_error2.setText("Unesite ispravan telefonski broj (minimalno 9 cifara)!");
+					greska = false;
+				}
+				try
+				{
+					z.setEmail(mail);
+				}
+				catch (Exception es)
+				{
+					LOGGER.log(Level.SEVERE,"context",es);
+					label_error2.setText("Unesite validnu mail adresu!");
+					greska = false;
+				}
 				try
 				{
 					Date d = (Date)spinner.getValue();
@@ -890,13 +921,6 @@ public class MainForm extends JFrame {
 					label_error2.setText("Unesite ispravan datum!");
 					greska = false;
 				}
-				
-				if(list_5.isSelectionEmpty())
-				{
-					label_error2.setText("Odaberite odjel u kojem radi zaposlenik!");
-					greska = false;
-				}
-				
 				try
 				{
 					Double satnica = (Double)spinner_1.getValue();
@@ -908,13 +932,12 @@ public class MainForm extends JFrame {
 					label_error2.setText("Izaberite ispravan unos za satnicu!");
 					greska = false;
 				}
-				
 				try
 				{
 					z.setUsername(textField_41.getText());
 					if (!DalDao.ValidirajUsername(z.getUsername()))
 					{
-						label_error2.setText("Unesite ispravno korisničko ime!");
+						label_error2.setText("Korisničko ime koje ste unijeli je već u upotrebi!");
 						greska = false;
 					}
 				}
@@ -925,32 +948,46 @@ public class MainForm extends JFrame {
 					greska = false;
 				}
 				
-				
-				if(p1.length() >=0 && p1.length() < 7){
+				if(p1.length() < 7)
+				{
 					label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
-					greska = false;}
-				if(p2.length() >= 0 && p2.length() < 7 && p2.trim().isEmpty() && p2 == null){
+					greska = false;
+				}
+				if(p2.length()  < 7 || p2.length() < 7)
+				{
 					label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
-					greska = false;} 
-				if (!p1.equals(p2)) {
+					greska = false;
+				} 
+				if (!p1.equals(p2)) 
+				{
 					label_error2.setText("Lozinke se ne podudaraju!");
 					greska = false;
-					} else
-					try {
+				} 
+				else
+				{
+					try 
+					{
 						z.setLozinka(p1);
-					} catch (NoSuchAlgorithmException es) {
+					} 
+					catch (NoSuchAlgorithmException es) 
+					{
 						LOGGER.log(Level.SEVERE,"context",es);
-						label_error2.setText("Lozinke se ne podudaraju!");
-					} catch (InvalidKeySpecException es) {
+						label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
+					} 
+					catch (InvalidKeySpecException es) 
+					{
 						LOGGER.log(Level.SEVERE,"context",es);
-						label_error2.setText("Lozinke se ne podudaraju!");
+						label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
+					} catch (InvalidAttributeValueException es) 
+					{
+						LOGGER.log(Level.SEVERE,"context",es);
+						label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					}
-				
-				if(greska == false){
-					label_error2.setVisible(true);	
 				}
-				
-				else{
+				if(greska == false)
+					label_error2.setVisible(true);	
+				else
+				{
 					label_error2.setVisible(false);
 					ZaposlenikHibernate zh = new ZaposlenikHibernate();
 					zh.setIme(z.getIme());
@@ -959,13 +996,13 @@ public class MainForm extends JFrame {
 					zh.setArhiviran(false);
 					zh.setKoordinator(chckbxDa.isSelected());
 					zh.setDatumZaposlenja(z.getDatumZaposlenja());
-					if (p1.length() > 7)
-					{
-						zh.setLozinka(z.getLozinka());
-					}
+					zh.setLozinka(z.getLozinka());
 					zh.setSatnica(z.getSatnica());
 					zh.setUsername(z.getUsername());
+					zh.setEmail(z.getEmail());
+					zh.setTelefon(z.getTelefon());
 					DalDao.DodajObjekat(zh);
+					
 					ArrayList<String> izabrane = (ArrayList<String>) list_5.getSelectedValuesList();
 					for (int i = 0; i < izabrane.size(); i++)
 					{
@@ -978,6 +1015,16 @@ public class MainForm extends JFrame {
 						DalDao.DodajObjekat(ozh);
 					}
 					JOptionPane.showMessageDialog(null, "Uspjesno ste kreirali zaposlenika", "Zaposlenik kreiran", JOptionPane.INFORMATION_MESSAGE);
+					textField_36.setText("");
+					textField_37.setText("");
+					textField_38.setText("");
+					textField_41.setText("");
+					textField_4.setText("");
+					textField_5.setText("");
+					passwordField.setText("");
+					passwordField_1.setText("");
+					spinner_1.setValue(0d);
+					list_5.clearSelection();
 				}
 			}
 		});
@@ -995,9 +1042,12 @@ public class MainForm extends JFrame {
 				textField_37.setText("");
 				textField_38.setText("");
 				textField_41.setText("");
+				textField_4.setText("");
+				textField_5.setText("");
 				passwordField.setText("");
 				passwordField_1.setText("");
-				list .clearSelection();
+				spinner_1.setValue(0d);
+				list_5.clearSelection();
 				label_error2.setVisible(false);
 			}
 		});
@@ -1147,7 +1197,6 @@ public class MainForm extends JFrame {
 				if(list_2.isSelectionEmpty()){
 					greska = false;
 					label_error1.setText("Morate označiti korisnika!");
-					
 				}
 				if(greska == false){
 					label_error1.setVisible(true);
@@ -1157,9 +1206,10 @@ public class MainForm extends JFrame {
 					String selektovanaVrijednost = list_2.getSelectedValue().toString();
 					String[] rijeci = selektovanaVrijednost.split(" ");
 					long id = Long.parseLong(rijeci[0]);
+					lista.removeAllElements();
+					textField_42.setText("");
 					new KorisnikForm(id).setVisible(true);
 				}
-				
 			}
 		});
 		
@@ -1176,7 +1226,6 @@ public class MainForm extends JFrame {
 				if(list_2.isSelectionEmpty()){
 					greska = false;
 					label_error2.setText("Morate označiti korisnika da bi ga obrisali!");
-					
 				}
 				if(greska == false){
 					label_error2.setVisible(true);

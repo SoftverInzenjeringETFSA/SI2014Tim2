@@ -331,7 +331,7 @@ public class DalDao {
 		for (int i = 0; i < odjeliZap.size(); i++)
 		{
 			if (!odjeli.contains(odjeliZap.get(i).getOdjel()))
-			odjeli.add(odjeliZap.get(i).getOdjel());
+				odjeli.add(odjeliZap.get(i).getOdjel());
 		}
 		return odjeli;
 	}
