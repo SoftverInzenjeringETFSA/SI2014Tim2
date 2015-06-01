@@ -1,6 +1,7 @@
 package ba.etf.unsa.si.QuickSheet;
 
 import java.awt.EventQueue;
+
 import javax.naming.directory.InvalidAttributeValueException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,30 +14,39 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SpinnerNumberModel;
+
 import java.awt.Toolkit;
+
 import javax.swing.DefaultComboBoxModel;
+
 import ba.etf.unsa.si.Klase.DalDao;
 import ba.etf.unsa.si.Klase.IzvjestajOdjela;
 import ba.etf.unsa.si.Klase.IzvjestajZaposlenika;
@@ -52,9 +62,12 @@ import ba.etf.unsa.si.KlaseHibernate.ProjekatHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TaskHibernate;
 import ba.etf.unsa.si.KlaseHibernate.TimesheetHibernate;
 import ba.etf.unsa.si.KlaseHibernate.ZaposlenikHibernate;
+
+import java.time.LocalDate;
 import java.time.Month;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+
 import javax.swing.JPasswordField;
 
 
@@ -97,6 +110,7 @@ public class MainFormKoordinator extends JFrame {
 
 	public MainFormKoordinator(final ZaposlenikHibernate zh) {
 		final ZaposlenikHibernate Zaposlenik = zh;
+		final ProjekatHibernate Projekatt = new ProjekatHibernate();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet - Koordinator");
@@ -135,7 +149,6 @@ public class MainFormKoordinator extends JFrame {
 		
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Times New Roman", Font.PLAIN, 11));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"projekat1", "projekat2"}));
 		comboBox.setBounds(136, 69, 201, 20);
 		panel_4.add(comboBox);
 		
@@ -644,29 +657,56 @@ public class MainFormKoordinator extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean greska = true;
 				
-				if(textField_4.getText().equals("")){
+				if(textField_4.getText().equals("") || !textField_4.getText().matches("^[a-zA-Z0-9]*$"))
+				{
 					greska = false;
 					label_error1.setText("Unesite naziv projekta!");
 				}
-				else if(textField_5.getText().equals("")){
+				if(textField_5.getText().equals("") || !textField_5.getText().matches("^[a-zA-Z0-9]*$"))
+				{
 					greska = false;
 					label_error1.setText("Unesite naziv klijenta!");
 				}
-				else if(list_3.getModel().getSize() == 0){
+				if(list_3.getModel().getSize() == 0){
 					greska = false;
 					label_error1.setText("Dodajte zaposlenike na projekat!");
 				}
-			
 				
-				else if(comboBox_3.getSelectedItem() == null){
+				if (comboBox_3.getSelectedIndex() == -1)
+				{
 					greska = false;
-					label_error1.setText("Morate označiti nadređenog!");
+					label_error1.setText("Morate označiti koordinatora projekta!");
 				}
-				else greska = true;
-				if(greska == false){
+				
+				if(greska == false)
+				{
 					label_error1.setVisible(true);
 				}
-				else label_error1.setVisible(false);
+				else 
+				{
+					label_error1.setVisible(false);
+					ProjekatHibernate phib = DalDao.VratiProjekat(Projekatt.getId());
+					phib.setNaziv(textField_4.getText());
+					phib.setNazivKlijenta(textField_5.getText());
+					phib.setArhiviran(chckbxArhiviraj.isSelected());
+					String s = comboBox_3.getSelectedItem().toString();
+					String[] rijecs=s.split(" ");
+					long l=Long.parseLong(rijecs[0]);
+					ZaposlenikHibernate zaps=DalDao.VratiZaposlenika(l);
+					phib.setKoordinator(zaps);
+					DalDao.ModifikujObjekat(phib);
+					
+					if (listaZaposlenikaProjekta.contains(s))
+					{
+						listaZaposlenikaProjekta.removeElement(s);
+						ArrayList<TaskHibernate> tajmovi = DalDao.VratiTaskoveZaposlenikaNaProjektu(Projekatt.getId(), l);
+						for (int i = 0; i < tajmovi.size(); i++)
+						{
+							DalDao.ObrisiObjekat(tajmovi.get(i));
+						}
+					}
+					JOptionPane.showMessageDialog(null, "Uspješno ste izmijenili projekat", "Projekat izmijenjen", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		
@@ -677,11 +717,6 @@ public class MainFormKoordinator extends JFrame {
 		JButton btnUkloni = new JButton("Dodaj");
 		btnUkloni.setBackground(UIManager.getColor("TextField.selectionBackground"));
 		btnUkloni.setForeground(UIManager.getColor("Button.foreground"));
-		btnUkloni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new DodajKorisnika().setVisible(true);
-			}
-		});
 		btnUkloni.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnUkloni.setBounds(249, 306, 82, 23);
 		panel_8.add(btnUkloni);
@@ -691,16 +726,41 @@ public class MainFormKoordinator extends JFrame {
 		button_3.setForeground(UIManager.getColor("Button.foreground"));
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean greska = true;
-				
-				if(list_3.isSelectionEmpty()){
-					greska = false;
-					label_error1.setText("Morate označiti korisnika da bi ga uklonili!");
-				}
-				if(greska == false){
+				if(list_3.isSelectionEmpty())
+				{	
 					label_error1.setVisible(true);
+					label_error1.setText("Odaberite zaposlenika!");
 				}
-				else label_error1.setVisible(false);
+				else
+				{
+					label_error1.setVisible(false);
+					int[] temp=list_3.getSelectedIndices();
+					for (int index:temp)
+					{
+						String ll = listaZaposlenikaProjekta.get(index).toString();
+						String[] rijeci = ll.split(" ");
+						long ID = Long.parseLong(rijeci[0]);
+						ArrayList<TimesheetHibernate> tajmovii = DalDao.VratiTimesheetoveZaposlenikaNaProjektu(Projekatt.getId(), ID);
+						for (int i = 0; i < tajmovii.size(); i++)
+						{
+							if (!tajmovii.get(i).getValidiran())
+							{
+								tajmovii.get(i).setValidiran(true);
+								DalDao.ModifikujObjekat(tajmovii.get(i));
+							}
+						}
+						ArrayList<TaskHibernate> tajmovi = DalDao.VratiTaskoveZaposlenikaNaProjektu(Projekatt.getId(), ID);
+						for (int i = 0; i < tajmovi.size(); i++)
+						{
+							DalDao.ObrisiObjekat(tajmovi.get(i));
+						}
+					}
+					for (int i = temp.length-1; i >= 0; i--)
+					{
+						listaZaposlenikaProjekta.removeElementAt(temp[i]);
+					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste uklonili zaposlenike sa projekta!", "Zaposlenici uklonjeni", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		
@@ -708,7 +768,7 @@ public class MainFormKoordinator extends JFrame {
 		button_3.setBounds(249, 175, 82, 23);
 		panel_8.add(button_3);
 		
-		JList list_10 = new JList();
+		final JList list_10 = new JList();
 		list_10.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		list_10.setBackground(Color.WHITE);
 		JScrollPane scrollPaneX = new JScrollPane(list_10, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -717,6 +777,50 @@ public class MainFormKoordinator extends JFrame {
 		final DefaultListModel listaZaposlenika = new DefaultListModel();
 		list_10.setModel(listaZaposlenika);
 		panel_8.add(scrollPaneX);
+		
+		btnUkloni.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean greska = true;
+				if(list_10.isSelectionEmpty())
+				{
+					label_error1.setVisible(true);
+					label_error1.setText("Odaberite zaposlenika!");
+				}
+				else
+				{
+					label_error1.setVisible(false);
+					int[] temp =  list_10.getSelectedIndices();
+					int brojac = 0;
+					for (int index: temp)
+					{
+						if (!listaZaposlenikaProjekta.contains(listaZaposlenika.getElementAt(index)))
+						{
+							brojac++;
+						}
+					}
+					for (int index: temp)
+					{
+						if (!listaZaposlenikaProjekta.contains(listaZaposlenika.getElementAt(index)))
+						{
+							String dodavanje = listaZaposlenika.getElementAt(index).toString();
+							String[] rijeci = dodavanje.split(" ");
+							long noviZaposlenikID = Long.parseLong(rijeci[0]);
+							TaskHibernate ozh = new TaskHibernate();
+							ozh.setZaposlenik(DalDao.VratiZaposlenika(noviZaposlenikID));
+							ozh.setProjekat(DalDao.VratiProjekat(Projekatt.getId()));
+							ozh.setPrioritet(10);
+							ozh.setProcenatZavrsenosti(100);
+							ozh.setRok(LocalDate.now());
+							ozh.setNaziv("Zaposlenik dodan u projekat");
+							DalDao.DodajObjekat(ozh);
+							listaZaposlenikaProjekta.addElement(listaZaposlenika.getElementAt(index));
+						}
+					}
+					if (brojac != 0)
+						JOptionPane.showMessageDialog(null, "Uspjesno ste dodali zaposlenike u projekat!" , "Zaposlenici dodani", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(UIManager.getColor("TextField.darkShadow"));
@@ -752,6 +856,8 @@ public class MainFormKoordinator extends JFrame {
 					label_error1.setVisible(true);
 				}
 				else{
+					listaZaposlenikaProjekta.removeAllElements();
+					listaZaposlenika.removeAllElements();
 					label_error1.setVisible(false);
 					String Projekat = list_1.getSelectedValue().toString();
 					textField_46.setText("");
@@ -760,6 +866,11 @@ public class MainFormKoordinator extends JFrame {
 					String[] temp = Projekat.split(" ");
 					final long id = Long.parseLong(temp[0]);
 					ProjekatHibernate prikaz = DalDao.VratiProjekat(id);
+					Projekatt.setId(prikaz.getId());
+					Projekatt.setArhiviran(prikaz.getArhiviran());
+					Projekatt.setKoordinator(prikaz.getKoordinator());
+					Projekatt.setNaziv(prikaz.getNaziv());
+					Projekatt.setNazivKlijenta(prikaz.getNazivKlijenta());
 					ArrayList<ZaposlenikHibernate> zaposleniciProjekta=DalDao.VratiZaposlenikeNaProjektu(id);
 					for (int i=0;i<zaposleniciProjekta.size();i++)
 					{
@@ -794,7 +905,7 @@ public class MainFormKoordinator extends JFrame {
 		btnDodajTask.setForeground(UIManager.getColor("Button.foreground"));
 		btnDodajTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (textField_4.getText() == null || textField_4.getText().isEmpty() || textField_4.getText() == "")
+				if (Projekatt.getNaziv() == null)
 				{
 					label_error1.setVisible(true);
 					label_error1.setText("Morate izabrati projekat!");
@@ -802,7 +913,7 @@ public class MainFormKoordinator extends JFrame {
 				else 
 				{
 					label_error1.setVisible(false);
-					ArrayList<ProjekatHibernate> pj = DalDao.VratiArhiviraneProjektePoNazivu(textField_4.getText());
+					ArrayList<ProjekatHibernate> pj = DalDao.VratiArhiviraneProjektePoNazivu(Projekatt.getNaziv());
 					new TaskForm(pj.get(0), dll).setVisible(true);
 				}
 			}
