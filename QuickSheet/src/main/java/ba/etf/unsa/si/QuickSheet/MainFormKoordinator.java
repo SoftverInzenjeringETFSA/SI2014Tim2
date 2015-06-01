@@ -81,6 +81,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
+
 import javax.swing.JPasswordField;
 
 
@@ -168,21 +169,7 @@ public class MainFormKoordinator extends JFrame {
 		comboBox.setBounds(136, 69, 201, 20);
 		panel_4.add(comboBox);
 		
-		timeSheetPanel.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(ComponentEvent e) {
-				try {
-				comboBox.removeAllItems();
-				ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
-				for(ProjekatHibernate projekat: projekti) {
-					comboBox.addItem(projekat);
-				}
-				}
-				catch(Exception ex) {
-					LOGGER.log(Level.SEVERE,"context",ex);
-				}
-			}
-		});
+		
 		
 		final JSpinner spinner_3 = new JSpinner();
 		spinner_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -231,12 +218,14 @@ public class MainFormKoordinator extends JFrame {
 		lblTaskovi.setBounds(10, 104, 116, 14);
 		panel_4.add(lblTaskovi);
 		
+		
+		
 		final JTextArea textArea = new JTextArea();
 		textArea.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_PERIOD))) {
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN) || (c == KeyEvent.VK_PERIOD))) {
 					e.consume();
 				}
 				
@@ -284,7 +273,7 @@ public class MainFormKoordinator extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER) || (c == KeyEvent.VK_PERIOD))) {
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN) || (c == KeyEvent.VK_PERIOD))) {
 					e.consume();
 				}
 			}
@@ -2098,14 +2087,17 @@ public class MainFormKoordinator extends JFrame {
 				try {
 					DefaultListModel4.removeAllElements();
 					ProjekatHibernate ph = (ProjekatHibernate)comboBox.getSelectedItem();
-					ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(ph.getId());
-					String temp = "";
+					ArrayList<TaskHibernate> taskovi = DalDao.VratiTaskoveZaposlenikaNaProjektu(ph.getId(), Zaposlenik.getId());
+					String temp1 = "";
+					String temp2 = "";
 					for(TaskHibernate task : taskovi) {
+						if(task.getProcenatZavrsenosti() == 100 ) continue;
 						DefaultListModel4.addElement(task);
-						temp += "0\n";
+						temp1 += task.getProcenatZavrsenosti().toString() + "\n";
+						temp2 += "0\n";
 					}
-					textArea.setText(temp);
-					textArea_1.setText(temp);
+					textArea.setText(temp1);
+					textArea_1.setText(temp2);
 				}
 				catch(Exception ex) 
 				{
@@ -2123,22 +2115,41 @@ public class MainFormKoordinator extends JFrame {
 					timesheet.setValidiran(false);
 					DalDao.DodajObjekat(timesheet);
 					String[] sati = textArea_1.getText().split("\n");
-					String[] procenti = textArea_1.getText().split("\n");
+					String[] procenti = textArea.getText().split("\n");
 					spinner_2.setValue(0.0);
 					for(String sat: sati) {
 						Double temp = Double.parseDouble(sat);
 						spinner_2.setValue((Double)spinner_2.getValue() + temp);
 					}
 					
-					for(int i = 0; i < list_3.getModel().getSize(); i++) {
-						TaskHibernate task = (TaskHibernate)list_3.getModel().getElementAt(i);
-						task.setProcenatZavrsenosti(Integer.getInteger(procenti[i]));
+					for(int i = 0; i < list_11.getModel().getSize(); i++) {
+						TaskHibernate task = (TaskHibernate)list_11.getModel().getElementAt(i);
+						task.setProcenatZavrsenosti(Integer.parseInt(procenti[i]));
 						DalDao.ModifikujObjekat(task);
 						TimesheetTaskHibernate tt = new TimesheetTaskHibernate();
 						tt.setTask(task);
 						tt.setTimesheet(timesheet);
 						DalDao.DodajObjekat(tt);
 					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste poslali timesheet na reviziju!", "Timesheet poslat", JOptionPane.INFORMATION_MESSAGE);
+				}
+				catch(Exception ex) {
+					LOGGER.log(Level.SEVERE,"context",ex);
+				}
+			}
+		});
+		timeSheetPanel.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				try {
+				comboBox.removeAllItems();
+				DefaultListModel4.removeAllElements();
+				textArea.setText("");
+				textArea_1.setText("");
+				ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
+				for(ProjekatHibernate projekat: projekti) {
+					comboBox.addItem(projekat);
+				}
 				}
 				catch(Exception ex) {
 					LOGGER.log(Level.SEVERE,"context",ex);

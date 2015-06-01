@@ -85,7 +85,7 @@ public class MainFormZaposlenik extends JFrame {
 		});
 	}
 
-	public MainFormZaposlenik(ZaposlenikHibernate zaposlenik) {
+	public MainFormZaposlenik(final ZaposlenikHibernate zaposlenik) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("qs.png"));
 		setResizable(false);
 		setTitle("QuickSheet - Zaposlenik");
@@ -617,7 +617,11 @@ public class MainFormZaposlenik extends JFrame {
 		timeSheetPanel.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
+				textArea.setText("");
+				textArea_1.setText("");
+				DefaultListModel4.removeAllElements();
 				comboBox.removeAllItems();
+				list_3.removeAll();
 				ArrayList<ProjekatHibernate> projekti = DalDao.VratiZaposlenikoveProjekte(Zaposlenik.getId());
 				for(ProjekatHibernate projekat: projekti) {
 					comboBox.addItem(projekat);
@@ -630,25 +634,17 @@ public class MainFormZaposlenik extends JFrame {
 				//promjeniti 
 				DefaultListModel4.removeAllElements();
 				ProjekatHibernate ph = (ProjekatHibernate)comboBox.getSelectedItem();
-				ArrayList<TaskHibernate> taskovi = DalDao.VratiSveTaskoveProjekta(ph.getId());
-				String temp = "";
+				ArrayList<TaskHibernate> taskovi = DalDao.VratiTaskoveZaposlenikaNaProjektu(ph.getId(), zaposlenik.getId());
+				String temp1 = "";
+				String temp2 = "";
 				for(TaskHibernate task : taskovi) {
+					if(task.getProcenatZavrsenosti().equals(100)) continue;
 					DefaultListModel4.addElement(task);
-					temp += "0\n";
+					temp1 += task.getProcenatZavrsenosti().toString() + "\n";
+					temp2 += "0\n";
 				}
-				textArea.setText(temp);
-				textArea_1.setText(temp);
-			}
-		});
-		
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					
-				}
-				catch(Exception ex) {
-					LOGGER.log(Level.SEVERE,"context",ex);
-				}
+				textArea.setText(temp1);
+				textArea_1.setText(temp2);
 			}
 		});
 		
@@ -707,7 +703,7 @@ public class MainFormZaposlenik extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_PERIOD))) {
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_PERIOD))) {
 					e.consume();
 				}
 				
@@ -718,7 +714,7 @@ public class MainFormZaposlenik extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER) || (c == KeyEvent.VK_PERIOD))) {
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN) || (c == KeyEvent.VK_PERIOD))) {
 					e.consume();
 				}
 			}
@@ -767,7 +763,7 @@ public class MainFormZaposlenik extends JFrame {
 					timesheet.setValidiran(false);
 					DalDao.DodajObjekat(timesheet);
 					String[] sati = textArea_1.getText().split("\n");
-					String[] procenti = textArea_1.getText().split("\n");
+					String[] procenti = textArea.getText().split("\n");
 					spinner_2.setValue(0.0);
 					for(String sat: sati) {
 						Double temp = Double.parseDouble(sat);
@@ -776,13 +772,14 @@ public class MainFormZaposlenik extends JFrame {
 					
 					for(int i = 0; i < list_3.getModel().getSize(); i++) {
 						TaskHibernate task = (TaskHibernate)list_3.getModel().getElementAt(i);
-						task.setProcenatZavrsenosti(Integer.getInteger(procenti[i]));
+						task.setProcenatZavrsenosti(Integer.parseInt(procenti[i]));
 						DalDao.ModifikujObjekat(task);
 						TimesheetTaskHibernate tt = new TimesheetTaskHibernate();
 						tt.setTask(task);
 						tt.setTimesheet(timesheet);
 						DalDao.DodajObjekat(tt);
 					}
+					JOptionPane.showMessageDialog(null, "Uspjesno ste poslali timesheet na reviziju!", "Timesheet poslat", JOptionPane.INFORMATION_MESSAGE);
 				}
 				catch(Exception ex) {
 					LOGGER.log(Level.SEVERE,"context",ex);
