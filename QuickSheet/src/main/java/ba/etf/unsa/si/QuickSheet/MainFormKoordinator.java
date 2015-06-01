@@ -324,13 +324,15 @@ public class MainFormKoordinator extends JFrame {
 		panel_3.setForeground(UIManager.getColor("TextField.highlight"));
 		panel_3.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga odjela", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_3.setBounds(30, 22, 355, 370);
+		panel_3.setBounds(30, 22, 355, 426);
 		odjeliPanel.add(panel_3);
 		panel_3.setLayout(null);
 		
 		final JList list_4 = new JList();
 		JScrollPane scrollPane7 = new JScrollPane(list_4, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane7.setBounds(22, 116, 309, 243);
+		scrollPane7.setBounds(22, 116, 309, 260);
+		final DefaultListModel dlm_1 = new DefaultListModel();
+		list_4.setModel(dlm_1);
 		list_4.setBounds(22, 116, 309, 243);
 		panel_3.add(scrollPane7);
 		
@@ -341,7 +343,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_3.add(label_16);
 		
 		final JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setFont(new Font("Times New Roman", Font.PLAIN, 11));
+		comboBox_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!(comboBox_5.getSelectedItem() == null)){
@@ -350,7 +352,7 @@ public class MainFormKoordinator extends JFrame {
 			}
 		});
 		
-		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"Naziv"}));
+		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"Naziv", "Max br. zaposlenika"}));
 		comboBox_5.setBounds(22, 56, 99, 23);
 		panel_3.add(comboBox_5);
 		
@@ -360,8 +362,9 @@ public class MainFormKoordinator extends JFrame {
 		panel_3.add(textField_7);
 		
 		final JLabel label_error = new JLabel("");
+		label_error.setForeground(Color.RED);
 		label_error.setVisible(false);
-		label_error.setBounds(0, 408, 759, 14);
+		label_error.setBounds(0, 459, 759, 25);
 		odjeliPanel.add(label_error);
 		
 		final JCheckBox checkBox = new JCheckBox("Prikaži arhivirane korisnike");
@@ -374,63 +377,58 @@ public class MainFormKoordinator extends JFrame {
 		JButton button_2 = new JButton("Pretraži");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean greska = true;
 				
-				if(comboBox_5.getSelectedItem() == null){
-					greska = false;
-					label_error.setText("Morate označiti parametar pretrage!");
+				ArrayList<OdjelHibernate> odjeli = new ArrayList<OdjelHibernate>();
+				dlm_1.removeAllElements();
+				if (comboBox_5.getSelectedItem().toString().equals("Naziv"))
+				{
+					if (checkBox.isSelected())
+					{
+						odjeli = DalDao.PretraziArhiviraneOdjelePoNazivu(textField_7.getText());
+					}
+					else 
+					{
+						odjeli = DalDao.PretraziNearhiviraneOdjelePoNazivu(textField_7.getText());
+					}
 				}
-				if(greska == false){
-					label_error.setVisible(true);
-				}
-				else label_error.setVisible(false);
-				if (textField_7.getText().equalsIgnoreCase("") && checkBox.isSelected()==false){
-					DefaultListModel listaArhOdjela = new DefaultListModel();
-					list_4.setModel(listaArhOdjela);
-					ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.VratiSveNearhiviraneOdjele();
-
-					for (int i=0;i<arhiviraniOdjeli.size();i++)
+				else
+				{
+					if (textField_7.getText().matches("^[0-9]*$"))
+					{
+						if (checkBox.isSelected())
 						{
-						    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-							listaArhOdjela.addElement(tempString);
+							odjeli = DalDao.PretraziArhiviraneOdjelePoKapacitetu(Integer.parseInt(textField_7.getText()));
 						}
-				} else
-					if (checkBox.isSelected()){
-						DefaultListModel listaArhOdjela = new DefaultListModel();
-						list_4.setModel(listaArhOdjela);
-						ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziArhiviraneOdjelePoNazivu(textField_7.getText());
-
-						for (int i=0;i<arhiviraniOdjeli.size();i++)
-							{
-							    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-								listaArhOdjela.addElement(tempString);
-							}
-					} else
-						if (checkBox.isSelected()==false){
-							DefaultListModel listaArhOdjela = new DefaultListModel();
-							list_4.setModel(listaArhOdjela);
-							ArrayList<OdjelHibernate> arhiviraniOdjeli=DalDao.PretraziNearhiviraneOdjelePoNazivu(textField_7.getText());
-
-							for (int i=0;i<arhiviraniOdjeli.size();i++)
-								{
-								    String tempString = arhiviraniOdjeli.get(i).getId() + " " + arhiviraniOdjeli.get(i).getNaziv();
-									listaArhOdjela.addElement(tempString);
-								}
-						} 
+						else 
+						{
+							odjeli = DalDao.PretraziNearhiviraneOdjelePoKapacitetu(Integer.parseInt(textField_7.getText()));
+						}
+					}
+				}
+				for (int i=0; i < odjeli.size(); i++)
+				{
+				    String tempString = odjeli.get(i).getId() + " " + odjeli.get(i).getNaziv();
+				    dlm_1.addElement(tempString);
+				}
+				
 			}
-			
 		});
 		
 		button_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		button_2.setBounds(262, 56, 69, 23);
 		panel_3.add(button_2);
 		
+		JButton btnPrikaiOdjel = new JButton("Prikaži odjel");
+		btnPrikaiOdjel.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnPrikaiOdjel.setBounds(230, 387, 101, 23);
+		panel_3.add(btnPrikaiOdjel);
+		
 		JPanel panel_5 = new JPanel();
 		panel_5.setForeground(UIManager.getColor("TextField.highlight"));
 		panel_5.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_5.setLayout(null);
 		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o odjelu", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_5.setBounds(392, 22, 341, 370);
+		panel_5.setBounds(392, 22, 341, 426);
 		odjeliPanel.add(panel_5);
 		
 		JLabel label_6 = new JLabel("Naziv odjela:");
@@ -440,6 +438,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_5.add(label_6);
 		
 		textField_1 = new JTextField();
+		textField_1.setDisabledTextColor(Color.BLACK);
 		textField_1.setBorder(null);
 		textField_1.setBackground(Color.WHITE);
 		textField_1.setEnabled(false);
@@ -457,27 +456,55 @@ public class MainFormKoordinator extends JFrame {
 		JLabel label_9 = new JLabel("Maksimalni broj zaposlenika:");
 		label_9.setForeground(UIManager.getColor("TextField.highlight"));
 		label_9.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_9.setBounds(10, 207, 152, 14);
+		label_9.setBounds(10, 298, 152, 14);
 		panel_5.add(label_9);
 		
 		final JList list = new JList();
-		final DefaultListModel listaZaposlenika = new DefaultListModel();
-		list.setModel(listaZaposlenika);
-		
+		final DefaultListModel listaZaposlenikaOdjela = new DefaultListModel();
+		list.setModel(listaZaposlenikaOdjela);
 		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		list.setEnabled(false);
 		JScrollPane scrollPane6 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane6.setBounds(190, 61, 141, 135);
+		scrollPane6.setBounds(190, 61, 141, 226);
 		list.setBounds(190, 61, 141, 135);
 		panel_5.add(scrollPane6);
 		
+		btnPrikaiOdjel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listaZaposlenikaOdjela.removeAllElements();
+				boolean greska = true;
+				if(list_4.isSelectionEmpty())
+				{
+					label_error.setText("Morate označiti odjel!");
+					label_error.setVisible(true);
+				}
+				else
+				{
+					label_error.setVisible(false);
+					String Odjel=list_4.getSelectedValue().toString();
+					String[] temp = Odjel.split(" ");
+					final long id = Long.parseLong(temp[0]);
+					final OdjelHibernate prikaz = DalDao.VratiOdjel(id); 
+					ArrayList<ZaposlenikHibernate> zaposleniciOdjela=DalDao.VratiZaposlenikeUOdjelu(id);
+					for (int i=0;i<zaposleniciOdjela.size();i++)
+					{
+					    String tempString = zaposleniciOdjela.get(i).toString();
+						listaZaposlenikaOdjela.addElement(tempString);
+					}
+					textField_1.setText(prikaz.getNaziv());
+					textField_2.setText(prikaz.getMaksimalanBrojRadnika().toString());
+				}
+			}
+		});
+		
 		textField_2 = new JTextField();
+		textField_2.setDisabledTextColor(Color.BLACK);
 		textField_2.setEnabled(false);
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBorder(null);
 		textField_2.setBackground(Color.WHITE);
-		textField_2.setBounds(190, 207, 141, 20);
+		textField_2.setBounds(190, 298, 141, 20);
 		panel_5.add(textField_2);
 		
 		JPanel projektiPanel = new JPanel();
@@ -735,15 +762,17 @@ public class MainFormKoordinator extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(UIManager.getColor("TextField.darkShadow"));
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga korisnika", TitledBorder.LEADING, TitledBorder.TOP, null, UIManager.getColor("TextField.highlight")));
-		panel_1.setBounds(30, 22, 355, 370);
+		panel_1.setBounds(30, 22, 355, 426);
 		korisniciPanel.add(panel_1);
 		panel_1.setLayout(null);
 		
 	    final JList list_2 = new JList();
 	    list_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	    JScrollPane scrollPane2 = new JScrollPane(list_2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane2.setBounds(22, 116, 309, 209);
+		scrollPane2.setBounds(22, 116, 309, 265);
 		list_2.setBounds(22, 116, 309, 209);
+		final DefaultListModel lista = new DefaultListModel();
+	    list_2.setModel(lista);
 		panel_1.add(scrollPane2);
 		
 		final JCheckBox chckbxNewCheckBox = new JCheckBox("Prikaži arhivirane korisnike");
@@ -767,7 +796,7 @@ public class MainFormKoordinator extends JFrame {
 			}
 		});
 		
-		btnNewButton_1.setBounds(212, 336, 119, 23);
+		btnNewButton_1.setBounds(212, 392, 119, 23);
 		panel_1.add(btnNewButton_1);
 		
 		JLabel label_11 = new JLabel("Izaberite parametar pretrage:");
@@ -777,15 +806,7 @@ public class MainFormKoordinator extends JFrame {
 		panel_1.add(label_11);
 		
 		final JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!(comboBox_4.getSelectedItem() == null)){
-					textField_6.setText((String) comboBox_4.getSelectedItem());
-				}
-			}
-		});
-		
-		comboBox_4.setFont(new Font("Times New Roman", Font.PLAIN, 11));
+		comboBox_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"Ime", "Prezime", "Username"}));
 		comboBox_4.setBounds(22, 56, 99, 23);
 		panel_1.add(comboBox_4);
@@ -797,7 +818,7 @@ public class MainFormKoordinator extends JFrame {
 		
 		final JLabel label_error2 = new JLabel("");
 		label_error2.setVisible(false);
-		label_error2.setBounds(0, 408, 759, 14);
+		label_error2.setBounds(0, 459, 759, 25);
 		korisniciPanel.add(label_error2);
 		
 		JButton button_1 = new JButton("Pretraži");
@@ -805,108 +826,65 @@ public class MainFormKoordinator extends JFrame {
 		button_1.setForeground(new Color(0, 0, 0));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean greska = true;
 				
-				if(comboBox_4.getSelectedItem() == null){
-					greska = false;
-					label_error2.setText("Morate označiti parametar pretrage!");
-				}
-				if(greska == false){
-					label_error2.setVisible(true);
-				}
-				else {
-					label_error2.setVisible(false);
 				if (!textField_6.getText().isEmpty())
 				{
-			    DefaultListModel lista = new DefaultListModel();
-			    list_2.setModel(lista);
-			    ArrayList<ProjekatHibernate> projekti = DalDao.VratiSveKoordinatorskeProjekte(zh.getId());
-				ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
-				for (int i = 0; i < projekti.size(); i++)
-				{
-					
-					ArrayList<ZaposlenikHibernate> zaps = DalDao.VratiZaposlenikeNaProjektu(projekti.get(i).getId());
-					for (int j = 0; j < zaps.size(); j++)
+					lista.removeAllElements();
+					ArrayList<ZaposlenikHibernate> zaposlenici = new ArrayList<ZaposlenikHibernate>();
+					String vrijednost = comboBox_4.getSelectedItem().toString();
+					if (chckbxNewCheckBox.isSelected())
 					{
-						if (!zaposlenici.contains(zaps.get(j)))
-							zaposlenici.add(zaps.get(j));
-					}
-				}
-				ArrayList<ZaposlenikHibernate> filterZaposlenici = new ArrayList<ZaposlenikHibernate>();
-				String vrijednost = comboBox_4.getSelectedItem().toString();
-				if (chckbxNewCheckBox.isSelected())
-				{
-					if (vrijednost.equals("Ime"))
-					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						if (vrijednost.equals("Ime"))
 						{
-							if (zaposlenici.get(i).getIme().equals(textField_6.getText()))
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							zaposlenici = DalDao.VratiArhiviraneZaposlenikePoImenu(textField_6.getText());
 						}
-					}
-					else if (vrijednost.equalsIgnoreCase("Prezime"))
-					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						else if (vrijednost.equalsIgnoreCase("Prezime"))
 						{
-							if (zaposlenici.get(i).getPrezime().equals(textField_6.getText()))
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							zaposlenici = DalDao.VratiArhiviraneZaposlenikePoPrezimenu(textField_6.getText());
+						}
+						else
+						{
+							zaposlenici.add(DalDao.VratiArhiviraneZaposlenikePoUsername(textField_6.getText()));
 						}
 					}
 					else
 					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						if (vrijednost.equals("Ime"))
 						{
-							if (zaposlenici.get(i).getUsername().equals(textField_6.getText()))
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoImenu(textField_6.getText());
+						}
+						else if (vrijednost.equalsIgnoreCase("Prezime"))
+						{
+							zaposlenici = DalDao.VratiNearhiviraneZaposlenikePoPrezimenu(textField_6.getText());
+						}
+						else
+						{
+							zaposlenici.add(DalDao.VratiNearhiviraneZaposlenikePoUsername(textField_6.getText()));
 						}
 					}
-				}
-				else
-				{
-					if (vrijednost.equals("Ime"))
+					ArrayList<ProjekatHibernate> projekti = DalDao.VratiSveKoordinatorskeProjekte(Zaposlenik.getId());
+					ArrayList<String> dopusteniZaposlenici = new ArrayList<String>();
+					for (int index = 0; index < projekti.size(); index++)
 					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						ArrayList<ZaposlenikHibernate> zata = DalDao.VratiZaposlenikeNaProjektu(projekti.get(index).getId());
+						for (ZaposlenikHibernate zz: zata)
 						{
-							if (zaposlenici.get(i).getIme().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							if (!dopusteniZaposlenici.contains(zz))
+								dopusteniZaposlenici.add(zz.toString());
 						}
 					}
-					else if (vrijednost.equalsIgnoreCase("Prezime"))
+					for (int i = 0; i < zaposlenici.size(); i++)
 					{
-						for (int i = 0; i < zaposlenici.size(); i++)
+						if (zaposlenici.get(i) != null)
 						{
-							if (zaposlenici.get(i).getPrezime().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
+							String podatak = zaposlenici.get(i).toString();
+							if (dopusteniZaposlenici.contains(podatak))
+								lista.addElement(podatak);
 						}
 					}
-					else
-					{
-						for (int i = 0; i < zaposlenici.size(); i++)
-						{
-							if (zaposlenici.get(i).getUsername().equals(textField_6.getText()) && !zaposlenici.get(i).getArhiviran())
-							{
-								filterZaposlenici.add(zaposlenici.get(i));
-							}
-						}					
-					}
+
 				}
-				for (int i = 0; i < filterZaposlenici.size(); i++)
-				{
-					String podatak = filterZaposlenici.get(i).getId() + " " + filterZaposlenici.get(i).getIme() + " " + filterZaposlenici.get(i).getPrezime();
-					lista.addElement(podatak);
-				}
-				}
-			}}
+			}
 		});
 		
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
