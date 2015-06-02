@@ -1133,7 +1133,7 @@ public class MainForm extends JFrame {
 					label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;
 				}
-				if(p2.length()  < 7 || p2.length() < 7)
+				if(p2.length()  < 7)
 				{
 					label_error2.setText("Unesite ispravnu lozinku (minimalno 7 karaktera)!");
 					greska = false;

@@ -225,7 +225,7 @@ public class MainFormKoordinator extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN) || (c == KeyEvent.VK_PERIOD))) {
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_PERIOD))) {
 					e.consume();
 				}
 				
@@ -273,7 +273,7 @@ public class MainFormKoordinator extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN) || (c == KeyEvent.VK_PERIOD))) {
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_PERIOD))) {
 					e.consume();
 				}
 			}
@@ -1166,7 +1166,7 @@ public class MainFormKoordinator extends JFrame {
 						ArrayList<ZaposlenikHibernate> zata = DalDao.VratiZaposlenikeNaProjektu(projekti.get(index).getId());
 						for (ZaposlenikHibernate zz: zata)
 						{
-							if (!dopusteniZaposlenici.contains(zz))
+							if (!dopusteniZaposlenici.contains(zz.toString()))
 								dopusteniZaposlenici.add(zz.toString());
 						}
 					}

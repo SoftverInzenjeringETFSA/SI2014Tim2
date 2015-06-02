@@ -703,7 +703,7 @@ public class MainFormZaposlenik extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_PERIOD))) {
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_PERIOD))) {
 					e.consume();
 				}
 				
@@ -714,7 +714,7 @@ public class MainFormZaposlenik extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_DOWN)  || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN) || (c == KeyEvent.VK_PERIOD))) {
+				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_ENTER)|| (c == KeyEvent.VK_UP) || (c == KeyEvent.VK_LEFT) || (c == KeyEvent.VK_DOWN) || (c == KeyEvent.VK_PERIOD))) {
 					e.consume();
 				}
 			}
